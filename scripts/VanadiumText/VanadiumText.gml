@@ -27,7 +27,8 @@ function VText(_x, _y, _w, _h, _text, _root) : VCore(_x, _y, _w, _h, _root) cons
         var ty = GetTextY(y1);
         
         scribble_set_wrap(width, height);
-        scribble_draw(tx, ty, string(text));
+        scribble_set_box_align(alignment, valignment);
+        scribble_draw(tx, ty, text);
     }
     
     // Inherited:
