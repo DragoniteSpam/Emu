@@ -22,7 +22,7 @@ function scribble_cache() {
 	{
 	    var _scribble_array = _draw_string;
     
-	    if ((array_length_1d(_scribble_array) != SCRIBBLE.__SIZE)
+	    if ((array_length(_scribble_array) != SCRIBBLE.__SIZE)
 	    || (_scribble_array[SCRIBBLE.VERSION] != __SCRIBBLE_VERSION))
 	    {
 	        show_error("Scribble:\nArray is not a valid Scribble text element\n ", false);
@@ -210,7 +210,7 @@ function scribble_cache() {
 	        _page_array[@ __SCRIBBLE_PAGE.LINES_ARRAY         ] = _page_lines_array;
 	        _page_array[@ __SCRIBBLE_PAGE.VERTEX_BUFFERS_ARRAY] = _page_vbuffs_array;
         
-	        _element_pages_array[@ array_length_1d(_element_pages_array)] = _page_array;
+	        _element_pages_array[@ array_length(_element_pages_array)] = _page_array;
 	        ++_meta_element_pages;
         
         #endregion
@@ -230,7 +230,7 @@ function scribble_cache() {
 	        _line_array[@ __SCRIBBLE_LINE.WIDTH     ] = _line_width;
 	        _line_array[@ __SCRIBBLE_LINE.HEIGHT    ] = _line_height;
 	        _line_array[@ __SCRIBBLE_LINE.HALIGN    ] = _def_halign;
-	        _page_lines_array[@ array_length_1d(_page_lines_array)] = _line_array;
+	        _page_lines_array[@ array_length(_page_lines_array)] = _line_array;
         
         #endregion
 
@@ -441,7 +441,7 @@ function scribble_cache() {
 	                                    ++_j;
 	                                }
                                 
-	                                var _count = array_length_1d(_events_char_array);
+	                                var _count = array_length(_events_char_array);
 	                                _events_char_array[@ _count] = _meta_element_characters;
 	                                _events_name_array[@ _count] = _command_name;
 	                                _events_data_array[@ _count] = _data;
@@ -606,7 +606,7 @@ function scribble_cache() {
 	                                                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.LINE_START_LIST] = _vbuff_line_start_list;
 	                                                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.TEXEL_WIDTH    ] = texture_get_texel_width( _sprite_texture);
 	                                                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.TEXEL_HEIGHT   ] = texture_get_texel_height(_sprite_texture);
-	                                                            _page_vbuffs_array[@ array_length_1d(_page_vbuffs_array)] = _vbuff_data;
+	                                                            _page_vbuffs_array[@ array_length(_page_vbuffs_array)] = _vbuff_data;
                                                         
 	                                                            _texture_to_buffer_map[? _sprite_texture] = _vbuff_data;
 	                                                        }
@@ -621,7 +621,7 @@ function scribble_cache() {
                                                 
 	                                                        //Fill link break list
 	                                                        var _tell = buffer_tell(_buffer);
-	                                                        repeat(array_length_1d(_page_lines_array) - ds_list_size(_vbuff_line_start_list)) ds_list_add(_vbuff_line_start_list, _tell);
+	                                                        repeat(array_length(_page_lines_array) - ds_list_size(_vbuff_line_start_list)) ds_list_add(_vbuff_line_start_list, _tell);
                                                     
 	                                                        ++_image;
 	                                                    }
@@ -850,7 +850,7 @@ function scribble_cache() {
 	                    var _delay = global.__scribble_character_delay_map[? _character_code];
 	                    if ((_delay != undefined) && (_delay > 0))
 	                    {
-	                        var _count = array_length_1d(_events_char_array);
+	                        var _count = array_length(_events_char_array);
 	                        _events_char_array[@ _count] = _meta_element_characters;
 	                        _events_name_array[@ _count] = "delay";
 	                        _events_data_array[@ _count] = [_delay];
@@ -869,7 +869,7 @@ function scribble_cache() {
                 
 	                //Iterate over all the vertex buffers we've been using and reset the word start position
 	                var _v = 0;
-	                repeat(array_length_1d(_page_vbuffs_array))
+	                repeat(array_length(_page_vbuffs_array))
 	                {
 	                    var _data = _page_vbuffs_array[_v];
 	                    _data[@ __SCRIBBLE_VERTEX_BUFFER.WORD_START_TELL] = buffer_tell(_data[__SCRIBBLE_VERTEX_BUFFER.BUFFER]);
@@ -888,7 +888,7 @@ function scribble_cache() {
 	                    var _delay = global.__scribble_character_delay_map[? _character_code];
 	                    if ((_delay != undefined) && (_delay > 0))
 	                    {
-	                        var _count = array_length_1d(_events_char_array);
+	                        var _count = array_length(_events_char_array);
 	                        _events_char_array[@ _count] = _meta_element_characters;
 	                        _events_name_array[@ _count] = "delay";
 	                        _events_data_array[@ _count] = [_delay];
@@ -984,7 +984,7 @@ function scribble_cache() {
 	                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.LINE_START_LIST] = _vbuff_line_start_list;
 	                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.TEXEL_WIDTH    ] = texture_get_texel_width( _glyph_texture);
 	                            _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.TEXEL_HEIGHT   ] = texture_get_texel_height(_glyph_texture);
-	                            _page_vbuffs_array[@ array_length_1d(_page_vbuffs_array)] = _vbuff_data;
+	                            _page_vbuffs_array[@ array_length(_page_vbuffs_array)] = _vbuff_data;
                         
 	                            _texture_to_buffer_map[? _glyph_texture] = _vbuff_data;
 	                        }
@@ -996,7 +996,7 @@ function scribble_cache() {
             
 	                        //Fill link break list
 	                        var _tell = buffer_tell(_glyph_buffer);
-	                        repeat(array_length_1d(_page_lines_array) - ds_list_size(_vbuff_line_start_list)) ds_list_add(_vbuff_line_start_list, _tell);
+	                        repeat(array_length(_page_lines_array) - ds_list_size(_vbuff_line_start_list)) ds_list_add(_vbuff_line_start_list, _tell);
 	                    }
             
 	                    //Update CHAR_START_TELL, and WORD_START_TELL if needed
@@ -1063,7 +1063,7 @@ function scribble_cache() {
 	                    var _delay = global.__scribble_character_delay_map[? _character_code];
 	                    if ((_delay != undefined) && (_delay > 0))
 	                    {
-	                        var _count = array_length_1d(_events_char_array);
+	                        var _count = array_length(_events_char_array);
 	                        _events_char_array[@ _count] = _meta_element_characters;
 	                        _events_name_array[@ _count] = "delay";
 	                        _events_data_array[@ _count] = [_delay];
@@ -1081,7 +1081,7 @@ function scribble_cache() {
 	                var _line_offset_x = -_text_x;
                 
 	                var _v = 0;
-	                repeat(array_length_1d(_page_vbuffs_array))
+	                repeat(array_length(_page_vbuffs_array))
 	                {
 	                    var _data = _page_vbuffs_array[_v];
                     
@@ -1189,7 +1189,7 @@ function scribble_cache() {
 	                _line_array[@ __SCRIBBLE_LINE.WIDTH     ] = 0;
 	                _line_array[@ __SCRIBBLE_LINE.HEIGHT    ] = _line_height;
 	                _line_array[@ __SCRIBBLE_LINE.HALIGN    ] = _text_halign;
-	                _page_lines_array[@ array_length_1d(_page_lines_array)] = _line_array; //Add this line to the page
+	                _page_lines_array[@ array_length(_page_lines_array)] = _line_array; //Add this line to the page
                 
 	                _force_newline = false;
 	            }
@@ -1217,12 +1217,12 @@ function scribble_cache() {
 	                _new_page_array[@ __SCRIBBLE_PAGE.LINES_ARRAY         ] = _new_page_lines_array;
 	                _new_page_array[@ __SCRIBBLE_PAGE.VERTEX_BUFFERS_ARRAY] = _new_page_vbuffs_array;
         
-	                _element_pages_array[@ array_length_1d(_element_pages_array)] = _new_page_array;
+	                _element_pages_array[@ array_length(_element_pages_array)] = _new_page_array;
 	                ++_meta_element_pages;
         
 	                //Steal the last line from the previous page
 	                _page_array[@ __SCRIBBLE_PAGE.LINES] = _meta_page_lines - 1;
-	                _page_lines_array[@ array_length_1d(_page_lines_array)-1] = undefined;
+	                _page_lines_array[@ array_length(_page_lines_array)-1] = undefined;
         
 	                //Figure out last/start chars for pages
 	                _page_array[@ __SCRIBBLE_PAGE.LAST_CHAR] = _line_array[@ __SCRIBBLE_LINE.START_CHAR] - 1;
@@ -1239,7 +1239,7 @@ function scribble_cache() {
 	                {
 	                    //Iterate over every vertex buffer on the previous page and steal vertices where we need to
 	                    var _v = 0;
-	                    repeat(array_length_1d(_page_vbuffs_array))
+	                    repeat(array_length(_page_vbuffs_array))
 	                    {
 	                        var _vbuff_data = _page_vbuffs_array[_v];
                         
@@ -1254,7 +1254,7 @@ function scribble_cache() {
                             
 	                            //Make a new vertex buffer for the new page
 	                            var _new_vbuff_data = array_create(__SCRIBBLE_VERTEX_BUFFER.__SIZE);
-	                            _new_page_vbuffs_array[@ array_length_1d(_new_page_vbuffs_array)] = _new_vbuff_data;
+	                            _new_page_vbuffs_array[@ array_length(_new_page_vbuffs_array)] = _new_vbuff_data;
 	                            _texture_to_buffer_map[? _vbuff_data[@ __SCRIBBLE_VERTEX_BUFFER.TEXTURE]] = _new_vbuff_data;
                             
 	                            //Create new data structures
@@ -1301,7 +1301,7 @@ function scribble_cache() {
 	                }
                 
 	                //Add the line array to this page
-	                _new_page_lines_array[@ array_length_1d(_new_page_lines_array)] = _line_array;
+	                _new_page_lines_array[@ array_length(_new_page_lines_array)] = _line_array;
                 
 	                //Transfer new page variables into current page variables
 	                _page_array        = _new_page_array;
@@ -1360,14 +1360,14 @@ function scribble_cache() {
 	        var _justify_max_width = 0;
 
 	        var _p = 0;
-	        repeat(array_length_1d(_element_pages_array))
+	        repeat(array_length(_element_pages_array))
 	        {
 	            var _page_array = _element_pages_array[_p];
 	            _page_lines_array = _page_array[__SCRIBBLE_PAGE.LINES_ARRAY];
     
 	            //Iterate over every line on the page
 	            var _l = 0;
-	            repeat(array_length_1d(_page_lines_array))
+	            repeat(array_length(_page_lines_array))
 	            {
 	                var _line_data = _page_lines_array[_l];
 	                if (is_array(_line_data)) //Someimtes the array can contain <undefined> if a line is moved from one page to another
@@ -1433,7 +1433,7 @@ function scribble_cache() {
         
 	        //Iterate over every page
 	        var _p = 0;
-	        repeat(array_length_1d(_element_pages_array))
+	        repeat(array_length(_element_pages_array))
 	        {
 	            var _page_array = _element_pages_array[_p];
 	            _page_lines_array  = _page_array[__SCRIBBLE_PAGE.LINES_ARRAY         ];
@@ -1441,7 +1441,7 @@ function scribble_cache() {
             
 	            //Iterate over every vertex buffer for that page
 	            var _v = 0;
-	            repeat(array_length_1d(_page_vbuffs_array))
+	            repeat(array_length(_page_vbuffs_array))
 	            {
 	                var _data = _page_vbuffs_array[_v];
                 
@@ -1569,14 +1569,14 @@ function scribble_cache() {
             
 	            //Iterate over every page
 	            var _p = 0;
-	            repeat(array_length_1d(_element_pages_array))
+	            repeat(array_length(_element_pages_array))
 	            {
 	                var _page_array = _element_pages_array[_p];
 	                _page_vbuffs_array = _page_array[__SCRIBBLE_PAGE.VERTEX_BUFFERS_ARRAY];
                 
 	                //Iterate over every vertex buffer for that page
 	                var _v = 0;
-	                repeat(array_length_1d(_page_vbuffs_array))
+	                repeat(array_length(_page_vbuffs_array))
 	                {
 	                    //Grab the vertex buffer
 	                    var _data = _page_vbuffs_array[_v];
@@ -1641,7 +1641,7 @@ function scribble_cache() {
 	                ++_p;
 	            }
             
-	            _glyph_ltrb_array[@ array_length_1d(_glyph_ltrb_array)] = _glyph_ltrb_array[array_length_1d(_glyph_ltrb_array)-1];
+	            _glyph_ltrb_array[@ array_length(_glyph_ltrb_array)] = _glyph_ltrb_array[array_length(_glyph_ltrb_array)-1];
 	            _scribble_array[@ SCRIBBLE.GLYPH_LTRB_ARRAY] = _glyph_ltrb_array;
             
             #endregion
@@ -1689,7 +1689,7 @@ function scribble_cache() {
 	    _occurance_array[@ __SCRIBBLE_OCCURANCE.ANIMATION_TIME     ] =  current_time;
 	    _occurance_array[@ __SCRIBBLE_OCCURANCE.EVENT_PREVIOUS     ] = -1;
 	    _occurance_array[@ __SCRIBBLE_OCCURANCE.EVENT_CHAR_PREVIOUS] = -1;
-	    _occurance_array[@ __SCRIBBLE_OCCURANCE.EVENT_VISITED_ARRAY] = array_create(array_length_1d(_events_char_array), false);
+	    _occurance_array[@ __SCRIBBLE_OCCURANCE.EVENT_VISITED_ARRAY] = array_create(array_length(_events_char_array), false);
     
 	    _occurance_map[? _occurance_name] = _occurance_array;
 	}

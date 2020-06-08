@@ -70,7 +70,7 @@ function scribble_draw() {
 
 	//Grab our vertex buffers for this page
 	var _page_vbuffs_array = _page_array[__SCRIBBLE_PAGE.VERTEX_BUFFERS_ARRAY];
-	var _count = array_length_1d(_page_vbuffs_array);
+	var _count = array_length(_page_vbuffs_array);
 	if (_count > 0)
 	{
     #region Advance the autotyper, execute events, play sounds etc.
@@ -149,7 +149,7 @@ function scribble_draw() {
 	                var _events_char_array = _scribble_array[SCRIBBLE.EVENT_CHAR_ARRAY];
 	                var _events_name_array = _scribble_array[SCRIBBLE.EVENT_NAME_ARRAY];
 	                var _events_data_array = _scribble_array[SCRIBBLE.EVENT_DATA_ARRAY];
-	                var _event_count       = array_length_1d(_events_char_array);
+	                var _event_count       = array_length(_events_char_array);
                 
 	                var _event                = _occurance_array[__SCRIBBLE_OCCURANCE.EVENT_PREVIOUS     ];
 	                var _events_visited_array = _occurance_array[__SCRIBBLE_OCCURANCE.EVENT_VISITED_ARRAY];
@@ -185,7 +185,7 @@ function scribble_draw() {
 	                                {
 	                                    _occurance_array[@ __SCRIBBLE_OCCURANCE.EVENT_PREVIOUS] = _event;
                                         
-	                                    if (array_length_1d(_event_data_array) >= 1)
+	                                    if (array_length(_event_data_array) >= 1)
 	                                    {
 	                                        var _duration = real(_event_data_array[0]);
 	                                    }
@@ -270,7 +270,7 @@ function scribble_draw() {
         #region Play a sound effect as the text is revealed
         
 	        var _sound_array = _occurance_array[__SCRIBBLE_OCCURANCE.SOUND_ARRAY];
-	        if (is_array(_sound_array) && (array_length_1d(_sound_array) > 0))
+	        if (is_array(_sound_array) && (array_length(_sound_array) > 0))
 	        {
 	            var _play_sound = false;
 	            if (_occurance_array[__SCRIBBLE_OCCURANCE.SOUND_PER_CHAR])
@@ -286,7 +286,7 @@ function scribble_draw() {
 	            {
 	                global.__scribble_lcg = (48271*global.__scribble_lcg) mod 2147483647; //Lehmer
 	                var _rand = global.__scribble_lcg / 2147483648;
-	                var _sound = _sound_array[floor(_rand*array_length_1d(_sound_array))];
+	                var _sound = _sound_array[floor(_rand*array_length(_sound_array))];
                 
 	                var _inst = audio_play_sound(_sound, 0, false);
                 
