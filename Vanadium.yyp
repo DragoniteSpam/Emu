@@ -26,6 +26,7 @@
     {"id":{"name":"readme_please","path":"notes/readme_please/readme_please.yy",},"order":4,},
     {"id":{"name":"scribble_autotype_function","path":"scripts/scribble_autotype_function/scribble_autotype_function.yy",},"order":2,},
     {"id":{"name":"scribble_page_set","path":"scripts/scribble_page_set/scribble_page_set.yy",},"order":3,},
+    {"id":{"name":"VanadiumTabGroup","path":"scripts/VanadiumTabGroup/VanadiumTabGroup.yy",},"order":3,},
     {"id":{"name":"scribble_draw_set_wrap","path":"scripts/scribble_draw_set_wrap/scribble_draw_set_wrap.yy",},"order":11,},
     {"id":{"name":"__scribble_macros","path":"scripts/__scribble_macros/__scribble_macros.yy",},"order":7,},
     {"id":{"name":"scribble_add_color","path":"scripts/scribble_add_color/scribble_add_color.yy",},"order":0,},
