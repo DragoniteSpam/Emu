@@ -6,7 +6,7 @@
     "path": "folders/Vanadium/Core.yy",
   },
   "resourceVersion": "1.0",
-  "name": "VanadiumCore",
+  "name": "VanadiumRectangle",
   "tags": [],
   "resourceType": "GMScript",
 }
