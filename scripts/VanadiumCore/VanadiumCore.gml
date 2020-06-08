@@ -16,7 +16,7 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     text = "core";
     offset = 12;
     
-    color = c_black;
+    color = VANADIUM_DEFAULT_COLOR;
     alignment = fa_left;
     valignment = fa_middle;
     

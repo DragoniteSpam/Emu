@@ -180,7 +180,7 @@ function scribble_add_font() {
 	}
 
 	var _yy_glyph_list = _json[? "glyphs" ];
-    var _yy_glyph_list_type = ds_map_is_list(_yy_glyph_list, "glyphs") ? ds_type_list : ds_type_map;
+    var _yy_glyph_list_type = ds_map_exists(_json, "mvc") ? ds_type_list : ds_type_map;
     if (_yy_glyph_list_type == ds_type_list)
     {
 	    var _size = ds_list_size(_yy_glyph_list);
@@ -279,39 +279,78 @@ function scribble_add_font() {
 	            _data[@ __SCRIBBLE_FONT.GLYPHS_ARRAY] = _font_glyphs_array;
             
                 var _yy_glyph_map_key = undefined;
-	            for(var _i = 0; _i < _size; _i++)
-	            {
-                    var _yy_glyph_map = _yy_glyph_list[| _i];
-	                    _yy_glyph_map = _yy_glyph_map[? "Value"];
                 
-	                var _index = _yy_glyph_map[? "character"];
-	                var _char  = chr(_index);
-	                var _x     = _yy_glyph_map[? "x"];
-	                var _y     = _yy_glyph_map[? "y"];
-	                var _w     = _yy_glyph_map[? "w"];
-	                var _h     = _yy_glyph_map[? "h"];
+                if (_yy_glyph_list_type == ds_type_list)
+                {
+    	            for(var _i = 0; _i < _size; _i++)
+    	            {
+                        var _yy_glyph_map = _yy_glyph_list[| _i];
+    	                    _yy_glyph_map = _yy_glyph_map[? "Value"];
                 
-	                var _u0    = _x*_texture_tw + _texture_uvs[0];
-	                var _v0    = _y*_texture_th + _texture_uvs[1];
-	                var _u1    = _u0 + _w * _texture_tw;
-	                var _v1    = _v0 + _h * _texture_th;
+    	                var _index = _yy_glyph_map[? "character"];
+    	                var _char  = chr(_index);
+    	                var _x     = _yy_glyph_map[? "x"];
+    	                var _y     = _yy_glyph_map[? "y"];
+    	                var _w     = _yy_glyph_map[? "w"];
+    	                var _h     = _yy_glyph_map[? "h"];
                 
-	                var _array = array_create(SCRIBBLE_GLYPH.__SIZE, 0);
-	                _array[@ SCRIBBLE_GLYPH.CHARACTER ] = _char;
-	                _array[@ SCRIBBLE_GLYPH.INDEX     ] = _index;
-	                _array[@ SCRIBBLE_GLYPH.WIDTH     ] = _w;
-	                _array[@ SCRIBBLE_GLYPH.HEIGHT    ] = _h;
-	                _array[@ SCRIBBLE_GLYPH.X_OFFSET  ] = _yy_glyph_map[? "offset"];
-	                _array[@ SCRIBBLE_GLYPH.Y_OFFSET  ] = 0;
-	                _array[@ SCRIBBLE_GLYPH.SEPARATION] = _yy_glyph_map[? "shift"];
-	                _array[@ SCRIBBLE_GLYPH.TEXTURE   ] = _texture;
-	                _array[@ SCRIBBLE_GLYPH.U0        ] = _u0;
-	                _array[@ SCRIBBLE_GLYPH.V0        ] = _v0;
-	                _array[@ SCRIBBLE_GLYPH.U1        ] = _u1;
-	                _array[@ SCRIBBLE_GLYPH.V1        ] = _v1;
+    	                var _u0    = _x*_texture_tw + _texture_uvs[0];
+    	                var _v0    = _y*_texture_th + _texture_uvs[1];
+    	                var _u1    = _u0 + _w * _texture_tw;
+    	                var _v1    = _v0 + _h * _texture_th;
                 
-	                _font_glyphs_array[@ _index - _glyph_min] = _array;
-	            }
+    	                var _array = array_create(SCRIBBLE_GLYPH.__SIZE, 0);
+    	                _array[@ SCRIBBLE_GLYPH.CHARACTER ] = _char;
+    	                _array[@ SCRIBBLE_GLYPH.INDEX     ] = _index;
+    	                _array[@ SCRIBBLE_GLYPH.WIDTH     ] = _w;
+    	                _array[@ SCRIBBLE_GLYPH.HEIGHT    ] = _h;
+    	                _array[@ SCRIBBLE_GLYPH.X_OFFSET  ] = _yy_glyph_map[? "offset"];
+    	                _array[@ SCRIBBLE_GLYPH.Y_OFFSET  ] = 0;
+    	                _array[@ SCRIBBLE_GLYPH.SEPARATION] = _yy_glyph_map[? "shift"];
+    	                _array[@ SCRIBBLE_GLYPH.TEXTURE   ] = _texture;
+    	                _array[@ SCRIBBLE_GLYPH.U0        ] = _u0;
+    	                _array[@ SCRIBBLE_GLYPH.V0        ] = _v0;
+    	                _array[@ SCRIBBLE_GLYPH.U1        ] = _u1;
+    	                _array[@ SCRIBBLE_GLYPH.V1        ] = _v1;
+                
+    	                _font_glyphs_array[@ _index - _glyph_min] = _array;
+    	            }
+                }
+                else
+                {
+                    for(var _i = ds_map_find_first(_yy_glyph_list); _i != undefined; _i = ds_map_find_next(_yy_glyph_list, _i))
+                    {
+            	        var _yy_glyph_map = _yy_glyph_list[? _i];
+        
+            	        var _index = _yy_glyph_map[? "character"];
+            	        var _char  = chr(_index);
+            	        var _x     = _yy_glyph_map[? "x"];
+            	        var _y     = _yy_glyph_map[? "y"];
+            	        var _w     = _yy_glyph_map[? "w"];
+            	        var _h     = _yy_glyph_map[? "h"];
+        
+            	        var _u0    = _x*_texture_tw + _texture_uvs[0];
+            	        var _v0    = _y*_texture_th + _texture_uvs[1];
+            	        var _u1    = _u0 + _w*_texture_tw;
+            	        var _v1    = _v0 + _h*_texture_th;
+        
+            	        var _array = array_create(SCRIBBLE_GLYPH.__SIZE, 0);
+            	        _array[@ SCRIBBLE_GLYPH.CHARACTER ] = _char;
+            	        _array[@ SCRIBBLE_GLYPH.INDEX     ] = _index;
+            	        _array[@ SCRIBBLE_GLYPH.WIDTH     ] = _w;
+            	        _array[@ SCRIBBLE_GLYPH.HEIGHT    ] = _h;
+            	        _array[@ SCRIBBLE_GLYPH.X_OFFSET  ] = _yy_glyph_map[? "offset"];
+            	        _array[@ SCRIBBLE_GLYPH.Y_OFFSET  ] = 0;
+            	        _array[@ SCRIBBLE_GLYPH.SEPARATION] = _yy_glyph_map[? "shift"];
+            	        _array[@ SCRIBBLE_GLYPH.TEXTURE   ] = _texture;
+            	        _array[@ SCRIBBLE_GLYPH.U0        ] = _u0;
+            	        _array[@ SCRIBBLE_GLYPH.V0        ] = _v0;
+            	        _array[@ SCRIBBLE_GLYPH.U1        ] = _u1;
+            	        _array[@ SCRIBBLE_GLYPH.V1        ] = _v1;
+        
+            	        _font_glyphs_map[? ord(_char)] = _array;
+                    }
+                }
 	        }
 	    }
     
