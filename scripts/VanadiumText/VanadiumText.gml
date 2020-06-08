@@ -1,9 +1,6 @@
 function VText(_x, _y, _w, _h, _text, _root) : VCore(_x, _y, _w, _h, _root) constructor {
     text = _text;
     
-    use_scribble = false;
-    font = VANADIUM_DEFAULT_FONT;
-    
     GetTextX = function(_x) {
         switch (alignment) {
             case fa_left: return _x + offset;
@@ -29,16 +26,8 @@ function VText(_x, _y, _w, _h, _text, _root) : VCore(_x, _y, _w, _h, _root) cons
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
-        if (use_scribble) {
-            scribble_set_wrap(width, height);
-            scribble_draw(tx, ty, string(text));
-        } else {
-            draw_set_halign(alignment);
-            draw_set_valign(valignment);
-            draw_set_color(color);
-            draw_set_font(font);
-            draw_text_ext(tx, ty, string(text), height, width);
-        }
+        scribble_set_wrap(width, height);
+        scribble_draw(tx, ty, string(text));
     }
     
     // Inherited:
