@@ -1,0 +1,1 @@
+scribble_init("vanadium_fonts", "fnt_vanadium_default", true);
