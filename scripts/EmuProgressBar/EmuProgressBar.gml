@@ -8,6 +8,8 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
     
     color_bar = EMU_COLOR_PROGRESS_BAR;
     sprite_bar = spr_emu_progress;
+    sprite_knob = spr_emu_knob;
+    knob_scale = 1.5;
     
     DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
         c = (c != undefined) ? c : c_white;
@@ -50,8 +52,16 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         var bx2 = x2 - offset;
         var by2 = floor(mean(y1, y2)) + thickness / 2;
         
+        var knob_color = EMU_COLOR_BACK;
+        
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+            knob_color = EMU_COLOR_HOVER;
+        }
+        
         if (draggable) {
             if (GetMouseHold(x1, y1, x2, y2)) {
+                knob_color = EMU_COLOR_SELECTED;
                 value = clamp((window_mouse_get_x() - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
                 if (integers_only) {
                     value = round(value);
@@ -60,12 +70,20 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
             }
         }
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
-        }
+        var f = clamp((value - value_min) / (value_max - value_min), 0, 1);
         
         DrawProgress(2, bx1, by1, bx2, by2, 1, EMU_COLOR_BACK, 1);
-        DrawProgress(0, bx1, by1, bx2, by2, clamp((value - value_min) / (value_max - value_min), 0, 1), color_bar, 1);
+        DrawProgress(0, bx1, by1, bx2, by2, f, color_bar, 1);
         DrawProgress(1, bx1, by1, bx2, by2, 1, color, 1);
+        
+        if (draggable) {
+            var w = bx2 - bx1;
+            var h = by2 - by1;
+            var fw = max(w * f, 0);
+            var scale = knob_scale * thickness / sprite_get_height(sprite_knob);
+            draw_sprite_ext(sprite_knob, 2, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, knob_color, 1);
+            draw_sprite_ext(sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color, 1);
+            draw_sprite_ext(sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color, 1);
+        }
     }
 }
