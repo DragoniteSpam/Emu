@@ -4,6 +4,8 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
     value_max = _max;
     draggable = _draggable;
     
+    integers_only = false;
+    
     color_bar = EMU_COLOR_PROGRESS_BAR;
     sprite_bar = spr_emu_progress;
     
@@ -50,7 +52,10 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         
         if (draggable) {
             if (GetMouseHold(x1, y1, x2, y2)) {
-                value = (window_mouse_get_x() - x1) / (x2 - x1) * (value_max - value_min) + value_min;
+                value = clamp((window_mouse_get_x() - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
+                if (integers_only) {
+                    value = round(value);
+                }
                 callback();
             }
         }

@@ -6,13 +6,16 @@ var tab_4 = group.AddTab(new EmuTab("Tab4"), 1);
 var tab_5 = group.AddTab(new EmuTab("Tab5"), 1);
 
 var u = undefined;
+
+var bar_int = new EmuProgressBar(32, u, 256, 32, 12, 0, 10, true, 7, function() { });
+bar_int.integers_only = true;
 tab_1.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
     new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 1, function() { }),
     new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 35, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 60, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 99, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 5, false, 2, function() { }),
+    bar_int,
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, function() { });
