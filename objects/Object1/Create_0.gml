@@ -25,6 +25,7 @@ var bitfield_3_2 = new VBitfield(352, 16, 256, 256, EVBitfieldOrientations.VERTI
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);
+bitfield_3_1.interactive = false;
 
 bitfield_3_2.AddOptions([
     "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles"

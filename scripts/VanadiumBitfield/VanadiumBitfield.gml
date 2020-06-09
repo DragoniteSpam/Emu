@@ -97,6 +97,13 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCore(0, 0, 0, 0) co
         state = evaluate();
         
         var back_color = state ? color_active : color_inactive;
+        
+        if (interactive && root.interactive) {
+            back_color = merge_colour(back_color, GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : back_color, 0.5);
+        } else {
+            back_color = merge_colour(back_color, VANADIUM_COLOR_DISABLED, 0.5);
+        }
+        
         DrawNineslice(sprite_nineslice, 1, x1, y1, x2, y2, back_color, 1);
         DrawNineslice(sprite_nineslice, 0, x1, y1, x2, y2, color, 1);
         scribble_set_box_align(fa_center, fa_middle);
