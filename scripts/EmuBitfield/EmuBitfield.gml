@@ -118,13 +118,12 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
-            if (GetMousePressed(x1, y1, x2, y2)) {
-                callback();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
+        
+        if (GetMousePressed(x1, y1, x2, y2)) {
+            callback();
         }
     }
     

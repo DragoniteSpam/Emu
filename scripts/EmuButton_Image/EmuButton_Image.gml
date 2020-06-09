@@ -36,13 +36,12 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         surface_reset_target();
         #endregion
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
-            if (GetMouseReleased(x1, y1, x2, y2)) {
-                callback();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
+        
+        if (GetMouseReleased(x1, y1, x2, y2)) {
+            callback();
         }
         
         var back_color = GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);

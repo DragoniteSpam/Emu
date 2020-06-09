@@ -10,14 +10,13 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
-            if (GetMouseReleased(x1, y1, x2, y2)) {
-                value = !value;
-                callback();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
+        
+        if (GetMouseReleased(x1, y1, x2, y2)) {
+            value = !value;
+            callback();
         }
         
         var bx = x1 + offset + box_size / 2;

@@ -54,10 +54,8 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
         }
         
         scribble_set_wrap(width, height);
@@ -100,15 +98,14 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
-            if (GetMouseReleased(x1, y1, x2, y2)) {
-                // radio array options don't get individual callbacks
-                root.value = value;
-                root.callback();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
+        
+        if (GetMouseReleased(x1, y1, x2, y2)) {
+            // radio array options don't get individual callbacks
+            root.value = value;
+            root.callback();
         }
         
         draw_sprite_ext(spr_emu_radio, 2, tx + offset, ty, 1, 1, 0, color_back, 1);

@@ -9,13 +9,12 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                SetTooltip();
-            }
-            if (GetMouseReleased(x1, y1, x2, y2)) {
-                callback();
-            }
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
+        
+        if (GetMouseReleased(x1, y1, x2, y2)) {
+            callback();
         }
         
         var back_color = GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);

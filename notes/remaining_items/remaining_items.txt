@@ -2,7 +2,6 @@ Dialog
 UIBitfield - create a column (or row) setter the same way Radio Arrays have
 UIColorPickerInput
 UIList
-UIProgressBar
 UIRenderSurface
 UIInput
     UIColorPicker
