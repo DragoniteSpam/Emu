@@ -8,6 +8,7 @@ function VCheckbox(_x, _y, _w, _h, _text, _value, _callback, _root) : VCore(_x, 
     value = _value;
     
     box_size = 20;
+    check = spr_vanadium_checkbox;
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
@@ -28,6 +29,7 @@ function VCheckbox(_x, _y, _w, _h, _text, _value, _callback, _root) : VCore(_x, 
         var by2 = by + box_size / 2;
         var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
         DrawNineslice(nineslice, 1, bx1, by1, bx2, by2, back_color, 1);
+        draw_sprite(check, value, bx, by);
         DrawNineslice(nineslice, 0, bx1, by1, bx2, by2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
