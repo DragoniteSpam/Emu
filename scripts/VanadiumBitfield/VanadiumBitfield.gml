@@ -1,12 +1,6 @@
-function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCore(_x, _y, _w, _h) constructor {
+function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(_x, _y, _w, _h, _value, _callback) constructor {
     enum EVBitfieldOrientations { HORIZONTAL, VERTICAL };
     
-    SetCallback = function(_callback) {
-        callback = method(self, _callback);
-    }
-    
-    SetCallback(_callback);
-    value = _value;
     orientation = _orientation;
     
     AddOptions = function(elements) {
@@ -70,19 +64,13 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCore(_x, 
     }
 }
 
-function VBitfieldOption(_text, _value, _callback, _eval) : VCore(0, 0, 0, 0) constructor {
-    SetCallback = function(_callback) {
-        callback = method(self, _callback);
-    }
-    
+function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0, _value, _callback) constructor {
     SetEval = function(_eval) {
         evaluate = method(self, _eval);
     }
     
     text = _text;
-    SetCallback(_callback);
     SetEval(_eval);
-    value = _value;
     state = 0;
     
     color_active = VANADIUM_COLOR_SELECTED;

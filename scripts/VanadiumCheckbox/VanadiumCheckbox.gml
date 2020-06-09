@@ -1,11 +1,5 @@
-function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCore(_x, _y, _w, _h) constructor {
-    SetCallback = function(_callback) {
-        callback = method(self, _callback);
-    }
-    
+function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
-    SetCallback(_callback);
-    value = _value;
     
     box_size = 20;
     sprite_check = spr_vanadium_checkbox;

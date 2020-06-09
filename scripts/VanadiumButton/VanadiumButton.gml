@@ -1,10 +1,5 @@
-function VButton(_x, _y, _w, _h, _text, _callback) : VCore(_x, _y, _w, _h) constructor {
-    SetCallback = function(_callback) {
-        callback = method(self, _callback);
-    }
-    
+function VButton(_x, _y, _w, _h, _text, _callback) : VCallback(_x, _y, _w, _h, 0, _callback) constructor {
     text = _text;
-    SetCallback(_callback);
     alignment = fa_center;
     valignment = fa_middle;
     

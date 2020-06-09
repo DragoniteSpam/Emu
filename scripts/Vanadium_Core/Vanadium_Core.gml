@@ -84,7 +84,7 @@ function VCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    static DrawNineslice = function(sprite, index, x1, y1, x2, y2, color, alpha) {
+    DrawNineslice = function(sprite, index, x1, y1, x2, y2, color, alpha) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         var w = x2 - x1;
@@ -107,19 +107,28 @@ function VCore(_x, _y, _w, _h) constructor {
         draw_sprite_general(sprite, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
     
-    static GetMousePressed = function(x1, y1, x2, y2) {
+    /* static */ GetMousePressed = function(x1, y1, x2, y2) {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
     }
     
-    static GetMouseReleased = function(x1, y1, x2, y2) {
+    /* static */ GetMouseReleased = function(x1, y1, x2, y2) {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
     }
     
-    static GetMouseHold = function(x1, y1, x2, y2) {
+    /* static */ GetMouseHold = function(x1, y1, x2, y2) {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
     }
     
-    static GetMouseHover = function(x1, y1, x2, y2) {
+    /* static */ GetMouseHover = function(x1, y1, x2, y2) {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
     }
+}
+
+function VCallback(_x, _y, _w, _h, _value, _callback) : VCore(_x, _y, _w, _h) constructor {
+    SetCallback = function(_callback) {
+        callback = method(self, _callback);
+    }
+    
+    SetCallback(_callback);
+    value = _value;
 }
