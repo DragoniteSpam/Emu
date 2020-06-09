@@ -46,7 +46,8 @@ group.ActivateTab(tab_1);
 var radio_4 = new EmuRadioArray(32, u, 256, 32, "Pick one", 0, function() {
     show_message("Option set to " + string(value));
 });
-radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese"]);
+radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese", "Olives", "Tomatoes", "Garlic"]);
+radio_4.SetColumns(4, 160);
 tab_4.AddContent(radio_4);
 
 var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)

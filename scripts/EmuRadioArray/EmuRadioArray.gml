@@ -15,6 +15,16 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         AddContent(elements);
     }
     
+    SetColumns = function(_column_capacity, _column_width) {
+        for (var i = 0; i < ds_list_size(contents); i++) {
+            var option = contents[| i];
+            option.x = (i div _column_capacity) * _column_width;
+            option.y = height * (1 + (i % _column_capacity));
+            option.width = _column_width;
+        }
+        width = (ds_list_size(contents) div _column_capacity) * _column_width;
+    }
+    
     GetTextX = function(_x) {
         switch (alignment) {
             case fa_left: return _x + offset;
