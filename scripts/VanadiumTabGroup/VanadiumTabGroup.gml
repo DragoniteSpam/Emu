@@ -8,6 +8,7 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
     }
     
     active_tab = noone;
+    active_tab_request = noone;
     
     AddTab = function(tab, row) {
         if (row > rows) {
@@ -55,6 +56,10 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         ArrangeRow(rows - 1);
     }
     
+    RequestActivateTab = function(tab) {
+        active_tab_request = tab;
+    }
+    
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -66,5 +71,12 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         }
         
         DrawNineslice(spr_vanadium_nineslice, 2, x1, y1 + rows * row_height, x2, y2, color);
+        
+        // Save this for after everything has been drawn, because if you do it
+        // in the middle you'll find the tabs become misaligned for one frame
+        if (active_tab_request) {
+            ActivateTab(active_tab_request);
+            active_tab_request = noone;
+        }
     }
 }

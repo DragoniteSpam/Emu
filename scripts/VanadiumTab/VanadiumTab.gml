@@ -23,7 +23,7 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
         var hy2 = hy1 + header_height;
         
         if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
-            root.ActivateTab(self);
+            root.RequestActivateTab(self);
         }
         
         if (!interactive) {
