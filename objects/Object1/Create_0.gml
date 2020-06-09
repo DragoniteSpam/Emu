@@ -20,8 +20,8 @@ tab_2.AddContent([
     })
 ]);
 
-var bitfield_3_1 = new VBitfield(32, u, 256, 32, EVBitfieldOrientations.HORIZONTAL, 0, function() { });
-var bitfield_3_2 = new VBitfield(352, 16, 256, 256, EVBitfieldOrientations.VERTICAL, 0, function() { });
+var bitfield_3_1 = new VBitfield(32, u, 256, 32, EVBitfieldOrientations.HORIZONTAL, 15, function() { });
+var bitfield_3_2 = new VBitfield(352, 16, 256, 256, EVBitfieldOrientations.VERTICAL, 41, function() { });
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);
