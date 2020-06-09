@@ -2,6 +2,17 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
     enum EVBitfieldOrientations { HORIZONTAL, VERTICAL };
     
     orientation = _orientation;
+    fixed_spacing = -1;
+    
+    SetFixedSpacing = function(spacing) {
+        fixed_spacing = spacing;
+        ArrangeElements();
+    }
+    
+    SetAutoSpacing = function() {
+        fixed_spacing = -1;
+        ArrangeElements();
+    }
     
     AddOptions = function(elements) {
         if (!is_array(elements)) {
@@ -38,7 +49,7 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
         if (orientation == EVBitfieldOrientations.HORIZONTAL) {
             for (var i = 0; i < ds_list_size(contents); i++) {
                 var option = contents[| i];
-                option.width = floor(width / ds_list_size(contents));
+                option.width = (fixed_spacing == -1) ? floor(width / ds_list_size(contents)) : fixed_spacing;
                 option.height = height;
                 option.x = option.width * i;
                 option.y = 0;
@@ -47,7 +58,7 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
             for (var i = 0; i < ds_list_size(contents); i++) {
                 var option = contents[| i];
                 option.width = width;
-                option.height = floor(height / ds_list_size(contents));
+                option.height = (fixed_spacing == -1) ? floor(height / ds_list_size(contents)) : fixed_spacing;
                 option.x = 0;
                 option.y = option.height * i;
             }
@@ -62,7 +73,9 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
     }
     
     GetHeight = function() {
-        return ds_list_empty(contents) ? height : contents[| ds_list_size(contents) - 1].y + contents[| ds_list_size(contents) - 1].height;
+        var first = contents[| 0];
+        var last = contents[| ds_list_size(contents) - 1];
+        return (first == undefined) ? height : (last.y + last.height - first.y);
     }
     
     Render = function(base_x, base_y) {
