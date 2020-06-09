@@ -27,23 +27,33 @@ function VCore(_x, _y, _w, _h) constructor {
     sprite_nineslice = spr_vanadium_nineslice;
     element_spacing_y = 16;
     
-    AddContent = function(addition) {
-        if (addition.y == undefined) {
-            var top = contents[| ds_list_size(contents) - 1];
-            if (top) {
-                addition.y = top.y + top.GetHeight() + element_spacing_y;
-            } else {
-                addition.y = element_spacing_y;
-            }
+    AddContent = function(elements) {
+        if (!is_array(elements)) {
+            elements = [elements];
         }
-        ds_list_add(contents, addition);
-        addition.root = self;
-        return addition;
+        for (var i = 0; i < array_length(elements); i++) {
+            var thing = elements[i];
+            if (thing.y == undefined) {
+                var top = contents[| ds_list_size(contents) - 1];
+                if (top) {
+                    thing.y = top.y + top.GetHeight() + element_spacing_y;
+                } else {
+                    thing.y = element_spacing_y;
+                }
+            }
+            ds_list_add(contents, thing);
+            thing.root = self;
+        }
     }
     
-    RemoveContent = function(addition) {
-        ds_list_delete(contents, ds_list_find_index(contents, addition));
-        return addition;
+    RemoveContent = function(elements) {
+        if (!is_array(elements)) {
+            elements = [elements];
+        }
+        for (var i = 0; i < array_length(elements); i++) {
+            var thing = elements[i];
+            ds_list_delete(contents, ds_list_find_index(contents, thing));
+        }
     }
     
     GetHeight = function() {
