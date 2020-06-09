@@ -38,7 +38,7 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
     }
     
     ActivateTab = function(tab) {
-        if (row > rows) {
+        if (tab.root != self) {
             throw new VException("Tab is not included in group", "You are trying to activate a tab in a group that it does not belong to. Please only activate tabs that are members of a group.");
         }
         
@@ -61,11 +61,11 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        DrawNineslice(spr_vanadium_nineslice, 0, x1, y1 + rows * row_height, x2, y2, color);
-        
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Render(x1, y1);
         }
+        
+        DrawNineslice(spr_vanadium_nineslice, 2, x1, y1 + rows * row_height, x2, y2, color);
     }
     
     // Inherited:
