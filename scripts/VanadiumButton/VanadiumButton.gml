@@ -18,7 +18,8 @@ function VButton(_x, _y, _w, _h, _text, _callback, _root) : VCore(_x, _y, _w, _h
             callback();
         }
         
-        DrawNineslice(nineslice, 1, x1, y1, x2, y2, interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED, 1);
+        var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
+        DrawNineslice(nineslice, 1, x1, y1, x2, y2, back_color, 1);
         DrawNineslice(nineslice, 0, x1, y1, x2, y2, color, 1);
         
         scribble_set_box_align(alignment, valignment);

@@ -70,7 +70,9 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
             contents[| i].Render(x1, y1 + rows * row_height);
         }
         
-        DrawNineslice(nineslice, 2, x1, y1 + rows * row_height, x2, y2, color);
+        // no sense making a tab group non-interactive
+        DrawNineslice(nineslice, 2, x1, y1 + rows * row_height, x2, y2, VANADIUM_COLOR_BACK, 1);
+        DrawNineslice(nineslice, 2, x1, y1 + rows * row_height, x2, y2, color, 1);
         
         // Save this for after everything has been drawn, because if you do it
         // in the middle you'll find the tabs become misaligned for one frame

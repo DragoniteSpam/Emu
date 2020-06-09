@@ -5,6 +5,6 @@ scribble_init("vanadium_fonts", "fnt_vanadium_default", true);
 
 #macro VANADIUM_COLOR_DEFAULT 0x000000
 #macro VANADIUM_COLOR_BACK 0xffffff
-#macro VANADIUM_COLOR_HOVER 0xffb8ac
+#macro VANADIUM_COLOR_HOVER 0xffe5ce
 #macro VANADIUM_COLOR_DISABLED c_ltgray
 #endregion
