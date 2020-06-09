@@ -9,7 +9,7 @@ function VButton(_x, _y, _w, _h, _text, _callback) : VCallback(_x, _y, _w, _h, 0
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (interactive) {
+        if (GetInteractive()) {
             if (GetMouseHover(x1, y1, x2, y2)) {
                 SetTooltip();
             }
@@ -18,7 +18,7 @@ function VButton(_x, _y, _w, _h, _text, _callback) : VCallback(_x, _y, _w, _h, 0
             }
         }
         
-        var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
+        var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (GetInteractive() ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
         DrawNineslice(1, x1, y1, x2, y2, back_color, 1);
         DrawNineslice(0, x1, y1, x2, y2, color, 1);
         

@@ -1,5 +1,8 @@
 scribble_init("vanadium_fonts", "fnt_vanadium_default", true);
 
+global.__vanadium_dialogs = ds_list_create();
+global.__vanadium_active_element = noone;
+
 #region some macros which you may want to set
 #macro VANADIUM_FONT_DEFAULT fnt_vanadium_default
 

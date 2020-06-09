@@ -22,7 +22,7 @@ function VTab(_name) : VCore(0, 0, 0, 0) constructor {
         var hx2 = hx1 + header_width;
         var hy2 = hy1 + header_height;
         
-        if (interactive) {
+        if (GetInteractive()) {
             if (GetMouseHover(x1, y1, x2, y2)) {
                 SetTooltip();
             }
@@ -37,7 +37,7 @@ function VTab(_name) : VCore(0, 0, 0, 0) constructor {
             var index = 5;
         }
         
-        var back_color = GetMouseHover(hx1, hy1, hx2, hy2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
+        var back_color = GetMouseHover(hx1, hy1, hx2, hy2) ? VANADIUM_COLOR_HOVER : (GetInteractive() ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
         DrawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
         DrawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
         scribble_set_box_align(alignment, valignment);
@@ -51,5 +51,9 @@ function VTab(_name) : VCore(0, 0, 0, 0) constructor {
     
     IsActive = function() {
         return (root.active_tab == self);
+    }
+    
+    GetInteractive = function() {
+        return interactive && root.IsActiveDialog();
     }
 }

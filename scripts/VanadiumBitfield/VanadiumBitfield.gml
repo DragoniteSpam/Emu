@@ -110,7 +110,7 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0
         
         var back_color = state ? color_active : color_inactive;
         
-        if (interactive && root.interactive) {
+        if (root.GetInteractive()) {
             back_color = merge_colour(back_color, GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : back_color, 0.5);
         } else {
             back_color = merge_colour(back_color, VANADIUM_COLOR_DISABLED, 0.5);
@@ -121,7 +121,7 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         
-        if (interactive) {
+        if (GetInteractive()) {
             if (GetMouseHover(x1, y1, x2, y2)) {
                 SetTooltip();
             }
@@ -129,6 +129,10 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0
                 callback();
             }
         }
+    }
+    
+    GetInteractive = function() {
+        return interactive && root.IsActiveDialog();
     }
 }
 

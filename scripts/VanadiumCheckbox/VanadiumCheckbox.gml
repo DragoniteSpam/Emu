@@ -10,7 +10,7 @@ function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCallback(_x, _y,
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (interactive) {
+        if (GetInteractive()) {
             if (GetMouseHover(x1, y1, x2, y2)) {
                 SetTooltip();
             }
@@ -26,7 +26,7 @@ function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCallback(_x, _y,
         var by1 = by - box_size / 2;
         var bx2 = bx + box_size / 2;
         var by2 = by + box_size / 2;
-        var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
+        var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (GetInteractive() ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
         DrawNineslice(1, bx1, by1, bx2, by2, back_color, 1);
         draw_sprite(sprite_check, value, bx, by);
         DrawNineslice(0, bx1, by1, bx2, by2, color, 1);

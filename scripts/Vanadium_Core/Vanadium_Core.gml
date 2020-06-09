@@ -107,20 +107,33 @@ function VCore(_x, _y, _w, _h) constructor {
         draw_sprite_general(sprite_nineslice, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
     
-    /* static */ GetMousePressed = function(x1, y1, x2, y2) {
-        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+    IsActiveDialog = function() {
+        var top = global.__vanadium_dialogs[| ds_list_size(global.__vanadium_dialogs) - 1];
+        return !top || (top == root);
     }
     
-    /* static */ GetMouseReleased = function(x1, y1, x2, y2) {
-        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+    IsActiveElement = function() {
+        return global.__vanadium_active_element == self;
     }
     
-    /* static */ GetMouseHold = function(x1, y1, x2, y2) {
-        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
+    GetInteractive = function() {
+        return interactive && IsActiveDialog();
     }
     
-    /* static */ GetMouseHover = function(x1, y1, x2, y2) {
-        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+    GetMousePressed = function(x1, y1, x2, y2) {
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+    }
+    
+    GetMouseReleased = function(x1, y1, x2, y2) {
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+    }
+    
+    GetMouseHold = function(x1, y1, x2, y2) {
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
+    }
+    
+    GetMouseHover = function(x1, y1, x2, y2) {
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
     }
 }
 
