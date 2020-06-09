@@ -73,7 +73,11 @@ function VCore(_x, _y, _w, _h) constructor {
         }
     }
     
-    Destroy = function() {
+    Destory = function() {
+        DestroyContent();
+    }
+    
+    DestroyContent = function() {
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Destroy();
         }

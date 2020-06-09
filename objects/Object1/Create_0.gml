@@ -10,15 +10,6 @@ tab_1.AddContent([
     new VText(32, u, 256, 32, "Text label"),
     new VText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
 ]);
-tab_2.AddContent([
-    new VText(32, u, 256, 32, "Text label"),
-    new VButton(32, u, 256, 32, "Button", function() {
-        show_message("clicked the that does absolutely nothing");
-    }),
-    new VCheckbox(32, u, 256, 32, "Toggle", false, function() {
-    
-    })
-]);
 
 var bitfield_3_1 = new VBitfield(32, u, 256, 32, EVBitfieldOrientations.HORIZONTAL, 15, function() { });
 var bitfield_3_2 = new VBitfield(352, 16, 256, 256, EVBitfieldOrientations.VERTICAL, 41, function() { });
@@ -37,6 +28,17 @@ bitfield_3_2.AddOptions([
 tab_1.AddContent([
     bitfield_3_1,
     bitfield_3_2,
+]);
+
+tab_2.AddContent([
+    new VText(32, u, 256, 32, "Text label"),
+    new VButton(32, u, 256, 32, "Button", function() {
+        show_message("clicked the that does absolutely nothing");
+    }),
+    new VCheckbox(32, u, 256, 32, "Toggle", false, function() {
+    
+    }),
+    new VButtonImage(32, u, 256, 256, spr_vanadium_birb, 0, c_white, 1, false, function() { })
 ]);
 
 group.ActivateTab(tab_1);
