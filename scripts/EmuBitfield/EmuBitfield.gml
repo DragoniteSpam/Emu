@@ -37,14 +37,6 @@ function EmuBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : EmuCallb
         ArrangeElements();
     }
     
-    RemoveOptions = function(elements) {
-        if (!is_array(elements)) {
-            elements = [elements];
-        }
-        RemoveOptions(elements);
-        ArrangeElements();
-    }
-    
     ArrangeElements = function() {
         if (orientation == EmuBitfieldOrientations.HORIZONTAL) {
             for (var i = 0; i < ds_list_size(contents); i++) {
