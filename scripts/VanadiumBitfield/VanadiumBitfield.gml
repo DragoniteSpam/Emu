@@ -7,6 +7,7 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
         if (!is_array(elements)) {
             elements = [elements];
         }
+        
         for (var i = 0; i < array_length(elements); i++) {
             if (!is_struct(elements[i])) {
                 elements[i] = new VBitfieldOption(string(elements[i]), 1 << (ds_list_size(contents) + i),
@@ -20,6 +21,7 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
                 });
             }
         }
+        
         AddContent(elements);
         ArrangeElements();
     }
@@ -113,3 +115,22 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0
         }
     }
 }
+
+// You may find yourself using these particularly often
+function v_bitfield_option_all_callback() {
+    root.value = value;
+    root.callback();
+}
+
+function v_bitfield_option_all_eval() {
+    return root.value == value;
+};
+
+function v_bitfield_option_none_callback() {
+    root.value = 0;
+    root.callback();
+}
+
+function v_bitfield_option_none_eval() {
+    return root.value == value;
+};
