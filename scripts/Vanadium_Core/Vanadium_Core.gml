@@ -25,6 +25,14 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     next = noone;
     previous = noone;
     
+    AddContent = function(content) {
+        ds_list_add(contents, content);
+    }
+    
+    RemoveContent = function(content) {
+        ds_list_delete(contents, ds_list_find_index(contents, content));
+    }
+    
     Render = function(base_x, base_y) {
         RenderContents(x + base_x, y + base_y);
     }
