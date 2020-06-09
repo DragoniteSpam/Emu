@@ -93,6 +93,10 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     static GetMouseHold = function(x1, y1, x2, y2) {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
     }
+    
+    static GetMouseHover = function(x1, y1, x2, y2) {
+        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+    }
 }
 
 function VException(_message, _longMessage) constructor {
