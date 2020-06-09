@@ -83,15 +83,15 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     }
     
     static GetMousePressed = function(x1, y1, x2, y2) {
-        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
     }
     
     static GetMouseReleased = function(x1, y1, x2, y2) {
-        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
     }
     
     static GetMouseHold = function(x1, y1, x2, y2) {
-        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
+        return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
     }
 }
 
