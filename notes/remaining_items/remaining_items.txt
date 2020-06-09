@@ -1,6 +1,4 @@
 Dialog
-UIBitfield
-    UIBitfieldOption
 UIImageButton
 UIRenderSurface
 UIInput

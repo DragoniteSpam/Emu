@@ -22,8 +22,13 @@ function VTab(_name) : VCore(0, 0, 0, 0) constructor {
         var hx2 = hx1 + header_width;
         var hy2 = hy1 + header_height;
         
-        if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
-            root.RequestActivateTab(self);
+        if (interactive) {
+            if (GetMouseHover(x1, y1, x2, y2)) {
+                SetTooltip();
+            }
+            if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
+                root.RequestActivateTab(self);
+            }
         }
         
         if (IsActive() || row < root.rows - 1) {

@@ -26,6 +26,12 @@ function VText(_x, _y, _w, _h, _text) : VCore(_x, _y, _w, _h) constructor {
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
+        if (interactive) {
+            if (GetMouseHover(x1, y1, x2, y2)) {
+                SetTooltip();
+            }
+        }
+        
         scribble_set_wrap(width, height);
         scribble_set_box_align(alignment, valignment);
         scribble_draw(tx, ty, text);

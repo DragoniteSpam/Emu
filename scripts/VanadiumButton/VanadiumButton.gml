@@ -9,8 +9,13 @@ function VButton(_x, _y, _w, _h, _text, _callback) : VCallback(_x, _y, _w, _h, 0
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (GetMouseReleased(x1, y1, x2, y2)) {
-            callback();
+        if (interactive) {
+            if (GetMouseHover(x1, y1, x2, y2)) {
+                SetTooltip();
+            }
+            if (GetMouseReleased(x1, y1, x2, y2)) {
+                callback();
+            }
         }
         
         var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
