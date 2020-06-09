@@ -4,6 +4,11 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
     fixed_spacing = -1;
     orientation = EmuBitfieldOrientations.HORIZONTAL;
     
+    SetOrientation = function(_orientation) {
+        orientation = _orientation;
+        ArrangeElements();
+    }
+    
     SetFixedSpacing = function(spacing) {
         fixed_spacing = spacing;
         ArrangeElements();

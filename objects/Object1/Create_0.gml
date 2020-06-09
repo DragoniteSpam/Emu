@@ -24,6 +24,7 @@ bitfield_3_2.AddOptions([
     new EmuBitfieldOption("all", 0xffffffff, v_bitfield_option_all_callback, v_bitfield_option_all_eval),
     new EmuBitfieldOption("none", 0, v_bitfield_option_none_callback, v_bitfield_option_none_eval),
 ]);
+bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 
 tab_1.AddContent([
     bitfield_3_1,
