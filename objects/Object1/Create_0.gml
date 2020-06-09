@@ -28,7 +28,7 @@ bitfield_3_1.AddOptions([
 bitfield_3_1.interactive = false;
 
 bitfield_3_2.AddOptions([
-    "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles"
+    "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles", "all", "none"
 ]);
 
 tab_1.AddContent([

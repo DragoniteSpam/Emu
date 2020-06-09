@@ -11,10 +11,12 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
             if (!is_struct(elements[i])) {
                 elements[i] = new VBitfieldOption(string(elements[i]), 1 << (ds_list_size(contents) + i),
                 function() {
+                    state = !state;
+                    root.Calculate();
                     root.callback();
                 },
                 function() {
-                    return !!(root.value & value);
+                    return (root.value & value) == value;
                 });
             }
         }
@@ -47,6 +49,13 @@ function VBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : VCallback(
                 option.x = 0;
                 option.y = option.height * i;
             }
+        }
+    }
+    
+    Calculate = function() {
+        value = 0;
+        for (var i = 0; i < ds_list_size(contents); i++) {
+            value |= contents[| i].value * contents[| i].state;
         }
     }
     
@@ -96,16 +105,11 @@ function VBitfieldOption(_text, _value, _callback, _eval) : VCallback(0, 0, 0, 0
         DrawNineslice(0, x1, y1, x2, y2, color, 1);
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
-        /*
-        if (interactive && dialog_is_active(bitfield.root.root)) {
-            var inbounds = mouse_within_rectangle_determine(x1, y1, x2, y2, bitfield.adjust_view);
-            if (inbounds) {
-                if (Controller.release_left) {
-                    ui_activate(bitfield);
-                    script_execute(bitfield.onvaluechange, bitfield);
-                }
-                Stuff.element_tooltip = bitfield.root;
+        
+        if (interactive) {
+            if (GetMousePressed(x1, y1, x2, y2)) {
+                callback();
             }
-        }*/
+        }
     }
 }
