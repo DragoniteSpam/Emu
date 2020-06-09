@@ -84,27 +84,27 @@ function VCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    DrawNineslice = function(sprite, index, x1, y1, x2, y2, color, alpha) {
+    DrawNineslice = function(index, x1, y1, x2, y2, color, alpha) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         var w = x2 - x1;
         var h = y2 - y1;
-        var sw = sprite_get_width(sprite) / 3;
-        var sh = sprite_get_height(sprite) / 3;
+        var sw = sprite_get_width(sprite_nineslice) / 3;
+        var sh = sprite_get_height(sprite_nineslice) / 3;
         
-        draw_sprite_general(sprite, index, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, 2 * sw, 0, sw, sh, x1 + w - sw, y1, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, 2 * sw, 2 * sh, sw, sh, x1 + w - sw, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, 0, 2 * sh, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 2 * sw, 0, sw, sh, x1 + w - sw, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 2 * sw, 2 * sh, sw, sh, x1 + w - sw, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 0, 2 * sh, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
         
         var hxscale = (w - 2 * sw) / sw;
         var vyscale = (h - 2 * sh) / sh;
         
-        draw_sprite_general(sprite, index, sw, 0, sw, sh, x1 + sw, y1, hxscale, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, sw, sh * 2, sw, sh, x1 + sw, y1 + h - sh, hxscale, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, 0, sh, sw, sh, x1, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, sw, 0, sw, sh, x1 + sw, y1, hxscale, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, sw, sh * 2, sw, sh, x1 + sw, y1 + h - sh, hxscale, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 0, sh, sw, sh, x1, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
     
     /* static */ GetMousePressed = function(x1, y1, x2, y2) {

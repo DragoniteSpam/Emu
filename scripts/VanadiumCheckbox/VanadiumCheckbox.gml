@@ -22,9 +22,9 @@ function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCallback(_x, _y,
         var bx2 = bx + box_size / 2;
         var by2 = by + box_size / 2;
         var back_color = GetMouseHover(x1, y1, x2, y2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
-        DrawNineslice(sprite_nineslice, 1, bx1, by1, bx2, by2, back_color, 1);
+        DrawNineslice(1, bx1, by1, bx2, by2, back_color, 1);
         draw_sprite(sprite_check, value, bx, by);
-        DrawNineslice(sprite_nineslice, 0, bx1, by1, bx2, by2, color, 1);
+        DrawNineslice(0, bx1, by1, bx2, by2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
         scribble_draw(x1 + box_size + offset * 2, floor(mean(y1, y2)), text);

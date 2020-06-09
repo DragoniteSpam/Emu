@@ -33,8 +33,8 @@ function VTab(_name) : VCore(0, 0, 0, 0) constructor {
         }
         
         var back_color = GetMouseHover(hx1, hy1, hx2, hy2) ? VANADIUM_COLOR_HOVER : (interactive ? VANADIUM_COLOR_BACK : VANADIUM_COLOR_DISABLED);
-        DrawNineslice(sprite_nineslice, 4, hx1, hy1, hx2, hy2, back_color, 1);
-        DrawNineslice(sprite_nineslice, index, hx1, hy1, hx2, hy2, color, 1);
+        DrawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
+        DrawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
         scribble_set_box_align(alignment, valignment);
         scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);
         #endregion
