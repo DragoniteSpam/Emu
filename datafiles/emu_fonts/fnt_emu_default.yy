@@ -276,10 +276,10 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Demo",
-    "path": "folders/Vanadium/Demo.yy",
+    "path": "folders/Emu/Demo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "fnt_vanadium_default",
+  "name": "fnt_emu_default",
   "tags": [],
   "resourceType": "GMFont",
 }
