@@ -67,8 +67,4 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         
         DrawNineslice(spr_vanadium_nineslice, 2, x1, y1 + rows * row_height, x2, y2, color);
     }
-    
-    // Inherited:
-    // SetTooltip()
-    // Destroy()
 }

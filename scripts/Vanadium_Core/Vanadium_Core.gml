@@ -71,6 +71,18 @@ function VCore(_x, _y, _w, _h, _root) constructor {
         draw_sprite_general(sprite, index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
         draw_sprite_general(sprite, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
+    
+    static GetMousePressed = function(x1, y1, x2, y2) {
+        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+    }
+    
+    static GetMouseReleased = function(x1, y1, x2, y2) {
+        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+    }
+    
+    static GetMouseHold = function(x1, y1, x2, y2) {
+        return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
+    }
 }
 
 function VException(_message, _longMessage) constructor {

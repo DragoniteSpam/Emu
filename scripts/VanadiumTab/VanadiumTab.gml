@@ -22,7 +22,7 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
         var hx2 = hx1 + header_width;
         var hy2 = hy1 + header_height;
         
-        if (point_in_rectangle(mouse_x, mouse_y, hx1, hy1, hx2, hy2) && mouse_check_button_pressed(mb_left)) {
+        if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
             root.ActivateTab(self);
         }
         
@@ -47,8 +47,4 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
     IsActive = function() {
         return (root.active_tab == self);
     }
-    
-    // Inherited:
-    // SetTooltip()
-    // Destroy()
 }
