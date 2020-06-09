@@ -112,13 +112,3 @@ function VCore(_x, _y, _w, _h, _root) constructor {
         return interactive && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
     }
 }
-
-function VException(_message, _longMessage) constructor {
-    message = _message;
-    longMessage = _longMessage;
-	var script_stack = debug_get_callstack();
-	var script_count = array_length(script_stack);
-	var script_top = script_stack[0];
-	script = string_replace(string_copy(script_top, 1, string_pos(":", script_top) - 1), "gml_Script_", "");
-    stacktrace = debug_get_callstack();
-}
