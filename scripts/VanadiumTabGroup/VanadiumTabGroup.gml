@@ -14,12 +14,14 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
             throw new VException("Tab row out of bounds", "Trying to add to tab row " + string(row) + ", but only up to " + string(rows) + " are available");
         }
         tab.root = self;
+        tab.row = row;
+        tab.index = ds_list_size(contents[| row].contents);
         ds_list_add(contents[| row].contents, tab);
-        ArrangeTabs(row);
+        ArrangeRow(row);
         return tab;
     }
     
-    ArrangeTabs = function(row) {
+    ArrangeRow = function(row) {
         if (row > rows) {
             throw new VException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(rows) + " are available");
         }
@@ -27,11 +29,30 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         var tab_row = contents[| row];
         for (var i = 0; i < ds_list_size(tab_row.contents); i++) {
             var tab = tab_row.contents[| i];
+            tab.row = row;
             tab.width = floor(width / ds_list_size(tab_row.contents));
             tab.height = row_height;
             tab.x = tab.width * i;
             tab.y = tab.height * row;
         }
+    }
+    
+    ActivateTab = function(tab) {
+        if (row > rows) {
+            throw new VException("Tab is not included in group", "You are trying to activate a tab in a group that it does not belong to. Please only activate tabs that are members of a group.");
+        }
+        
+        active_tab = tab;
+        var contents_clone = ds_list_create();
+        ds_list_copy(contents_clone, contents);
+        var index = 0;
+        for (var i = 0; i < ds_list_size(contents_clone); i++) {
+            if (i == tab.row) continue;
+            contents[| index] = contents_clone[| i];
+            ArrangeRow(index++);
+        }
+        contents[| rows - 1] = contents_clone[| tab.row];
+        ArrangeRow(rows - 1);
     }
     
     Render = function(base_x, base_y) {
