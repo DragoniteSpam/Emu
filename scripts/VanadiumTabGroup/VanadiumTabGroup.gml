@@ -30,10 +30,10 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         for (var i = 0; i < ds_list_size(tab_row.contents); i++) {
             var tab = tab_row.contents[| i];
             tab.row = row;
-            tab.width = floor(width / ds_list_size(tab_row.contents));
-            tab.height = row_height;
-            tab.x = tab.width * i;
-            tab.y = tab.height * row;
+            tab.header_width = floor(width / ds_list_size(tab_row.contents));
+            tab.header_height = row_height;
+            tab.header_x = tab.header_width * i;
+            tab.header_y = tab.header_height * row;
         }
     }
     

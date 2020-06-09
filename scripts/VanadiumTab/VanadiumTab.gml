@@ -5,6 +5,10 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
     valignment = fa_middle;
     row = 0;
     index = 0;
+    header_x = 0;
+    header_y = 0;
+    header_width = 0;
+    header_height = 0;
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
@@ -12,20 +16,31 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
         var x2 = x1 + width;
         var y2 = y1 + height;
         
+        #region header stuff
+        var hx1 = header_x + base_x;
+        var hy1 = header_y + base_y;
+        var hx2 = hx1 + header_width;
+        var hy2 = hy1 + header_height;
+        
+        if (point_in_rectangle(mouse_x, mouse_y, hx1, hy1, hx2, hy2) && mouse_check_button_pressed(mb_left)) {
+            root.ActivateTab(self);
+        }
+        
         if (!interactive) {
             var index = 4;
-        } else if (root.active_tab == self || row < root.rows - 1) {
+        } else if (IsActive() || row < root.rows - 1) {
             var index = 3;
         } else {
             var index = 5;
         }
         
-        DrawNineslice(spr_vanadium_nineslice, index, x1, y1, x2, y2, color);
+        DrawNineslice(spr_vanadium_nineslice, index, hx1, hy1, hx2, hy2, color);
         scribble_set_box_align(alignment, valignment);
-        scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
+        scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);
+        #endregion
         
-        if (point_in_rectangle(mouse_x, mouse_y, x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) {
-            root.ActivateTab(self);
+        if (IsActive()) {
+            RenderContents(x1, y1);
         }
     }
     

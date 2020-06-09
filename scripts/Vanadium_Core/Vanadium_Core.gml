@@ -26,10 +26,14 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     previous = noone;
     
     Render = function(base_x, base_y) {
+        RenderContents(x + base_x, y + base_y);
+    }
+    
+    RenderContents = function(at_x, at_y) {
         for (var i = 0; i < ds_list_size(contents); i++) {
             var what = contents[| i];
             if (what.enabled) {
-                what.Render(x + base_x, y + base_y);
+                what.Render(at_x, at_y);
             }
         }
     }
