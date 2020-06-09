@@ -1,4 +1,4 @@
-function VCheckbox(_x, _y, _w, _h, _text, _value, _callback, _root) : VCore(_x, _y, _w, _h, _root) constructor {
+function VCheckbox(_x, _y, _w, _h, _text, _value, _callback) : VCore(_x, _y, _w, _h) constructor {
     SetCallback = function(_callback) {
         callback = method(self, _callback);
     }

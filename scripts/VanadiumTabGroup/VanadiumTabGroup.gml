@@ -1,10 +1,10 @@
-function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w, _h, _root) constructor {
+function VTabGroup(_x, _y, _w, _h, _rows, _row_height) : VCore(_x, _y, _w, _h) constructor {
     rows = _rows;
     row_height = _row_height;
     
     // Initialize the tab rows - which are just empty VCores
     repeat (rows) {
-        ds_list_add(contents, new VCore(0, 0, 0, 0, self));
+        ds_list_add(contents, new VCore(0, 0, 0, 0));
     }
     
     active_tab = noone;

@@ -1,4 +1,4 @@
-function VText(_x, _y, _w, _h, _text, _root) : VCore(_x, _y, _w, _h, _root) constructor {
+function VText(_x, _y, _w, _h, _text) : VCore(_x, _y, _w, _h) constructor {
     text = _text;
     
     GetTextX = function(_x) {

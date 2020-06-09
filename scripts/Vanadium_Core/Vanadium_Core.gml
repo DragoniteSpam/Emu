@@ -1,9 +1,9 @@
-function VCore(_x, _y, _w, _h, _root) constructor {
+function VCore(_x, _y, _w, _h) constructor {
     x = _x;
     y = _y;
     width = _w;
     height = _h;
-    root = _root;
+    root = noone;
     
     contents = ds_list_create();
     enabled = true;
@@ -27,22 +27,23 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     sprite_nineslice = spr_vanadium_nineslice;
     element_spacing_y = 16;
     
-    AddContent = function(content) {
-        if (content.y == undefined) {
+    AddContent = function(addition) {
+        if (addition.y == undefined) {
             var top = contents[| ds_list_size(contents) - 1];
             if (top) {
-                content.y = top.y + top.GetHeight() + element_spacing_y;
+                addition.y = top.y + top.GetHeight() + element_spacing_y;
             } else {
-                content.y = element_spacing_y;
+                addition.y = element_spacing_y;
             }
         }
-        ds_list_add(contents, content);
-        return content;
+        ds_list_add(contents, addition);
+        addition.root = self;
+        return addition;
     }
     
-    RemoveContent = function(content) {
-        ds_list_delete(contents, ds_list_find_index(contents, content));
-        return content;
+    RemoveContent = function(addition) {
+        ds_list_delete(contents, ds_list_find_index(contents, addition));
+        return addition;
     }
     
     GetHeight = function() {

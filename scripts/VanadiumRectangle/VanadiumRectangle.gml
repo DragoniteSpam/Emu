@@ -1,4 +1,4 @@
-function VRectangle(_x, _y, _w, _h, _color, _outline, _root) : VCore(_x, _y, _w, _h, _root) constructor {
+function VRectangle(_x, _y, _w, _h, _color, _outline) : VCore(_x, _y, _w, _h) constructor {
     color = _color;
     outline = _outline;
     

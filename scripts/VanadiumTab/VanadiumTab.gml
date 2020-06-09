@@ -1,4 +1,4 @@
-function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
+function VTab(_name) : VCore(0, 0, 0, 0) constructor {
     text = _name;
     
     alignment = fa_center;
