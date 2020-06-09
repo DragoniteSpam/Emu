@@ -24,6 +24,7 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     
     next = noone;
     previous = noone;
+    nineslice = spr_vanadium_nineslice;
     
     AddContent = function(content) {
         ds_list_add(contents, content);
