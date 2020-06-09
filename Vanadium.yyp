@@ -20,7 +20,6 @@
     {"id":{"name":"scribble_set_line_height","path":"scripts/scribble_set_line_height/scribble_set_line_height.yy",},"order":4,},
     {"id":{"name":"scribble_draw_reset","path":"scripts/scribble_draw_reset/scribble_draw_reset.yy",},"order":2,},
     {"id":{"name":"shd_scribble","path":"shaders/shd_scribble/shd_scribble.yy",},"order":0,},
-    {"id":{"name":"spr_vanadium_nineslice_tab","path":"sprites/spr_vanadium_nineslice_tab/spr_vanadium_nineslice_tab.yy",},"order":1,},
     {"id":{"name":"scribble_set_box_align","path":"scripts/scribble_set_box_align/scribble_set_box_align.yy",},"order":3,},
     {"id":{"name":"scribble_draw_set_defaults","path":"scripts/scribble_draw_set_defaults/scribble_draw_set_defaults.yy",},"order":7,},
     {"id":{"name":"scribble_get_glyph_property","path":"scripts/scribble_get_glyph_property/scribble_get_glyph_property.yy",},"order":5,},
