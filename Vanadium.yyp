@@ -49,6 +49,7 @@
     {"id":{"name":"scribble_autotype_set_pause","path":"scripts/scribble_autotype_set_pause/scribble_autotype_set_pause.yy",},"order":5,},
     {"id":{"name":"scribble_add_shader_effect","path":"scripts/scribble_add_shader_effect/scribble_add_shader_effect.yy",},"order":1,},
     {"id":{"name":"scribble_add_autotype_character_delay","path":"scripts/scribble_add_autotype_character_delay/scribble_add_autotype_character_delay.yy",},"order":0,},
+    {"id":{"name":"VanadiumCheckbox","path":"scripts/VanadiumCheckbox/VanadiumCheckbox.yy",},"order":6,},
     {"id":{"name":"scribble_set_blend","path":"scripts/scribble_set_blend/scribble_set_blend.yy",},"order":2,},
     {"id":{"name":"scribble_bake_outline","path":"scripts/scribble_bake_outline/scribble_bake_outline.yy",},"order":3,},
     {"id":{"name":"scribble_autotype_fade_out","path":"scripts/scribble_autotype_fade_out/scribble_autotype_fade_out.yy",},"order":2,},
