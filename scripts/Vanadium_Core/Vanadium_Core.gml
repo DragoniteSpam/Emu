@@ -10,7 +10,7 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     interactive = true;
     outline = true;             // not used in all element types
     tooltip = "";               // not used by all element types
-    color = VANADIUM_DEFAULT_COLOR;
+    color = VANADIUM_COLOR_DEFAULT;
     
     active_element = noone;
     
@@ -27,10 +27,12 @@ function VCore(_x, _y, _w, _h, _root) constructor {
     
     AddContent = function(content) {
         ds_list_add(contents, content);
+        return content;
     }
     
     RemoveContent = function(content) {
         ds_list_delete(contents, ds_list_find_index(contents, content));
+        return content;
     }
     
     Render = function(base_x, base_y) {
