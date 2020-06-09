@@ -18,7 +18,7 @@ function VTab(_name) : VCore(0, 0, 0, 0, noone) constructor {
         
         #region header stuff
         var hx1 = header_x + base_x;
-        var hy1 = header_y + base_y;
+        var hy1 = header_y + base_y - root.rows * root.row_height;
         var hx2 = hx1 + header_width;
         var hy2 = hy1 + header_height;
         

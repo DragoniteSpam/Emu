@@ -62,7 +62,7 @@ function VTabGroup(_x, _y, _w, _h, _rows, _row_height, _root) : VCore(_x, _y, _w
         var y2 = y1 + height;
         
         for (var i = 0; i < ds_list_size(contents); i++) {
-            contents[| i].Render(x1, y1);
+            contents[| i].Render(x1, y1 + rows * row_height);
         }
         
         DrawNineslice(spr_vanadium_nineslice, 2, x1, y1 + rows * row_height, x2, y2, color);
