@@ -47,7 +47,7 @@
   },
   "parent": {
     "name": "Demo",
-    "path": "folders/Vanadium/Demo.yy",
+    "path": "folders/Emu/Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "Room1",

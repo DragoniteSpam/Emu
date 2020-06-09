@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Emu",
-    "path": "folders/Emu.yy",
+    "name": "Core",
+    "path": "folders/Emu/Core.yy",
   },
   "resourceVersion": "1.0",
-  "name": "vanadium_init",
+  "name": "EmuTab",
   "tags": [],
   "resourceType": "GMScript",
 }

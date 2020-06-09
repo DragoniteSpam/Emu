@@ -24,8 +24,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Vanadium",
-    "path": "Vanadium.yyp",
+    "name": "Emu",
+    "path": "Emu.yyp",
   },
   "resourceVersion": "1.0",
   "name": "Object1",

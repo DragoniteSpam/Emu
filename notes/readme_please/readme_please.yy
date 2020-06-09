@@ -1,7 +1,7 @@
 {
   "parent": {
-    "name": "Vanadium",
-    "path": "folders/Vanadium.yy",
+    "name": "Emu",
+    "path": "folders/Emu.yy",
   },
   "resourceVersion": "1.1",
   "name": "readme_please",
