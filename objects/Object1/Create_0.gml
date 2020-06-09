@@ -11,8 +11,8 @@ tab_1.AddContent([
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
 ]);
 
-var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, EmuBitfieldOrientations.HORIZONTAL, 15, function() { });
-var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, EmuBitfieldOrientations.VERTICAL, 41, function() { });
+var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, function() { });
+var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, function() { });
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);

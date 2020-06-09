@@ -1,8 +1,8 @@
-function EmuBitfield(_x, _y, _w, _h, _orientation, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     enum EmuBitfieldOrientations { HORIZONTAL, VERTICAL };
     
-    orientation = _orientation;
     fixed_spacing = -1;
+    orientation = EmuBitfieldOrientations.HORIZONTAL;
     
     SetFixedSpacing = function(spacing) {
         fixed_spacing = spacing;
