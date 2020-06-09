@@ -11,8 +11,8 @@ tab_1.AddContent([
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
 ]);
 
-var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, EVBitfieldOrientations.HORIZONTAL, 15, function() { });
-var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, EVBitfieldOrientations.VERTICAL, 41, function() { });
+var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, EmuBitfieldOrientations.HORIZONTAL, 15, function() { });
+var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, EmuBitfieldOrientations.VERTICAL, 41, function() { });
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);
@@ -43,7 +43,11 @@ tab_2.AddContent([
 
 group.ActivateTab(tab_1);
 
-tab_4.interactive = false;
+var radio_4 = new EmuRadioArray(32, u, 256, 32, "Pick one", 0, function() {
+    show_message("Option set to " + string(value));
+});
+radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese"]);
+tab_4.AddContent(radio_4);
 
 var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)
 tab_3.AddContent(group_inner);

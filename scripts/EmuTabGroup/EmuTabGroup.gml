@@ -2,7 +2,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
     rows = _rows;
     row_height = _row_height;
     
-    // Initialize the tab rows - which are just empty VCores
+    // Initialize the tab rows - which are just empty EmuCores
     repeat (rows) {
         ds_list_add(contents, new EmuCore(0, 0, 0, 0));
     }
