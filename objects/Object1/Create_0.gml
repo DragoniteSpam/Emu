@@ -9,10 +9,10 @@ var u = undefined;
 tab_1.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, 1, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, 35, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, 60, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, 99, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 1, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 35, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 60, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 99, function() { }),
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, function() { });

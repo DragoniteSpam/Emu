@@ -1,7 +1,8 @@
-function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     thickness = _thickness;
     value_min = _min;
     value_max = _max;
+    draggable = _draggable;
     
     color_bar = EMU_COLOR_PROGRESS_BAR;
     sprite_bar = spr_emu_progress;
@@ -42,10 +43,21 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _value, _callbac
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        var bx1 = x1;
+        var bx1 = x1 + offset;
         var by1 = floor(mean(y1, y2)) - thickness / 2;
-        var bx2 = x2;
+        var bx2 = x2 - offset;
         var by2 = floor(mean(y1, y2)) + thickness / 2;
+        
+        if (draggable) {
+            if (GetMouseHold(x1, y1, x2, y2)) {
+                value = (window_mouse_get_x() - x1) / (x2 - x1) * (value_max - value_min) + value_min;
+                callback();
+            }
+        }
+        
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            SetTooltip();
+        }
         
         DrawProgress(2, bx1, by1, bx2, by2, 1, EMU_COLOR_BACK, 1);
         DrawProgress(0, bx1, by1, bx2, by2, clamp((value - value_min) / (value_max - value_min), 0, 1), color_bar, 1);
