@@ -21,6 +21,7 @@ tab_1.AddContent([
         var dialog = new EmuDialog(320, 240, "Hey, listen!", function() { });
         dialog.AddContent([
             new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
+            new EmuInput(32, u, 256, 32, "Input:", "doggos", "", 10, EmuInputTypes.STRING, 128, 0, 256, 32, function() { }),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", function() {
                 root.Close();
             }),

@@ -91,6 +91,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     DestroyContent = function() {
+        if (IsActiveElement()) global.__emu_active_element = noone;
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Destroy();
         }

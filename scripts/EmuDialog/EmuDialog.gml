@@ -47,10 +47,10 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         var x2 = x1 + width;
         var y2 = y1 + GetHeight();
         
-        var cbx1 = x2 - offset - sprite_get_width(sprite_close);
-        var cbx2 = x2 - offset
-        var cby1 = y1 + offset;
-        var cby2 = y1 + offset + sprite_get_height(sprite_close);
+        var cbx1 = x2 - sprite_get_width(sprite_close);
+        var cbx2 = x2;
+        var cby1 = y1;
+        var cby2 = y1 + sprite_get_height(sprite_close);
         var cbi = 2;  // 0 is is available, 1 is hovering, 2 is unavailable
         
         var active = IsActiveDialog();
@@ -63,6 +63,7 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
                     cbi = 1;
                     if (GetMouseReleased(cbx1, cby1, cbx2, cby2)) {
                         kill = true;
+                        global.__emu_active_element = noone;
                     }
                 } else {
                     if (GetMousePressed(x1, y1, x2, y1 + header_height)) {
@@ -120,6 +121,12 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         }
         
         RenderContents(x1, y1 + header_height);
+        
+        kill |= (active && (flags & EmuDialogFlags.CLOSE_BUTTON) && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
+        
+        if (kill) {
+            Close();
+        }
     }
     
     // Override this function for dialogs
