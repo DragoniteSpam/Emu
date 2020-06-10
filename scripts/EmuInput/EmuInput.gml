@@ -1,4 +1,6 @@
-function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+    enum EmuInputTypes { STRING, INT, REAL };
+    
     text = _text;
     help_text = _help_text;
     character_limit = clamp(_character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
@@ -11,11 +13,19 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     require_enter = false;
     multi_line = false;
     input_font = EMU_FONT_DEFAULT;
+    value_type = _input_type;
+    value_lower = 0;
+    value_upper = 100;
     
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetValue = function(_value) {
         
+    }
+    
+    SetRealNumberBounds = function(_lower, _upper) {
+        value_lower = _lower;
+        value_upper = _upper;
     }
     
     Render = function(base_x, base_y) {
@@ -39,23 +49,20 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         var sw = string_width(working_value);
         var sw_end = sw + 4;
         
-        #region text label
+        #region work out the input color
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, string(text));
         
-        /*if (script_execute(validation, working_value, input)) {
-            var c = color;
-            if (real_value) {
-                var n = script_execute(value_conversion, working_value);
-                if (!is_clamped(n, value_lower, value_upper)) {
-                    c = c_orange;
-                }
+        if (ValidateInput(working_value)) {
+            var cast = CastInput(working_value);
+            if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
+                c = c_orange;
             }
         } else {
             var c = c_red;
-        }*/
+        }
         #endregion
-
+        
         var vtx = vx1 + 12;
         var vty = floor(mean(vy1, vy2));
         var spacing = 12;
@@ -130,34 +137,35 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         if (require_enter) {
             draw_sprite(spr_emu_enter, 0, vx2 - sprite_get_width(spr_emu_enter) - 4, vy2 - sprite_get_height(spr_emu_enter) - 4);
         }
-
+        #endregion
+        
+        #region interaction
         if (GetInteractive()) {
             if (IsActiveElement()) {
-                var v0 = value;
-                value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
+                var v0 = working_value;
+                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
                 if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
-                    value = "";
+                    working_value = "";
                     keyboard_string = "";
                 }
                 if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
-                    value = value + "\n";
+                    working_value += "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
         
-                value = value;
+                value = working_value;
         
-                if (true /* script_execute(validation, value, input) */) {
-                    var execute_value_change = (!require_enter && v0 != value) || (require_enter && Controller.press_enter);
+                if (ValidateInput(working_value)) {
+                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && Controller.press_enter);
                     if (execute_value_change) {
-                        /*if (real_value) {
-                            var n = script_execute(value_conversion, value);
-                            execute_value_change = execute_value_change && is_clamped(n, value_lower, value_upper);
+                        var cast = CastInput(working_value);
+                        if (is_real(cast)) {
+                            execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
                         }
                         if (execute_value_change) {
-                            emphasis = (validation == validate_string_internal_name && internal_name_get(value));
                             callback();
-                        }*/
+                        }
                     }
                 }
             }
@@ -181,5 +189,37 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     Destroy = function() {
         DestroyContent();
         if (surface_exists(surface)) surface_free(surface);
+    }
+    
+    ValidateInput = function(_text) {
+        switch (value_type) {
+            case EmuInputTypes.STRING:
+                return true;
+            case EmuInputTypes.INT:
+                var success = true;
+                try {
+                    var cast = real(_text);
+                    if (floor(cast) != cast) success = false;
+                } catch (e) {
+                    success = false;
+                }
+                return success;
+            case EmuInputTypes.REAL:
+                var success = true;
+                try {
+                    var cast = real(_text);
+                } catch (e) {
+                    success = false;
+                }
+                return success;
+        }
+    }
+    
+    CastInput = function(_text) {
+        switch (value_type) {
+            case EmuInputTypes.STRING: return _text;
+            case EmuInputTypes.INT: return real(_text);
+            case EmuInputTypes.REAL: return real(_text);
+        }
     }
 }

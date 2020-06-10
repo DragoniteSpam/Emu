@@ -69,7 +69,7 @@ radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese", "Olives", "Tomatoes", "Gar
 radio_4.SetColumns(4, 160);
 tab_4.AddContent(radio_4);
 
-var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, 128, 0, 560, 128, function() { show_message(value); });
+var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, EmuInputTypes.STRING, 128, 0, 560, 128, function() { show_debug_message(value); });
 input_4.multi_line = true;
 tab_4.AddContent(input_4);
 
@@ -91,10 +91,13 @@ tab_15.AddContent([
     new EmuButton(32, u, 320, 32, "just so that these aren't empty", function() { show_message("clicked the bottom button"); }),
 ]);
 
+var input_5_float = new EmuInput(32, u, 256, 32, "Enter float:", "float", "start typing", 7, EmuInputTypes.REAL, 128, 0, 256, 32, function() { show_debug_message(value) });
+input_5_float.SetRealNumberBounds(-10000, 10000);
 tab_5.AddContent([
-    new EmuRenderSurface(32, u, 480, 480,
+    new EmuRenderSurface(32, u, 480, 400,
         function(x1, y1, x2, y2) { },
         function(x1, y1, x2, y2) { }
     ),
-    new EmuInput(32, u, 256, 32, "Enter words:", "words", "start typing", 50, 128, 0, 256, 32, function() { show_debug_message(value) }),
+    new EmuInput(32, u, 256, 32, "Enter int:", "int", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, function() { show_debug_message(value) }),
+    input_5_float,
 ]);
