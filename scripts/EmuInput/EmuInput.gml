@@ -17,6 +17,9 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     value_lower = 0;
     value_upper = 100;
     
+    sprite_ring = spr_emu_ring
+    sprite_enter = spr_emu_enter;
+    
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetValue = function(_value) {
@@ -60,10 +63,10 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         if (ValidateInput(working_value)) {
             var cast = CastInput(working_value);
             if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
-                c = c_orange;
+                c = EMU_COLOR_INPUT_WARN;
             }
         } else {
-            var c = c_red;
+            var c = EMU_COLOR_INPUT_REJECT;
         }
         #endregion
         
@@ -103,8 +106,8 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 var remaining_y = hh - 16;
                 var r = 12;
                 var steps = 32;
-                draw_sprite(spr_emu_ring, 0, remaining_x, remaining_y);
-                draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(spr_emu_ring, 0));
+                draw_sprite(sprite_ring, 0, remaining_x, remaining_y);
+                draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(sprite_ring, 0));
                 draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, EMU_COLOR_SELECTED, 1);
                 for (var i = 0; i <= steps * f; i++) {
                     var angle = 360 / steps * i - 90;
@@ -139,7 +142,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         }
 
         if (require_enter) {
-            draw_sprite(spr_emu_enter, 0, vx2 - vx1 - sprite_get_width(spr_emu_enter) - 4, vty - vy1);
+            draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
         }
         #endregion
         
@@ -187,7 +190,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         #endregion
 
         draw_surface(surface, vx1, vy1)
-        draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
+        draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
     }
     
     Destroy = function() {
