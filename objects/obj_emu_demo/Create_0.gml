@@ -30,6 +30,7 @@ tab_1.AddContent([
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
+    new EmuInput(32, u, 256, 32, "Hex:", "FF", "a hex value", 4, EmuInputTypes.HEX, 128, 0, 256, 32, emu_null),
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, emu_null);

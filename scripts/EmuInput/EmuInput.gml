@@ -1,5 +1,5 @@
 function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    enum EmuInputTypes { STRING, INT, REAL };
+    enum EmuInputTypes { STRING, INT, REAL, HEX };
     
     text = _text;
     help_text = _help_text;
@@ -219,6 +219,14 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                     success = false;
                 }
                 return success;
+            case EmuInputTypes.HEX:
+                var success = true;
+                try {
+                    var cast = emu_hex(_text);
+                } catch (e) {
+                    success = false;
+                }
+                return success;
         }
     }
     
@@ -227,6 +235,55 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
             case EmuInputTypes.STRING: return _text;
             case EmuInputTypes.INT: return real(_text);
             case EmuInputTypes.REAL: return real(_text);
+            case EmuInputTypes.HEX: return emu_hex(_text);
         }
     }
+}
+
+function emu_string_hex(_value, _padding) {
+    if (_padding == undefined) _padding = 0;
+    
+    var s = sign(_value);
+    var v = abs(_value);
+    var output = "";
+    
+    while (v > 0)  {
+        var c  = v & 0xf;
+        // magic, do not touch
+        output = chr(c + ((c < 10) ? 48 : 55)) + output;
+        v = v >> 4;
+    }
+    
+    if (string_length(output) == 0) {
+        output = "0";
+    }
+    
+    while (string_length(output) < _padding) {
+        output = "0" + _padding;
+    }
+
+    return ((s < 0) ? "-" : "") + output;
+}
+
+function emu_hex(_string) {
+    var result = 0;
+    var ZERO = ord("0");
+    var NINE = ord("9");
+    var A = ord("A");
+    var F = ord("F");
+    
+    for (var i = 1; i <= string_length(_string); i++) {
+        var c = ord(string_char_at(string_upper(_string), i));
+        // you could also multiply by 16 but you get more nerd points for bitshifts
+        result = result << 4;
+        if (c >= ZERO && c <= NINE) {
+            result = result + (c - ZERO);
+        } else if (c >= A && c <= F) {
+            result = result + (c - A + 10);
+        } else {
+            throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(_string) + " as a hex value");
+        }
+    }
+    
+    return result;
 }
