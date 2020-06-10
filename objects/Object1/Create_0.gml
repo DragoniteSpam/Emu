@@ -41,6 +41,12 @@ tab_1.AddContent([
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 12, function() { });
 list_2.tooltip = "This list has a tooltip";
 list_2.AddContent(["Alice", "Bob", "Charlie"]);
+list_2.SetCallbackDouble(function() {
+    show_message("double click");
+});
+list_2.SetCallbackMiddle(function() {
+    show_message("middle click");
+});
 
 tab_2.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),

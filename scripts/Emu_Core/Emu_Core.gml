@@ -182,6 +182,18 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
         callback = method(self, _callback);
     }
     
+    SetCallbackMiddle = function(_callback) {
+        callback_middle = method(self, _callback);
+    }
+    
+    SetCallbackRight = function(_callback) {
+        callback_right = method(self, _callback);
+    }
+    
+    SetCallbackDouble = function(_callback) {
+        callback_double = method(self, _callback);
+    }
+    
     SetCallback(_callback);
     value = _value;
 }
