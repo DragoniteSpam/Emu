@@ -38,6 +38,8 @@ tab_1.AddContent([
     bitfield_3_2,
 ]);
 
+var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 12, function() { });
+
 tab_2.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
     new EmuButton(32, u, 256, 32, "Button", function() {
@@ -46,7 +48,8 @@ tab_2.AddContent([
     new EmuCheckbox(32, u, 256, 32, "Toggle", false, function() {
     
     }),
-    new EmuButtonImage(32, u, 256, 256, spr_emu_birb, 0, c_white, 1, false, function() { })
+    new EmuButtonImage(32, u, 256, 256, spr_emu_birb, 0, c_white, 1, false, function() { }),
+    list_2,
 ]);
 
 group.ActivateTab(tab_1);

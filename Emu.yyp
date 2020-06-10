@@ -78,6 +78,7 @@
     {"id":{"name":"scribble_cache_group_flush","path":"scripts/scribble_cache_group_flush/scribble_cache_group_flush.yy",},"order":0,},
     {"id":{"name":"scribble_draw_set_fade","path":"scripts/scribble_draw_set_fade/scribble_draw_set_fade.yy",},"order":8,},
     {"id":{"name":"scribble_get_state","path":"scripts/scribble_get_state/scribble_get_state.yy",},"order":0,},
+    {"id":{"name":"EmuList","path":"scripts/EmuList/EmuList.yy",},"order":12,},
     {"id":{"name":"EmuText","path":"scripts/EmuText/EmuText.yy",},"order":1,},
     {"id":{"name":"scribble_autotype_fade_in","path":"scripts/scribble_autotype_fade_in/scribble_autotype_fade_in.yy",},"order":1,},
     {"id":{"name":"scribble_draw_set_blend","path":"scripts/scribble_draw_set_blend/scribble_draw_set_blend.yy",},"order":4,},
