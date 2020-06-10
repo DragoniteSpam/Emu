@@ -7,6 +7,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
     value_x2 = _vx2;
     value_y2 = _vy2;
     
+    alpha = 1;
     allow_alpha = false;
     active_shade = true;
     
@@ -39,18 +40,17 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
             DrawNineslice(1, vx1 + 3, vy1 + 3, vx2 - 3, vy2 - 3, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, 1);
         }
         DrawNineslice(0, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color, 1);
-        return;
-        if (interactive && dialog_is_active(root)) {
-            var inbounds = mouse_within_rectangle_determine(vx1, vy1, vx2, vy2, adjust_view);
-            if (inbounds) {
-                if (Controller.release_left) {
-                    ui_activate(picker);
-                    var dialog = dialog_create_color_picker_options(picker, value, uivc_color_picker_reflect);
+        
+        if (GetInteractive()) {
+            if (GetMouseHover(vx1, vy1, vx2, vy2)) {
+                if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
+                    Activate();
+                    var dialog = new EmuDialog(480, 400, "Pick a color", emu_dialog_close_auto);
                     dialog.el_alpha = alpha;
                     dialog.el_allow_alpha = allow_alpha;
-                    dialog.active_shade = active_shade;
+                    dialog.flags = (dialog.flags ^ EmuDialogFlags.ACTIVE_SHADE) | (allow_alpha * EmuDialogFlags.ACTIVE_SHADE);
                 }
-                Stuff.element_tooltip = picker;
+                SetTooltip();
             }
         }
     }
