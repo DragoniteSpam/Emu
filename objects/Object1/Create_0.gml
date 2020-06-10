@@ -48,7 +48,7 @@ list_2.SetCallbackMiddle(function() {
     show_message("middle click");
 });
 //list_2.auto_multi_select = true;
-//list_2.allow_multi_select = true;
+list_2.allow_multi_select = true;
 list_2.allow_deselect = true;
 //list_2.select_toggle = true;
 

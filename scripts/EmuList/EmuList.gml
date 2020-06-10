@@ -68,9 +68,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     
     Select = function(list_index, _set_index) {
         if (_set_index == undefined) _set_index = false;
-        if (ds_map_empty(selected_entries)) return selected_entries[? "first"];
-        selected_entries[? value] = true;
-        if (clamp(list_index, index, index + slots - 1) != list_index) {
+        if (ds_map_exists(selected_entries, "first")) selected_entries[? "first"] = list_index;
+        selected_entries[? "last"] = list_index;
+        selected_entries[? list_index] = true;
+        if (_set_index && clamp(list_index, index, index + slots - 1) != list_index) {
             index = max(0, min(list_index, ds_list_size(entries) - slots));
         }
     }
@@ -194,8 +195,8 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 // toggle selection over a range
                 if (allow_multi_select && keyboard_check(vk_shift)) {
                     if (last_index > -1) {
-                        var d = clamp(mn - last_index, -1, 1);
-                        for (var i = last_index; i != mn; i = i + d) {
+                        var d = sign(mn - last_index);
+                        for (var i = last_index; i != (mn + d); i = i + d) {
                             if (!GetSelected(i)) {
                                 Select(i);
                             } else if (select_toggle && allow_deselect) {
