@@ -20,7 +20,11 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetValue = function(_value) {
-        
+        _value = string(value);
+        value = _value;
+        if (IsActiveElement()) {
+            keyboard_string = value;
+        }
     }
     
     SetRealNumberBounds = function(_lower, _upper) {
