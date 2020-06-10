@@ -87,6 +87,7 @@
     {"id":{"name":"EmuText","path":"scripts/EmuText/EmuText.yy",},"order":1,},
     {"id":{"name":"scribble_autotype_fade_in","path":"scripts/scribble_autotype_fade_in/scribble_autotype_fade_in.yy",},"order":1,},
     {"id":{"name":"spr_emu_help","path":"sprites/spr_emu_help/spr_emu_help.yy",},"order":7,},
+    {"id":{"name":"EmuInput_ColorPicker","path":"scripts/EmuInput_ColorPicker/EmuInput_ColorPicker.yy",},"order":15,},
     {"id":{"name":"scribble_draw_set_blend","path":"scripts/scribble_draw_set_blend/scribble_draw_set_blend.yy",},"order":4,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
@@ -127,10 +128,9 @@
     {"folderPath":"folders/Scripts/Scribble/Initialisation.yy","order":5,"resourceVersion":"1.0","name":"Initialisation","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/Scribble/Pages.yy","order":6,"resourceVersion":"1.0","name":"Pages","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Shaders/Scribble.yy","order":1,"resourceVersion":"1.0","name":"Scribble","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scribble.yy","order":13,"resourceVersion":"1.0","name":"Scribble","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Emu/Graphics.yy","order":5,"resourceVersion":"1.0","name":"Graphics","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scribble/Scripts.yy","order":0,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scribble/Shaders.yy","order":1,"resourceVersion":"1.0","name":"Shaders","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts.yy","order":11,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Shaders.yy","order":12,"resourceVersion":"1.0","name":"Shaders","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},
@@ -139,7 +139,6 @@
     {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [
-    {"CopyToMask":-1,"filePath":"datafiles\\vanadium_fonts","resourceVersion":"1.0","name":"fnt_vanadium_default.yy","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles\\emu_fonts","resourceVersion":"1.0","name":"fnt_emu_default.yy","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {

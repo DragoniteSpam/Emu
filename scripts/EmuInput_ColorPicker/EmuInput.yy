@@ -3,10 +3,10 @@
   "isCompatibility": false,
   "parent": {
     "name": "Core",
-    "path": "folders/Vanadium/Core.yy",
+    "path": "folders/Emu/Core.yy",
   },
   "resourceVersion": "1.0",
-  "name": "VanadiumTabGroup",
+  "name": "EmuInput",
   "tags": [],
   "resourceType": "GMScript",
 }

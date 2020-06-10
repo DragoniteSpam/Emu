@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Assets",
-    "path": "folders/Vanadium/Assets.yy",
+    "name": "Core",
+    "path": "folders/Emu/Core.yy",
   },
   "resourceVersion": "1.0",
-  "name": "VanadiumCore",
+  "name": "EmuText",
   "tags": [],
   "resourceType": "GMScript",
 }
