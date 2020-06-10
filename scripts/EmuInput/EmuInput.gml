@@ -1,4 +1,4 @@
-function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, _vx1, _vy1, _vx2, _vy2) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
     help_text = _help_text;
     limit = _limit;
@@ -9,8 +9,10 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
     
     override_escape = true;
     require_enter = false;
+    multi_line = false;
+    input_font = EMU_FONT_DEFAULT;
     
-    surface = surface_create(value_vx2 - value_vx1, value_vy2 - value_vy1);
+    surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetValue = function(_value) {
         
@@ -37,18 +39,18 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
-        var value = string(value);
-        var sw = string_width(value);
+        var working_value = string(value);
+        var sw = string_width(working_value);
         var sw_end = sw + 4;
         
         #region text label
         scribble_set_box_align(fa_left, fa_middle);
-        draw_text_colour(tx, ty, string(text), c, c, c, c, 1);
+        scribble_draw(tx, ty, string(text));
         
-        /*if (script_execute(validation, value, input)) {
+        /*if (script_execute(validation, working_value, input)) {
             var c = color;
             if (real_value) {
-                var n = script_execute(value_conversion, value);
+                var n = script_execute(value_conversion, working_value);
                 if (!is_clamped(n, value_lower, value_upper)) {
                     c = c_orange;
                 }
@@ -59,7 +61,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
         #endregion
 
         var vtx = vx1 + 12;
-        var vty = mean(vy1, vy2);
+        var vty = floor(mean(vy1, vy2));
         var spacing = 12;
         
         #region input drawing
@@ -76,13 +78,13 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
         draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
         surface_reset_target();
         
-        var display_text = value + (GetInteractive() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (IsActive() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
             if (value_limit > 0) {
-                var remaining = value_limit - string_length(value);
-                var f = string_length(value) / value_limit;
+                var remaining = value_limit - string_length(working_value);
+                var f = string_length(working_value) / value_limit;
                 // hard limit on 99 for characters remaining
                 if (f > 0.9 && remaining < 100) {
                     var remaining_w = string_width(string(remaining));
@@ -119,6 +121,9 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
             draw_text_ext_colour(vtx - vx1, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
             draw_set_valign(valign);
         } else {
+            draw_set_halign(fa_left);
+            draw_set_valign(fa_middle);
+            draw_set_font(input_font);
             var sw_begin = min(vtx - vx1, ww - offset - sw);
             draw_text_colour(sw_begin, vty - vy1, display_text, c, c, c, c, 1);
             sw_end = sw_begin + sw + 4;
@@ -163,7 +168,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _callback, 
                 }
             }
             // activation
-            if (GetHover(vx1, vy1, vx2, vy2)) {
+            if (GetMouseHover(vx1, vy1, vx2, vy2)) {
                 if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
                     keyboard_string = value;
                     //ui_activate(input);

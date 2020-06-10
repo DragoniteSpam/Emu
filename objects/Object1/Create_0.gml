@@ -91,5 +91,6 @@ tab_5.AddContent([
     new EmuRenderSurface(32, u, 480, 480,
         function(x1, y1, x2, y2) { },
         function(x1, y1, x2, y2) { }
-    )
+    ),
+    new EmuInput(32, u, 256, 32, "Enter words:", "words", "start typing", 50, 128, 0, 256, 32, function() { show_debug_message(value) }),
 ]);
