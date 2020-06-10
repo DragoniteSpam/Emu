@@ -67,5 +67,6 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _control, _create, _destroy) 
     Destroy = function() {
         DestroyContent();
         if (surface_exists(surface)) surface_free(surface);
+        callback_destroy();
     }
 }

@@ -163,6 +163,7 @@ function EmuDemoMeshScene() constructor {
         }
         ds_list_destroy(mesh_list);
         skybox.Destroy();
+        ground.Destroy();
         vertex_format_delete(format);
         vertex_format_delete(format_texture);
     }
