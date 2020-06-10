@@ -4,6 +4,8 @@ global.__emu_dialogs = ds_list_create();
 global.__emu_active_element = noone;
 
 #region some macros which you may want to set
+#macro EMU_DOUBLE_CLICK_THRESHOLD 250
+
 #macro EMU_FONT_DEFAULT fnt_emu_default
 
 #macro EMU_COLOR_BACK 0xffffff

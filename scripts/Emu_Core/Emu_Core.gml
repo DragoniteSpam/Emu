@@ -136,6 +136,9 @@ function EmuCore(_x, _y, _w, _h) constructor {
         return global.__emu_active_element == self;
     }
     
+    time_click_left = -1;
+    time_click_left_last = -10000;
+    
     GetInteractive = function() {
         return interactive && IsActiveDialog();
     }
@@ -145,7 +148,19 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMousePressed = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+        if (!GetMouseHover(x1, y1, x2, y2)) return false;
+        var click = mouse_check_button_pressed(mb_left);
+        // In the event that clicking is polled more than once per frame, don't
+        // register two clicks per frame
+        if (click && time_click_left != current_time) {
+            time_click_left_last = time_click_left;
+            time_click_left = current_time;
+        }
+        return click;
+    }
+    
+    GetMouseLeftDouble = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_DOUBLE_CLICK_THRESHOLD);
     }
     
     GetMouseReleased = function(x1, y1, x2, y2) {
@@ -154,10 +169,6 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     GetMouseHold = function(x1, y1, x2, y2) {
         return GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left);
-    }
-    
-    GetMouseLeftDouble = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && false;
     }
     
     GetMouseMiddlePressed = function(x1, y1, x2, y2) {
