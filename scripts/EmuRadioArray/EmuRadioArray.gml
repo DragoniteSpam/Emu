@@ -25,22 +25,6 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         width = (ds_list_size(contents) div _column_capacity) * _column_width;
     }
     
-    GetTextX = function(_x) {
-        switch (alignment) {
-            case fa_left: return _x + offset;
-            case fa_center: return _x + width / 2;
-            case fa_right: return _x + width - offset;
-        }
-    }
-    
-    GetTextY = function(_y) {
-        switch (valignment) {
-            case fa_left: return _y + offset;
-            case fa_center: return _y + height / 2;
-            case fa_right: return _y + height - offset;
-        }
-    }
-    
     GetHeight = function() {
         return height * (1 + ds_list_size(contents));
     }
@@ -72,22 +56,6 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
     
     color_active = EMU_COLOR_RADIO_ACTIVE;
     color_back = EMU_COLOR_BACK;
-    
-    GetTextX = function(_x) {
-        switch (alignment) {
-            case fa_left: return _x + offset;
-            case fa_center: return _x + width / 2;
-            case fa_right: return _x + width - offset;
-        }
-    }
-    
-    GetTextY = function(_y) {
-        switch (valignment) {
-            case fa_left: return _y + offset;
-            case fa_center: return _y + height / 2;
-            case fa_right: return _y + height - offset;
-        }
-    }
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;

@@ -52,22 +52,6 @@ function EmuList(_x, _y, _w, _h, _text, _vacant_text, _element_height, _content_
         width = (ds_list_size(contents) div _column_capacity) * _column_width;
     }
     
-    GetTextX = function(_x) {
-        switch (alignment) {
-            case fa_left: return _x + offset;
-            case fa_center: return _x + width / 2;
-            case fa_right: return _x + width - offset;
-        }
-    }
-    
-    GetTextY = function(_y) {
-        switch (valignment) {
-            case fa_left: return _y + offset;
-            case fa_center: return _y + height / 2;
-            case fa_right: return _y + height - offset;
-        }
-    }
-    
     GetHeight = function() {
         return height + element_height * slots;
     }
