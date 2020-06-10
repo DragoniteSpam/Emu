@@ -81,6 +81,7 @@
     {"id":{"name":"EmuList","path":"scripts/EmuList/EmuList.yy",},"order":12,},
     {"id":{"name":"EmuText","path":"scripts/EmuText/EmuText.yy",},"order":1,},
     {"id":{"name":"scribble_autotype_fade_in","path":"scripts/scribble_autotype_fade_in/scribble_autotype_fade_in.yy",},"order":1,},
+    {"id":{"name":"spr_emu_help","path":"sprites/spr_emu_help/spr_emu_help.yy",},"order":7,},
     {"id":{"name":"scribble_draw_set_blend","path":"scripts/scribble_draw_set_blend/scribble_draw_set_blend.yy",},"order":4,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],

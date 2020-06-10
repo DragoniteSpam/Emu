@@ -39,6 +39,7 @@ tab_1.AddContent([
 ]);
 
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 12, function() { });
+list_2.tooltip = "This list has a tooltip";
 
 tab_2.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
