@@ -82,10 +82,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     RenderContents = function(at_x, at_y) {
         for (var i = 0; i < ds_list_size(contents); i++) {
-            var what = contents[| i];
-            if (what.enabled) {
-                what.Render(at_x, at_y);
-            }
+            if (contents[| i]) contents[| i].Render(at_x, at_y);
         }
     }
     

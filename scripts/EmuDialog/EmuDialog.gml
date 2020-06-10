@@ -29,23 +29,19 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
     
     ds_list_add(global.__emu_dialogs, self);
     
-    GetTextY = function(_y) {
-        switch (valignment) {
-            case fa_top: return _y + offset;
-            case fa_middle: return _y + header_height / 2;
-            case fa_bottom: return _y + header_height - offset;
-        }
-    }
-    
     Close = function() {
         Destroy();
+    }
+    
+    GetHeight = function() {
+        return height + header_height;
     }
     
     Render = function() {
         var x1 = x;
         var y1 = y;
         var x2 = x1 + width;
-        var y2 = y1 + height;
+        var y2 = y1 + GetHeight();
         
         var cbx1 = x2 - offset - sprite_get_width(sprite_close);
         var cbx2 = x2 - offset
@@ -88,10 +84,10 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         var x1 = x;
         var y1 = y;
         var x2 = x1 + width;
-        var y2 = y1 + height;
+        var y2 = y1 + GetHeight();
         
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = x1 + offset;
+        var ty = floor(mean(y1, y1 + header_height));
         
         var cbx1 = x2 - sprite_get_width(sprite_close);
         var cbx2 = x2;
@@ -112,13 +108,14 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         DrawNineslice(1, x1, y1, x2, y1 + header_height, ch, 1);
         DrawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
         
-        draw_set_halign(fa_left);
-        draw_text_colour(tx, ty, string(text), c_black, c_black, c_black, c_black, 1);
+        scribble_set_box_align(fa_left, fa_middle);
+        scribble_draw(tx, ty, string(text), c_black, c_black, c_black, c_black, 1);
         
         if (flags & EmuDialogFlags.CLOSE_BUTTON) {
             draw_sprite(sprite_close, cbi, cbx1, cby1);
         }
         
+        RenderContents(x1, y1 + header_height);
     }
     
     // Override this function for dialogs
