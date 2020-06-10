@@ -14,7 +14,7 @@
   "bbox_bottom": 23,
   "HTile": false,
   "VTile": false,
-  "For3D": false,
+  "For3D": true,
   "width": 24,
   "height": 24,
   "textureGroupId": {

@@ -2,7 +2,7 @@ group = new EmuTabGroup(32, 32, 640, 640, 2, 32);
 var tab_1 = group.AddTab(new EmuTab("Tab1"), 0);
 var tab_2 = group.AddTab(new EmuTab("Tab2"), 0);
 var tab_3 = group.AddTab(new EmuTab("Tab3"), 0);
-var tab_4 = group.AddTab(new EmuTab("Tab4"), 1);
+var tab_4 = group.AddTab(new EmuTab("Multi-line"), 1);
 var tab_5 = group.AddTab(new EmuTab("Render Surface"), 1);
 
 var u = undefined;
@@ -68,6 +68,10 @@ var radio_4 = new EmuRadioArray(32, u, 256, 32, "Pick one", 0, function() {
 radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese", "Olives", "Tomatoes", "Garlic"]);
 radio_4.SetColumns(4, 160);
 tab_4.AddContent(radio_4);
+
+var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, 128, 0, 560, 128, function() { show_message(value); });
+input_4.multi_line = true;
+tab_4.AddContent(input_4);
 
 var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)
 tab_3.AddContent(group_inner);

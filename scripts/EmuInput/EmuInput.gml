@@ -1,7 +1,7 @@
-function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
     help_text = _help_text;
-    limit = _limit;
+    character_limit = clamp(_character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
     value_x1 = _vx1;
     value_y1 = _vy1;
     value_x2 = _vx2;
@@ -82,44 +82,42 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _vx1, _vy1,
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
-            if (value_limit > 0) {
-                var remaining = value_limit - string_length(working_value);
-                var f = string_length(working_value) / value_limit;
-                // hard limit on 99 for characters remaining
-                if (f > 0.9 && remaining < 100) {
-                    var remaining_w = string_width(string(remaining));
-                    var remaining_h = string_height(string(remaining));
-                    var remaining_x = ww - 4 - remaining_w;
-                    var remaining_y = hh - remaining_h;
-                    draw_text(remaining_x, remaining_y, string(remaining));
-                } else {
-                    var remaining_x = ww - 16;
-                    var remaining_y = hh - 16;
-                    var r = 12;
-                    var steps = 32;
-                    draw_sprite(spr_emu_ring, 0, remaining_x, remaining_y);
-                    draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(spr_ring, 0));
-                    draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, c_ui_select, 1);
-                    for (var i = 0; i <= steps * f; i++) {
-                        var angle = 360 / steps * i - 90;
-                        draw_vertex_texture_colour(
-                            clamp(remaining_x + r * dcos(angle), remaining_x - r, remaining_x + r),
-                            clamp(remaining_y + r * dsin(angle), remaining_y - r, remaining_y + r),
-                            clamp(0.5 + 0.5 * dcos(angle), 0, 1),
-                            clamp(0.5 + 0.5 * dsin(angle), 0, 1),
-                        c_ui_select, 1);
-                    }
-                    draw_primitive_end();
+            var remaining = character_limit - string_length(working_value);
+            var f = string_length(working_value) / character_limit;
+            // hard limit on 99 for characters remaining
+            if (f > 0.9 && remaining < 100) {
+                var remaining_w = string_width(string(remaining));
+                var remaining_h = string_height(string(remaining));
+                var remaining_x = ww - 4 - remaining_w;
+                var remaining_y = hh - remaining_h;
+                scribble_draw(remaining_x, remaining_y, string(remaining));
+            } else {
+                var remaining_x = ww - 16;
+                var remaining_y = hh - 16;
+                var r = 12;
+                var steps = 32;
+                draw_sprite(spr_emu_ring, 0, remaining_x, remaining_y);
+                draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(spr_emu_ring, 0));
+                draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, EMU_COLOR_SELECTED, 1);
+                for (var i = 0; i <= steps * f; i++) {
+                    var angle = 360 / steps * i - 90;
+                    draw_vertex_texture_colour(
+                        clamp(remaining_x + r * dcos(angle), remaining_x - r, remaining_x + r),
+                        clamp(remaining_y + r * dsin(angle), remaining_y - r, remaining_y + r),
+                        clamp(0.5 + 0.5 * dcos(angle), 0, 1),
+                        clamp(0.5 + 0.5 * dsin(angle), 0, 1),
+                    EMU_COLOR_SELECTED, 1);
                 }
+                draw_primitive_end();
             }
             #endregion
             
-            var valign = draw_get_valign();
+            draw_set_halign(fa_left);
             draw_set_valign(fa_top);
+            draw_set_font(input_font);
             var sh = string_height_ext(display_text, -1, vx2 - vx1 - (vtx - vx1) * 2);
             var vty = vy1 + offset;
             draw_text_ext_colour(vtx - vx1, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
-            draw_set_valign(valign);
         } else {
             draw_set_halign(fa_left);
             draw_set_valign(fa_middle);
@@ -140,7 +138,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _limit, _vx1, _vy1,
         if (GetInteractive()) {
             if (false && IsActive()) {
                 var v0 = value;
-                value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), value_limit));
+                value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
                 if (Controller.press_escape) {
                     Controller.press_escape = false;
                     value = "";
