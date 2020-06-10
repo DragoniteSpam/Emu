@@ -253,10 +253,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             var srange = smax - smin;
             var sy = smin + srange * index / noutofrange;
             var active = GetInteractive();
-            draw_rectangle_colour(x2 - sw, y2, x2, y3, c_white, c_white, c_white, c_white, false);
-            draw_line(x2 - sw, y2 + sw, x2, y2 + sw);
-            draw_line(x2 - sw, y3 - sw, x2, y3 - sw);
-            draw_rectangle(x2 - sw, y2, x2, y3, true);
+            draw_rectangle_colour(x2 - sw, y2, x2, y3, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, false);
+            draw_line_colour(x2 - sw, y2 + sw, x2, y2 + sw, color, color);
+            draw_line_colour(x2 - sw, y3 - sw, x2, y3 - sw, color, color);
+            draw_rectangle_colour(x2 - sw, y2, x2, y3, color, color, color, color, true);
             
             var sby1 = sy - shalf;
             var sby2 = sy + shalf;
@@ -278,10 +278,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     click_y = -1;
                 }
             }
-            draw_rectangle(x2 - sw, sby1, x2, sby2, true);
-            draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, c_gray, c_gray);
-            draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, c_gray, c_gray);
-            draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, c_gray, c_gray);
+            draw_rectangle_colour(x2 - sw, sby1, x2, sby2, color, color, color, color, true);
+            draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, color, color);
+            draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, color, color);
+            draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, color, color);
             
             if (active) {
                 var inbounds_top = GetMouseHover(x2 - sw, y2, x2, y2 + sw);
@@ -306,8 +306,8 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     }
                 }
             }
-            draw_sprite(spr_emu_scroll_arrow, 0, x2 - sw, y2);
-            draw_sprite(spr_emu_scroll_arrow, 1, x2 - sw, y3 - sw);
+            draw_sprite_ext(spr_emu_scroll_arrow, 0, x2 - sw, y2, 1, 1, 0, color, 1);
+            draw_sprite_ext(spr_emu_scroll_arrow, 1, x2 - sw, y3 - sw, 1, 1, 0, color, 1);
         }
         #endregion
 
