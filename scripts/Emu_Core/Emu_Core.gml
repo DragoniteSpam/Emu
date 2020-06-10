@@ -140,20 +140,40 @@ function EmuCore(_x, _y, _w, _h) constructor {
         return interactive && IsActiveDialog();
     }
     
+    GetMouseHover = function(x1, y1, x2, y2) {
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+    }
+    
     GetMousePressed = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left);
     }
     
     GetMouseReleased = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left);
     }
     
     GetMouseHold = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2) && mouse_check_button(mb_left);
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left);
     }
     
-    GetMouseHover = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+    GetMouseLeftDouble = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && false;
+    }
+    
+    GetMouseMiddlePressed = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+    }
+    
+    GetMouseMiddleReleased = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
+    }
+    
+    GetMouseRightPressed = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+    }
+    
+    GetMouseRightReleased = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
     }
 }
 

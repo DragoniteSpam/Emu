@@ -74,6 +74,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         }
     }
     
+    Deselect = function(list_index) {
+        ds_map_delete(selected_entries, list_index);
+    }
+    
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -136,11 +140,13 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 var ya = y2 + height * i;
                 var yb = ya + height;
                 var tya = mean(ya, yb);
-                if (GetSelected(current_index)) {
-                    var c = interactive ? c_ui_select : c_ltgray;
-                    draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, c, c, c, c, false);
+                
+                if (GetInteractive()) {
+                    if (GetSelected(current_index)) {
+                        draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, false);
+                    }
                 }
-        
+                
                 var c = GetListColors(current_index);
                 var index_text = numbered ? (string(current_index) + ". ") : "";
         
@@ -161,6 +167,83 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         #endregion
 
         draw_surface(surface, x1, y2);
+        
+        #region interact
+        var offset = (n > slots) ? 16 : 0;
+        var lx1 = x1;
+        var ly1 = y2;
+        var lx2 = x2 - offset;
+        var ly2 = y3;
+        
+        var move_direction = 0;
+        
+        if (GetInteractive()) {
+            if (GetMouseHover(lx1, ly1, lx2, ly2)) {
+                if (GetMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
+                    //script_execute(onmiddleclick, list);
+                } else if (GetMouseLeftDouble(lx1, ly1, lx2, ly2)) {
+                    //script_execute(ondoubleclick, list);
+                } else if (GetMousePressed(lx1, ly1, lx2, ly2)) {
+                    // if this ends up having a bounds problem it's probably because the list is empty and
+                    // it's trying to access n-1 from the next line
+                    var mn = min(((mouse_y - ly1) div height) + index, n - 1);
+                    // deselect the list if that's what yo uwould expect to happen
+                    if (!auto_multi_select) {
+                        if ((!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !select_toggle) || !allow_multi_select) {
+                            ClearSelection();
+                        }
+                    }
+                    // toggle selection over a range
+                    if (allow_multi_select && keyboard_check(vk_shift)) {
+                        if (last_index > -1) {
+                            var d = clamp(mn - last_index, -1, 1);
+                            for (var i = last_index; i != mn; i = i + d) {
+                                if (!GetSelected(i)) {
+                                    Select(i);
+                                } else if (select_toggle && allow_deselect) {
+                                    Deselect(i);
+                                }
+                            }
+                        }
+                    // toggle single selections
+                    } else {
+                        if (!GetSelected(mn)) {
+                            ds_map_add(selected_entries, mn, true);
+                        } else if (select_toggle && allow_deselect) {
+                            Deselect(mn);
+                        }
+                    }
+            
+                    last_index = mn;
+                    //ui_activate(list);
+                    callback();
+                } else if (GetMouseRightReleased(lx1, ly1, lx2, ly2)) {
+                    if (allow_deselect) {
+                        ClearSelection();
+                        callback();
+                    }
+                }
+                
+                if (mouse_wheel_up()) {
+                    move_direction = -1;
+                } else if (mouse_wheel_down()) {
+                    move_direction = 1;
+                }
+                
+                if (allow_multi_select) {
+                    if (keyboard_check(vk_control) && keyboard_check_pressed(ord("A"))) {
+                        for (var i = 0; i < n; i++) {
+                            if (!GetSelected(i)) {
+                                Select(i);
+                            } else if (select_toggle) {
+                                Deselect(i);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
     }
     
     Destory = function() {
