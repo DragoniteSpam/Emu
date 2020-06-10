@@ -1,5 +1,5 @@
 function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback, _list) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
-    enum EmuListEntriesAre { STRINGS, STRUCTS, SCRIPTS };
+    enum EmuListEntries { STRINGS, STRUCTS, SCRIPTS };
     text = _text;
     text_vacant = _text_vacant;
     element_height = _element_height;
@@ -16,40 +16,33 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     select_toggle = false;
     selected_entries = ds_map_create();
     colorize = false;
-    entries_are = EmuListEntriesAre.STRINGS;
+    entries_are = EmuListEntries.STRINGS;
     numbered = false;
     surface = -1;
     
     sprite_help = spr_emu_help;
     
-    if (_list == undefined) {
+    own_contents = (_list == undefined);
+    if (own_contents) {
         entries = ds_list_create();
     } else {
-        own_contents = false;
         ds_list_destroy(contents);
         entries = _list;
     }
     
-    AddOptions = function(elements) {
-        if (!is_array(elements)) {
-            elements = [elements];
-        }
-        
+    AddContent = function(elements) {
+        if (!is_array(elements)) elements = [elements];
         for (var i = 0; i < array_length(elements); i++) {
-            elements[i] = new EmuRadioArrayOption(0, height * (1 + i), width, height, elements[i], i);
+            ds_list_add(entries, elements[i]);
         }
-        
-        AddContent(elements);
     }
     
-    SetColumns = function(_column_capacity, _column_width) {
-        for (var i = 0; i < ds_list_size(contents); i++) {
-            var option = contents[| i];
-            option.x = (i div _column_capacity) * _column_width;
-            option.y = height * (1 + (i % _column_capacity));
-            option.width = _column_width;
+    Clear = function() {
+        if (own_entries) {
+            ds_list_clear(entries);
+        } else {
+            throw new EmuException("Trying to clear a list owned by someone else", "Please do not request to clear a list whose contents were passed in to the constructor.");
         }
-        width = (ds_list_size(contents) div _column_capacity) * _column_width;
     }
     
     GetHeight = function() {
@@ -122,7 +115,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 var ya = y2 + height * i;
                 var yb = ya + height;
                 var tya = mean(ya, yb);
-                if (IsSelected(current_index)) {
+                if (GetSelected(current_index)) {
                     var c = interactive ? c_ui_select : c_ltgray;
                     draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, c, c, c, c, false);
                 }
@@ -131,11 +124,11 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 var index_text = numbered ? string(current_index) + ". " : "";
         
                 switch (entries_are) {
-                    case ListEntries.STRINGS: index_text += string(entries[| current_index]); break;
-                    case ListEntries.INSTANCES: index_text += entries[| current_index].name; break;
-                    case ListEntries.SCRIPT: index_text = index_text + string(entries[| current_index](list, current_index)); break;
+                    case EmuListEntries.STRINGS: index_text += string(entries[| current_index]); break;
+                    case EmuListEntries.INSTANCES: index_text += entries[| current_index].name; break;
+                    case EmuListEntries.SCRIPT: index_text = index_text + string(entries[| current_index](list, current_index)); break;
                 }
-                draw_text_colour(tx - x1, tya - y2, string(index_text), c, c, c, c, 1);
+                scribble_draw(tx - x1, tya - y2, index_text);
             }
         }
         
