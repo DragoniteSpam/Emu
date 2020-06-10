@@ -70,8 +70,8 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"40b3ded0-57f8-4854-88a8-6a89ad2573de","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
-    "name": "Graphics",
-    "path": "folders/Emu/Graphics.yy",
+    "name": "Demo",
+    "path": "folders/Emu/Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_emu_birb",

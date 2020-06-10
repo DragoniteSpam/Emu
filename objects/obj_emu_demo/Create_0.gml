@@ -16,6 +16,9 @@ tab_1.AddContent([
     new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 35, function() { }),
     new EmuProgressBar(32, u, 256, 32, 12, 0, 5, false, 2, function() { }),
     bar_int,
+    new EmuButton(32, u, 256, 32, "make popup dialog", function() {
+        var dialog = new EmuDialog(320, 240, "dialog", function() { });
+    }),
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, function() { });
@@ -88,20 +91,16 @@ var tab_19 = group_inner.AddTab(new EmuTab("Tab 19"), 2);
 group_inner.ActivateTab(tab_11);
 
 tab_15.AddContent([
-    new EmuButton(32, u, 320, 32, "i guess i should put something here", function() { show_message("clicked the top button"); }),
-    new EmuButton(32, u, 320, 32, "just so that these aren't empty", function() { show_message("clicked the bottom button"); }),
+    new EmuButton(32, u, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
 ]);
 
-var input_5_float = new EmuInput(32, u, 256, 32, "Enter float:", "float", "start typing", 7, EmuInputTypes.REAL, 128, 0, 256, 32, function() { show_debug_message(value) });
-input_5_float.SetRealNumberBounds(-10000, 10000);
-input_5_float.require_enter = true;
 tab_5.AddContent([
-    new EmuRenderSurface(32, u, 480, 400,
+    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, function() { }),
+    new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, function() { }),
+    new EmuRenderSurface(32, u, 576, 432,
         function(x1, y1, x2, y2) { data.Render(); },
         function(x1, y1, x2, y2) { data.Control(); },
         function() { data = new EmuDemoMeshScene(); },
         function() { data.Destroy(); }
     ),
-    new EmuInput(32, u, 256, 32, "Enter int:", "int", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, function() { show_debug_message(value) }),
-    input_5_float,
 ]);
