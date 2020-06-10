@@ -1,4 +1,4 @@
-function EmuRenderSurface(_x, _y, _w, _h, _render, _control) : EmuCore(_x, _y, _w, _h) constructor {
+function EmuRenderSurface(_x, _y, _w, _h, _render, _control, _create, _destroy) : EmuCore(_x, _y, _w, _h) constructor {
     SetRender = function(_render) {
         callback_render = method(self, _render);
     }
@@ -11,8 +11,14 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _control) : EmuCore(_x, _y, _
         callback_recreate = method(self, _recreate);
     }
     
+    SetDestroy = function(_destroy) {
+        callback_destroy = method(self, _destroy);
+    }
+    
     SetRender(_render);
     SetControl(_control);
+    method(self, _create)();
+    SetDestroy(_destroy);
     
     callback_recreate = function() {
         surface_set_target(surface);

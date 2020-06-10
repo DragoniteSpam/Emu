@@ -18,17 +18,17 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"Object1","path":"objects/Object1/Object1.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"parent":{"name":"Object1","path":"objects/Object1/Object1.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"obj_emu_demo","path":"objects/obj_emu_demo/obj_emu_demo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"parent":{"name":"obj_emu_demo","path":"objects/obj_emu_demo/obj_emu_demo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Emu",
-    "path": "Emu.yyp",
+    "name": "Demo",
+    "path": "folders/Emu/Demo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Object1",
+  "name": "obj_emu_demo",
   "tags": [],
   "resourceType": "GMObject",
 }

@@ -97,8 +97,10 @@ input_5_float.SetRealNumberBounds(-10000, 10000);
 input_5_float.require_enter = true;
 tab_5.AddContent([
     new EmuRenderSurface(32, u, 480, 400,
-        function(x1, y1, x2, y2) { },
-        function(x1, y1, x2, y2) { }
+        function(x1, y1, x2, y2) { data.Render(); },
+        function(x1, y1, x2, y2) { data.Control(); },
+        function() { data = new EmuDemoMeshScene(); },
+        function() { data.Destroy(); }
     ),
     new EmuInput(32, u, 256, 32, "Enter int:", "int", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, function() { show_debug_message(value) }),
     input_5_float,

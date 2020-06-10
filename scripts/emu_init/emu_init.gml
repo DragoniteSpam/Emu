@@ -1,4 +1,4 @@
-scribble_init("emu_fonts", "fnt_emu_default", true);
+scribble_init("emu", "fnt_emu_default", true);
 
 global.__emu_dialogs = ds_list_create();
 global.__emu_active_element = noone;
