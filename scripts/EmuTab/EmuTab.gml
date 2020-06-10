@@ -48,6 +48,9 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         }
     }
     
+    // This is NOT the same as IsActiveElement() - this checks for the active
+    // tab in the tab group, rather than the UI element which will respond to
+    // keyboard input
     IsActive = function() {
         return (root.active_tab == self);
     }

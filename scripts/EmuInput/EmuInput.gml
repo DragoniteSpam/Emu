@@ -18,10 +18,6 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         
     }
     
-    IsActive = function() {
-        return false;
-    }
-    
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -78,7 +74,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
         surface_reset_target();
         
-        var display_text = working_value + (IsActive() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (IsActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
@@ -128,40 +124,40 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         }
         
         if (string_length(value) == 0) {
-            draw_text_colour(vtx - vx1, vty - vy1, string(value_default), c_dkgray, c_dkgray, c_dkgray, c_dkgray, 1);
+            draw_text_colour(vtx - vx1, vty - vy1, string(help_text), c_dkgray, c_dkgray, c_dkgray, c_dkgray, 1);
         }
 
         if (require_enter) {
-            draw_sprite(spr_emu_enter, 0, vx2 - sprite_get_width(spr_enter) - 4, vy2 - sprite_get_height(spr_enter) - 4);
+            draw_sprite(spr_emu_enter, 0, vx2 - sprite_get_width(spr_emu_enter) - 4, vy2 - sprite_get_height(spr_emu_enter) - 4);
         }
 
         if (GetInteractive()) {
-            if (false && IsActive()) {
+            if (IsActiveElement()) {
                 var v0 = value;
                 value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
-                if (Controller.press_escape) {
-                    Controller.press_escape = false;
+                if (keyboard_check_pressed(vk_escape)) {
+                    keyboard_clear(vk_escape);
                     value = "";
                     keyboard_string = "";
                 }
-                if (multi_line && !require_enter && Controller.press_enter) {
+                if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
                     value = value + "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
         
                 value = value;
         
-                if (script_execute(validation, value, input)) {
+                if (true /* script_execute(validation, value, input) */) {
                     var execute_value_change = (!require_enter && v0 != value) || (require_enter && Controller.press_enter);
                     if (execute_value_change) {
-                        if (real_value) {
+                        /*if (real_value) {
                             var n = script_execute(value_conversion, value);
                             execute_value_change = execute_value_change && is_clamped(n, value_lower, value_upper);
                         }
                         if (execute_value_change) {
                             emphasis = (validation == validate_string_internal_name && internal_name_get(value));
-                            script_execute(onvaluechange, input);
-                        }
+                            callback();
+                        }*/
                     }
                 }
             }
@@ -169,7 +165,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
             if (GetMouseHover(vx1, vy1, vx2, vy2)) {
                 if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
                     keyboard_string = value;
-                    //ui_activate(input);
+                    Activate();
                 }
                 SetTooltip();
             }

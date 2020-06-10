@@ -136,6 +136,10 @@ function EmuCore(_x, _y, _w, _h) constructor {
         return global.__emu_active_element == self;
     }
     
+    Activate = function() {
+        global.__emu_active_element = self;
+    }
+    
     time_click_left = -1;
     time_click_left_last = -10000;
     
