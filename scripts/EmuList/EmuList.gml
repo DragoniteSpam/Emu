@@ -261,23 +261,26 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             var sby1 = sy - shalf;
             var sby2 = sy + shalf;
             if (active) {
+                // Hover over the scroll bar: draw the hover color
                 if (GetMouseHover(x2 - sw, sby1, x2, sby2)) {
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    // Click: begin dragging the scroll bar
                     if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
                         click_x = mouse_x;
                         click_y = mouse_y;
                     }
                 }
-                if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
-                    if (click_y > -1) {
-                        index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
-                    }
+                // Hold while dragging: update the list position
+                if (GetMouseHold(x2 - sw, sby1, x2, sby2) && click_y > -1) {
+                    index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
                 }
+                // Release: stop dragging
                 if (GetMouseReleased(x2 - sw, sby1, x2, sby2)) {
                     click_x = -1;
                     click_y = -1;
                 }
             }
+            
             draw_rectangle_colour(x2 - sw, sby1, x2, sby2, color, color, color, color, true);
             draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, color, color);
             draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, color, color);
@@ -286,28 +289,35 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             if (active) {
                 var inbounds_top = GetMouseHover(x2 - sw, y2, x2, y2 + sw);
                 var inbounds_bottom = GetMouseHover(x2 - sw, y3 - sw, x2, y3);
+                // Top button
                 if (inbounds_top) {
                     draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
-                    if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                    if (GetMousePressed(x2 - sw, y2, x2, y2 + sw)) {
                         move_direction = -1;
-                    } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
-                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > 0.5) {
+                    } else if (GetMouseHold(x2 - sw, y2, x2, y2 + sw)) {
+                        if (GetMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_HOLD_THRESHOLD) {
                             move_direction = -1;
                         }
                     }
+                // Bottom button
                 } else if (inbounds_bottom) {
                     draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    // On click, scroll once
                     if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
                         move_direction = 1;
+                    // On hold, scroll after an amount of time
                     } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
-                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > 0.5) {
+                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_HOLD_THRESHOLD) {
                             move_direction = 1;
                         }
                     }
                 }
             }
+            
             draw_sprite_ext(spr_emu_scroll_arrow, 0, x2 - sw, y2, 1, 1, 0, color, 1);
             draw_sprite_ext(spr_emu_scroll_arrow, 1, x2 - sw, y3 - sw, 1, 1, 0, color, 1);
+            
+            index = clamp(index + move_direction, 0, max(0, n - slots));
         }
         #endregion
 

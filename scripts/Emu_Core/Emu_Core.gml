@@ -168,7 +168,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseHoldDuration = function(x1, y1, x2, y2) {
-        return GetMouseHold(x1, y1, x2, y2) ? 0 : (current_time - time_click_left);
+        return GetMouseHold(x1, y1, x2, y2) ? (current_time - time_click_left) : 0;
     }
     
     GetMouseReleased = function(x1, y1, x2, y2) {
