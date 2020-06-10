@@ -15,7 +15,6 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     allow_deselect = true;
     select_toggle = false;
     selected_entries = ds_map_create();
-    colorize = false;
     entries_are = EmuListEntries.STRINGS;
     numbered = false;
     surface = -1;
@@ -51,6 +50,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     
     GetSelected = function(list_index) {
         return ds_map_exists(selected_entries, list_index);
+    }
+    
+    GetListColors = function(list_index) {
+        return c_black;
     }
     
     Render = function(base_x, base_y) {
@@ -120,15 +123,18 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, c, c, c, c, false);
                 }
         
-                var c = colorize ? script_execute(render_colors, list, current_index) : c_black;
-                var index_text = numbered ? string(current_index) + ". " : "";
+                var c = GetListColors(current_index);
+                var index_text = numbered ? (string(current_index) + ". ") : "";
         
                 switch (entries_are) {
                     case EmuListEntries.STRINGS: index_text += string(entries[| current_index]); break;
                     case EmuListEntries.INSTANCES: index_text += entries[| current_index].name; break;
                     case EmuListEntries.SCRIPT: index_text = index_text + string(entries[| current_index](list, current_index)); break;
                 }
+                var base_color = global.scribble_state_starting_color;
+                global.scribble_state_starting_color = c;
                 scribble_draw(tx - x1, tya - y2, index_text);
+                global.scribble_state_starting_color = base_color;
             }
         }
         
