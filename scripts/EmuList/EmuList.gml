@@ -56,6 +56,24 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         return c_black;
     }
     
+    GetSelection = function() {
+        if (ds_map_empty(selected_entries)) return -1;
+        return selected_entries[? "first"];
+    }
+    
+    ClearSelection = function() {
+        ds_map_clear(selected_entries);
+    }
+    
+    Select = function(list_index, _set_index) {
+        if (_set_index == undefined) _set_index = false;
+        if (ds_map_empty(selected_entries)) return selected_entries[? "first"];
+        selected_entries[? value] = true;
+        if (clamp(list_index, index, index + slots - 1) != list_index) {
+            index = max(0, min(list_index, ds_list_size(entries) - slots));
+        }
+    }
+    
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
         var y1 = y + base_y;
