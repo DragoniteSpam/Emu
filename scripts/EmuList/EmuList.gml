@@ -20,6 +20,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     surface = -1;
     
     sprite_help = spr_emu_help;
+    sprite_arrows = spr_emu_scroll_arrow;
     
     own_contents = (_list == undefined);
     if (own_contents) {
@@ -295,7 +296,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     if (GetMousePressed(x2 - sw, y2, x2, y2 + sw)) {
                         move_direction = -1;
                     } else if (GetMouseHold(x2 - sw, y2, x2, y2 + sw)) {
-                        if (GetMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_HOLD_THRESHOLD) {
+                        if (GetMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = -1;
                         }
                     }
@@ -307,20 +308,19 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                         move_direction = 1;
                     // On hold, scroll after an amount of time
                     } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
-                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_HOLD_THRESHOLD) {
+                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = 1;
                         }
                     }
                 }
             }
             
-            draw_sprite_ext(spr_emu_scroll_arrow, 0, x2 - sw, y2, 1, 1, 0, color, 1);
-            draw_sprite_ext(spr_emu_scroll_arrow, 1, x2 - sw, y3 - sw, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_arrows, 0, x2 - sw, y2, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_arrows, 1, x2 - sw, y3 - sw, 1, 1, 0, color, 1);
             
             index = clamp(index + move_direction, 0, max(0, n - slots));
         }
         #endregion
-
     }
     
     Destory = function() {

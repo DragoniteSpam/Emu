@@ -160,7 +160,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseDouble = function(x1, y1, x2, y2) {
-        return GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_DOUBLE_CLICK_THRESHOLD);
+        return GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
     }
     
     GetMouseHold = function(x1, y1, x2, y2) {
