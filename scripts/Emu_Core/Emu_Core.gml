@@ -89,7 +89,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
     }
     
-    Destory = function() {
+    Destroy = function() {
         DestroyContent();
     }
     

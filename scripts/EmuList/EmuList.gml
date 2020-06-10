@@ -324,7 +324,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         #endregion
     }
     
-    Destory = function() {
+    Destroy = function() {
         DestroyContent();
         ds_map_destroy(selected_entries);
         if (own_entries) ds_list_destroy(entries);
