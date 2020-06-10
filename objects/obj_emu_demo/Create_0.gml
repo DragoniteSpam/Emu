@@ -7,18 +7,18 @@ var tab_5 = group.AddTab(new EmuTab("Render Surface"), 1);
 
 var u = undefined;
 
-var bar_int = new EmuProgressBar(32, u, 256, 32, 12, 0, 10, true, 7, function() { });
+var bar_int = new EmuProgressBar(32, u, 256, 32, 12, 0, 10, true, 7, emu_null);
 bar_int.integers_only = true;
 tab_1.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 1, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 35, function() { }),
-    new EmuProgressBar(32, u, 256, 32, 12, 0, 5, false, 2, function() { }),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, true, 1, emu_null),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 100, false, 35, emu_null),
+    new EmuProgressBar(32, u, 256, 32, 12, 0, 5, false, 2, emu_null),
     bar_int,
     new EmuButton(32, u, 256, 32, "make popup dialog", function() {
         var u = undefined;
-        var dialog = new EmuDialog(640, 640, "Hey, listen!", function() { });
+        var dialog = new EmuDialog(640, 640, "Hey, listen!", emu_null);
         dialog.AddContent([
             new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
             new EmuRenderSurface(32, u, 576, 432,
@@ -32,8 +32,8 @@ tab_1.AddContent([
     }),
 ]);
 
-var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, function() { });
-var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, function() { });
+var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, emu_null);
+var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, emu_null);
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);
@@ -50,10 +50,10 @@ bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 tab_1.AddContent([
     bitfield_3_1,
     bitfield_3_2,
-    new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, function() { }),
+    new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, emu_null),
 ]);
 
-var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() { });
+var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, emu_null);
 list_2.tooltip = "This list has a tooltip";
 list_2.AddContent(["Alice", "Bob", "Charlie", "And", "Your", "Little", "Dog", "Too"]);
 list_2.SetCallbackDouble(function() {
@@ -71,7 +71,7 @@ tab_2.AddContent([
     new EmuCheckbox(32, u, 256, 32, "Toggle", false, function() {
     
     }),
-    new EmuButtonImage(32, u, 256, 256, spr_emu_birb, 0, c_white, 1, false, function() { }),
+    new EmuButtonImage(32, u, 256, 256, spr_emu_birb, 0, c_white, 1, false, emu_null),
     list_2,
 ]);
 
@@ -106,8 +106,8 @@ tab_15.AddContent([
 ]);
 
 tab_5.AddContent([
-    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, function() { }),
-    new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, function() { }),
+    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, emu_null),
+    new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, emu_null),
     new EmuRenderSurface(32, u, 576, 432,
         function(x1, y1, x2, y2) { data.Render(); },
         function(x1, y1, x2, y2) { data.Control(); },

@@ -214,3 +214,7 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
     SetCallback(_callback);
     value = _value;
 }
+
+function emu_null() {
+    
+}
