@@ -133,9 +133,6 @@ function EmuDemoMeshScene() constructor {
     
     Render = function() {
         var camera = camera_get_active();
-        var old_view_mat = camera_get_view_mat(camera);
-        var old_proj_mat = camera_get_proj_mat(camera);
-        var old_state = gpu_get_state();
         camera_set_view_mat(camera, matrix_build_lookat(camera_position.x, camera_position.y, camera_position.z, 0, 0, 40, 0, 0, 1));
         camera_set_proj_mat(camera, matrix_build_projection_perspective_fov(-60, 4 / 3, 1, 1000));
         camera_apply(camera);
@@ -158,12 +155,6 @@ function EmuDemoMeshScene() constructor {
         }
         
         shader_reset();
-        
-        camera_set_view_mat(camera, old_view_mat);
-        camera_set_proj_mat(camera, old_proj_mat);
-        camera_apply(camera);
-        gpu_set_state(old_state);
-        ds_map_destroy(old_state);
     }
     
     Destroy = function() {
