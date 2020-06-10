@@ -36,6 +36,7 @@ bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 tab_1.AddContent([
     bitfield_3_1,
     bitfield_3_2,
+    new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, function() { }),
 ]);
 
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() { });
