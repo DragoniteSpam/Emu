@@ -93,6 +93,7 @@ tab_15.AddContent([
 
 var input_5_float = new EmuInput(32, u, 256, 32, "Enter float:", "float", "start typing", 7, EmuInputTypes.REAL, 128, 0, 256, 32, function() { show_debug_message(value) });
 input_5_float.SetRealNumberBounds(-10000, 10000);
+input_5_float.require_enter = true;
 tab_5.AddContent([
     new EmuRenderSurface(32, u, 480, 400,
         function(x1, y1, x2, y2) { },

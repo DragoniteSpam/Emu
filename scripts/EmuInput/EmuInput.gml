@@ -139,7 +139,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         }
 
         if (require_enter) {
-            draw_sprite(spr_emu_enter, 0, vx2 - sprite_get_width(spr_emu_enter) - 4, vy2 - sprite_get_height(spr_emu_enter) - 4);
+            draw_sprite(spr_emu_enter, 0, vx2 - vx1 - sprite_get_width(spr_emu_enter) - 4, vty - vy1);
         }
         #endregion
         
@@ -161,7 +161,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 value = working_value;
         
                 if (ValidateInput(working_value)) {
-                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && Controller.press_enter);
+                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
                         var cast = CastInput(working_value);
                         if (is_real(cast)) {
