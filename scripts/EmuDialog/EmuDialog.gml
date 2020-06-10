@@ -30,7 +30,11 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
     ds_list_add(global.__emu_dialogs, self);
     
     Close = function() {
-        Destroy();
+        do {
+            var top = global.__emu_dialogs[| ds_list_size(global.__emu_dialogs) - 1];
+            top.Destroy();
+            ds_list_delete(global.__emu_dialogs, ds_list_size(global.__emu_dialogs) - 1);
+        } until (top == self);
     }
     
     GetHeight = function() {

@@ -22,6 +22,7 @@ tab_1.AddContent([
         dialog.AddContent([
             new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", function() {
+                root.Close();
             }),
         ]);
     }),
