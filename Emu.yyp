@@ -43,6 +43,7 @@
     {"id":{"name":"scribble_set_transform","path":"scripts/scribble_set_transform/scribble_set_transform.yy",},"order":7,},
     {"id":{"name":"scribble_draw_set_cache_group","path":"scripts/scribble_draw_set_cache_group/scribble_draw_set_cache_group.yy",},"order":6,},
     {"id":{"name":"EmuRadioArray","path":"scripts/EmuRadioArray/EmuRadioArray.yy",},"order":10,},
+    {"id":{"name":"spr_emu_scroll_arrow","path":"sprites/spr_emu_scroll_arrow/spr_emu_scroll_arrow.yy",},"order":8,},
     {"id":{"name":"scribble_draw_set_box_align","path":"scripts/scribble_draw_set_box_align/scribble_draw_set_box_align.yy",},"order":5,},
     {"id":{"name":"scribble_cache","path":"scripts/scribble_cache/scribble_cache.yy",},"order":8,},
     {"id":{"name":"EmuProgressBar","path":"scripts/EmuProgressBar/EmuProgressBar.yy",},"order":11,},

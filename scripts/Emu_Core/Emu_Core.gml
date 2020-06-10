@@ -159,16 +159,20 @@ function EmuCore(_x, _y, _w, _h) constructor {
         return click;
     }
     
-    GetMouseLeftDouble = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_DOUBLE_CLICK_THRESHOLD);
-    }
-    
-    GetMouseReleased = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+    GetMouseDouble = function(x1, y1, x2, y2) {
+        return GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_DOUBLE_CLICK_THRESHOLD);
     }
     
     GetMouseHold = function(x1, y1, x2, y2) {
         return GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left);
+    }
+    
+    GetMouseHoldDuration = function(x1, y1, x2, y2) {
+        return GetMouseHold(x1, y1, x2, y2) ? 0 : (current_time - time_click_left);
+    }
+    
+    GetMouseReleased = function(x1, y1, x2, y2) {
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left);
     }
     
     GetMouseMiddlePressed = function(x1, y1, x2, y2) {

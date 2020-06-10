@@ -112,8 +112,6 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         scribble_draw(tx + txoffset, ty, text);
         #endregion
         
-        // Drawing to the surface instead of the screen directly - everything drawn needs
-        // to be minus x1 and minus y1, because suddenly we're drawing at the origin again
         #region list drawing
         if (surface_exists(surface) && (surface_get_width(surface) != ww || surface_get_height(surface) != hh)) {
             surface_free(surface);
@@ -165,10 +163,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         draw_rectangle_colour(1, 1, ww - 2, hh - 2, color, color, color, color, true);
         surface_reset_target();
         #endregion
-
+        
         draw_surface(surface, x1, y2);
         
-        #region interact
+        #region interaction
         var offset = (n > slots) ? 16 : 0;
         var lx1 = x1;
         var ly1 = y2;
@@ -180,7 +178,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         if (GetMouseHover(lx1, ly1, lx2, ly2)) {
             if (GetMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
                 callback_middle();
-            } else if (GetMouseLeftDouble(lx1, ly1, lx2, ly2)) {
+            } else if (GetMouseDouble(lx1, ly1, lx2, ly2)) {
                 callback_double();
             } else if (GetMousePressed(lx1, ly1, lx2, ly2)) {
                 // if this ends up having a bounds problem it's probably because the list is empty and
@@ -242,6 +240,77 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             }
         }
         #endregion
+        
+        #region slider
+        if (n > slots) {
+            var sw = 16;
+            var noutofrange = n - slots; // at minimum, one
+            // the minimum slider height will never be below 20, but it'll scale up for longer lists;
+            // otherwise it's simply proportional to the fraction of the entries that are visible in the list
+            var shalf = max(20 + 20 * log10(slots), (y3 - y2 - sw * 2) * slots / n) / 2;
+            var smin = y2 + sw + shalf;
+            var smax = y3 - sw - shalf;
+            var srange = smax - smin;
+            var sy = smin + srange * index / noutofrange;
+            var active = GetInteractive();
+            draw_rectangle_colour(x2 - sw, y2, x2, y3, c_white, c_white, c_white, c_white, false);
+            draw_line(x2 - sw, y2 + sw, x2, y2 + sw);
+            draw_line(x2 - sw, y3 - sw, x2, y3 - sw);
+            draw_rectangle(x2 - sw, y2, x2, y3, true);
+            
+            var sby1 = sy - shalf;
+            var sby2 = sy + shalf;
+            if (active) {
+                if (GetMouseHover(x2 - sw, sby1, x2, sby2)) {
+                    draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
+                        click_x = mouse_x;
+                        click_y = mouse_y;
+                    }
+                }
+                if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
+                    if (click_y > -1) {
+                        index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
+                    }
+                }
+                if (GetMouseReleased(x2 - sw, sby1, x2, sby2)) {
+                    click_x = -1;
+                    click_y = -1;
+                }
+            }
+            draw_rectangle(x2 - sw, sby1, x2, sby2, true);
+            draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, c_gray, c_gray);
+            draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, c_gray, c_gray);
+            draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, c_gray, c_gray);
+            
+            if (active) {
+                var inbounds_top = GetMouseHover(x2 - sw, y2, x2, y2 + sw);
+                var inbounds_bottom = GetMouseHover(x2 - sw, y3 - sw, x2, y3);
+                if (inbounds_top) {
+                    draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                        move_direction = -1;
+                    } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
+                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > 0.5) {
+                            move_direction = -1;
+                        }
+                    }
+                } else if (inbounds_bottom) {
+                    draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                        move_direction = 1;
+                    } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
+                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > 0.5) {
+                            move_direction = 1;
+                        }
+                    }
+                }
+            }
+            draw_sprite(spr_emu_scroll_arrow, 0, x2 - sw, y2);
+            draw_sprite(spr_emu_scroll_arrow, 1, x2 - sw, y3 - sw);
+        }
+        #endregion
+
     }
     
     Destory = function() {

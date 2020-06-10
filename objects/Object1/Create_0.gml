@@ -38,9 +38,9 @@ tab_1.AddContent([
     bitfield_3_2,
 ]);
 
-var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 12, function() { });
+var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() { });
 list_2.tooltip = "This list has a tooltip";
-list_2.AddContent(["Alice", "Bob", "Charlie"]);
+list_2.AddContent(["Alice", "Bob", "Charlie", "And", "Your", "Little", "Dog", "Too"]);
 list_2.SetCallbackDouble(function() {
     show_message("double click");
 });
