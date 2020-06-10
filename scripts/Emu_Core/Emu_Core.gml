@@ -184,11 +184,11 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseRightPressed = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
     }
     
     GetMouseRightReleased = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
+        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
     }
 }
 

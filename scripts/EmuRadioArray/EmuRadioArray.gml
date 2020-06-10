@@ -55,7 +55,6 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
     value = _value;
     
     color_active = EMU_COLOR_RADIO_ACTIVE;
-    color_back = EMU_COLOR_BACK;
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
@@ -76,7 +75,7 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
             root.callback();
         }
         
-        draw_sprite_ext(spr_emu_radio, 2, tx + offset, ty, 1, 1, 0, color_back, 1);
+        draw_sprite_ext(spr_emu_radio, 2, tx + offset, ty, 1, 1, 0, EMU_COLOR_BACK, 1);
         draw_sprite_ext(spr_emu_radio, 1, tx + offset, ty, 1, 1, 0, color, 1);
         draw_sprite_ext(spr_emu_radio, 0, tx + offset, ty, 1, 1, 0, color, 1);
         if (value == root.value) {
