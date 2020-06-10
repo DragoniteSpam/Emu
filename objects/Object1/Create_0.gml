@@ -3,7 +3,7 @@ var tab_1 = group.AddTab(new EmuTab("Tab1"), 0);
 var tab_2 = group.AddTab(new EmuTab("Tab2"), 0);
 var tab_3 = group.AddTab(new EmuTab("Tab3"), 0);
 var tab_4 = group.AddTab(new EmuTab("Tab4"), 1);
-var tab_5 = group.AddTab(new EmuTab("Tab5"), 1);
+var tab_5 = group.AddTab(new EmuTab("Render Surface"), 1);
 
 var u = undefined;
 
@@ -47,10 +47,6 @@ list_2.SetCallbackDouble(function() {
 list_2.SetCallbackMiddle(function() {
     show_message("middle click");
 });
-//list_2.auto_multi_select = true;
-list_2.allow_multi_select = true;
-list_2.allow_deselect = true;
-//list_2.select_toggle = true;
 
 tab_2.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
@@ -89,4 +85,11 @@ group_inner.ActivateTab(tab_11);
 tab_15.AddContent([
     new EmuButton(32, u, 320, 32, "i guess i should put something here", function() { show_message("clicked the top button"); }),
     new EmuButton(32, u, 320, 32, "just so that these aren't empty", function() { show_message("clicked the bottom button"); }),
+]);
+
+tab_5.AddContent([
+    new EmuRenderSurface(32, u, 480, 480,
+        function(x1, y1, x2, y2) { },
+        function(x1, y1, x2, y2) { }
+    )
 ]);

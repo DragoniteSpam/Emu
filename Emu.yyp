@@ -31,6 +31,7 @@
     {"id":{"name":"scribble_get_width","path":"scripts/scribble_get_width/scribble_get_width.yy",},"order":12,},
     {"id":{"name":"readme_please","path":"notes/readme_please/readme_please.yy",},"order":4,},
     {"id":{"name":"scribble_autotype_function","path":"scripts/scribble_autotype_function/scribble_autotype_function.yy",},"order":2,},
+    {"id":{"name":"EmuRenderSurface","path":"scripts/EmuRenderSurface/EmuRenderSurface.yy",},"order":13,},
     {"id":{"name":"scribble_page_set","path":"scripts/scribble_page_set/scribble_page_set.yy",},"order":3,},
     {"id":{"name":"EmuTabGroup","path":"scripts/EmuTabGroup/EmuTabGroup.yy",},"order":3,},
     {"id":{"name":"EmuException","path":"scripts/EmuException/EmuException.yy",},"order":7,},
