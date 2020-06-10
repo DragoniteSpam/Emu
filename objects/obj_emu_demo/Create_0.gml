@@ -18,13 +18,16 @@ tab_1.AddContent([
     bar_int,
     new EmuButton(32, u, 256, 32, "make popup dialog", function() {
         var u = undefined;
-        var dialog = new EmuDialog(320, 240, "Hey, listen!", function() { });
+        var dialog = new EmuDialog(640, 640, "Hey, listen!", function() { });
         dialog.AddContent([
             new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
-            new EmuInput(32, u, 256, 32, "Input:", "doggos", "", 10, EmuInputTypes.STRING, 128, 0, 256, 32, function() { }),
-            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", function() {
-                root.Close();
-            }),
+            new EmuRenderSurface(32, u, 576, 432,
+                function(x1, y1, x2, y2) { data.Render(); },
+                function(x1, y1, x2, y2) { data.Control(); },
+                function() { data = new EmuDemoMeshScene(); },
+                function() { data.Destroy(); }
+            ),
+            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
 ]);
@@ -39,8 +42,8 @@ bitfield_3_1.interactive = false;
 bitfield_3_2.SetFixedSpacing(32);
 bitfield_3_2.AddOptions([
     "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles",
-    new EmuBitfieldOption("all", 0xffffffff, v_bitfield_option_all_callback, v_bitfield_option_all_eval),
-    new EmuBitfieldOption("none", 0, v_bitfield_option_none_callback, v_bitfield_option_none_eval),
+    new EmuBitfieldOption("all", 0xffffffff, emu_bitfield_option_all_callback, emu_bitfield_option_all_eval),
+    new EmuBitfieldOption("none", 0, emu_bitfield_option_none_callback, emu_bitfield_option_none_eval),
 ]);
 bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 

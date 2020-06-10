@@ -133,20 +133,20 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
 }
 
 // You may find yourself using these particularly often
-function v_bitfield_option_all_callback() {
+function emu_bitfield_option_all_callback() {
     root.value = value;
     root.callback();
 }
 
-function v_bitfield_option_all_eval() {
+function emu_bitfield_option_all_eval() {
     return root.value == value;
 };
 
-function v_bitfield_option_none_callback() {
+function emu_bitfield_option_none_callback() {
     root.value = 0;
     root.callback();
 }
 
-function v_bitfield_option_none_eval() {
+function emu_bitfield_option_none_eval() {
     return root.value == value;
 };
