@@ -56,9 +56,9 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     GetTextY = function(_y) {
         switch (valignment) {
-            case fa_left: return _y + offset;
-            case fa_center: return _y + height / 2;
-            case fa_right: return _y + height - offset;
+            case fa_top: return _y + offset;
+            case fa_middle: return _y + height / 2;
+            case fa_bottom: return _y + height - offset;
         }
     }
     
