@@ -48,10 +48,12 @@ bitfield_3_2.AddOptions([
 ]);
 bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 
+var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, emu_null);
+picker_1.allow_alpha = true;
 tab_1.AddContent([
     bitfield_3_1,
     bitfield_3_2,
-    new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, emu_null),
+    picker_1,
 ]);
 
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, emu_null);
@@ -106,9 +108,11 @@ tab_15.AddContent([
     new EmuButton(32, u, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
 ]);
 
+var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, emu_null);
+picker_5.allow_alpha = true;
 tab_5.AddContent([
     new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, emu_null),
-    new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, emu_null),
+    picker_5,
     new EmuRenderSurface(32, u, 576, 432,
         function(x1, y1, x2, y2) { data.Render(); },
         function(x1, y1, x2, y2) { data.Control(); },

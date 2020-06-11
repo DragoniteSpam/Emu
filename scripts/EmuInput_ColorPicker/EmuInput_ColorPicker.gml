@@ -46,8 +46,6 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                 if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
                     Activate();
                     var dialog = new EmuDialog(480, 400, "Pick a color", emu_dialog_close_auto);
-                    dialog.el_alpha = alpha;
-                    dialog.el_allow_alpha = allow_alpha;
                     dialog.flags = (dialog.flags ^ EmuDialogFlags.ACTIVE_SHADE) | (allow_alpha * EmuDialogFlags.ACTIVE_SHADE);
                     
                     var ew = 256;
@@ -176,7 +174,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                             var chx = vx1 + axis_w * w;
                             var chy = vy1 + (1 - axis_h) * h;
-                            draw_sprite(spr_emu_crosshair_mask, 0, chx, chy);
+                            draw_sprite(spr_emu_mask_crosshair, 0, chx, chy);
                             gpu_set_blendmode(bm_normal);
                             #endregion
                             
@@ -209,7 +207,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             
                             var f = min(vy1 + h * axis_value, vy2 - 1);
                             gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
-                            draw_sprite_ext(spr_emu_mask_bar, 0, vx1, f, (vx2 - vx1) / sprite_get_width(spr_emu_mask_bar), 1, 0, c_white, 1);
+                            draw_sprite_ext(spr_emu_mask_bar_h, 0, vx1, f, (vx2 - vx1) / sprite_get_width(spr_emu_mask_bar_h), 1, 0, c_white, 1);
                             gpu_set_blendmode(bm_normal);
                             #endregion
                             
@@ -227,6 +225,44 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             draw_set_alpha(1);
                             draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
                             #endregion
+                            
+                            #region alpha
+                            if (allow_alpha) {
+                                vx1 = x1 + alpha_x;
+                                vy1 = y1 + alpha_y;
+                                vx2 = vx1 + main_size;
+                                vy2 = vy1 + alpha_height;
+                                var w = vx2 - vx1;
+                                var h = vy2 - vy1;
+                                
+                                if (GetMousePressed(vx1, vy1, vx2, vy2)) {
+                                    selecting_alpha = true;
+                                }
+                                
+                                if (selecting_alpha) {
+                                    alpha = clamp((mouse_x - vx1) / w, 0, 1);
+                                    selecting_alpha = GetMouseHold(0, 0, window_get_width(), window_get_height());
+                                }
+                                
+                                scribble_draw(GetTextX(x + base_x), floor(mean(vy1, vy2)), "A");
+                                //draw_checkerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 2.25, 2.25);
+                                draw_primitive_begin(pr_trianglelist);
+                                draw_vertex_colour(vx1, vy1, value, 0);
+                                draw_vertex_colour(vx2 + 1, vy1, value, 1);
+                                draw_vertex_colour(vx2 + 1, vy2 + 1, value, 1);
+                                draw_vertex_colour(vx2 + 1, vy2 + 1, value, 1);
+                                draw_vertex_colour(vx1, vy2 + 1, value, 0);
+                                draw_vertex_colour(vx1, vy1, value, 0);
+                                draw_primitive_end();
+                                draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
+                                
+                                var f = min(vx1 + w * alpha, vx2 - 1);
+                                gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
+                                draw_sprite_ext(spr_emu_mask_bar_v, 0, f, vy1, 1, (vy2 - vy1) / sprite_get_height(spr_emu_mask_bar_v), 0, c_white, 1);
+                                gpu_set_blendmode(bm_normal);
+                            }
+                            #endregion
+                            
                         }
                     }
                     
