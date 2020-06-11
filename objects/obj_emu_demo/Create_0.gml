@@ -122,9 +122,38 @@ tab_5.AddContent([
     new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, emu_null),
     picker_5,
     new EmuRenderSurface(32, u, 576, 432,
-        function(x1, y1, x2, y2) { data.Render(); },
-        function(x1, y1, x2, y2) { data.Control(); },
+        function(mx, my) { data.Render(); },
+        function(mx, my) { data.Control(); },
         function() { data = new EmuDemoMeshScene(); },
         function() { data.Destroy(); }
     ),
 ]);
+
+var render_surface = new EmuRenderSurface(32, 32, 256, 256,
+    function(mx, my) {
+        if (mouse_check_button(mb_left)) {
+            draw_circle_colour(mx, my, 2, c_black, c_black, false);
+            draw_line_width_colour(mx_previous, my_previous, mx, my, 4, c_black, c_black);
+        }
+        mx_previous = mx;
+        my_previous = my;
+    },
+    function(mx, my) {
+        buffer_seek(surface_buffer, buffer_seek_start, 0);
+        buffer_get_surface(surface_buffer, GetSurface(), buffer_surface_copy, 0, 0);
+    },
+    function() {
+        draw_clear(c_yellow);
+        mx_previous = 0;
+        my_previous = 0;
+        surface_buffer = buffer_create(width * height * 4, buffer_fixed, 1);
+    },
+    function() {
+        buffer_delete(surface_buffer);
+    }
+);
+
+render_surface.SetRecreate(function() {
+    buffer_set_surface(surface_buffer, GetSurface(), buffer_surface_copy, 0, 0);
+});
+tab_11.AddContent(render_surface);
