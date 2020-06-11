@@ -7,7 +7,6 @@
     {"id":{"name":"emu_init","path":"scripts/emu_init/emu_init.yy",},"order":3,},
     {"id":{"name":"scribble_draw_get_state","path":"scripts/scribble_draw_get_state/scribble_draw_get_state.yy",},"order":1,},
     {"id":{"name":"scribble_add_spritefont","path":"scripts/scribble_add_spritefont/scribble_add_spritefont.yy",},"order":2,},
-    {"id":{"name":"EmuRectangle","path":"scripts/EmuRectangle/EmuRectangle.yy",},"order":2,},
     {"id":{"name":"EmuDialog","path":"scripts/EmuDialog/EmuDialog.yy",},"order":16,},
     {"id":{"name":"spr_emu_enter","path":"sprites/spr_emu_enter/spr_emu_enter.yy",},"order":10,},
     {"id":{"name":"spr_emu_birb","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"order":6,},
