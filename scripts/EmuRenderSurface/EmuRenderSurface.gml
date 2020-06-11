@@ -1,10 +1,10 @@
-function EmuRenderSurface(_x, _y, _w, _h, _render, _control, _create, _destroy) : EmuCore(_x, _y, _w, _h) constructor {
+function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : EmuCore(_x, _y, _w, _h) constructor {
     SetRender = function(_render) {
         callback_render = method(self, _render);
     }
     
-    SetControl = function(_control) {
-        callback_control = method(self, _control);
+    SetStep = function(_step) {
+        callback_step = method(self, _step);
     }
     
     SetRecreate = function(_recreate) {
@@ -16,7 +16,7 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _control, _create, _destroy) 
     }
     
     SetRender(_render);
-    SetControl(_control);
+    SetStep(_step);
     method(self, _create)();
     SetDestroy(_destroy);
     
@@ -46,7 +46,7 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _control, _create, _destroy) 
             callback_recreate();
         }
         
-        callback_control(x1, y1, x2, y2);
+        callback_step(x1, y1, x2, y2);
         
         surface_set_target(surface);
         var camera = camera_get_active();
