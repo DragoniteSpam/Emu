@@ -86,4 +86,8 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         scribble_set_wrap(width, height);
         scribble_draw(tx + offset + sprite_get_width(spr_emu_radio), ty, text);
     }
+    
+    GetInteractive = function() {
+        return interactive && root.IsActiveDialog();
+    }
 }
