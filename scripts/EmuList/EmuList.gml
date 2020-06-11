@@ -75,19 +75,19 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         callback();
     }
     
-    Select = function(list_index, _set_index) {
+    Select = function(_list_index, _set_index) {
         if (_set_index == undefined) _set_index = false;
-        if (ds_map_exists(selected_entries, "first")) selected_entries[? "first"] = list_index;
-        selected_entries[? "last"] = list_index;
-        selected_entries[? list_index] = true;
-        if (_set_index && clamp(list_index, index, index + slots - 1) != list_index) {
-            index = max(0, min(list_index, ds_list_size(entries) - slots));
+        if (!ds_map_exists(selected_entries, "first")) selected_entries[? "first"] = _list_index;
+        selected_entries[? "last"] = _list_index;
+        selected_entries[? _list_index] = true;
+        if (_set_index && clamp(_list_index, index, index + slots - 1) != _list_index) {
+            index = max(0, min(_list_index, ds_list_size(entries) - slots));
         }
         callback();
     }
     
-    Deselect = function(list_index) {
-        ds_map_delete(selected_entries, list_index);
+    Deselect = function(_list_index) {
+        ds_map_delete(selected_entries, _list_index);
         callback();
     }
     
@@ -163,8 +163,8 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         
                 switch (entries_are) {
                     case EmuListEntryType.STRINGS: index_text += string(entries[| current_index]); break;
-                    case EmuListEntryType.INSTANCES: index_text += entries[| current_index].name; break;
-                    case EmuListEntryType.SCRIPT: index_text = index_text + string(entries[| current_index](current_index)); break;
+                    case EmuListEntryType.STRUCTS: index_text += entries[| current_index].name; break;
+                    case EmuListEntryType.SCRIPTS: index_text = index_text + string(entries[| current_index](current_index)); break;
                 }
                 var base_color = global.scribble_state_starting_color;
                 global.scribble_state_starting_color = c;
@@ -218,7 +218,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 // toggle single selections
                 } else {
                     if (!GetSelected(mn)) {
-                        ds_map_add(selected_entries, mn, true);
+                        Select(mn);
                     } else if (select_toggle && allow_deselect) {
                         Deselect(mn);
                     }

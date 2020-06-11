@@ -67,7 +67,10 @@ tab_1.AddContent([
 ]);
 
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() {
-    show_message("Selection: " + string(GetSelection()));
+    var selected_index = GetSelection();
+    if (selected_index >= 0) {
+        show_message("Selection: " + string(selected_index));
+    }
 });
 list_2.tooltip = "This list has a tooltip";
 list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
