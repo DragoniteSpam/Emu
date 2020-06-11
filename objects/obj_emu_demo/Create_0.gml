@@ -48,7 +48,7 @@ bitfield_3_2.AddOptions([
 ]);
 bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 
-var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", c_maroon, 128, 0, 256, 32, function() {
+var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", 0xff000000 | c_maroon, 128, 0, 256, 32, function() {
     
 });
 picker_1.allow_alpha = true;

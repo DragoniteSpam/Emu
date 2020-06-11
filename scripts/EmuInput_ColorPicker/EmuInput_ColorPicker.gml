@@ -7,7 +7,6 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
     value_x2 = _vx2;
     value_y2 = _vy2;
     
-    alpha = 1;
     allow_alpha = false;
     active_shade = true;
     
@@ -24,7 +23,6 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
         var vy2 = y1 + value_y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
-        var a = allow_alpha ? ((value >> 24) & 0xff) / 0xff : 1;
         
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
@@ -34,11 +32,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
         
         DrawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, EMU_COLOR_BACK, 1);
         DrawCheckerbox(vx1, vy1, (vx2 - vx1), (vy2 - vy1));
-        DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, value, value, value, a);
-        if (!GetInteractive()) {
-            DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, 1);
-            DrawNineslice(1, vx1 + 3, vy1 + 3, vx2 - 3, vy2 - 3, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, 1);
-        }
+        DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
         DrawNineslice(0, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color, 1);
         
         if (GetInteractive()) {
@@ -294,18 +288,18 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         if (string_length(value) == 6) {
                             var value_as_real = emu_hex(value);
                             root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
-                            root.base_color_element.value = value_as_real;
+                        root.base_color_element.value = value_as_real | (floor(alpha * 0xff) << 24);
                         }
                     });
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
                     dialog.el_picker = new controls(32, u, ew, eh, value, allow_alpha, function() {
-                        root.base_color_element.value = value;
-                        root.base_color_element.alpha = alpha;
+                        root.base_color_element.value = value | (floor(alpha * 0xff) << 24);
                         root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
                     });
                     
+                    dialog.el_picker.alpha = ((value & 0xff000000) >> 24) / 0xff;
                     dialog.el_picker.axis_value = (value & 0x0000ff) / 0xff;
                     dialog.el_picker.axis_w = ((value & 0x00ff00) >> 8) / 0xff;
                     dialog.el_picker.axis_h = ((value & 0xff0000) >> 16) / 0xff;
