@@ -167,7 +167,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     time_click_left_last = -10000;
     
     GetInteractive = function() {
-        return interactive && IsActiveDialog();
+        return enabled && interactive && IsActiveDialog();
     }
     
     GetMouseHover = function(x1, y1, x2, y2) {

@@ -56,6 +56,6 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     }
     
     GetInteractive = function() {
-        return interactive && root.IsActiveDialog();
+        return enabled && interactive && root.IsActiveDialog();
     }
 }
