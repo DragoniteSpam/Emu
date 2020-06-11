@@ -17,9 +17,7 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
     callback_destroy = method(self, _destroy);
     
     callback_recreate = function() {
-        surface_set_target(surface);
         draw_clear(c_black);
-        surface_reset_target();
     }
     
     surface = surface_create(width, height);
@@ -39,7 +37,9 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
         
         if (!surface_exists(surface)) {
             surface = surface_create(width, height);
+            surface_set_target(surface);
             callback_recreate();
+            surface_reset_target();
         }
         
         callback_step(x1, y1, x2, y2);
