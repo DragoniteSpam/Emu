@@ -1,11 +1,15 @@
-group = new EmuTabGroup(32, 32, 640, 640, 2, 32);
+var u = undefined;
+
+container = new EmuCore(32, 32, 640, 640);
+
+var group = new EmuTabGroup(0, u, 640, 640, 2, 32);
 var tab_1 = group.AddTab(new EmuTab("Tab1"), 0);
 var tab_2 = group.AddTab(new EmuTab("Tab2"), 0);
 var tab_3 = group.AddTab(new EmuTab("Tab3"), 0);
 var tab_4 = group.AddTab(new EmuTab("Multi-line"), 1);
 var tab_5 = group.AddTab(new EmuTab("Render Surface"), 1);
 
-var u = undefined;
+container.AddContent(group);
 
 var bar_int = new EmuProgressBar(32, u, 256, 32, 12, 0, 10, true, 7, emu_null);
 bar_int.integers_only = true;
@@ -43,8 +47,8 @@ bitfield_3_1.interactive = false;
 bitfield_3_2.SetFixedSpacing(32);
 bitfield_3_2.AddOptions([
     "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles",
-    new EmuBitfieldOption("all", 0xffffffff, emu_bitfield_option_all_callback, emu_bitfield_option_all_eval),
-    new EmuBitfieldOption("none", 0, emu_bitfield_option_none_callback, emu_bitfield_option_none_eval),
+    new EmuBitfieldOption("all", 0x1ff, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
+    new EmuBitfieldOption("none", 0, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
 ]);
 bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 

@@ -28,8 +28,7 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
             if (!is_struct(elements[i])) {
                 elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (ds_list_size(contents) + i),
                 function() {
-                    state = !state;
-                    root.Calculate();
+                    root.value ^= value;
                     root.callback();
                 },
                 function() {
@@ -62,13 +61,6 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
         }
     }
     
-    Calculate = function() {
-        value = 0;
-        for (var i = 0; i < ds_list_size(contents); i++) {
-            value |= contents[| i].value * contents[| i].state;
-        }
-    }
-    
     GetHeight = function() {
         var first = contents[| 0];
         var last = contents[| ds_list_size(contents) - 1];
@@ -92,7 +84,6 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
     
     text = _text;
     SetEval(_eval);
-    state = 0;
     
     color_active = EMU_COLOR_SELECTED;
     color_inactive = EMU_COLOR_BACK;
@@ -103,9 +94,7 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        state = evaluate();
-        
-        var back_color = state ? color_active : color_inactive;
+        var back_color = evaluate() ? color_active : color_inactive;
         
         if (root.GetInteractive()) {
             back_color = merge_colour(back_color, GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : back_color, 0.5);
@@ -133,20 +122,11 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
 }
 
 // You may find yourself using these particularly often
-function emu_bitfield_option_all_callback() {
+function emu_bitfield_option_exact_callback() {
     root.value = value;
     root.callback();
 }
 
-function emu_bitfield_option_all_eval() {
-    return root.value == value;
-};
-
-function emu_bitfield_option_none_callback() {
-    root.value = 0;
-    root.callback();
-}
-
-function emu_bitfield_option_none_eval() {
+function emu_bitfield_option_exact_eval() {
     return root.value == value;
 };
