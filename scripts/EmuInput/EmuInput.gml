@@ -23,7 +23,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetValue = function(_value) {
-        _value = string(value);
+        value = string(_value);
         value = _value;
         if (IsActiveElement()) {
             keyboard_string = value;
@@ -89,6 +89,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         surface_reset_target();
         
         var display_text = working_value + (IsActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter

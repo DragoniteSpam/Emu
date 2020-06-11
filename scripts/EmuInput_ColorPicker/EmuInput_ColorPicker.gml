@@ -97,6 +97,28 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         axis_channel = EmuColorChannels.R;
                         all_colors = true;
                         
+                        SetValue = function(_value) {
+                            value = _value;
+                            
+                            switch (axis_channel) {
+                                case EmuColorChannels.R:
+                                    axis_value = (value & 0x0000ff) / 0xff;
+                                    axis_w = ((value & 0x00ff00) >> 8) / 0xff;
+                                    axis_h = ((value & 0xff0000) >> 16) / 0xff;
+                                    break;
+                                case EmuColorChannels.G:
+                                    axis_h = (value & 0x0000ff) / 0xff;
+                                    axis_value = ((value & 0x00ff00) >> 8) / 0xff;
+                                    axis_w = ((value & 0xff0000) >> 16) / 0xff;
+                                    break;
+                                case EmuColorChannels.B:
+                                    axis_w = (value & 0x0000ff) / 0xff;
+                                    axis_h = ((value & 0x00ff00) >> 8) / 0xff;
+                                    axis_value = ((value & 0xff0000) >> 16) / 0xff;
+                                    break;
+                            }
+                        }
+                        
                         Render = function(base_x, base_y) {
                             var x1 = x + base_x;
                             var y1 = y + base_y;
@@ -152,16 +174,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                                 selecting_color = GetMouseHold(0, 0, window_get_width(), window_get_height());
                             }
                             
-                            var current_axis = axis_value;
-                            var ww = axis_w;
-                            var hh = axis_h;
-
-                            current_axis = floor(current_axis * buckets) / buckets;
-                            ww = floor(ww * buckets) / buckets;
-                            hh = floor(hh * buckets) / buckets;
-                            current_axis = current_axis * 0xff;
-                            ww = ww * 0xff;
-                            hh = hh * 0xff;
+                            var current_axis = floor(axis_value * buckets) * 0xff / buckets;
+                            var ww = floor(axis_w * buckets) * 0xff / buckets;
+                            var hh = floor(axis_h * buckets) * 0xff / buckets;
                             
                             switch (axis_channel) {
                                 case EmuColorChannels.R: value = (hh << 16) | (ww << 8) | current_axis; break;
@@ -275,12 +290,19 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         }
                     }
                     
-                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, EmuInputTypes.HEX, vx1, vy1, vx2, vy2, emu_null);
+                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, EmuInputTypes.HEX, vx1, vy1, vx2, vy2, function() {
+                        if (string_length(value) == 6) {
+                            var value_as_real = emu_hex(value);
+                            root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
+                            root.base_color_element.value = value_as_real;
+                        }
+                    });
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
                     dialog.el_picker = new controls(32, u, ew, eh, value, allow_alpha, function() {
                         root.base_color_element.value = value;
                         root.base_color_element.alpha = alpha;
+                        root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
                     });
                     
