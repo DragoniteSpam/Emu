@@ -48,7 +48,9 @@ bitfield_3_2.AddOptions([
 ]);
 bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
 
-var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, emu_null);
+var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", c_red, 128, 0, 256, 32, function() {
+    
+});
 picker_1.allow_alpha = true;
 tab_1.AddContent([
     bitfield_3_1,

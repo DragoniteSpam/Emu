@@ -47,6 +47,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                     Activate();
                     var dialog = new EmuDialog(480, 400, "Pick a color", emu_dialog_close_auto);
                     dialog.flags = (dialog.flags ^ EmuDialogFlags.ACTIVE_SHADE) | (allow_alpha * EmuDialogFlags.ACTIVE_SHADE);
+                    dialog.base_color_element = self;
                     
                     var ew = 256;
                     var eh = 32;
@@ -102,6 +103,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             var x2 = x1 + width;
                             var y2 = y1 + height;
                             var buckets = all_colors ? 255 : 8;
+                            
+                            var color_initial = value;
+                            var alpha_initial = alpha;
                             
                             #region color picker
                             var vx1 = x1 + color_x;
@@ -265,6 +269,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             }
                             #endregion
                             
+                            if (color_initial != value || alpha_initial != alpha) {
+                                callback();
+                            }
                         }
                     }
                     
@@ -272,7 +279,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
                     dialog.el_picker = new controls(32, u, ew, eh, value, allow_alpha, function() {
-                        
+                        root.base_color_element.value = value;
+                        root.base_color_element.alpha = alpha;
+                        root.base_color_element.callback();
                     });
                     
                     dialog.el_picker.axis_value = (value & 0x0000ff) / 0xff;

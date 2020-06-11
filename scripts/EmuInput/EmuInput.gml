@@ -259,7 +259,7 @@ function emu_string_hex(_value, _padding) {
     }
     
     while (string_length(output) < _padding) {
-        output = "0" + _padding;
+        output = "0" + output;
     }
 
     return ((s < 0) ? "-" : "") + output;
