@@ -214,7 +214,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 }
                 
                 last_index = mn;
-                //ui_activate(list);
+                Activate();
                 callback();
             } else if (GetMouseRightReleased(lx1, ly1, lx2, ly2)) {
                 if (allow_deselect) {
