@@ -14,7 +14,9 @@ group.AddTabs(1, [tab_4, tab_5]);
 container.AddContent(group);
 
 var bar_int = new EmuProgressBar(32, u, 256, 32, 12, 0, 10, true, 7, emu_null);
-bar_int.integers_only = true;
+
+bar_int.SetIntegersOnly(true);
+
 tab_1.AddContent([
     new EmuText(32, u, 256, 32, "Text label"),
     new EmuText(32, u, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
@@ -64,9 +66,11 @@ tab_1.AddContent([
     picker_1,
 ]);
 
-var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, emu_null);
+var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() {
+    show_message("Selection: " + string(GetSelection()));
+});
 list_2.tooltip = "This list has a tooltip";
-list_2.AddContent(["Alice", "Bob", "Charlie", "And", "Your", "Little", "Dog", "Too"]);
+list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
 list_2.SetCallbackDouble(function() {
     show_message("double click");
 });

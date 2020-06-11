@@ -1,5 +1,5 @@
 function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback, _list) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
-    enum EmuListEntries { STRINGS, STRUCTS, SCRIPTS };
+    enum EmuListEntryType { STRINGS, STRUCTS, SCRIPTS };
     text = _text;
     text_vacant = _text_vacant;
     element_height = _element_height;
@@ -15,7 +15,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     allow_deselect = true;
     select_toggle = false;
     selected_entries = ds_map_create();
-    entries_are = EmuListEntries.STRINGS;
+    entries_are = EmuListEntryType.STRINGS;
     numbered = false;
     surface = -1;
     
@@ -30,7 +30,15 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         entries = _list;
     }
     
-    AddContent = function(elements) {
+    SetEntryTypes = function(_type) {
+        entries_are = _type;
+    }
+    
+    AddEntries = function(elements) {
+        if (!own_contents) {
+            throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its entries.");
+        }
+        
         if (!is_array(elements)) elements = [elements];
         for (var i = 0; i < array_length(elements); i++) {
             ds_list_add(entries, elements[i]);
@@ -41,7 +49,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         if (own_entries) {
             ds_list_clear(entries);
         } else {
-            throw new EmuException("Trying to clear a list owned by someone else", "Please do not request to clear a list whose contents were passed in to the constructor.");
+            throw new EmuException("Trying to clear a list owned by someone else", "Please do not clear a list using an external list for its entries.");
         }
     }
     
@@ -64,6 +72,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     
     ClearSelection = function() {
         ds_map_clear(selected_entries);
+        callback();
     }
     
     Select = function(list_index, _set_index) {
@@ -74,10 +83,12 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         if (_set_index && clamp(list_index, index, index + slots - 1) != list_index) {
             index = max(0, min(list_index, ds_list_size(entries) - slots));
         }
+        callback();
     }
     
     Deselect = function(list_index) {
         ds_map_delete(selected_entries, list_index);
+        callback();
     }
     
     Render = function(base_x, base_y) {
@@ -151,9 +162,9 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 var index_text = numbered ? (string(current_index) + ". ") : "";
         
                 switch (entries_are) {
-                    case EmuListEntries.STRINGS: index_text += string(entries[| current_index]); break;
-                    case EmuListEntries.INSTANCES: index_text += entries[| current_index].name; break;
-                    case EmuListEntries.SCRIPT: index_text = index_text + string(entries[| current_index](list, current_index)); break;
+                    case EmuListEntryType.STRINGS: index_text += string(entries[| current_index]); break;
+                    case EmuListEntryType.INSTANCES: index_text += entries[| current_index].name; break;
+                    case EmuListEntryType.SCRIPT: index_text = index_text + string(entries[| current_index](current_index)); break;
                 }
                 var base_color = global.scribble_state_starting_color;
                 global.scribble_state_starting_color = c;
@@ -215,11 +226,9 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 
                 last_index = mn;
                 Activate();
-                callback();
             } else if (GetMouseRightReleased(lx1, ly1, lx2, ly2)) {
                 if (allow_deselect) {
                     ClearSelection();
-                    callback();
                 }
             }
             

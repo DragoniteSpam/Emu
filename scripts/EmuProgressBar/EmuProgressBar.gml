@@ -11,6 +11,10 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
     sprite_knob = spr_emu_knob;
     knob_scale = 1.5;
     
+    SetIntegersOnly = function(_integers) {
+        integers_only = _integers;
+    }
+    
     DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
         c = (c != undefined) ? c : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
