@@ -26,6 +26,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     previous = noone;
     sprite_nineslice = spr_emu_nineslice;
     element_spacing_y = 16;
+    sprite_checkers = spr_emu_checker;
     
     AddContent = function(elements) {
         if (!is_array(elements)) {
@@ -123,6 +124,30 @@ function EmuCore(_x, _y, _w, _h) constructor {
         draw_sprite_general(sprite_nineslice, index, 0, sh, sw, sh, x1, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
         draw_sprite_general(sprite_nineslice, index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
         draw_sprite_general(sprite_nineslice, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
+    }
+    
+    DrawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
+        if (_xscale == undefined) _xscale = 1;
+        if (_yscale == undefined) _yscale = 1;
+        if (_color == undefined) _color = c_white;
+        if (_alpha == undefined) _alpha = 1;
+        
+        var old_repeat = gpu_get_texrepeat();
+        gpu_set_texrepeat(true);
+        var _s = sprite_get_width(sprite_checkers);
+        var _xcount = _w / _s / _xscale;
+        var _ycount = _h / _s / _yscale;
+        
+        draw_primitive_begin_texture(pr_trianglelist, sprite_get_texture(sprite_checkers, 0));
+        draw_vertex_texture_colour(_x, _y, 0, 0, _color, _alpha);
+        draw_vertex_texture_colour(_x + _w, _y, _xcount, 0, _color, _alpha);
+        draw_vertex_texture_colour(_x + _w, _y + _h, _xcount, _ycount, _color, _alpha);
+        draw_vertex_texture_colour(_x + _w, _y + _h, _xcount, _ycount, _color, _alpha);
+        draw_vertex_texture_colour(_x, _y + _h, 0, _ycount, _color, _alpha);
+        draw_vertex_texture_colour(_x, _y, 0, 0, _color, _alpha);
+        draw_primitive_end();
+        
+        gpu_set_texrepeat(old_repeat);
     }
     
     IsActiveDialog = function() {

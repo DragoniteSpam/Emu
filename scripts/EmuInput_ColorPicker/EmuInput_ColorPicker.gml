@@ -33,7 +33,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
         scribble_draw(tx, ty, text);
         
         DrawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, EMU_COLOR_BACK, 1);
-        //draw_checkerbox(vx1, vy1, (vx2 - vx1), (vy2 - vy1));
+        DrawCheckerbox(vx1, vy1, (vx2 - vx1), (vy2 - vy1));
         DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, value, value, value, a);
         if (!GetInteractive()) {
             DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, EMU_COLOR_DISABLED, 1);
@@ -238,7 +238,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             var w = vx2 - vx1;
                             var h = vy2 - vy1;
                             
-                            //draw_checkerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 2.25, 2.25);
+                            DrawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                             draw_set_alpha(alpha);
                             draw_rectangle_colour(vx1, vy1, vx2, vy2, value, value, value, value, false);
                             draw_set_alpha(1);
@@ -265,8 +265,8 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                                     selecting_alpha = GetMouseHold(0, 0, window_get_width(), window_get_height());
                                 }
                                 
-                                scribble_draw(GetTextX(x + base_x), floor(mean(vy1, vy2)), "A");
-                                //draw_checkerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 2.25, 2.25);
+                                scribble_draw(GetTextX(x + base_x), floor(mean(vy1, vy2)), "A:");
+                                DrawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                                 draw_primitive_begin(pr_trianglelist);
                                 draw_vertex_colour(vx1, vy1, value, 0);
                                 draw_vertex_colour(vx2 + 1, vy1, value, 1);

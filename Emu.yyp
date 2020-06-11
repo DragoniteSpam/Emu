@@ -55,6 +55,7 @@
     {"id":{"name":"EmuProgressBar","path":"scripts/EmuProgressBar/EmuProgressBar.yy",},"order":11,},
     {"id":{"name":"EmuBitfield","path":"scripts/EmuBitfield/EmuBitfield.yy",},"order":8,},
     {"id":{"name":"shd_emu","path":"shaders/shd_emu/shd_emu.yy",},"order":5,},
+    {"id":{"name":"spr_emu_checker","path":"sprites/spr_emu_checker/spr_emu_checker.yy",},"order":16,},
     {"id":{"name":"scribble_set_animation","path":"scripts/scribble_set_animation/scribble_set_animation.yy",},"order":1,},
     {"id":{"name":"scribble_autotype_set_sound_per_char","path":"scripts/scribble_autotype_set_sound_per_char/scribble_autotype_set_sound_per_char.yy",},"order":7,},
     {"id":{"name":"scribble_set_starting_format","path":"scripts/scribble_set_starting_format/scribble_set_starting_format.yy",},"order":5,},
