@@ -1,7 +1,7 @@
 function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     thickness = _thickness;
-    value_min = _min;
-    value_max = _max;
+    value_min = min(_min, _max);
+    value_max = max(_min, _max);
     draggable = _draggable;
     
     integers_only = false;

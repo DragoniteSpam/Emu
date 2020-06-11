@@ -86,11 +86,11 @@ tab_2.AddContent([
     list_2,
 ]);
 
-var radio_4 = new EmuRadioArray(32, u, 256, 32, "Pick one", 0, function() {
-    show_message("Option set to " + string(value));
+var radio_4 = new EmuRadioArray(32, u, 256, 32, "Select your favorite planet:", 0, function() {
+    show_message("You have chosen planet #" + string(value) + ".");
 });
-radio_4.AddOptions(["Sausage", "Pepperoni", "Cheese", "Olives", "Tomatoes", "Garlic"]);
-radio_4.SetColumns(4, 160);
+radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
+radio_4.SetColumns(3, 160);
 tab_4.AddContent(radio_4);
 
 var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, EmuInputTypes.STRING, 128, 0, 560, 128, function() { show_debug_message(value); });
