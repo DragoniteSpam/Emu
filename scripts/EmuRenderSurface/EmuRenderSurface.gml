@@ -11,14 +11,10 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
         callback_recreate = method(self, _recreate);
     }
     
-    SetDestroy = function(_destroy) {
-        callback_destroy = method(self, _destroy);
-    }
-    
     SetRender(_render);
     SetStep(_step);
     method(self, _create)();
-    SetDestroy(_destroy);
+    callback_destroy = method(self, _destroy);
     
     callback_recreate = function() {
         surface_set_target(surface);
