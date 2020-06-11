@@ -69,6 +69,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         
                         override_escape = true;
                         
+                        alpha = 1;
                         color_x = 0;
                         color_y = 0;
                         main_size = 176;
@@ -96,13 +97,13 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         axis_h = 0;
                         axis_channel = EmuColorChannels.R;
                         all_colors = true;
-                        buckets = 8;
                         
                         Render = function(base_x, base_y) {
                             var x1 = x + base_x;
                             var y1 = y + base_y;
                             var x2 = x1 + width;
                             var y2 = y1 + height;
+                            var buckets = all_colors ? 255 : 8;
                             
                             #region color picker
                             var vx1 = x1 + color_x;
@@ -153,12 +154,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             var ww = axis_w;
                             var hh = axis_h;
 
-                            if (!all_colors) {
-                                current_axis = floor(current_axis * buckets) / buckets;
-                                ww = floor(ww * buckets) / buckets;
-                                hh = floor(hh * buckets) / buckets;
-                            }
-                            
+                            current_axis = floor(current_axis * buckets) / buckets;
+                            ww = floor(ww * buckets) / buckets;
+                            hh = floor(hh * buckets) / buckets;
                             current_axis = current_axis * 0xff;
                             ww = ww * 0xff;
                             hh = hh * 0xff;
@@ -170,7 +168,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             }
                             
                             shader_set(shd_emu_color_buckets);
-                            shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "buckets"), all_colors ? 0xff : buckets);
+                            shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "buckets"), buckets);
                             draw_rectangle_colour(vx1, vy1, vx2, vy2, c1, c2, c3, c4, false);
                             shader_reset();
                             draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
@@ -181,7 +179,54 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             draw_sprite(spr_emu_crosshair_mask, 0, chx, chy);
                             gpu_set_blendmode(bm_normal);
                             #endregion
-
+                            
+                            #region color axis
+                            vx1 = x1 + axis_x;
+                            vy1 = y1 + axis_y;
+                            vx2 = vx1 + axis_width;
+                            vy2 = vy1 + main_size;
+                            var w = vx2 - vx1;
+                            var h = vy2 - vy1;
+                            
+                            if (GetInteractive()) {
+                                if (GetMousePressed(vx1, vy1, vx2, vy2)) {
+                                    selecting_axis = true;
+                                }
+                            }
+                            
+                            if (selecting_axis) {
+                                axis_value = clamp((mouse_y - vy1) / h, 0, 1);
+                                selecting_axis = GetMouseHold(0, 0, window_get_width(), window_get_height());
+                            }
+                            
+                            shader_set(shd_emu_color_buckets);
+                            shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "buckets"), buckets);
+                            var channels = [0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000];
+                            var c = channels[axis_channel];
+                            draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c, c, false);
+                            shader_reset();
+                            draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
+                            
+                            var f = min(vy1 + h * axis_value, vy2 - 1);
+                            gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
+                            draw_sprite_ext(spr_emu_mask_bar, 0, vx1, f, (vx2 - vx1) / sprite_get_width(spr_emu_mask_bar), 1, 0, c_white, 1);
+                            gpu_set_blendmode(bm_normal);
+                            #endregion
+                            
+                            #region output color
+                            vx1 = x1 + output_x;
+                            vy1 = y1 + output_y;
+                            vx2 = vx1 + main_size;
+                            vy2 = vy1 + output_height;
+                            var w = vx2 - vx1;
+                            var h = vy2 - vy1;
+                            
+                            //draw_checkerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 2.25, 2.25);
+                            draw_set_alpha(alpha);
+                            draw_rectangle_colour(vx1, vy1, vx2, vy2, value, value, value, value, false);
+                            draw_set_alpha(1);
+                            draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
+                            #endregion
                         }
                     }
                     

@@ -84,6 +84,7 @@
     {"id":{"name":"spr_emu_progress","path":"sprites/spr_emu_progress/spr_emu_progress.yy",},"order":5,},
     {"id":{"name":"spr_emu_crosshair_mask","path":"sprites/spr_emu_crosshair_mask/spr_emu_crosshair_mask.yy",},"order":13,},
     {"id":{"name":"scribble_draw","path":"scripts/scribble_draw/scribble_draw.yy",},"order":9,},
+    {"id":{"name":"spr_emu_mask_bar","path":"sprites/spr_emu_mask_bar/spr_emu_mask_bar.yy",},"order":14,},
     {"id":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"order":4,},
     {"id":{"name":"obj_emu_demo","path":"objects/obj_emu_demo/obj_emu_demo.yy",},"order":3,},
     {"id":{"name":"scribble_set_wrap","path":"scripts/scribble_set_wrap/scribble_set_wrap.yy",},"order":8,},
