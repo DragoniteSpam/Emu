@@ -30,7 +30,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
             root.RequestActivateTab(self);
         }
         
-        if (IsActive() || row < root.rows - 1) {
+        if (IsActiveTab() || row < root.rows - 1) {
             var index = 3;
         } else {
             var index = 5;
@@ -43,7 +43,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);
         #endregion
         
-        if (IsActive()) {
+        if (IsActiveTab()) {
             RenderContents(x1, y1);
         }
     }
@@ -51,7 +51,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     // This is NOT the same as IsActiveElement() - this checks for the active
     // tab in the tab group, rather than the UI element which will respond to
     // keyboard input
-    IsActive = function() {
+    IsActiveTab = function() {
         return (root.active_tab == self);
     }
     
