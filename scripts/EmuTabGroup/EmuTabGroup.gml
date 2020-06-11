@@ -10,16 +10,26 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
     active_tab = noone;
     active_tab_request = noone;
     
-    AddTab = function(tab, row) {
+    AddTabs = function(row, tabs) {
         if (row > rows) {
             throw new EmuException("Tab row out of bounds", "Trying to add to tab row " + string(row) + ", but only up to " + string(rows) + " are available");
         }
-        tab.root = self;
-        tab.row = row;
-        tab.index = ds_list_size(contents[| row].contents);
-        ds_list_add(contents[| row].contents, tab);
+        if (!is_array(tabs)) {
+            tabs = [tabs];
+        }
+        
+        var _tab_row = contents[| row];
+        for (var i = 0; i < array_length(tabs); i++) {
+            var _tab = tabs[i];
+            _tab.root = self;
+            _tab.row = row;
+            _tab.index = ds_list_size(contents[| row].contents);
+            ds_list_add(_tab_row.contents, _tab);
+            if (!active_tab && !active_tab_request) {
+                RequestActivateTab(_tab);
+            }
+        }
         ArrangeRow(row);
-        return tab;
     }
     
     ArrangeRow = function(row) {
@@ -66,6 +76,13 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         var x2 = x1 + width;
         var y2 = y1 + height;
         
+        // Save this for the beginning of the next frame, because if you do it
+        // in the middle you'll find the tabs become misaligned for one frame
+        if (active_tab_request) {
+            ActivateTab(active_tab_request);
+            active_tab_request = noone;
+        }
+        
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Render(x1, y1 + rows * row_height);
         }
@@ -73,12 +90,5 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         // no sense making a tab group non-interactive
         DrawNineslice(2, x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
         DrawNineslice(2, x1, y1 + rows * row_height, x2, y2, color, 1);
-        
-        // Save this for after everything has been drawn, because if you do it
-        // in the middle you'll find the tabs become misaligned for one frame
-        if (active_tab_request) {
-            ActivateTab(active_tab_request);
-            active_tab_request = noone;
-        }
     }
 }

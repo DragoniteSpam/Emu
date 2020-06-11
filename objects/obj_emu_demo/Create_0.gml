@@ -3,11 +3,13 @@ var u = undefined;
 container = new EmuCore(32, 32, 640, 640);
 
 var group = new EmuTabGroup(0, u, 640, 640, 2, 32);
-var tab_1 = group.AddTab(new EmuTab("Tab1"), 0);
-var tab_2 = group.AddTab(new EmuTab("Tab2"), 0);
-var tab_3 = group.AddTab(new EmuTab("Tab3"), 0);
-var tab_4 = group.AddTab(new EmuTab("Multi-line"), 1);
-var tab_5 = group.AddTab(new EmuTab("Render Surface"), 1);
+var tab_1 = new EmuTab("Tab1");
+var tab_2 = new EmuTab("Tab2");
+var tab_3 = new EmuTab("Tab3");
+var tab_4 = new EmuTab("Multi-line");
+var tab_5 = new EmuTab("Render Surface");
+group.AddTabs(0, [tab_1, tab_2, tab_3]);
+group.AddTabs(1, [tab_4, tab_5]);
 
 container.AddContent(group);
 
@@ -84,8 +86,6 @@ tab_2.AddContent([
     list_2,
 ]);
 
-group.ActivateTab(tab_1);
-
 var radio_4 = new EmuRadioArray(32, u, 256, 32, "Pick one", 0, function() {
     show_message("Option set to " + string(value));
 });
@@ -99,16 +99,18 @@ tab_4.AddContent(input_4);
 
 var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)
 tab_3.AddContent(group_inner);
-var tab_11 = group_inner.AddTab(new EmuTab("Tab 11"), 0);
-var tab_12 = group_inner.AddTab(new EmuTab("Tab 12"), 0);
-var tab_13 = group_inner.AddTab(new EmuTab("Tab 13"), 0);
-var tab_14 = group_inner.AddTab(new EmuTab("Tab 14"), 1);
-var tab_15 = group_inner.AddTab(new EmuTab("Tab 15"), 1);
-var tab_16 = group_inner.AddTab(new EmuTab("Tab 16"), 2);
-var tab_17 = group_inner.AddTab(new EmuTab("Tab 17"), 2);
-var tab_18 = group_inner.AddTab(new EmuTab("Tab 18"), 2);
-var tab_19 = group_inner.AddTab(new EmuTab("Tab 19"), 2);
-group_inner.ActivateTab(tab_11);
+var tab_11 = new EmuTab("Tab 11");
+var tab_12 = new EmuTab("Tab 12");
+var tab_13 = new EmuTab("Tab 13");
+var tab_14 = new EmuTab("Tab 14");
+var tab_15 = new EmuTab("Tab 15");
+var tab_16 = new EmuTab("Tab 16");
+var tab_17 = new EmuTab("Tab 17");
+var tab_18 = new EmuTab("Tab 18");
+var tab_19 = new EmuTab("Tab 19");
+group_inner.AddTabs(0, [tab_11, tab_12]);
+group_inner.AddTabs(1, [tab_13, tab_14, tab_15]);
+group_inner.AddTabs(2, [tab_16, tab_17, tab_18, tab_19]);
 
 tab_15.AddContent([
     new EmuButton(32, u, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
