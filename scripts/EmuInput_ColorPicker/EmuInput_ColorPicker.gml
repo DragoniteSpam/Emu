@@ -136,7 +136,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                                     break;
                             }
                             
-                            if (GetInteractive()) {
+                            if (GetMouseHover(vx1, vy1, vx2, vy2)) {
                                 if (GetMouseHold(vx1, vy1, vx2, vy2)) {
                                     selecting_color = true;
                                 }
@@ -186,7 +186,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                             var w = vx2 - vx1;
                             var h = vy2 - vy1;
                             
-                            if (GetInteractive()) {
+                            if (GetMouseHover(vx1, vy1, vx2, vy2)) {
                                 if (GetMousePressed(vx1, vy1, vx2, vy2)) {
                                     selecting_axis = true;
                                 }
@@ -235,8 +235,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                                 var w = vx2 - vx1;
                                 var h = vy2 - vy1;
                                 
-                                if (GetMousePressed(vx1, vy1, vx2, vy2)) {
-                                    selecting_alpha = true;
+                                if (GetMouseHover(vx1, vy1, vx2, vy2)) {
+                                    if (GetMousePressed(vx1, vy1, vx2, vy2)) {
+                                        selecting_alpha = true;
+                                    }
                                 }
                                 
                                 if (selecting_alpha) {
@@ -278,11 +280,11 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                     dialog.el_picker.axis_h = ((value & 0xff0000) >> 16) / 0xff;
                     
                     dialog.el_channels = new EmuRadioArray(320, 32, ew / 2, eh, "Axis Channel", 0, function() {
-                        
+                        root.el_picker.axis_channel = value;
                     });
                     dialog.el_channels.AddOptions(["Red", "Green", "Blue"]);
                     dialog.el_all = new EmuCheckbox(320, u, ew / 2, eh, "All colors?", true, function() {
-                        
+                        root.el_picker.all_colors = value;
                     });
                     
                     var b_width = 128;
