@@ -16,7 +16,7 @@ global.__emu_active_element = noone;
 #macro EMU_COLOR_WINDOWSKIN 0x339900
 
 #macro EMU_DIALOG_SHADE_ALPHA 0.5
-#macro EMU_DIALOG_SHADE_COLOR c_black
+#macro EMU_DIALOG_SHADE_COLOR 0x000000
 
 #macro EMU_FONT_DEFAULT fnt_emu_default
 

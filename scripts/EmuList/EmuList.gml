@@ -1,5 +1,5 @@
 function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback, _list) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
-    enum E_ListEntryType { STRINGS, STRUCTS, SCRIPTS };
+    enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     text = _text;
     text_vacant = _text_vacant;
     element_height = _element_height;
@@ -15,7 +15,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     allow_deselect = true;
     select_toggle = false;
     selected_entries = ds_map_create();
-    entries_are = E_ListEntryType.STRINGS;
+    entries_are = E_ListEntryTypes.STRINGS;
     numbered = false;
     surface = -1;
     
@@ -168,9 +168,9 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 var index_text = numbered ? (string(current_index) + ". ") : "";
         
                 switch (entries_are) {
-                    case E_ListEntryType.STRINGS: index_text += string(entries[| current_index]); break;
-                    case E_ListEntryType.STRUCTS: index_text += entries[| current_index].name; break;
-                    case E_ListEntryType.SCRIPTS: index_text = index_text + string(entries[| current_index](current_index)); break;
+                    case E_ListEntryTypes.STRINGS: index_text += string(entries[| current_index]); break;
+                    case E_ListEntryTypes.STRUCTS: index_text += entries[| current_index].name; break;
+                    case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(entries[| current_index](current_index)); break;
                 }
                 var base_color = global.scribble_state_starting_color;
                 global.scribble_state_starting_color = c;
