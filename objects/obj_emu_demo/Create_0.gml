@@ -26,15 +26,10 @@ tab_1.AddContent([
     bar_int,
     new EmuButton(32, u, 256, 32, "make popup dialog", function() {
         var u = undefined;
-        var dialog = new EmuDialog(640, 640, "Hey, listen!");
+        var dialog = new EmuDialog(640, 320, "Hey, listen!");
         dialog.AddContent([
-            new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
-            new EmuRenderSurface(32, u, 576, 432,
-                function(x1, y1, x2, y2) { data.Render(); },
-                function(x1, y1, x2, y2) { data.Control(); },
-                function() { data = new EmuDemoMeshScene(); },
-                function() { data.Destroy(); }
-            ),
+            new EmuText(32, u, 576, 32, "These are words that you can read"),
+            new EmuCheckbox(32, u, 320, 32, "Toggle option", false, function() { }),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),

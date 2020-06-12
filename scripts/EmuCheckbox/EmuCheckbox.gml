@@ -3,6 +3,7 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
     
     box_size = 20;
     sprite_check = spr_emu_checkbox;
+    color_active = EMU_COLOR_RADIO_ACTIVE;
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
@@ -27,7 +28,7 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
         var by2 = by + box_size / 2;
         var back_color = GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
         DrawNineslice(1, bx1, by1, bx2, by2, back_color, 1);
-        draw_sprite(sprite_check, value, bx, by);
+        draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, color_active, 1);
         DrawNineslice(0, bx1, by1, bx2, by2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
