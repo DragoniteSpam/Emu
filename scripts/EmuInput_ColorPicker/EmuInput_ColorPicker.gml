@@ -284,13 +284,14 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         }
                     }
                     
-                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, EmuInputTypes.HEX, vx1, vy1, vx2, vy2, function() {
+                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, EmuInputTypes.HEX, function() {
                         if (string_length(value) == 6) {
                             var value_as_real = emu_hex(value);
                             root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
                         root.base_color_element.value = value_as_real | (floor(alpha * 0xff) << 24);
                         }
                     });
+                    dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
                     dialog.el_picker = new controls(32, u, ew, eh, value, allow_alpha, function() {

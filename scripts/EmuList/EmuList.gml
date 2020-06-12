@@ -34,6 +34,12 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         entries_are = _type;
     }
     
+    SetMultiSelect = function(_multi_select, _auto, _toggle) {
+        allow_multi_select = _multi_select;
+        auto_multi_select = _auto;
+        select_toggle = _toggle;
+    }
+    
     AddEntries = function(elements) {
         if (!own_contents) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its entries.");
@@ -189,14 +195,12 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         var move_direction = 0;
         
         if (GetMouseHover(lx1, ly1, lx2, ly2)) {
+            var mn = min(((mouse_y - ly1) div height) + index, n - 1);
             if (GetMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
-                callback_middle();
+                callback_middle(mn);
             } else if (GetMouseDouble(lx1, ly1, lx2, ly2)) {
-                callback_double();
+                callback_double(mn);
             } else if (GetMousePressed(lx1, ly1, lx2, ly2)) {
-                // if this ends up having a bounds problem it's probably because the list is empty and
-                // it's trying to access n-1 from the next line
-                var mn = min(((mouse_y - ly1) div height) + index, n - 1);
                 // deselect the list if that's what yo uwould expect to happen
                 if (!auto_multi_select) {
                     if ((!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !select_toggle) || !allow_multi_select) {

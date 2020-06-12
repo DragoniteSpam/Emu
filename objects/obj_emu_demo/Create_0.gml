@@ -38,7 +38,7 @@ tab_1.AddContent([
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
-    new EmuInput(32, u, 256, 32, "Hex:", "FF", "a hex value", 4, EmuInputTypes.HEX, 128, 0, 256, 32, emu_null),
+    new EmuInput(32, u, 256, 32, "Hex:", "FF", "a hex value", 4, EmuInputTypes.HEX, emu_null),
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, emu_null);
@@ -69,16 +69,17 @@ tab_1.AddContent([
 var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() {
     var selected_index = GetSelection();
     if (selected_index >= 0) {
-        show_message("Selection: " + string(selected_index));
+        show_debug_message("Selection: " + string(selected_index));
     }
 });
+list_2.SetMultiSelect(true, true, true);
 list_2.tooltip = "This list has a tooltip";
 list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
-list_2.SetCallbackDouble(function() {
-    show_message("double click");
+list_2.SetCallbackDouble(function(index) {
+    show_debug_message("Double-click on element: " + string(index));
 });
-list_2.SetCallbackMiddle(function() {
-    show_message("middle click");
+list_2.SetCallbackMiddle(function(index) {
+    show_debug_message("Middle-click on element: " + string(index));
 });
 
 tab_2.AddContent([
@@ -100,7 +101,7 @@ radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "U
 radio_4.SetColumns(3, 160);
 tab_4.AddContent(radio_4);
 
-var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, EmuInputTypes.STRING, 128, 0, 560, 128, function() { show_debug_message(value); });
+var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, EmuInputTypes.STRING, function() { show_debug_message(value); });
 input_4.multi_line = true;
 tab_4.AddContent(input_4);
 
@@ -126,7 +127,7 @@ tab_15.AddContent([
 var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, emu_null);
 picker_5.allow_alpha = true;
 tab_5.AddContent([
-    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, 128, 0, 256, 32, emu_null),
+    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, emu_null),
     picker_5,
     new EmuRenderSurface(32, u, 576, 432,
         function(mx, my) { data.Render(); },

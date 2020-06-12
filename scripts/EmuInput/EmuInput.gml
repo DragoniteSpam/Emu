@@ -1,13 +1,13 @@
-function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     enum EmuInputTypes { STRING, INT, REAL, HEX };
     
     text = _text;
     help_text = _help_text;
     character_limit = clamp(_character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
-    value_x1 = _vx1;
-    value_y1 = _vy1;
-    value_x2 = _vx2;
-    value_y2 = _vy2;
+    value_x1 = width / 2;
+    value_y1 = 0;
+    value_x2 = width;
+    value_y2 = height;
     
     override_escape = true;
     require_enter = false;
@@ -21,6 +21,13 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     sprite_enter = spr_emu_enter;
     
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
+    
+    SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
+        value_x1 = _vx1;
+        value_y1 = _vy1;
+        value_x2 = _vx2;
+        value_y2 = _vy2;
+    }
     
     SetValue = function(_value) {
         value = string(_value);
