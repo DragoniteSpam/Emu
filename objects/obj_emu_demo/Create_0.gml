@@ -38,7 +38,7 @@ var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, emu_null);
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
 ]);
-bitfield_3_1.interactive = false;
+bitfield_3_1.SetInteractive(false);
 
 bitfield_3_2.SetFixedSpacing(32);
 bitfield_3_2.AddOptions([

@@ -93,6 +93,6 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
     }
     
     GetInteractive = function() {
-        return enabled && interactive && root.IsActiveDialog();
+        return enabled && interactive && root.interactive && root.IsActiveDialog();
     }
 }

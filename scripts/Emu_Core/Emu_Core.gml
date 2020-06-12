@@ -63,6 +63,10 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
     }
     
+    SetInteractive = function(_interactive) {
+        interactive = _interactive;
+    }
+    
     RemoveContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
