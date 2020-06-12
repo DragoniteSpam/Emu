@@ -207,8 +207,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMousePressed = function(x1, y1, x2, y2) {
-        if (!GetMouseHover(x1, y1, x2, y2)) return false;
-        var click = mouse_check_button_pressed(mb_left);
+        var click = (GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (IsActiveElement() && keyboard_check_pressed(vk_space));
         // In the event that clicking is polled more than once per frame, don't
         // register two clicks per frame
         if (click && time_click_left != current_time) {
@@ -223,7 +222,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseHold = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left);
+        return (GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (IsActiveElement() && keyboard_check(vk_space));
     }
     
     GetMouseHoldDuration = function(x1, y1, x2, y2) {
@@ -231,7 +230,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseReleased = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left);
+        return (GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (IsActiveElement() && keyboard_check_released(vk_space));
     }
     
     GetMouseMiddlePressed = function(x1, y1, x2, y2) {
