@@ -43,7 +43,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         scribble_draw(tx, ty, text);
         
         DrawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, EMU_COLOR_BACK, 1);
-        DrawCheckerbox(vx1, vy1, (vx2 - vx1), (vy2 - vy1));
+        DrawCheckerbox(vx1 + 2, vy1 + 2, (vx2 - vx1) - 4, (vy2 - vy1) - 4);
         DrawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
         DrawNineslice(0, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color, 1);
         
