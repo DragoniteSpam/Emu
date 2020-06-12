@@ -44,7 +44,7 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         var ty = GetTextY(y1);
         
         if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
+            ShowTooltip();
         }
         
         scribble_set_wrap(width, height);
@@ -71,7 +71,7 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         var ty = GetTextY(y1);
         
         if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
+            ShowTooltip();
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {

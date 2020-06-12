@@ -37,7 +37,7 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         #endregion
         
         if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
+            ShowTooltip();
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {

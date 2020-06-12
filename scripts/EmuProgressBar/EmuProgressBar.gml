@@ -61,7 +61,7 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         var knob_color = EMU_COLOR_BACK;
         
         if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
+            ShowTooltip();
             knob_color = EMU_COLOR_HOVER;
         }
         

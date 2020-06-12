@@ -118,7 +118,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             
             if (GetMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
                 draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_HOVER, 1);
-                SetTooltip();
+                ShowTooltip();
             } else {
                 draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_BACK, 1);
             }

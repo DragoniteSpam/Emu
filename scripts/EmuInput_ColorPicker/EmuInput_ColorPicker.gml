@@ -330,7 +330,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                     
                     dialog.AddContent([dialog.el_picker_code, dialog.el_picker, dialog.el_channels, dialog.el_all, el_confirm]);
                 }
-                SetTooltip();
+                ShowTooltip();
             }
         }
     }

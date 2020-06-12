@@ -102,7 +102,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
     }
     
-    SetTooltip = function() {
+    ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }

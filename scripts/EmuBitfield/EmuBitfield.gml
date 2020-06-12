@@ -108,7 +108,7 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         
         if (GetMouseHover(x1, y1, x2, y2)) {
-            SetTooltip();
+            ShowTooltip();
         }
         
         if (GetMousePressed(x1, y1, x2, y2)) {
