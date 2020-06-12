@@ -11,6 +11,8 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
     sprite_knob = spr_emu_knob;
     knob_scale = 1.5;
     
+    currently_dragging = false;
+    
     SetIntegersOnly = function(_integers) {
         integers_only = _integers;
     }
@@ -64,13 +66,21 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         }
         
         if (draggable) {
-            if (GetMouseHold(x1, y1, x2, y2)) {
-                knob_color = EMU_COLOR_SELECTED;
-                value = clamp((window_mouse_get_x() - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
-                if (integers_only) {
-                    value = round(value);
+            if (GetMousePressed(x1, y1, x2, y2)) {
+                currently_dragging = true;
+            }
+            
+            if (currently_dragging) {
+                if (GetMouseHold(0, 0, window_get_width(), window_get_height())) {
+                    knob_color = EMU_COLOR_SELECTED;
+                    value = clamp((window_mouse_get_x() - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
+                    if (integers_only) {
+                        value = round(value);
+                    }
+                    callback();
+                } else {
+                    currently_dragging = false;
                 }
-                callback();
             }
         }
         
