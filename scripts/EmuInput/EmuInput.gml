@@ -38,8 +38,8 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     }
     
     SetRealNumberBounds = function(_lower, _upper) {
-        value_lower = _lower;
-        value_upper = _upper;
+        value_lower = min(_lower, _upper);
+        value_upper = max(_lower, _upper);
     }
     
     Render = function(base_x, base_y) {
