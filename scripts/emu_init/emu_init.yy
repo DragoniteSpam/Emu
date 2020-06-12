@@ -3,7 +3,7 @@
   "isCompatibility": false,
   "parent": {
     "name": "Emu",
-    "path": "folders/Emu.yy",
+    "path": "Emu.yyp",
   },
   "resourceVersion": "1.0",
   "name": "emu_init",

@@ -29,7 +29,6 @@
     {"id":{"name":"scribble_draw_set_defaults","path":"scripts/scribble_draw_set_defaults/scribble_draw_set_defaults.yy",},"order":7,},
     {"id":{"name":"spr_emu_not_found","path":"sprites/spr_emu_not_found/spr_emu_not_found.yy",},"order":3,},
     {"id":{"name":"shd_emu_lighting","path":"shaders/shd_emu_lighting/shd_emu_lighting.yy",},"order":4,},
-    {"id":{"name":"remaining_items","path":"notes/remaining_items/remaining_items.yy",},"order":15,},
     {"id":{"name":"scribble_get_glyph_property","path":"scripts/scribble_get_glyph_property/scribble_get_glyph_property.yy",},"order":5,},
     {"id":{"name":"scribble_get_width","path":"scripts/scribble_get_width/scribble_get_width.yy",},"order":12,},
     {"id":{"name":"readme_please","path":"notes/readme_please/readme_please.yy",},"order":4,},
