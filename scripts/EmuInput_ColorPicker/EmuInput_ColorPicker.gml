@@ -11,6 +11,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
     value_x2 = width;
     value_y2 = height;
     
+    SetAlphaUsed = function(_alpha_used) {
+        allow_alpha = _alpha_used;
+    }
+    
     SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
         value_x1 = _vx1;
         value_y1 = _vy1;
@@ -48,7 +52,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                 if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
                     Activate();
                     var dialog = new EmuDialog(480, 400, "Pick a color", emu_dialog_close_auto);
-                    dialog.flags = (dialog.flags ^ EmuDialogFlags.ACTIVE_SHADE) | (allow_alpha * EmuDialogFlags.ACTIVE_SHADE);
+                    dialog.flags = (dialog.flags ^ E_DialogFlags.ACTIVE_SHADE) | (allow_alpha * E_DialogFlags.ACTIVE_SHADE);
                     dialog.base_color_element = self;
                     
                     var ew = 256;

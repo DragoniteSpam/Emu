@@ -7,17 +7,14 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
     
     text = _title;
     
-    enum EmuDialogFlags {
-        IS_QUIT                 = 0x0001,
-        IS_EXCEPTION            = 0x0002,
-        CLOSE_BUTTON            = 0x0004,
-        IS_DUPLICATE_WARNING    = 0x0008,
-        ACTIVE_SHADE            = 0x0010,
+    enum E_DialogFlags {
+        CLOSE_BUTTON            = 0x0001,
+        ACTIVE_SHADE            = 0x0002,
         
-        DEFAULT_FLAGS           = EmuDialogFlags.CLOSE_BUTTON | EmuDialogFlags.ACTIVE_SHADE,
+        DEFAULT_FLAGS           = E_DialogFlags.CLOSE_BUTTON | E_DialogFlags.ACTIVE_SHADE,
     }
     
-    flags = EmuDialogFlags.DEFAULT_FLAGS;
+    flags = E_DialogFlags.DEFAULT_FLAGS;
     
     header_height = 32;
     changed = false;
@@ -59,7 +56,7 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         if (active) {
             cbi = 0;
             if (GetMouseHover(x1, y1, x2, y1 + header_height)) {
-                if ((flags & EmuDialogFlags.CLOSE_BUTTON) && GetMouseHover(cbx1, cby1, cbx2, cby2)) {
+                if ((flags & E_DialogFlags.CLOSE_BUTTON) && GetMouseHover(cbx1, cby1, cbx2, cby2)) {
                     cbi = 1;
                     if (GetMouseReleased(cbx1, cby1, cbx2, cby2)) {
                         kill = true;
@@ -100,7 +97,7 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         var cby2 = y1 + sprite_get_height(sprite_close);
         
         // tint the screen behind the active dialog (but only once per frame)
-        if (active && !!(flags & EmuDialogFlags.ACTIVE_SHADE) && (drawn_dialog_shade_time != current_time)) {
+        if (active && !!(flags & E_DialogFlags.ACTIVE_SHADE) && (drawn_dialog_shade_time != current_time)) {
             draw_set_alpha(EMU_DIALOG_SHADE_ALPHA);
             draw_rectangle_colour(0, 0, window_get_width(), window_get_height(), EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, false);
             draw_set_alpha(1);
@@ -116,13 +113,13 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, string(text), c_black, c_black, c_black, c_black, 1);
         
-        if (flags & EmuDialogFlags.CLOSE_BUTTON) {
+        if (flags & E_DialogFlags.CLOSE_BUTTON) {
             draw_sprite(sprite_close, cbi, cbx1, cby1);
         }
         
         RenderContents(x1, y1 + header_height);
         
-        kill |= (active && (flags & EmuDialogFlags.CLOSE_BUTTON) && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
+        kill |= (active && (flags & E_DialogFlags.CLOSE_BUTTON) && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
         
         if (kill) {
             Close();
