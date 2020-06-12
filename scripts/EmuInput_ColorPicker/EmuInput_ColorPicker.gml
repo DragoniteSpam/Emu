@@ -57,7 +57,6 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                     
                     var ew = 256;
                     var eh = 32;
-                    var u = undefined;
                     
                     var vx1 = 120;
                     var vy1 = 0;
@@ -306,7 +305,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                     dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
-                    dialog.el_picker = new controls(32, u, ew, eh, value, allow_alpha, function() {
+                    dialog.el_picker = new controls(32, emu_auto, ew, eh, value, allow_alpha, function() {
                         root.base_color_element.value = value | (floor(alpha * 0xff) << 24);
                         root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
@@ -321,7 +320,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                         root.el_picker.axis_channel = value;
                     });
                     dialog.el_channels.AddOptions(["Red", "Green", "Blue"]);
-                    dialog.el_all = new EmuCheckbox(320, u, ew / 2, eh, "All colors?", true, function() {
+                    dialog.el_all = new EmuCheckbox(320, emu_auto, ew / 2, eh, "All colors?", true, function() {
                         root.el_picker.all_colors = value;
                     });
                     

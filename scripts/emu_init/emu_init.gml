@@ -23,3 +23,7 @@ global.__emu_active_element = noone;
 #macro EMU_TIME_DOUBLE_CLICK_THRESHOLD 250
 #macro EMU_TIME_HOLD_THRESHOLD 500
 #endregion
+
+#region macros which it is not very useful to touch
+#macro emu_auto undefined
+#endregion
