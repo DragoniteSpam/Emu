@@ -240,8 +240,12 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
         callback_double = method(self, _callback);
     }
     
+    SetValue = function(_value) {
+        value = _value;
+    }
+    
     SetCallback(_callback);
-    value = _value;
+    SetValue(_value);
 }
 
 function emu_null() {
