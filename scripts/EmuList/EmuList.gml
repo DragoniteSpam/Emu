@@ -98,6 +98,8 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     }
     
     Render = function(base_x, base_y) {
+        processAdvancement();
+        
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + width;

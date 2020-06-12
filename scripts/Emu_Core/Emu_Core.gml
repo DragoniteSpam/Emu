@@ -21,6 +21,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     valignment = fa_middle;
     
     override_escape = false;
+    override_tab = false;
     
     next = noone;
     previous = noone;
@@ -67,6 +68,16 @@ function EmuCore(_x, _y, _w, _h) constructor {
         interactive = _interactive;
     }
     
+    SetNext = function(_element) {
+        next = _element;
+        if (next) next.previous = self;
+    }
+    
+    SetPrevious = function(_element) {
+        previous = _element;
+        if (previous) previous.next = self;
+    }
+    
     RemoveContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -82,12 +93,29 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     Render = function(base_x, base_y) {
+        processAdvancement();
         RenderContents(x + base_x, y + base_y);
     }
     
     RenderContents = function(at_x, at_y) {
         for (var i = 0; i < ds_list_size(contents); i++) {
             if (contents[| i]) contents[| i].Render(at_x, at_y);
+        }
+    }
+    
+    processAdvancement = function() {
+        if (!IsActiveElement()) return false;
+        if (!override_tab && keyboard_check_pressed(vk_tab)) {
+            if (keyboard_check(vk_shift) && previous) {
+                previous.Activate();
+                keyboard_clear(vk_tab);
+                return true;
+            }
+            if (next) {
+                next.Activate();
+                keyboard_clear(vk_tab);
+                return true;
+            }
         }
     }
     

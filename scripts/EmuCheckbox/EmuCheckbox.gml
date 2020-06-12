@@ -6,6 +6,8 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
     color_active = EMU_COLOR_RADIO_ACTIVE;
     
     Render = function(base_x, base_y) {
+        processAdvancement();
+        
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + width;

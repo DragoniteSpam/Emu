@@ -11,6 +11,8 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
     active_tab_request = noone;
     
     AddTabs = function(row, tabs) {
+        processAdvancement();
+        
         if (row > rows) {
             throw new EmuException("Tab row out of bounds", "Trying to add to tab row " + string(row) + ", but only up to " + string(rows) + " are available");
         }

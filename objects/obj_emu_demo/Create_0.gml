@@ -96,9 +96,14 @@ radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "U
 radio_4.SetColumns(3, 160);
 tab_4.AddContent(radio_4);
 
-var input_4 = new EmuInput(32, emu_auto, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
+var input_4 = new EmuInput(32, emu_auto, 560, 128, "Summary 1:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
 input_4.multi_line = true;
 tab_4.AddContent(input_4);
+var input_5 = new EmuInput(32, emu_auto, 560, 128, "Summary 2:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
+input_5.multi_line = true;
+tab_4.AddContent(input_5);
+input_4.SetNext(input_5);
+input_5.SetNext(input_4);
 
 var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)
 tab_3.AddContent(group_inner);

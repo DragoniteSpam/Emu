@@ -11,6 +11,8 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     header_height = 0;
     
     Render = function(base_x, base_y) {
+        processAdvancement();
+        
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + width;

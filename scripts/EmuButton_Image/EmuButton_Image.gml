@@ -8,6 +8,8 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
     surface = noone;
     
     Render = function(base_x, base_y) {
+        processAdvancement();
+        
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + width;
