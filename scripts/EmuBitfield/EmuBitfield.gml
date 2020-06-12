@@ -1,8 +1,8 @@
 function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    enum EmuBitfieldOrientations { HORIZONTAL, VERTICAL };
+    enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     
     fixed_spacing = -1;
-    orientation = EmuBitfieldOrientations.HORIZONTAL;
+    orientation = E_BitfieldOrientations.HORIZONTAL;
     
     SetOrientation = function(_orientation) {
         orientation = _orientation;
@@ -42,7 +42,7 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
     }
     
     ArrangeElements = function() {
-        if (orientation == EmuBitfieldOrientations.HORIZONTAL) {
+        if (orientation == E_BitfieldOrientations.HORIZONTAL) {
             for (var i = 0; i < ds_list_size(contents); i++) {
                 var option = contents[| i];
                 option.width = (fixed_spacing == -1) ? floor(width / ds_list_size(contents)) : fixed_spacing;

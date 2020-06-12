@@ -38,7 +38,7 @@ tab_1.AddContent([
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
-    new EmuInput(32, u, 256, 32, "Hex:", "FF", "a hex value", 4, EmuInputTypes.HEX, emu_null),
+    new EmuInput(32, u, 256, 32, "Hex:", "FF", "a hex value", 4, E_InputTypes.HEX, emu_null),
 ]);
 
 var bitfield_3_1 = new EmuBitfield(32, u, 256, 32, 15, emu_null);
@@ -54,9 +54,9 @@ bitfield_3_2.AddOptions([
     new EmuBitfieldOption("all", 0x1ff, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
     new EmuBitfieldOption("none", 0, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
 ]);
-bitfield_3_2.SetOrientation(EmuBitfieldOrientations.VERTICAL);
+bitfield_3_2.SetOrientation(E_BitfieldOrientations.VERTICAL);
 
-var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", 0xff000000 | c_maroon, 128, 0, 256, 32, function() {
+var picker_1 = new EmuColorPicker(320, u, 256, 32, "Color:", 0xff000000 | c_maroon, function() {
     
 });
 picker_1.allow_alpha = true;
@@ -90,7 +90,10 @@ tab_2.AddContent([
     new EmuCheckbox(32, u, 256, 32, "Toggle", false, function() {
     
     }),
-    new EmuButtonImage(32, u, 256, 256, spr_emu_birb, 0, c_white, 1, false, emu_null),
+    new EmuButtonImage(32, u, 128, 128, spr_emu_birb, 0, c_white, 1, false, function() {
+        var dialog = new EmuDialog(320, 240, "Hey, listen!", emu_null);
+        dialog.AddContent(new EmuText(32, 32, 256, 64, "You clicked on the birb!"));
+    }),
     list_2,
 ]);
 
@@ -101,7 +104,7 @@ radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "U
 radio_4.SetColumns(3, 160);
 tab_4.AddContent(radio_4);
 
-var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, EmuInputTypes.STRING, function() { show_debug_message(value); });
+var input_4 = new EmuInput(32, u, 560, 128, "Summary:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
 input_4.multi_line = true;
 tab_4.AddContent(input_4);
 
@@ -124,10 +127,10 @@ tab_15.AddContent([
     new EmuButton(32, u, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
 ]);
 
-var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, 128, 0, 256, 32, emu_null);
+var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, emu_null);
 picker_5.allow_alpha = true;
 tab_5.AddContent([
-    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, EmuInputTypes.INT, emu_null),
+    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, E_InputTypes.INT, emu_null),
     picker_5,
     new EmuRenderSurface(32, u, 576, 432,
         function(mx, my) { data.Render(); },

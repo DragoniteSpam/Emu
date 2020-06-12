@@ -1,5 +1,5 @@
 function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    enum EmuInputTypes { STRING, INT, REAL, HEX };
+    enum E_InputTypes { STRING, INT, REAL, HEX };
     
     text = _text;
     help_text = _help_text;
@@ -19,6 +19,14 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     
     sprite_ring = spr_emu_ring
     sprite_enter = spr_emu_enter;
+    
+    SetMultiLine = function(_multi_line) {
+        multi_line = _multi_line;
+    }
+    
+    SetRequireConfirm = function(_require) {
+        require_enter = _require;
+    }
     
     surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
@@ -208,9 +216,9 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     
     ValidateInput = function(_text) {
         switch (value_type) {
-            case EmuInputTypes.STRING:
+            case E_InputTypes.STRING:
                 return true;
-            case EmuInputTypes.INT:
+            case E_InputTypes.INT:
                 var success = true;
                 try {
                     var cast = real(_text);
@@ -219,7 +227,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                     success = false;
                 }
                 return success;
-            case EmuInputTypes.REAL:
+            case E_InputTypes.REAL:
                 var success = true;
                 try {
                     var cast = real(_text);
@@ -227,7 +235,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                     success = false;
                 }
                 return success;
-            case EmuInputTypes.HEX:
+            case E_InputTypes.HEX:
                 var success = true;
                 try {
                     var cast = emu_hex(_text);
@@ -240,10 +248,10 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     
     CastInput = function(_text) {
         switch (value_type) {
-            case EmuInputTypes.STRING: return _text;
-            case EmuInputTypes.INT: return real(_text);
-            case EmuInputTypes.REAL: return real(_text);
-            case EmuInputTypes.HEX: return emu_hex(_text);
+            case E_InputTypes.STRING: return _text;
+            case E_InputTypes.INT: return real(_text);
+            case E_InputTypes.REAL: return real(_text);
+            case E_InputTypes.HEX: return emu_hex(_text);
         }
     }
 }

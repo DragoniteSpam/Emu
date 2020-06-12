@@ -1,7 +1,7 @@
 function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
     
-    orientation = EmuBitfieldOrientations.VERTICAL;
+    orientation = E_BitfieldOrientations.VERTICAL;
     
     AddOptions = function(elements) {
         if (!is_array(elements)) {

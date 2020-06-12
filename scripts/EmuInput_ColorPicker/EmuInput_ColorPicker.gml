@@ -1,14 +1,22 @@
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason
-function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
-    value_x1 = _vx1;
-    value_y1 = _vy1;
-    value_x2 = _vx2;
-    value_y2 = _vy2;
     
     allow_alpha = false;
     active_shade = true;
+    
+    value_x1 = width / 2;
+    value_y1 = 0;
+    value_x2 = width;
+    value_y2 = height;
+    
+    SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
+        value_x1 = _vx1;
+        value_y1 = _vy1;
+        value_x2 = _vx2;
+        value_y2 = _vy2;
+    }
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;
@@ -284,7 +292,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                         }
                     }
                     
-                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, EmuInputTypes.HEX, function() {
+                    dialog.el_picker_code = new EmuInput(32, 32, ew, eh, "Color:", emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | (value & 0x0000ff) << 16, 6), "RRGGBB", 6, E_InputTypes.HEX, function() {
                         if (string_length(value) == 6) {
                             var value_as_real = emu_hex(value);
                             root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
@@ -331,9 +339,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
     
     ValidateInput = function(_text) {
         switch (value_type) {
-            case EmuInputTypes.STRING:
+            case E_InputTypes.STRING:
                 return true;
-            case EmuInputTypes.INT:
+            case E_InputTypes.INT:
                 var success = true;
                 try {
                     var cast = real(_text);
@@ -342,7 +350,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
                     success = false;
                 }
                 return success;
-            case EmuInputTypes.REAL:
+            case E_InputTypes.REAL:
                 var success = true;
                 try {
                     var cast = real(_text);
@@ -355,9 +363,9 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _vx1, _vy1, _vx2, _vy2, _
     
     CastInput = function(_text) {
         switch (value_type) {
-            case EmuInputTypes.STRING: return _text;
-            case EmuInputTypes.INT: return real(_text);
-            case EmuInputTypes.REAL: return real(_text);
+            case E_InputTypes.STRING: return _text;
+            case E_InputTypes.INT: return real(_text);
+            case E_InputTypes.REAL: return real(_text);
         }
     }
 }
