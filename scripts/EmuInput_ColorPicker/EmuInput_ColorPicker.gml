@@ -336,36 +336,4 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         DestroyContent();
         if (surface_exists(surface)) surface_free(surface);
     }
-    
-    ValidateInput = function(_text) {
-        switch (value_type) {
-            case E_InputTypes.STRING:
-                return true;
-            case E_InputTypes.INT:
-                var success = true;
-                try {
-                    var cast = real(_text);
-                    if (floor(cast) != cast) success = false;
-                } catch (e) {
-                    success = false;
-                }
-                return success;
-            case E_InputTypes.REAL:
-                var success = true;
-                try {
-                    var cast = real(_text);
-                } catch (e) {
-                    success = false;
-                }
-                return success;
-        }
-    }
-    
-    CastInput = function(_text) {
-        switch (value_type) {
-            case E_InputTypes.STRING: return _text;
-            case E_InputTypes.INT: return real(_text);
-            case E_InputTypes.REAL: return real(_text);
-        }
-    }
 }
