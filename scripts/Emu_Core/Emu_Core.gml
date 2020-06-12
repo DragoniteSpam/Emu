@@ -175,7 +175,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     GetMouseHover = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2 - 1, y2 - 1);
     }
     
     GetMousePressed = function(x1, y1, x2, y2) {
