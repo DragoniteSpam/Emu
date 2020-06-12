@@ -1,5 +1,7 @@
-function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _callback) constructor {
+function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
+    
+    SetCallback(function() { Close(); });
     
     var size = ds_list_size(global.__emu_dialogs);
     x = 64 * (size + 1);
@@ -122,7 +124,7 @@ function EmuDialog(_w, _h, _title, _callback) : EmuCallback(0, 0, _w, _h, 0, _ca
         kill |= (active && (flags & E_DialogFlags.CLOSE_BUTTON) && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
         
         if (kill) {
-            Close();
+            callback();
         }
     }
     

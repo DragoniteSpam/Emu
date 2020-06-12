@@ -26,7 +26,7 @@ tab_1.AddContent([
     bar_int,
     new EmuButton(32, u, 256, 32, "make popup dialog", function() {
         var u = undefined;
-        var dialog = new EmuDialog(640, 640, "Hey, listen!", emu_null);
+        var dialog = new EmuDialog(640, 640, "Hey, listen!");
         dialog.AddContent([
             new EmuText(32, u, 256, 64, "These are words that you can read and stuff"),
             new EmuRenderSurface(32, u, 576, 432,
@@ -91,7 +91,7 @@ tab_2.AddContent([
     
     }),
     new EmuButtonImage(32, u, 128, 128, spr_emu_birb, 0, c_white, 1, false, function() {
-        var dialog = new EmuDialog(320, 240, "Hey, listen!", emu_null);
+        var dialog = new EmuDialog(320, 240, "Hey, listen!");
         dialog.AddContent(new EmuText(32, 32, 256, 64, "You clicked on the birb!"));
     }),
     list_2,
