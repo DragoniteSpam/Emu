@@ -54,7 +54,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                 if (getMouseReleased(vx1, vy1, vx2, vy2)) {
                     Activate();
                     var dialog = new EmuDialog(480, 400, "Pick a color");
-                    dialog.flags = (dialog.flags ^ E_DialogFlags.ACTIVE_SHADE) | (allow_alpha * E_DialogFlags.ACTIVE_SHADE);
+                    dialog.active_shade = active_shade;
                     dialog.base_color_element = self;
                     
                     var ew = 256;
