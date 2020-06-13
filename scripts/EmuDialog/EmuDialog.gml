@@ -1,6 +1,8 @@
 function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
     
+    global.__emu_active_element = noone;
+    
     SetCallback(function() { Close(); });
     
     var size = ds_list_size(global.__emu_dialogs);
