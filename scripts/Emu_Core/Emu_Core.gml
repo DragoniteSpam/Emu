@@ -275,6 +275,12 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
     SetValue(_value);
 }
 
+function emu_get_overlay() {
+    static _overlay = noone;
+    if (!_overlay) _overlay = new EmuCore(0, 0, window_get_width(), window_get_height());
+    return _overlay;
+}
+
 function emu_null() {
     
 }
