@@ -126,7 +126,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     destroyContent = function() {
-        if (isActiveElement()) global.__emu_active_element = noone;
+        if (isActiveElement()) _emu_active_element(noone);
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Destroy();
         }
@@ -190,11 +190,11 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     isActiveElement = function() {
-        return global.__emu_active_element == self;
+        return EmuActiveElement == self;
     }
     
     Activate = function() {
-        global.__emu_active_element = self;
+        _emu_active_element(self);
     }
     
     time_click_left = -1;

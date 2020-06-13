@@ -1,7 +1,7 @@
 function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
     
-    global.__emu_active_element = noone;
+    _emu_active_element(noone);
     
     SetCallback(function() { Close(); });
     
@@ -58,7 +58,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
                     cbi = 1;
                     if (getMouseReleased(cbx1, cby1, cbx2, cby2)) {
                         kill = true;
-                        global.__emu_active_element = noone;
+                        _emu_active_element(noone);
                     }
                 } else {
                     if (getMousePressed(x1, y1, x2, y1 + header_height)) {
@@ -117,7 +117,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         
         renderContents(x1, y1 + header_height);
         
-        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
+        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement.override_escape));
         
         if (kill) {
             callback();

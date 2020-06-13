@@ -1,7 +1,5 @@
 scribble_init("emu", "fnt_emu_default", true);
 
-global.__emu_active_element = noone;
-
 #region some macros which you may want to set
 #macro EMU_COLOR_BACK 0xffffff
 #macro EMU_COLOR_DEFAULT 0x000000
@@ -31,5 +29,14 @@ function _emu_get_overlay() {
     static _overlay = noone;
     if (!_overlay) _overlay = new EmuCore(0, 0, window_get_width(), window_get_height());
     return _overlay;
+}
+#macro EmuActiveElement (_emu_active_element())
+
+function _emu_active_element() { 
+    static _active = undefined;
+    if (argument_count > 0) {
+        _active = argument[0];
+    }
+    return _active;
 }
 #endregion
