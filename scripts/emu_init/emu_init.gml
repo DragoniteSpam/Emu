@@ -1,6 +1,5 @@
 scribble_init("emu", "fnt_emu_default", true);
 
-EmuOverlay.dialogs = ds_list_create();
 global.__emu_active_element = noone;
 
 #region some macros which you may want to set

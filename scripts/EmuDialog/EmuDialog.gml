@@ -32,9 +32,9 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     
     Close = function() {
         do {
-            var top = EmuOverlay.dialogs[| ds_list_size(EmuOverlay.dialogs) - 1];
+            var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
             top.Destroy();
-            ds_list_delete(EmuOverlay.dialogs, ds_list_size(EmuOverlay.dialogs) - 1);
+            ds_list_delete(EmuOverlay.contents, ds_list_size(EmuOverlay.contents) - 1);
         } until (top == self);
     }
     
@@ -132,7 +132,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     
     // Override this function for dialogs
     isActiveDialog = function() {
-        return (EmuOverlay.dialogs[| ds_list_size(EmuOverlay.dialogs) - 1] == self);
+        return (EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1] == self);
     }
 }
 

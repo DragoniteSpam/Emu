@@ -185,7 +185,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     isActiveDialog = function() {
-        var top = EmuOverlay.dialogs[| ds_list_size(EmuOverlay.dialogs) - 1];
+        var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
         return !top || (top == root);
     }
     
