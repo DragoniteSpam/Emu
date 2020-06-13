@@ -1,4 +1,4 @@
-function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback, _list) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
+function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     text = _text;
     text_vacant = _text_vacant;
@@ -22,12 +22,15 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     sprite_help = spr_emu_help;
     sprite_arrows = spr_emu_scroll_arrow;
     
-    own_contents = (_list == undefined);
-    if (own_contents) {
-        entries = ds_list_create();
-    } else {
-        ds_list_destroy(contents);
+    entries = ds_list_create();
+    
+    own_contents = true;
+    SetList = function(_list) {
+        if (own_contents) {
+            ds_list_destroy(entries);
+        }
         entries = _list;
+        own_contents = false;
     }
     
     SetEntryTypes = function(_type) {

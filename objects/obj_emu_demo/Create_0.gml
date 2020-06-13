@@ -58,12 +58,7 @@ tab_1.AddContent([
     picker_1,
 ]);
 
-var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, function() {
-    var selected_index = GetSelection();
-    if (selected_index >= 0) {
-        show_debug_message("Selection: " + string(selected_index));
-    }
-});
+var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, emu_null);
 list_2.SetMultiSelect(true, true, true);
 list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
 list_2.setCallbackDouble(function(index) {
