@@ -69,8 +69,8 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"95c8da59-948e-4015-ac12-0add3d2f8ce5","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
-    "name": "Demo",
-    "path": "folders/Emu/Demo.yy",
+    "name": "Emu Demo",
+    "path": "folders/Emu Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_emu_demo_birb_red",

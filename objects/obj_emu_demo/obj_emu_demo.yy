@@ -24,8 +24,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Demo",
-    "path": "folders/Emu/Demo.yy",
+    "name": "Emu Demo",
+    "path": "folders/Emu Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "obj_emu_demo",

@@ -42,8 +42,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Demo",
-    "path": "folders/Emu/Demo.yy",
+    "name": "Emu Demo",
+    "path": "folders/Emu Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "rm_emu_demo",
