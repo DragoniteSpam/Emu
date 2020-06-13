@@ -1,6 +1,6 @@
 container = new EmuCore(32, 32, 640, 640);
 
-var group = new EmuTabGroup(0, emu_auto, 640, 640, 2, 32);
+var group = new EmuTabGroup(0, EMU_AUTO, 640, 640, 2, 32);
 var tab_1 = new EmuTab("Tab1");
 var tab_2 = new EmuTab("Tab2");
 var tab_3 = new EmuTab("Tab3");
@@ -11,29 +11,29 @@ group.AddTabs(1, [tab_4, tab_5]);
 
 container.AddContent(group);
 
-var bar_int = new EmuProgressBar(32, emu_auto, 256, 32, 12, 0, 10, true, 7, emu_null);
+var bar_int = new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 10, true, 7, emu_null);
 
 bar_int.SetIntegersOnly(true);
 
 tab_1.AddContent([
-    new EmuText(32, emu_auto, 256, 32, "Text label"),
-    new EmuText(32, emu_auto, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
-    new EmuProgressBar(32, emu_auto, 256, 32, 12, 0, 100, true, 1, emu_null),
-    new EmuProgressBar(32, emu_auto, 256, 32, 12, 0, 100, false, 35, emu_null),
-    new EmuProgressBar(32, emu_auto, 256, 32, 12, 0, 5, false, 2, emu_null),
+    new EmuText(32, EMU_AUTO, 256, 32, "Text label"),
+    new EmuText(32, EMU_AUTO, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
+    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 100, true, 1, emu_null),
+    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 100, false, 35, emu_null),
+    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 5, false, 2, emu_null),
     bar_int,
-    new EmuButton(32, emu_auto, 256, 32, "make popup dialog", function() {
+    new EmuButton(32, EMU_AUTO, 256, 32, "make popup dialog", function() {
         var dialog = new EmuDialog(640, 320, "Hey, listen!");
         dialog.AddContent([
-            new EmuText(32, emu_auto, 576, 32, "These are words that you can read"),
-            new EmuCheckbox(32, emu_auto, 320, 32, "Toggle option", false, function() { }),
+            new EmuText(32, EMU_AUTO, 576, 32, "These are words that you can read"),
+            new EmuCheckbox(32, EMU_AUTO, 320, 32, "Toggle option", false, function() { }),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
-    new EmuInput(32, emu_auto, 256, 32, "Hex:", "FF", "a hex value", 4, E_InputTypes.HEX, emu_null),
+    new EmuInput(32, EMU_AUTO, 256, 32, "Hex:", "FF", "a hex value", 4, E_InputTypes.HEX, emu_null),
 ]);
 
-var bitfield_3_1 = new EmuBitfield(32, emu_auto, 256, 32, 15, emu_null);
+var bitfield_3_1 = new EmuBitfield(32, EMU_AUTO, 256, 32, 15, emu_null);
 var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, emu_null);
 bitfield_3_1.AddOptions([
     "0", "1", "2", "4"
@@ -48,7 +48,7 @@ bitfield_3_2.AddOptions([
 ]);
 bitfield_3_2.SetOrientation(E_BitfieldOrientations.VERTICAL);
 
-var picker_1 = new EmuColorPicker(320, emu_auto, 256, 32, "Color:", 0xff000000 | c_maroon, function() {
+var picker_1 = new EmuColorPicker(320, EMU_AUTO, 256, 32, "Color:", 0xff000000 | c_maroon, function() {
     
 });
 picker_1.allow_alpha = true;
@@ -75,31 +75,31 @@ list_2.setCallbackMiddle(function(index) {
 });
 
 tab_2.AddContent([
-    new EmuText(32, emu_auto, 256, 32, "Text label"),
-    new EmuButton(32, emu_auto, 256, 32, "Button", function() {
+    new EmuText(32, EMU_AUTO, 256, 32, "Text label"),
+    new EmuButton(32, EMU_AUTO, 256, 32, "Button", function() {
         show_message("clicked the that does absolutely nothing");
     }),
-    new EmuCheckbox(32, emu_auto, 256, 32, "Toggle", false, function() {
+    new EmuCheckbox(32, EMU_AUTO, 256, 32, "Toggle", false, function() {
     
     }),
-    new EmuButtonImage(32, emu_auto, 128, 128, spr_emu_birb, 0, c_white, 1, false, function() {
+    new EmuButtonImage(32, EMU_AUTO, 128, 128, spr_emu_birb, 0, c_white, 1, false, function() {
         var dialog = new EmuDialog(320, 240, "Hey, listen!");
         dialog.AddContent(new EmuText(32, 32, 256, 64, "You clicked on the birb!"));
     }),
     list_2,
 ]);
 
-var radio_4 = new EmuRadioArray(32, emu_auto, 256, 32, "Select your favorite planet:", 0, function() {
+var radio_4 = new EmuRadioArray(32, EMU_AUTO, 256, 32, "Select your favorite planet:", 0, function() {
     show_message("You have chosen planet #" + string(value) + ".");
 });
 radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
 radio_4.SetColumns(3, 160);
 tab_4.AddContent(radio_4);
 
-var input_4 = new EmuInput(32, emu_auto, 560, 128, "Summary 1:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
+var input_4 = new EmuInput(32, EMU_AUTO, 560, 128, "Summary 1:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
 input_4.multi_line = true;
 tab_4.AddContent(input_4);
-var input_5 = new EmuInput(32, emu_auto, 560, 128, "Summary 2:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
+var input_5 = new EmuInput(32, EMU_AUTO, 560, 128, "Summary 2:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
 input_5.multi_line = true;
 tab_4.AddContent(input_5);
 input_4.SetNext(input_5);
@@ -121,7 +121,7 @@ group_inner.AddTabs(1, [tab_13, tab_14, tab_15]);
 group_inner.AddTabs(2, [tab_16, tab_17, tab_18, tab_19]);
 
 tab_15.AddContent([
-    new EmuButton(32, emu_auto, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
+    new EmuButton(32, EMU_AUTO, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
 ]);
 
 var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, emu_null);
@@ -129,7 +129,7 @@ picker_5.allow_alpha = true;
 tab_5.AddContent([
     new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, E_InputTypes.INT, emu_null),
     picker_5,
-    new EmuRenderSurface(32, emu_auto, 576, 432,
+    new EmuRenderSurface(32, EMU_AUTO, 576, 432,
         function(mx, my) { data.Render(); },
         function(mx, my) { data.Control(); },
         function() { data = new EmuDemoMeshScene(); },

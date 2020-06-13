@@ -25,5 +25,5 @@ global.__emu_active_element = noone;
 #endregion
 
 #region macros which it is not very useful to touch
-#macro emu_auto undefined
+#macro EMU_AUTO undefined
 #endregion
