@@ -40,7 +40,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     SetValue = function(_value) {
         value = string(_value);
         value = _value;
-        if (IsActiveElement()) {
+        if (isActiveElement()) {
             keyboard_string = value;
         }
     }
@@ -105,7 +105,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
         surface_reset_target();
         
-        var display_text = working_value + (IsActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
@@ -166,7 +166,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         
         #region interaction
         if (GetInteractive()) {
-            if (IsActiveElement()) {
+            if (isActiveElement()) {
                 var v0 = working_value;
                 working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
                 if (keyboard_check_pressed(vk_escape)) {
@@ -195,8 +195,8 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 }
             }
             // activation
-            if (GetMouseHover(vx1, vy1, vx2, vy2)) {
-                if (GetMouseReleased(vx1, vy1, vx2, vy2)) {
+            if (getMouseHover(vx1, vy1, vx2, vy2)) {
+                if (getMouseReleased(vx1, vy1, vx2, vy2)) {
                     keyboard_string = value;
                     Activate();
                 }
@@ -212,7 +212,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     }
     
     Destroy = function() {
-        DestroyContent();
+        destroyContent();
         if (surface_exists(surface)) surface_free(surface);
     }
     

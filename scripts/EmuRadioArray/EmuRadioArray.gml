@@ -45,7 +45,7 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
         }
         
@@ -53,7 +53,7 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, text);
         
-        RenderContents(x1, y1);
+        renderContents(x1, y1);
     }
 }
 
@@ -72,11 +72,11 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
         }
         
-        if (GetMouseReleased(x1, y1, x2, y2)) {
+        if (getMouseReleased(x1, y1, x2, y2)) {
             root.Activate();
             // radio array options don't get individual callbacks
             root.value = value;
@@ -96,6 +96,6 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
     }
     
     GetInteractive = function() {
-        return enabled && interactive && root.interactive && root.IsActiveDialog();
+        return enabled && interactive && root.interactive && root.isActiveDialog();
     }
 }

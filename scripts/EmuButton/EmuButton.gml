@@ -11,18 +11,18 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
         }
         
-        if (GetMouseReleased(x1, y1, x2, y2)) {
+        if (getMouseReleased(x1, y1, x2, y2)) {
             Activate();
             callback();
         }
         
-        var back_color = GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
-        DrawNineslice(1, x1, y1, x2, y2, back_color, 1);
-        DrawNineslice(0, x1, y1, x2, y2, color, 1);
+        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        drawNineslice(1, x1, y1, x2, y2, back_color, 1);
+        drawNineslice(0, x1, y1, x2, y2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);

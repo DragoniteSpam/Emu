@@ -31,10 +31,10 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
                 RequestActivateTab(_tab);
             }
         }
-        ArrangeRow(row);
+        arrangeRow(row);
     }
     
-    ArrangeRow = function(row) {
+    arrangeRow = function(row) {
         if (row > rows) {
             throw new EmuException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(rows) + " are available");
         }
@@ -50,7 +50,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         }
     }
     
-    ActivateTab = function(tab) {
+    activateTab = function(tab) {
         if (tab.root != self) {
             throw new EmuException("Tab is not included in group", "You are trying to activate a tab in a group that it does not belong to. Please only activate tabs that are members of a group.");
         }
@@ -62,10 +62,10 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         for (var i = 0; i < ds_list_size(contents_clone); i++) {
             if (i == tab.row) continue;
             contents[| index] = contents_clone[| i];
-            ArrangeRow(index++);
+            arrangeRow(index++);
         }
         contents[| rows - 1] = contents_clone[| tab.row];
-        ArrangeRow(rows - 1);
+        arrangeRow(rows - 1);
     }
     
     RequestActivateTab = function(tab) {
@@ -81,7 +81,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         // Save this for the beginning of the next frame, because if you do it
         // in the middle you'll find the tabs become misaligned for one frame
         if (active_tab_request) {
-            ActivateTab(active_tab_request);
+            activateTab(active_tab_request);
             active_tab_request = noone;
         }
         
@@ -90,7 +90,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         }
         
         // no sense making a tab group non-interactive
-        DrawNineslice(2, x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
-        DrawNineslice(2, x1, y1 + rows * row_height, x2, y2, color, 1);
+        drawNineslice(2, x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
+        drawNineslice(2, x1, y1 + rows * row_height, x2, y2, color, 1);
     }
 }

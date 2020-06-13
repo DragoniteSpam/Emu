@@ -94,17 +94,17 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     Render = function(base_x, base_y) {
         processAdvancement();
-        RenderContents(x + base_x, y + base_y);
+        renderContents(x + base_x, y + base_y);
     }
     
-    RenderContents = function(at_x, at_y) {
+    renderContents = function(at_x, at_y) {
         for (var i = 0; i < ds_list_size(contents); i++) {
             if (contents[| i]) contents[| i].Render(at_x, at_y);
         }
     }
     
     processAdvancement = function() {
-        if (!IsActiveElement()) return false;
+        if (!isActiveElement()) return false;
         if (!override_tab && keyboard_check_pressed(vk_tab)) {
             if (keyboard_check(vk_shift) && previous) {
                 previous.Activate();
@@ -120,11 +120,11 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     Destroy = function() {
-        DestroyContent();
+        destroyContent();
     }
     
-    DestroyContent = function() {
-        if (IsActiveElement()) global.__emu_active_element = noone;
+    destroyContent = function() {
+        if (isActiveElement()) global.__emu_active_element = noone;
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Destroy();
         }
@@ -135,7 +135,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    DrawNineslice = function(index, x1, y1, x2, y2, color, alpha) {
+    drawNineslice = function(index, x1, y1, x2, y2, color, alpha) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         var w = x2 - x1;
@@ -158,7 +158,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         draw_sprite_general(sprite_nineslice, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
     
-    DrawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
+    drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
         if (_xscale == undefined) _xscale = 1;
         if (_yscale == undefined) _yscale = 1;
         if (_color == undefined) _color = c_white;
@@ -182,12 +182,12 @@ function EmuCore(_x, _y, _w, _h) constructor {
         gpu_set_texrepeat(old_repeat);
     }
     
-    IsActiveDialog = function() {
+    isActiveDialog = function() {
         var top = global.__emu_dialogs[| ds_list_size(global.__emu_dialogs) - 1];
         return !top || (top == root);
     }
     
-    IsActiveElement = function() {
+    isActiveElement = function() {
         return global.__emu_active_element == self;
     }
     
@@ -199,15 +199,15 @@ function EmuCore(_x, _y, _w, _h) constructor {
     time_click_left_last = -10000;
     
     GetInteractive = function() {
-        return enabled && interactive && IsActiveDialog();
+        return enabled && interactive && isActiveDialog();
     }
     
-    GetMouseHover = function(x1, y1, x2, y2) {
+    getMouseHover = function(x1, y1, x2, y2) {
         return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2 - 1, y2 - 1);
     }
     
-    GetMousePressed = function(x1, y1, x2, y2) {
-        var click = (GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (IsActiveElement() && keyboard_check_pressed(vk_space));
+    getMousePressed = function(x1, y1, x2, y2) {
+        var click = (getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (isActiveElement() && keyboard_check_pressed(vk_space));
         // In the event that clicking is polled more than once per frame, don't
         // register two clicks per frame
         if (click && time_click_left != current_time) {
@@ -217,36 +217,36 @@ function EmuCore(_x, _y, _w, _h) constructor {
         return click;
     }
     
-    GetMouseDouble = function(x1, y1, x2, y2) {
-        return GetMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
+    getMouseDouble = function(x1, y1, x2, y2) {
+        return getMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
     }
     
-    GetMouseHold = function(x1, y1, x2, y2) {
-        return (GetMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (IsActiveElement() && keyboard_check(vk_space));
+    getMouseHold = function(x1, y1, x2, y2) {
+        return (getMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (isActiveElement() && keyboard_check(vk_space));
     }
     
-    GetMouseHoldDuration = function(x1, y1, x2, y2) {
-        return GetMouseHold(x1, y1, x2, y2) ? (current_time - time_click_left) : 0;
+    getMouseHoldDuration = function(x1, y1, x2, y2) {
+        return getMouseHold(x1, y1, x2, y2) ? (current_time - time_click_left) : 0;
     }
     
-    GetMouseReleased = function(x1, y1, x2, y2) {
-        return (GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (IsActiveElement() && keyboard_check_released(vk_space));
+    getMouseReleased = function(x1, y1, x2, y2) {
+        return (getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (isActiveElement() && keyboard_check_released(vk_space));
     }
     
-    GetMouseMiddlePressed = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+    getMouseMiddlePressed = function(x1, y1, x2, y2) {
+        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
     }
     
-    GetMouseMiddleReleased = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
+    getMouseMiddleReleased = function(x1, y1, x2, y2) {
+        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
     }
     
     GetMouseRightPressed = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
+        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
     }
     
-    GetMouseRightReleased = function(x1, y1, x2, y2) {
-        return GetMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
+    getMouseRightReleased = function(x1, y1, x2, y2) {
+        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
     }
 }
 
@@ -255,15 +255,15 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
         callback = method(self, _callback);
     }
     
-    SetCallbackMiddle = function(_callback) {
+    setCallbackMiddle = function(_callback) {
         callback_middle = method(self, _callback);
     }
     
-    SetCallbackRight = function(_callback) {
+    setCallbackRight = function(_callback) {
         callback_right = method(self, _callback);
     }
     
-    SetCallbackDouble = function(_callback) {
+    setCallbackDouble = function(_callback) {
         callback_double = method(self, _callback);
     }
     

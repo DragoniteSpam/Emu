@@ -67,10 +67,10 @@ var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6,
 list_2.SetMultiSelect(true, true, true);
 list_2.tooltip = "This list has a tooltip";
 list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
-list_2.SetCallbackDouble(function(index) {
+list_2.setCallbackDouble(function(index) {
     show_debug_message("Double-click on element: " + string(index));
 });
-list_2.SetCallbackMiddle(function(index) {
+list_2.setCallbackMiddle(function(index) {
     show_debug_message("Middle-click on element: " + string(index));
 });
 

@@ -62,19 +62,19 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         
         var knob_color = EMU_COLOR_BACK;
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
             knob_color = EMU_COLOR_HOVER;
         }
         
         if (draggable) {
-            if (GetMousePressed(x1, y1, x2, y2)) {
+            if (getMousePressed(x1, y1, x2, y2)) {
                 Activate();
                 currently_dragging = true;
             }
             
             if (currently_dragging) {
-                if (GetMouseHold(0, 0, window_get_width(), window_get_height())) {
+                if (getMouseHold(0, 0, window_get_width(), window_get_height())) {
                     knob_color = EMU_COLOR_SELECTED;
                     value = clamp((window_mouse_get_x() - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
                     if (integers_only) {

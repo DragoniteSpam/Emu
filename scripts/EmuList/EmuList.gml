@@ -67,7 +67,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         return ds_map_exists(selected_entries, list_index);
     }
     
-    GetListColors = function(list_index) {
+    getListColors = function(list_index) {
         return c_black;
     }
     
@@ -118,7 +118,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             var spr_height = sprite_get_height(sprite_help);
             var txoffset = spr_width;
             
-            if (GetMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
+            if (getMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
                 draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_HOVER, 1);
                 ShowTooltip();
             } else {
@@ -149,7 +149,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         index = clamp(n - slots, 0, index);
         
         if (n == 0) {
-            DrawNineslice(1, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
+            drawNineslice(1, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
             scribble_draw(tx - x1, ty - y2, text_vacant);
@@ -166,7 +166,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     }
                 }
                 
-                var c = GetListColors(current_index);
+                var c = getListColors(current_index);
                 var index_text = numbered ? (string(current_index) + ". ") : "";
         
                 switch (entries_are) {
@@ -196,13 +196,13 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         
         var move_direction = 0;
         
-        if (GetMouseHover(lx1, ly1, lx2, ly2)) {
+        if (getMouseHover(lx1, ly1, lx2, ly2)) {
             var mn = min(((mouse_y - ly1) div height) + index, n - 1);
-            if (GetMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
+            if (getMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
                 callback_middle(mn);
-            } else if (GetMouseDouble(lx1, ly1, lx2, ly2)) {
+            } else if (getMouseDouble(lx1, ly1, lx2, ly2)) {
                 callback_double(mn);
-            } else if (GetMousePressed(lx1, ly1, lx2, ly2)) {
+            } else if (getMousePressed(lx1, ly1, lx2, ly2)) {
                 Activate();
                 // deselect the list if that's what yo uwould expect to happen
                 if (!auto_multi_select) {
@@ -231,7 +231,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     }
                 }
                 last_index = mn;
-            } else if (GetMouseRightReleased(lx1, ly1, lx2, ly2)) {
+            } else if (getMouseRightReleased(lx1, ly1, lx2, ly2)) {
                 Activate();
                 if (allow_deselect) {
                     ClearSelection();
@@ -280,21 +280,21 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             var sby2 = sy + shalf;
             if (active) {
                 // Hover over the scroll bar: draw the hover color
-                if (GetMouseHover(x2 - sw, sby1, x2, sby2)) {
+                if (getMouseHover(x2 - sw, sby1, x2, sby2)) {
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // Click: begin dragging the scroll bar
-                    if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
+                    if (getMousePressed(x2 - sw, sby1, x2, sby2)) {
                         Activate();
                         click_x = mouse_x;
                         click_y = mouse_y;
                     }
                 }
                 // Hold while dragging: update the list position
-                if (GetMouseHold(x2 - sw, sby1, x2, sby2) && click_y > -1) {
+                if (getMouseHold(x2 - sw, sby1, x2, sby2) && click_y > -1) {
                     index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
                 }
                 // Release: stop dragging
-                if (GetMouseReleased(x2 - sw, sby1, x2, sby2)) {
+                if (getMouseReleased(x2 - sw, sby1, x2, sby2)) {
                     click_x = -1;
                     click_y = -1;
                 }
@@ -306,16 +306,16 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, color, color);
             
             if (active) {
-                var inbounds_top = GetMouseHover(x2 - sw, y2, x2, y2 + sw);
-                var inbounds_bottom = GetMouseHover(x2 - sw, y3 - sw, x2, y3);
+                var inbounds_top = getMouseHover(x2 - sw, y2, x2, y2 + sw);
+                var inbounds_bottom = getMouseHover(x2 - sw, y3 - sw, x2, y3);
                 // Top button
                 if (inbounds_top) {
                     draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
-                    if (GetMousePressed(x2 - sw, y2, x2, y2 + sw)) {
+                    if (getMousePressed(x2 - sw, y2, x2, y2 + sw)) {
                         Activate();
                         move_direction = -1;
-                    } else if (GetMouseHold(x2 - sw, y2, x2, y2 + sw)) {
-                        if (GetMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
+                    } else if (getMouseHold(x2 - sw, y2, x2, y2 + sw)) {
+                        if (getMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = -1;
                         }
                     }
@@ -323,12 +323,12 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 } else if (inbounds_bottom) {
                     draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // On click, scroll once
-                    if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                    if (getMousePressed(x2 - sw, y3 - sw, x2, y3)) {
                         Activate();
                         move_direction = 1;
                     // On hold, scroll after an amount of time
-                    } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {
-                        if (GetMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_TIME_HOLD_THRESHOLD) {
+                    } else if (getMouseHold(x2 - sw, y3 - sw, x2, y3)) {
+                        if (getMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = 1;
                         }
                     }
@@ -344,7 +344,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     }
     
     Destroy = function() {
-        DestroyContent();
+        destroyContent();
         ds_map_destroy(selected_entries);
         if (own_entries) ds_list_destroy(entries);
         if (surface != -1) surface_free(surface);

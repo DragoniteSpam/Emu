@@ -24,37 +24,37 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         var hx2 = hx1 + header_width;
         var hy2 = hy1 + header_height;
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
         }
         
-        if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
+        if (getMouseReleased(hx1, hy1, hx2, hy2)) {
             Activate();
             root.RequestActivateTab(self);
         }
         
-        if (IsActiveTab() || row < root.rows - 1) {
+        if (isActiveTab() || row < root.rows - 1) {
             var index = 3;
         } else {
             var index = 5;
         }
         
-        var back_color = GetMouseHover(hx1, hy1, hx2, hy2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
-        DrawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
-        DrawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
+        var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        drawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
+        drawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
         scribble_set_box_align(alignment, valignment);
         scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);
         #endregion
         
-        if (IsActiveTab()) {
-            RenderContents(x1, y1);
+        if (isActiveTab()) {
+            renderContents(x1, y1);
         }
     }
     
-    // This is NOT the same as IsActiveElement() - this checks for the active
+    // This is NOT the same as isActiveElement() - this checks for the active
     // tab in the tab group, rather than the UI element which will respond to
     // keyboard input
-    IsActiveTab = function() {
+    isActiveTab = function() {
         return (root.active_tab == self);
     }
     
@@ -63,6 +63,6 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     }
     
     GetInteractive = function() {
-        return enabled && interactive && root.IsActiveDialog();
+        return enabled && interactive && root.isActiveDialog();
     }
 }

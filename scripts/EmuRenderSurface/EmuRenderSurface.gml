@@ -50,9 +50,9 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
             surface_reset_target();
         }
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
-            if (GetMousePressed(x1, y1, x2, y2)) {
+            if (getMousePressed(x1, y1, x2, y2)) {
                 Activate();
             }
         }
@@ -76,7 +76,7 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
     }
     
     Destroy = function() {
-        DestroyContent();
+        destroyContent();
         if (surface_exists(surface)) surface_free(surface);
         callback_destroy();
     }

@@ -52,31 +52,31 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         var cby2 = y1 + sprite_get_height(sprite_close);
         var cbi = 2;  // 0 is is available, 1 is hovering, 2 is unavailable
         
-        var active = IsActiveDialog();
+        var active = isActiveDialog();
         var kill = false;
         
         if (active) {
             cbi = 0;
-            if (GetMouseHover(x1, y1, x2, y1 + header_height)) {
-                if ((flags & E_DialogFlags.CLOSE_BUTTON) && GetMouseHover(cbx1, cby1, cbx2, cby2)) {
+            if (getMouseHover(x1, y1, x2, y1 + header_height)) {
+                if ((flags & E_DialogFlags.CLOSE_BUTTON) && getMouseHover(cbx1, cby1, cbx2, cby2)) {
                     cbi = 1;
-                    if (GetMouseReleased(cbx1, cby1, cbx2, cby2)) {
+                    if (getMouseReleased(cbx1, cby1, cbx2, cby2)) {
                         kill = true;
                         global.__emu_active_element = noone;
                     }
                 } else {
-                    if (GetMousePressed(x1, y1, x2, y1 + header_height)) {
+                    if (getMousePressed(x1, y1, x2, y1 + header_height)) {
                         click_x = window_mouse_get_x();
                         click_y = window_mouse_get_y();
                     }
-                    if (GetMouseReleased(x1, y1, x2, y1 + header_height)) {
+                    if (getMouseReleased(x1, y1, x2, y1 + header_height)) {
                         click_x = -1;
                         click_y = -1;
                     }
                 }
             }
             
-            if (GetMouseHold(0, 0, window_get_width(), window_get_height()) && click_x > -1) {
+            if (getMouseHold(0, 0, window_get_width(), window_get_height()) && click_x > -1) {
                 x += (window_mouse_get_x() - click_x);
                 y += (window_mouse_get_y() - click_y);
                 click_x = window_mouse_get_x();
@@ -106,11 +106,11 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
             drawn_dialog_shade_time = current_time;
         }
         
-        DrawNineslice(1, x1, y1, x2, y2, EMU_COLOR_BACK, 1);
-        DrawNineslice(0, x1, y1, x2, y2, color, 1);
+        drawNineslice(1, x1, y1, x2, y2, EMU_COLOR_BACK, 1);
+        drawNineslice(0, x1, y1, x2, y2, color, 1);
         var ch = merge_colour(color_header, EMU_DIALOG_SHADE_COLOR, active ? 0 : 0.5);
-        DrawNineslice(1, x1, y1, x2, y1 + header_height, ch, 1);
-        DrawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
+        drawNineslice(1, x1, y1, x2, y1 + header_height, ch, 1);
+        drawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
         
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, string(text), c_black, c_black, c_black, c_black, 1);
@@ -119,7 +119,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
             draw_sprite(sprite_close, cbi, cbx1, cby1);
         }
         
-        RenderContents(x1, y1 + header_height);
+        renderContents(x1, y1 + header_height);
         
         kill |= (active && (flags & E_DialogFlags.CLOSE_BUTTON) && keyboard_check_released(vk_escape) && !(global.__emu_active_element && global.__emu_active_element.override_escape));
         
@@ -129,7 +129,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     }
     
     // Override this function for dialogs
-    IsActiveDialog = function() {
+    isActiveDialog = function() {
         return (global.__emu_dialogs[| ds_list_size(global.__emu_dialogs) - 1] == self);
     }
 }

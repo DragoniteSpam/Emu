@@ -75,7 +75,7 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        RenderContents(x1, y1);
+        renderContents(x1, y1);
     }
 }
 
@@ -99,27 +99,27 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         var back_color = evaluate() ? color_active : color_inactive;
         
         if (root.GetInteractive()) {
-            back_color = merge_colour(back_color, GetMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : back_color, 0.5);
+            back_color = merge_colour(back_color, getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : back_color, 0.5);
         } else {
             back_color = merge_colour(back_color, EMU_COLOR_DISABLED, 0.5);
         }
         
-        DrawNineslice(1, x1, y1, x2, y2, back_color, 1);
-        DrawNineslice(0, x1, y1, x2, y2, color, 1);
+        drawNineslice(1, x1, y1, x2, y2, back_color, 1);
+        drawNineslice(0, x1, y1, x2, y2, color, 1);
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         
-        if (GetMouseHover(x1, y1, x2, y2)) {
+        if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
         }
         
-        if (GetMousePressed(x1, y1, x2, y2)) {
+        if (getMousePressed(x1, y1, x2, y2)) {
             callback();
         }
     }
     
     GetInteractive = function() {
-        return enabled && interactive && root.interactive && root.IsActiveDialog();
+        return enabled && interactive && root.interactive && root.isActiveDialog();
     }
 }
 
