@@ -1,7 +1,6 @@
-function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_slots, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
+function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     text = _text;
-    text_vacant = _text_vacant;
     element_height = _element_height;
     slots = _content_slots;
     
@@ -18,6 +17,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
     entries_are = E_ListEntryTypes.STRINGS;
     numbered = false;
     surface = -1;
+    text_vacant = "(empty list)";
     
     sprite_help = spr_emu_help;
     sprite_arrows = spr_emu_scroll_arrow;
@@ -42,6 +42,10 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         allow_multi_select = _multi_select;
         auto_multi_select = _auto;
         select_toggle = _toggle;
+    }
+    
+    SetVacantText = function(_text) {
+        text_vacant = _text;
     }
     
     AddEntries = function(elements) {
