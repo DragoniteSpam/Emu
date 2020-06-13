@@ -1,7 +1,7 @@
 function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
     
-    _emu_active_element(noone);
+    _emu_active_element(undefined);
     
     SetCallback(function() { Close(); });
     
@@ -58,7 +58,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
                     cbi = 1;
                     if (getMouseReleased(cbx1, cby1, cbx2, cby2)) {
                         kill = true;
-                        _emu_active_element(noone);
+                        _emu_active_element(undefined);
                     }
                 } else {
                     if (getMousePressed(x1, y1, x2, y1 + header_height)) {
