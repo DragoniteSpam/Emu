@@ -48,7 +48,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
     }
     
-    GetTextX = function(_x) {
+    getTextX = function(_x) {
         switch (alignment) {
             case fa_left: return _x + offset;
             case fa_center: return _x + width / 2;
@@ -56,7 +56,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
     }
     
-    GetTextY = function(_y) {
+    getTextY = function(_y) {
         switch (valignment) {
             case fa_top: return _y + offset;
             case fa_middle: return _y + height / 2;

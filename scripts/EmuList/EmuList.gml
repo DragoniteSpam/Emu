@@ -107,8 +107,8 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         var y3 = y2 + slots * height;
         var ww = x2 - x1;
         var hh = y3 - y2;
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = getTextX(x1);
+        var ty = getTextY(y1);
         
         #region list header
         if (string_length(tooltip) > 0) {

@@ -42,8 +42,8 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = getTextX(x1);
+        var ty = getTextY(y1);
         
         if (GetMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
@@ -69,8 +69,8 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = getTextX(x1);
+        var ty = getTextY(y1);
         
         if (GetMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();

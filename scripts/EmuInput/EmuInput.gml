@@ -66,8 +66,8 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = getTextX(x1);
+        var ty = getTextY(y1);
         
         var working_value = string(value);
         var sw = string_width(working_value);

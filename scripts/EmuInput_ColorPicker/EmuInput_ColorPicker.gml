@@ -38,8 +38,8 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
-        var tx = GetTextX(x1);
-        var ty = GetTextY(y1);
+        var tx = getTextX(x1);
+        var ty = getTextY(y1);
         
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, text);
@@ -272,7 +272,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                                     selecting_alpha = GetMouseHold(0, 0, window_get_width(), window_get_height());
                                 }
                                 
-                                scribble_draw(GetTextX(x + base_x), floor(mean(vy1, vy2)), "A:");
+                                scribble_draw(getTextX(x + base_x), floor(mean(vy1, vy2)), "A:");
                                 DrawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                                 draw_primitive_begin(pr_trianglelist);
                                 draw_vertex_colour(vx1, vy1, value, 0);
