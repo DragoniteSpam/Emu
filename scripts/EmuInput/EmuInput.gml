@@ -258,8 +258,11 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     }
 }
 
-function emu_string_hex(_value, _padding) {
-    if (_padding == undefined) _padding = 0;
+/// @param _value
+/// @param _padding
+function emu_string_hex() {
+    var _value = argument[0];
+    var _padding = (argument_count > 1) ? argument[1] : 0;
     
     var s = sign(_value);
     var v = abs(_value);
