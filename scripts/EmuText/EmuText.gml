@@ -12,9 +12,10 @@ function EmuText(_x, _y, _w, _h, _text) : EmuCore(_x, _y, _w, _h) constructor {
         var tx = GetTextX(x1);
         var ty = GetTextY(y1);
         
-        if (GetInteractive()) {
-            if (GetMouseHover(x1, y1, x2, y2)) {
-                ShowTooltip();
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            ShowTooltip();
+            if (GetMouseReleased(x1, y1, x2, y2)) {
+                Activate();
             }
         }
         

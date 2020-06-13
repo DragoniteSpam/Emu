@@ -203,6 +203,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             } else if (GetMouseDouble(lx1, ly1, lx2, ly2)) {
                 callback_double(mn);
             } else if (GetMousePressed(lx1, ly1, lx2, ly2)) {
+                Activate();
                 // deselect the list if that's what yo uwould expect to happen
                 if (!auto_multi_select) {
                     if ((!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !select_toggle) || !allow_multi_select) {
@@ -229,10 +230,9 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                         Deselect(mn);
                     }
                 }
-                
                 last_index = mn;
-                Activate();
             } else if (GetMouseRightReleased(lx1, ly1, lx2, ly2)) {
+                Activate();
                 if (allow_deselect) {
                     ClearSelection();
                 }
@@ -246,6 +246,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
             
             if (allow_multi_select) {
                 if (keyboard_check(vk_control) && keyboard_check_pressed(ord("A"))) {
+                    Activate();
                     for (var i = 0; i < n; i++) {
                         if (!GetSelected(i)) {
                             Select(i);
@@ -283,6 +284,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // Click: begin dragging the scroll bar
                     if (GetMousePressed(x2 - sw, sby1, x2, sby2)) {
+                        Activate();
                         click_x = mouse_x;
                         click_y = mouse_y;
                     }
@@ -310,6 +312,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                 if (inbounds_top) {
                     draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     if (GetMousePressed(x2 - sw, y2, x2, y2 + sw)) {
+                        Activate();
                         move_direction = -1;
                     } else if (GetMouseHold(x2 - sw, y2, x2, y2 + sw)) {
                         if (GetMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
@@ -321,6 +324,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
                     draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // On click, scroll once
                     if (GetMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                        Activate();
                         move_direction = 1;
                     // On hold, scroll after an amount of time
                     } else if (GetMouseHold(x2 - sw, y3 - sw, x2, y3)) {

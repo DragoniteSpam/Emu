@@ -29,6 +29,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         }
         
         if (GetMouseReleased(hx1, hy1, hx2, hy2)) {
+            Activate();
             root.RequestActivateTab(self);
         }
         

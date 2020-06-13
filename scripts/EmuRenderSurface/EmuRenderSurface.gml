@@ -50,6 +50,13 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
             surface_reset_target();
         }
         
+        if (GetMouseHover(x1, y1, x2, y2)) {
+            ShowTooltip();
+            if (GetMousePressed(x1, y1, x2, y2)) {
+                Activate();
+            }
+        }
+        
         callback_step(mx, my);
         
         surface_set_target(surface);

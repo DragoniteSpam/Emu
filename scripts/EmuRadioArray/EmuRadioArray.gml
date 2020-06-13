@@ -77,6 +77,7 @@ function EmuRadioArrayOption(_x, _y, _w, _h, _text, _value) : EmuCore(_x, _y, _w
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {
+            root.Activate();
             // radio array options don't get individual callbacks
             root.value = value;
             root.callback();

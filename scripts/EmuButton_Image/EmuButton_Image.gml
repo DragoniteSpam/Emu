@@ -43,6 +43,7 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {
+            Activate();
             callback();
         }
         

@@ -69,6 +69,7 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         
         if (draggable) {
             if (GetMousePressed(x1, y1, x2, y2)) {
+                Activate();
                 currently_dragging = true;
             }
             

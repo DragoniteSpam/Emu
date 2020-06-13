@@ -16,6 +16,7 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {
+            Activate();
             callback();
         }
         

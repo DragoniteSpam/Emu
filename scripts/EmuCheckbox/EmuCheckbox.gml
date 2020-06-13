@@ -18,6 +18,7 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
         }
         
         if (GetMouseReleased(x1, y1, x2, y2)) {
+            Activate();
             value = !value;
             callback();
         }
