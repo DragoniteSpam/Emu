@@ -25,13 +25,13 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"LayerId":{"name":"40b3ded0-57f8-4854-88a8-6a89ad2573de","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"spr_emu_birb","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"resourceVersion":"1.0","name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"LayerId":{"name":"40b3ded0-57f8-4854-88a8-6a89ad2573de","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+        {"FrameId":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_emu_demo_birb_blue_preview","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"resourceVersion":"1.0","name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"spr_emu_birb","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},
+    "spriteId": {"name":"spr_emu_demo_birb_blue_preview","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -43,7 +43,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"ed337faf-1e62-46d1-9b05-e44a088d0050","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"501b07f6-7eff-45c9-bba5-93a7f68ec1a0","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"bd506ad8-3a4b-4ac7-8e31-a2a96fe4ec07","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -60,9 +60,9 @@
     "yorigin": 16,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"spr_emu_birb","path":"sprites/spr_emu_birb/spr_emu_birb.yy",},
+    "parent": {"name":"spr_emu_demo_birb_blue_preview","path":"sprites/spr_emu_demo_birb_blue_preview/spr_emu_demo_birb_blue_preview.yy",},
     "resourceVersion": "1.3",
-    "name": "spr_emu_birb",
+    "name": "spr_emu_demo_birb_blue_preview",
     "tags": [],
     "resourceType": "GMSequence",
   },
@@ -74,7 +74,7 @@
     "path": "folders/Emu/Demo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "spr_emu_birb",
+  "name": "spr_emu_demo_birb_blue_preview",
   "tags": [],
   "resourceType": "GMSprite",
 }

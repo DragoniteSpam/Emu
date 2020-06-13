@@ -23,12 +23,27 @@ tab_1.AddContent([
     new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 5, false, 2, emu_null),
     bar_int,
     new EmuButton(32, EMU_AUTO, 256, 32, "make popup dialog", function() {
-        var dialog = new EmuDialog(640, 320, "Hey, listen!");
+        var group = new EmuTabGroup(32, EMU_AUTO, 576, 320, 2, 32);
+        var tab_1 = new EmuTab("Tab1");
+        var tab_2 = new EmuTab("Tab2");
+        var tab_3 = new EmuTab("Tab3");
+        var tab_4 = new EmuTab("Multi-line");
+        var tab_5 = new EmuTab("Render Surface");
+        group.AddTabs(0, [tab_1, tab_2, tab_3]);
+        group.AddTabs(1, [tab_4, tab_5]);
+        
+        var dialog = new EmuDialog(640, 416, "Hey, listen!");
         dialog.AddContent([
-            new EmuText(32, EMU_AUTO, 576, 32, "These are words that you can read"),
-            new EmuCheckbox(32, EMU_AUTO, 320, 32, "Toggle option", false, function() { }),
+            group,
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
+        
+        tab_5.AddContent(new EmuRenderSurface(32, EMU_AUTO, 240, 180,
+            function(mx, my) { data.Render(); },
+            function(mx, my) { data.Control(); },
+            function() { data = new EmuDemoMeshScene(); },
+            function() { data.Destroy(); }
+        ));
     }),
     new EmuInput(32, EMU_AUTO, 256, 32, "Hex:", "FF", "a hex value", 4, E_InputTypes.HEX, emu_null),
 ]);

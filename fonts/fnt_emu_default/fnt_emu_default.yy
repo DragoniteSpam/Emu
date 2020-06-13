@@ -275,8 +275,8 @@
   "canGenerateBitmap": true,
   "maintainGms1Font": false,
   "parent": {
-    "name": "Demo",
-    "path": "folders/Emu/Demo.yy",
+    "name": "Graphics",
+    "path": "folders/Emu/Graphics.yy",
   },
   "resourceVersion": "1.0",
   "name": "fnt_emu_default",

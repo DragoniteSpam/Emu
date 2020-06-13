@@ -137,14 +137,14 @@ function EmuDemoMeshScene() constructor {
         camera_set_proj_mat(camera, matrix_build_projection_perspective_fov(-60, 4 / 3, 1, 1000));
         camera_apply(camera);
         draw_clear(c_black);
-        shader_set(shd_emu);
+        shader_set(shd_emu_demo_mesh);
         gpu_set_ztestenable(false);
         gpu_set_zwriteenable(false);
         
         skybox.position = camera_position;
         skybox.Render();
         
-        shader_set(shd_emu_lighting);
+        shader_set(shd_emu_demo_lighting);
         gpu_set_ztestenable(true);
         gpu_set_zwriteenable(true);
         
