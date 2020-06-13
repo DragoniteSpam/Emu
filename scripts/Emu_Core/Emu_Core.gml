@@ -93,6 +93,8 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     Render = function(base_x, base_y) {
+        if (base_x == undefined) base_x = 0;
+        if (base_y == undefined) base_y = 0;
         processAdvancement();
         renderContents(x + base_x, y + base_y);
     }
