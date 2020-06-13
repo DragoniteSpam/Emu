@@ -31,6 +31,7 @@ function EmuList(_x, _y, _w, _h, _text, _text_vacant, _element_height, _content_
         }
         entries = _list;
         own_contents = false;
+        ClearSelection();
     }
     
     SetEntryTypes = function(_type) {
