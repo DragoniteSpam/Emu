@@ -1,3 +1,5 @@
+randomize();
+
 data = {
     // bio
     name: "Sam",
