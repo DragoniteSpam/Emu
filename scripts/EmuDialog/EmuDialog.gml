@@ -109,7 +109,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         drawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
         
         scribble_set_box_align(fa_left, fa_middle);
-        scribble_draw(tx, ty, string(text), c_black, c_black, c_black, c_black, 1);
+        scribble_draw(tx, ty, text);
         
         if (close_button) {
             draw_sprite(sprite_close, cbi, cbx1, cby1);

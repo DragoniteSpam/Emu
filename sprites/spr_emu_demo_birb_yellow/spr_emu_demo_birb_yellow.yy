@@ -8,15 +8,15 @@
   "edgeFiltering": false,
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
-  "bbox_left": 0,
-  "bbox_right": 127,
-  "bbox_top": 1,
-  "bbox_bottom": 127,
+  "bbox_left": 3,
+  "bbox_right": 60,
+  "bbox_top": 2,
+  "bbox_bottom": 63,
   "HTile": false,
   "VTile": false,
-  "For3D": false,
-  "width": 128,
-  "height": 128,
+  "For3D": true,
+  "width": 64,
+  "height": 64,
   "textureGroupId": {
     "name": "Default",
     "path": "texturegroups/Default",
@@ -25,9 +25,9 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"8d91f61a-3f15-4087-85ef-6cf90209b769","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"8d91f61a-3f15-4087-85ef-6cf90209b769","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"LayerId":{"name":"5c63f4a8-3e72-4a75-99df-bc90ba1cbb23","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"spr_emu_demo_birb_yellow","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","name":"8d91f61a-3f15-4087-85ef-6cf90209b769","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"LayerId":{"name":"b4ce1b40-5fe7-4311-a521-b7cb6ad12a58","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_emu_demo_birb_yellow","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","name":"b308ca5f-494b-4195-b147-acc46f045d63","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
     "spriteId": {"name":"spr_emu_demo_birb_yellow","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},
@@ -42,7 +42,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"5a407486-9e7f-416b-ae93-a3f8b8aa5dc9","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"8d91f61a-3f15-4087-85ef-6cf90209b769","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"fdfa462f-a464-45fc-9f7b-a9e1b69946c2","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_yellow/spr_emu_demo_birb_yellow.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -66,7 +66,7 @@
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"5c63f4a8-3e72-4a75-99df-bc90ba1cbb23","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"b4ce1b40-5fe7-4311-a521-b7cb6ad12a58","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
     "name": "Emu Demo",

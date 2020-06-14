@@ -1,176 +1,268 @@
+data = {
+    // bio
+    name: "Sam",
+    nickname: choose("Samwise", "Samcastle", "Samwich", "Kpop Sam", "United We Sam", "Comic Sams", "Samsquatch", "Consamtinpole", "Green Eggs and Sam"),
+    pronouns: irandom(2),
+    hometown: irandom(8),
+    alignment: irandom(8),
+    // appearance
+    size: irandom_range(4, 10) / 10,
+    sprite: choose(spr_emu_demo_birb_yellow, spr_emu_demo_birb_red, spr_emu_demo_birb_blue),
+    // stats
+    str: irandom_range(-5, 5),
+    dex: irandom_range(-5, 5),
+    con: irandom_range(-5, 5),
+    int: irandom_range(-5, 5),
+    wis: irandom_range(-5, 5),
+    cha: irandom_range(-5, 5),
+    level: irandom_range(1, 5),
+    // skills
+    skills: ds_list_create(),
+    // summary
+    summary: choose("Likes bacon, lettuce and tomatoes.", "Once walked a tightrope between the Twin Towers.", "Actually dreams in code.", "Has a pet Mimic named Douglas the Dingbat.", "Always plays as a Nord.", "Grew up believing in Santa Claus."),
+};
+
+all_hometowns = ds_list_create();
+ds_list_add(all_hometowns, "Alcamoth", "Hogwarts", "Markarth", "Mordor", "Narnia", "New Bark", "The Shire", "Wyoming", "Zanarkand");
+
+all_alignments = ds_list_create();
+ds_list_add(all_alignments, "Lawful Good", "Lawful Neutral", "Lawful Evil", "Neutral Good", "Boring", "Neutral Evil", "Chaotic Good", "Chaotic Neutral", "Chaotic Evil");
+
 container = new EmuCore(32, 32, 640, 640);
 
-var group = new EmuTabGroup(0, EMU_AUTO, 640, 640, 2, 32);
-var tab_1 = new EmuTab("Tab1");
-var tab_2 = new EmuTab("Tab2");
-var tab_3 = new EmuTab("Tab3");
-var tab_4 = new EmuTab("Multi-line");
-var tab_5 = new EmuTab("Render Surface");
-group.AddTabs(0, [tab_1, tab_2, tab_3]);
-group.AddTabs(1, [tab_4, tab_5]);
+var tab_group = new EmuTabGroup(0, 0, 640, 640, 2, 32);
+var tab_bio = new EmuTab("Bio");
+var tab_look = new EmuTab("Appearance");
+var tab_stats = new EmuTab("Stats");
+var tab_skills = new EmuTab("Skills");
+var tab_summary = new EmuTab("Summary");
 
-container.AddContent(group);
+tab_group.AddTabs(0, [tab_bio, tab_look]);
+tab_group.AddTabs(1, [tab_stats, tab_skills, tab_summary]);
 
-var bar_int = new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 10, true, 7, emu_null);
+container.AddContent(tab_group);
 
-bar_int.SetIntegersOnly(true);
+#region bio
+tab_bio.AddContent([
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Bio[/c]"),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Name:", data.name, "enter a name", 32, E_InputTypes.STRING, function() {
+        obj_emu_demo.data.name = value;
+    }),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Nickname:", data.nickname, "enter a nickname", 32, E_InputTypes.STRING, function() {
+        obj_emu_demo.data.nickname = value;
+    }),
+]);
 
-tab_1.AddContent([
-    new EmuText(32, EMU_AUTO, 256, 32, "Text label"),
-    new EmuText(32, EMU_AUTO, 256, 32, "[rainbow][wave](scribble enabled!)[]"),
-    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 100, true, 1, emu_null),
-    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 100, false, 35, emu_null),
-    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0, 5, false, 2, emu_null),
-    bar_int,
-    new EmuButton(32, EMU_AUTO, 256, 32, "make popup dialog", function() {
-        var group = new EmuTabGroup(32, EMU_AUTO, 576, 320, 2, 32);
-        var tab_1 = new EmuTab("Tab1");
-        var tab_2 = new EmuTab("Tab2");
-        var tab_3 = new EmuTab("Tab3");
-        var tab_4 = new EmuTab("Multi-line");
-        var tab_5 = new EmuTab("Render Surface");
-        group.AddTabs(0, [tab_1, tab_2, tab_3]);
-        group.AddTabs(1, [tab_4, tab_5]);
+var radio_gender = new EmuRadioArray(32, EMU_AUTO, 512, 32, "Pronouns:", data.pronouns, function() {
+    obj_emu_demo.data.pronouns = value;
+});
+
+radio_gender.AddOptions(["They / them", "He / him", "She / her"]);
+radio_gender.SetColumns(1, 160);
+tab_bio.AddContent(radio_gender);
+
+var list_hometown = new EmuList(32, EMU_AUTO, 256, 32, "Hometown:", 32, 8, function() {
+    var selection = GetSelection();
+    if (selection > -1) {
+        obj_emu_demo.data.hometown = selection;
+    }
+});
+list_hometown.SetList(all_hometowns);
+list_hometown.Select(data.hometown, true);
+tab_bio.AddContent(list_hometown);
+
+var list_alignment = new EmuList(320, list_hometown.y, 256, 32, "Alignment:", 32, 8, function() {
+    var selection = GetSelection();
+    if (selection > -1) {
+        obj_emu_demo.data.alignment = selection;
+    }
+});
+list_alignment.SetList(all_alignments);
+list_alignment.Select(data.alignment, true);
+tab_bio.AddContent(list_alignment);
+#endregion
+
+#region appearance
+tab_look.AddContent([
+    new EmuText(32, EMU_AUTO, 256, 32, "[c_blue]Visual Appearance[/c]"),
+    new EmuText(32, EMU_AUTO, 256, 32, "Size:"),
+    new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0.4, 1, true, data.size, function() {
+        obj_emu_demo.data.size = value;
+    }),
+]);
+
+var list_sprites = new EmuList(32, EMU_AUTO, 256, 32, "Sprite:", 32, 8, function() {
+    var selection = GetSelection();
+    switch (selection) {
+        case 0: obj_emu_demo.data.sprite = spr_emu_demo_birb_yellow; break;
+        case 1: obj_emu_demo.data.sprite = spr_emu_demo_birb_red; break;
+        case 2: obj_emu_demo.data.sprite = spr_emu_demo_birb_blue; break;
+    }
+});
+list_sprites.AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]);
+
+tab_look.AddContent(list_sprites);
+#endregion
+
+#region stats
+
+var input_str = new EmuInput(32, EMU_AUTO, 512, 32, "Strength:", string(data.str), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.str = real(value);
+});
+input_str.SetRealNumberBounds(-5, 5);
+var input_dex = new EmuInput(32, EMU_AUTO, 512, 32, "Dexterity:", string(data.dex), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.str = real(value);
+});
+input_dex.SetRealNumberBounds(-5, 5);
+var input_con = new EmuInput(32, EMU_AUTO, 512, 32, "Constitution:", string(data.con), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.con = real(value);
+});
+input_con.SetRealNumberBounds(-5, 5);
+var input_int = new EmuInput(32, EMU_AUTO, 512, 32, "Intelligence:", string(data.int), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.int = real(value);
+});
+input_int.SetRealNumberBounds(-5, 5);
+var input_wis = new EmuInput(32, EMU_AUTO, 512, 32, "Wisdom:", string(data.wis), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.wis = real(value);
+});
+input_wis.SetRealNumberBounds(-5, 5);
+var input_cha = new EmuInput(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha), "-5 to +5", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.cha = real(value);
+});
+input_cha.SetRealNumberBounds(-5, 5);
+var input_level = new EmuInput(32, EMU_AUTO, 512, 32, "[#006600]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
+    obj_emu_demo.data.level = real(value);
+});
+input_level.SetRealNumberBounds(1, 10);
+tab_stats.AddContent([
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Stats[/c]"),
+    input_str,
+    input_dex,
+    input_con,
+    input_int,
+    input_wis,
+    input_cha,
+    input_level,
+]);
+#endregion
+
+#region skills
+tab_skills.AddContent(new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Skills[/c]"));
+
+var list_your_skills = new EmuList(32, EMU_AUTO, 256, 32, "Your skills:", 32, 12, function() {
+    var selection = GetSelection();
+    if (selection > -1) {
+        name.SetValue(obj_emu_demo.data.skills[| selection]);
+    }
+});
+list_your_skills.SetList(data.skills);
+tab_skills.AddContent(list_your_skills);
+
+var button_add = new EmuButton(320, list_your_skills.y, 256, 32, "Add Skill", function() {
+    ds_list_add(obj_emu_demo.data.skills, "Skill " + string(ds_list_size(obj_emu_demo.data.skills)));
+});
+var button_remove = new EmuButton(320, EMU_AUTO, 256, 32, "Remove Skill", function() {
+    var selection = list.GetSelection();
+    if (selection > -1) {
+        ds_list_delete(obj_emu_demo.data.skills, selection);
+    }
+});
+tab_skills.AddContent([
+    button_add,
+    button_remove,
+    new EmuText(320, EMU_AUTO, 256, 32, "Skill Name:"),
+]);
+
+var input_skill_name = new EmuInput(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
+    var selection = list.GetSelection();
+    if (selection > -1) {
+        obj_emu_demo.data.skills[| selection] = value;
+    }
+});
+input_skill_name.SetInputBoxPosition(0, 0, 256, 32);
+
+tab_skills.AddContent(input_skill_name);
+
+list_your_skills.name = input_skill_name;
+input_skill_name.list = list_your_skills;
+
+button_add.list = list_your_skills;
+button_remove.list = list_your_skills;
+#endregion
+
+#region summary
+var input_summary = new EmuInput(32, EMU_AUTO, 512, 256, "Summary:", data.summary, "up to 500 characters", 500, E_InputTypes.STRING, function() {
+    obj_emu_demo.data.summary = value;
+});
+input_summary.SetMultiLine(true);
+input_summary.SetInputBoxPosition(160, 0, 512, 256);
+
+tab_summary.AddContent([
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Summary[/c]"),
+    input_summary,
+]);
+#endregion
+
+#region overview and credits
+container.AddContent([
+    new EmuButton(704, 32, 256, 32, "Show Character", function() {
+        var dialog = new EmuDialog(640, 384, "Show Credits");
+        var demo = obj_emu_demo;
+        var pronouns_possessive = ["Their", "His", "Her"];
+        var pronoun_possessive = pronouns_possessive[demo.data.pronouns];
+        var pronouns_subject = ["They", "He", "She"];
+        var pronoun_subject = pronouns_subject[demo.data.pronouns];
+        var pronouns_verb = ["are", "is", "is"];
+        var pronoun_verb = pronouns_verb[demo.data.pronouns];
+        var skill_count = ds_list_size(demo.data.skills);
+        var calc_stat = function(base) {
+            return 2 * base + 10;
+        }
+        var str_summary = "[rainbow][wave]" + demo.data.name + "[/wave][/rainbow] (or [rainbow][wave]" + demo.data.nickname + ",[/wave][/rainbow] according to " +
+            string_lower(pronoun_possessive) + " friends) is a " + demo.all_alignments[| demo.data.alignment] + " duckling from " + demo.all_hometowns[| demo.data.hometown] + ". " +
+            pronoun_subject + " " + pronoun_verb + " Level " + string(demo.data.level) + " with [c_red]" + string(calc_stat(demo.data.str)) + "[/c] Strength, [c_red]" +
+            string(calc_stat(demo.data.dex)) + "[/c] Dexterity, [c_red]" + string(calc_stat(demo.data.con)) + "[/c] Constitution, [c_red]" + string(calc_stat(demo.data.int)) +
+            "[/c] Intelligence, [c_red]" + string(calc_stat(demo.data.wis)) + "[/c] Wisdom, and [c_red]" + string(calc_stat(demo.data.cha)) + "[/c] Charisma. " + pronoun_subject +
+            " know" + ((demo.data.pronouns != 0) ? "s" : "") + " [c_blue]" + string(skill_count) + "[/c] skill" + ((skill_count == 1) ? "" : "s");
+        if (skill_count > 0) {
+            if (skill_count > 3) {
+                str_summary += ", including ";
+            } else {
+                str_summary += ": ";
+            }
+            switch (skill_count) {
+                case 1: str_summary += demo.data.skills[| 0]; break;
+                case 2: str_summary += demo.data.skills[| 0] + " and " + demo.data.skills[| 1]; break;
+                default: str_summary += demo.data.skills[| 0] + ", " + demo.data.skills[| 1] + " and " + demo.data.skills[| 2]; break;
+            }
+        }
+        str_summary += ".\n\n[#006600]" + demo.data.summary + "[/rainbow]";
         
-        var dialog = new EmuDialog(640, 416, "Hey, listen!");
         dialog.AddContent([
-            group,
+            new EmuText(32, EMU_AUTO, 560, 320, str_summary),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
-        
-        tab_5.AddContent(new EmuRenderSurface(32, EMU_AUTO, 240, 180,
-            function(mx, my) { data.Render(); },
-            function(mx, my) { data.Control(); },
-            function() { data = new EmuDemoMeshScene(); },
-            function() { data.Destroy(); }
-        ));
     }),
-    new EmuInput(32, EMU_AUTO, 256, 32, "Hex:", "FF", "a hex value", 4, E_InputTypes.HEX, emu_null),
-]);
-
-var bitfield_3_1 = new EmuBitfield(32, EMU_AUTO, 256, 32, 15, emu_null);
-var bitfield_3_2 = new EmuBitfield(352, 16, 256, 256, 41, emu_null);
-bitfield_3_1.AddOptions([
-    "0", "1", "2", "4"
-]);
-bitfield_3_1.SetInteractive(false);
-
-bitfield_3_2.SetFixedSpacing(32);
-bitfield_3_2.AddOptions([
-    "my", "very", "earnest", "mother", "just", "served", "us", "nine", "pickles",
-    new EmuBitfieldOption("all", 0x1ff, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
-    new EmuBitfieldOption("none", 0, emu_bitfield_option_exact_callback, emu_bitfield_option_exact_eval),
-]);
-bitfield_3_2.SetOrientation(E_BitfieldOrientations.VERTICAL);
-
-var picker_1 = new EmuColorPicker(320, EMU_AUTO, 256, 32, "Color:", 0xff000000 | c_maroon, function() {
-    
-});
-picker_1.allow_alpha = true;
-tab_1.AddContent([
-    bitfield_3_1,
-    bitfield_3_2,
-    picker_1,
-]);
-
-var list_2 = new EmuList(320, 32, 256, 32, "List of things", "no things", 24, 6, emu_null);
-list_2.SetMultiSelect(true, true, true);
-list_2.AddEntries(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
-list_2.setCallbackDouble(function(index) {
-    show_debug_message("Double-click on element: " + string(index));
-});
-list_2.setCallbackMiddle(function(index) {
-    show_debug_message("Middle-click on element: " + string(index));
-});
-
-tab_2.AddContent([
-    new EmuText(32, EMU_AUTO, 256, 32, "Text label"),
-    new EmuButton(32, EMU_AUTO, 256, 32, "Button", function() {
-        show_message("clicked the that does absolutely nothing");
+    new EmuButton(704, EMU_AUTO, 256, 32, "Credits", function() {
+        var dialog = new EmuDialog(640, 320, "Credits");
+        dialog.AddContent([
+            new EmuText(dialog.width / 2, EMU_AUTO, 560, 64, "[c_blue][fa_center]Emu UI, a user interface framework for GameMaker Studio 2.3 written by @dragonitespam[/c]"),
+            new EmuText(32, EMU_AUTO, 560, 32, "The [rainbow][wave]Scribble[/wave][/rainbow]  text renderer is by @jujuadams"),
+            new EmuText(32, EMU_AUTO, 560, 32, "Models are from Kenney's Nature Kit (www.kenney.nl)"),
+            new EmuText(32, EMU_AUTO, 560, 32, "Emu iconography by @gart_gh"),
+            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
+        ]);
     }),
-    new EmuCheckbox(32, EMU_AUTO, 256, 32, "Toggle", false, function() {
-    
-    }),
-    new EmuButtonImage(32, EMU_AUTO, 128, 128, spr_emu_birb, 0, c_white, 1, false, function() {
-        var dialog = new EmuDialog(320, 240, "Hey, listen!");
-        dialog.AddContent(new EmuText(32, 32, 256, 64, "You clicked on the birb!"));
-    }),
-    list_2,
 ]);
+#endregion
 
-var radio_4 = new EmuRadioArray(32, EMU_AUTO, 256, 32, "Select your favorite planet:", 0, function() {
-    show_message("You have chosen planet #" + string(value) + ".");
-});
-radio_4.AddOptions(["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]);
-radio_4.SetColumns(3, 160);
-tab_4.AddContent(radio_4);
-
-var input_4 = new EmuInput(32, EMU_AUTO, 560, 128, "Summary 1:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
-input_4.multi_line = true;
-tab_4.AddContent(input_4);
-var input_5 = new EmuInput(32, EMU_AUTO, 560, 128, "Summary 2:", "You can enter some longer text here, if you want", "start typing", 600, E_InputTypes.STRING, function() { show_debug_message(value); });
-input_5.multi_line = true;
-tab_4.AddContent(input_5);
-input_4.SetNext(input_5);
-input_5.SetNext(input_4);
-
-var group_inner = new EmuTabGroup(32, 32, 640 - 64, 640 - 128, 3, 32)
-tab_3.AddContent(group_inner);
-var tab_11 = new EmuTab("Tab 11");
-var tab_12 = new EmuTab("Tab 12");
-var tab_13 = new EmuTab("Tab 13");
-var tab_14 = new EmuTab("Tab 14");
-var tab_15 = new EmuTab("Tab 15");
-var tab_16 = new EmuTab("Tab 16");
-var tab_17 = new EmuTab("Tab 17");
-var tab_18 = new EmuTab("Tab 18");
-var tab_19 = new EmuTab("Tab 19");
-group_inner.AddTabs(0, [tab_11, tab_12]);
-group_inner.AddTabs(1, [tab_13, tab_14, tab_15]);
-group_inner.AddTabs(2, [tab_16, tab_17, tab_18, tab_19]);
-
-tab_15.AddContent([
-    new EmuButton(32, EMU_AUTO, 320, 32, "another button ", function() { show_message("clicked the bottom button"); }),
-]);
-
-var picker_5 = new EmuColorPicker(320, 32, 256, 32, "Color:", c_black, emu_null);
-picker_5.allow_alpha = true;
-tab_5.AddContent([
-    new EmuInput(32, 32, 256, 32, "Enter int:", "15", "start typing", 6, E_InputTypes.INT, emu_null),
-    picker_5,
-    new EmuRenderSurface(32, EMU_AUTO, 576, 432,
-        function(mx, my) { data.Render(); },
-        function(mx, my) { data.Control(); },
-        function() { data = new EmuDemoMeshScene(); },
-        function() { data.Destroy(); }
-    ),
-]);
-
-var render_surface = new EmuRenderSurface(32, 32, 256, 256,
-    function(mx, my) {
-        if (mouse_check_button(mb_left)) {
-            draw_circle_colour(mx, my, 2, c_black, c_black, false);
-            draw_line_width_colour(mx_previous, my_previous, mx, my, 4, c_black, c_black);
-        }
-        mx_previous = mx;
-        my_previous = my;
-    },
-    function(mx, my) {
-        buffer_seek(surface_buffer, buffer_seek_start, 0);
-        buffer_get_surface(surface_buffer, GetSurface(), buffer_surface_copy, 0, 0);
-    },
-    function() {
-        draw_clear(c_yellow);
-        mx_previous = 0;
-        my_previous = 0;
-        surface_buffer = buffer_create(width * height * 4, buffer_fixed, 1);
-    },
-    function() {
-        buffer_delete(surface_buffer);
-    }
+#region render surface
+container.AddContent(
+    new EmuRenderSurface(704, 144, 540, 400,
+        function(mx, my) { scene.Render(); },
+        function(mx, my) { scene.Control(); },
+        function() { scene = new EmuDemoMeshScene(); },
+        function() { scene.Destroy(); }
+    )
 );
-
-render_surface.SetRecreate(function() {
-    buffer_set_surface(surface_buffer, GetSurface(), buffer_surface_copy, 0, 0);
-});
-tab_11.AddContent(render_surface);
+#endregion

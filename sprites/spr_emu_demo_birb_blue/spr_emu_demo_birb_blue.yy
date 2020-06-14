@@ -8,15 +8,15 @@
   "edgeFiltering": false,
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
-  "bbox_left": 0,
-  "bbox_right": 127,
-  "bbox_top": 1,
-  "bbox_bottom": 127,
+  "bbox_left": 3,
+  "bbox_right": 60,
+  "bbox_top": 2,
+  "bbox_bottom": 63,
   "HTile": false,
   "VTile": false,
-  "For3D": false,
-  "width": 128,
-  "height": 128,
+  "For3D": true,
+  "width": 64,
+  "height": 64,
   "textureGroupId": {
     "name": "Default",
     "path": "texturegroups/Default",
@@ -25,9 +25,9 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"5cc5502c-ff0a-4ca3-a004-c30b626d8847","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"5cc5502c-ff0a-4ca3-a004-c30b626d8847","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"LayerId":{"name":"1875e49a-041e-4b22-8830-4e0826e7a6bb","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"spr_emu_demo_birb_blue","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","name":"5cc5502c-ff0a-4ca3-a004-c30b626d8847","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"aff89c1a-4050-46b1-8461-e2759af85d9b","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"aff89c1a-4050-46b1-8461-e2759af85d9b","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"LayerId":{"name":"81c3e9d6-126c-4b3e-966d-5eb03f5a3a22","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"spr_emu_demo_birb_blue","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","name":"aff89c1a-4050-46b1-8461-e2759af85d9b","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
     "spriteId": {"name":"spr_emu_demo_birb_blue","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},
@@ -42,7 +42,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"a8ab5a4f-6b90-47cf-8578-b1d142fa6cf4","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"5cc5502c-ff0a-4ca3-a004-c30b626d8847","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"0789c56f-6586-430b-b021-00efc53a0ea6","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"aff89c1a-4050-46b1-8461-e2759af85d9b","path":"sprites/spr_emu_demo_birb_blue/spr_emu_demo_birb_blue.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -66,7 +66,7 @@
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"1875e49a-041e-4b22-8830-4e0826e7a6bb","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"81c3e9d6-126c-4b3e-966d-5eb03f5a3a22","tags":[],"resourceType":"GMImageLayer",},
   ],
   "parent": {
     "name": "Emu Demo",
