@@ -1,3 +1,6 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason
 function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {

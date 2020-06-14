@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     text = _text;

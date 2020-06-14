@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     thickness = _thickness;
     value_min = min(_min, _max);

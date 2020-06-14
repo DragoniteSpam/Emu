@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuText(_x, _y, _w, _h, _text) : EmuCore(_x, _y, _w, _h) constructor {
     text = _text;
     

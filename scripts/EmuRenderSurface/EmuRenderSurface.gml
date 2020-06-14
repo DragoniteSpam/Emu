@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : EmuCore(_x, _y, _w, _h) constructor {
     SetRender = function(_render) {
         callback_render = method(self, _render);

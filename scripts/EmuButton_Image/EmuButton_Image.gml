@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_to_fit, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
     sprite = _sprite;
     index = _index;

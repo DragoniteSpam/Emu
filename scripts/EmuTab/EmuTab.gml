@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     text = _name;
     

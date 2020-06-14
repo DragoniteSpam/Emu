@@ -1,3 +1,5 @@
+// Emu (c) 2020 @dragonitespam
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     
