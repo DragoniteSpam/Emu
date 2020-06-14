@@ -12,6 +12,7 @@ Look inside the demo project or see the [wiki](https://github.com/DragoniteSpam/
 
 <a href="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MjkucG5n/original/Ernro5.png"><img src="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MjkucG5n/original/Ernro5.png" width="288"></a>
 <a href="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MzAucG5n/original/1USygf.png"><img src="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MzAucG5n/original/1USygf.png" width="288"></a>
+
 <a href="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MjgucG5n/original/B6NRS9.png"><img src="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MjgucG5n/original/B6NRS9.png" width="288"></a>
 <a href="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MzEucG5n/original/Mrb%2FyO.png"><img src="https://img.itch.zone/aW1hZ2UvNjcxMzAzLzM2NTk2MzEucG5n/original/Mrb%2FyO.png" width="288"></a>
 
@@ -25,8 +26,8 @@ Currently, the project is officially distributed on [itch.io](https://dragonite.
 
 ## Credits
 
- - [Scribble?](https://github.com/JujuAdams/scribble) is a text renderer by [@jujuadams??](https://twitter.com/jujuadams)
- - The emu icon was created by [@gart_gh??](https://twitter.com/gart_gh)
- - The duckling was created by [@alemunin?](https://twitter.com/alemunin)
- - The 3D meshes in the demo were created by [kenney.nl?](https://kenney.nl/assets/nature-kit)
- - The skybox in the demo was created by [Spiney?](https://opengameart.org/content/cloudy-skyboxes)
+ - [Scribble](https://github.com/JujuAdams/scribble) is a text renderer by [@jujuadams](https://twitter.com/jujuadams)
+ - The emu icon was created by [@gart_gh](https://twitter.com/gart_gh)
+ - The duckling was created by [@alemunin](https://twitter.com/alemunin)
+ - The 3D meshes in the demo were created by [kenney.nl](https://kenney.nl/assets/nature-kit)
+ - The skybox in the demo was created by [Spiney](https://opengameart.org/content/cloudy-skyboxes)
