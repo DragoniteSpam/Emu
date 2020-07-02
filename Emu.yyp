@@ -164,7 +164,7 @@
     {"CopyToMask":-1,"filePath":"datafiles\\emu","resourceVersion":"1.0","name":"campfire.d3d","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "23.1.1.149",
+    "IDEVersion": "23.1.1.167",
   },
   "resourceVersion": "1.3",
   "name": "Emu",

@@ -182,7 +182,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 }
         
                 value = working_value;
-        
+                
                 if (ValidateInput(working_value)) {
                     var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
@@ -205,10 +205,10 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 ShowTooltip();
             }
         }
-
+        
         surface_reset_target();
         #endregion
-
+        
         draw_surface(surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
     }
@@ -219,35 +219,40 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     }
     
     ValidateInput = function(_text) {
-        switch (value_type) {
-            case E_InputTypes.STRING:
-                return true;
-            case E_InputTypes.INT:
-                var success = true;
-                try {
-                    var cast = real(_text);
-                    if (floor(cast) != cast) success = false;
-                } catch (e) {
-                    success = false;
-                }
-                return success;
-            case E_InputTypes.REAL:
-                var success = true;
-                try {
-                    var cast = real(_text);
-                } catch (e) {
-                    success = false;
-                }
-                return success;
-            case E_InputTypes.HEX:
-                var success = true;
-                try {
-                    var cast = emu_hex(_text);
-                } catch (e) {
-                    success = false;
-                }
-                return success;
+        // this used to be a switch tree, but 23.1.1.159 has issues with
+        // try-catch in switch trees; if that issue has been fixed, feel
+        // free to change it back if you think those look nicer
+        var success = true;
+        if (value_type == E_InputTypes.STRING) {
+            return true;
         }
+        if (value_type == E_InputTypes.INT) {
+            try {
+                var cast = real(_text);
+                if (floor(cast) != cast) success = false;
+            } catch (e) {
+                success = false;
+            }
+            return success;
+        }
+        if (value_type == E_InputTypes.REAL) {
+            try {
+                var cast = real(_text);
+            } catch (e) {
+                success = false;
+            }
+            return success;
+        }
+        if (value_type == E_InputTypes.HEX) {
+            var success = true;
+            try {
+                var cast = emu_hex(_text);
+            } catch (e) {
+                success = false;
+            }
+            return success;
+        }
+        return success;
     }
     
     CastInput = function(_text) {
