@@ -1,11 +1,9 @@
-// Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    enum E_InputTypes { STRING, INT, REAL, HEX };
-    
+// Script assets have changed for v2.3.0 see
+// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
     help_text = _help_text;
-    character_limit = clamp(_character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
+    character_limit = clamp(_character_limit, 1, 1000);
     value_x1 = width / 2;
     value_y1 = 0;
     value_x2 = width;
@@ -21,16 +19,18 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     
     sprite_ring = spr_emu_ring
     sprite_enter = spr_emu_enter;
+
+	surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
+
+	working_value = "";
     
-    SetMultiLine = function(_multi_line) {
+	SetMultiLine = function(_multi_line) {
         multi_line = _multi_line;
     }
     
     SetRequireConfirm = function(_require) {
         require_enter = _require;
     }
-    
-    surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
     
     SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
         value_x1 = _vx1;
@@ -52,6 +52,82 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         value_upper = max(_lower, _upper);
     }
     
+	cursor_pos = 1;
+	key_delay_start = false;
+	enum H_KEY_ACTIONS {NONE, BACKSPACE, DELETE, NEWLINE, LEFT, RIGHT, UP, DOWN}
+	key_action = H_KEY_ACTIONS.NONE;
+	key_delay = 0;
+	/*GetDistanceFromLastNewline = function(str, pos) {
+		var dist = 0;
+		for (var i = pos; i >= 1; i--) {
+			if (string_char_at(str, i) == "\n") {
+				break;	
+			}
+			dist++;
+		}
+		return dist;
+	};
+	GetDistanceToNextNewline = function(str, pos) {
+		var dist = 0;
+		for (var i = pos; i < string_length(str); i++) {
+			if (string_char_at(str, i) == "\n") {
+				break;	
+			}
+			dist++;	
+		}
+		return dist;
+	};*/
+	KeyAction = function(action) {
+		if (action == H_KEY_ACTIONS.BACKSPACE) {
+			if (cursor_pos != 0) {
+				var left = string_copy(working_value, 0, cursor_pos - 1);
+				var right = string_copy(working_value, cursor_pos + 1, string_length(working_value) - cursor_pos + 1);
+				working_value = left + right;
+				cursor_pos--;
+			}
+		} else if (action == H_KEY_ACTIONS.DELETE) {
+			if (cursor_pos != string_length(working_value)) {
+				var left = string_copy(working_value, 0, cursor_pos);
+				var right = string_copy(working_value, cursor_pos + 2, string_length(working_value) - cursor_pos + 1);
+				working_value = left + right;
+			}
+		} else if (action == H_KEY_ACTIONS.NEWLINE && string_length(working_value) < character_limit) {
+		    if (multi_line && !require_enter) {
+				working_value = string_insert("\n", working_value, cursor_pos + 1);
+				cursor_pos += 1;
+            }
+		} else if (action == H_KEY_ACTIONS.LEFT) {
+			if (cursor_pos != 0) {
+				cursor_pos--;
+			}
+		} else if (action == H_KEY_ACTIONS.RIGHT) {
+			if (cursor_pos != string_length(working_value)) {
+				cursor_pos++;
+			}
+		}
+		// TODO: how the heck
+		/* else if (action == H_KEY_ACTIONS.UP) {
+			if (!multi_line) {
+				// TODO: add an option for disabling.
+				cursor_pos = string_length(working_value);
+			} else {
+				var line_length = GetDistanceToNextNewline(working_value, cursor_pos) - GetDistanceFromLastNewline(working_value, cursor_pos);
+				show_debug_message(line_length);
+				cursor_pos += line_length;
+				cursor_pos = clamp(cursor_pos, 0, string_length(working_value));
+			}
+		} else if (action == H_KEY_ACTIONS.DOWN) {
+			if (!multi_line) {
+				// TODO: add an option for disabling.
+				cursor_pos = 0;
+			} else {
+				var line_length = GetDistanceToNextNewline(working_value, cursor_pos) - GetDistanceFromLastNewline(working_value, cursor_pos);
+				show_debug_message(line_length);
+				cursor_pos += line_length;
+				cursor_pos = clamp(cursor_pos, 0, string_length(working_value));
+			}
+		}*/
+	};
     Render = function(base_x, base_y) {
         processAdvancement();
         
@@ -71,7 +147,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        var working_value = string(value);
+        working_value = string(value);
         var sw = string_width(working_value);
         var sw_end = sw + 4;
         
@@ -107,7 +183,12 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
         surface_reset_target();
         
-        var display_text = working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+		var display_left = string_copy(working_value, 0, cursor_pos);
+		var display_right = string_copy(working_value, cursor_pos + 1, string_length(working_value) - cursor_pos + 1);
+
+		// this looks bad. i'd use expletives but this is a public repo so no
+		// TODO: replace with like drawing a line instead or something
+        var display_text = display_left + (isActiveElement() && ((floor((current_time / EMU_INPUT_BLINKING_SPEED) % 2) == 0) || key_delay_start) ? "|" : "") + display_right;
         
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
@@ -154,6 +235,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
             draw_set_font(input_font);
             var sw_begin = min(vtx - vx1, ww - offset - sw);
             draw_text_colour(sw_begin, vty - vy1, display_text, c, c, c, c, 1);
+			
             sw_end = sw_begin + sw + 4;
         }
         
@@ -170,22 +252,58 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         if (GetInteractive()) {
             if (isActiveElement()) {
                 var v0 = working_value;
-                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
 
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
                     working_value = "";
-                    keyboard_string = "";
+                    keyboard_string = ""; // just in case, i guess?
                 }
-				
-				// add newline on pressing enter, if allowed
-                if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
-                    working_value += "\n";
-                    keyboard_string = keyboard_string + "\n";
-                }
-				
-                if (ValidateInput(working_value)) {
+
+				var any_pressed = keyboard_check_pressed(vk_backspace) || keyboard_check_pressed(vk_delete) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_right) || keyboard_check_pressed(vk_left)/* || keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_down)*/;
+				var any_released = keyboard_check_released(vk_backspace) || keyboard_check_released(vk_delete) || keyboard_check_released(vk_enter) || keyboard_check_released(vk_right) || keyboard_check_released(vk_left)/* || keyboard_check_released(vk_up) || keyboard_check_released(vk_down)*/;
+				var any_held = keyboard_check(vk_backspace) || keyboard_check(vk_delete) || keyboard_check(vk_enter) || keyboard_check(vk_right) || keyboard_check(vk_left)/* || keyboard_check(vk_up) || keyboard_check(vk_down)*/;
+				var all_released = !any_held;
+				if (any_pressed) {
+					// should probably use an array huh
+					if (keyboard_check_pressed(vk_backspace)) key_action = H_KEY_ACTIONS.BACKSPACE;
+					else if (keyboard_check_pressed(vk_delete)) key_action = H_KEY_ACTIONS.DELETE;
+					else if (keyboard_check_pressed(vk_enter)) key_action = H_KEY_ACTIONS.NEWLINE;
+					else if (keyboard_check_pressed(vk_right)) key_action = H_KEY_ACTIONS.RIGHT;
+					else if (keyboard_check_pressed(vk_left)) key_action = H_KEY_ACTIONS.LEFT;
+					/*else if (keyboard_check_pressed(vk_up)) key_action = H_KEY_ACTIONS.UP;
+					else if (keyboard_check_pressed(vk_down)) key_action = H_KEY_ACTIONS.DOWN;*/
+					KeyAction(key_action);
+					key_delay_start = true;
+					key_delay = EMU_KEY_REPEAT_DELAY;
+				}
+				if (key_delay > 0) {
+					key_delay -= 1;
+				} else {
+					var old_key_delay_start = key_delay_start;
+					
+					if (any_held && old_key_delay_start) {
+						// do backspace
+						KeyAction(key_action);
+						key_delay = EMU_KEY_REPEAT_RATE;
+					}
+					if (any_released && old_key_delay_start) {
+						key_delay = 0;
+						key_delay_start = false;
+					}
+					if (all_released) {
+						key_delay = 0;
+						key_delay_start = false;
+						key_action = H_KEY_ACTIONS.NONE;
+					}
+				}
+				if (string_length(keyboard_string) > 0 && string_length(working_value) < character_limit) {
+					// character/s was/were typed
+					working_value = string_insert(keyboard_string, working_value, cursor_pos + 1);
+					keyboard_string = "";
+					cursor_pos++;
+				}
+				if (ValidateInput(working_value)) {
                     var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
                         var cast = CastInput(working_value);
@@ -199,19 +317,12 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                             callback();
                         }
                     }
-					// reset the keyboard string if value change didn't occur
-					// this is to fix the bug that occured before, where you could essentially 'type past'
-					// the contents of the textbox. the value didn't change but you had to backspace more than once 
-					// to remove the last character of the textbox.
-					if (!execute_value_change) {
-						keyboard_string = working_value;
-					}
                 }
             }
             // activation
             if (getMouseHover(vx1, vy1, vx2, vy2)) {
                 if (getMouseReleased(vx1, vy1, vx2, vy2)) {
-                    keyboard_string = value;
+                    //keyboard_string = value;
                     Activate();
                 }
                 ShowTooltip();
@@ -275,55 +386,4 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
             case E_InputTypes.HEX: return emu_hex(_text);
         }
     }
-}
-
-/// @param _value
-/// @param _padding
-function emu_string_hex() {
-    var _value = argument[0];
-    var _padding = (argument_count > 1) ? argument[1] : 0;
-    
-    var s = sign(_value);
-    var v = abs(_value);
-    var output = "";
-    
-    while (v > 0)  {
-        var c  = v & 0xf;
-        // magic, do not touch
-        output = chr(c + ((c < 10) ? 48 : 55)) + output;
-        v = v >> 4;
-    }
-    
-    if (string_length(output) == 0) {
-        output = "0";
-    }
-    
-    while (string_length(output) < _padding) {
-        output = "0" + output;
-    }
-
-    return ((s < 0) ? "-" : "") + output;
-}
-
-function emu_hex(_string) {
-    var result = 0;
-    var ZERO = ord("0");
-    var NINE = ord("9");
-    var A = ord("A");
-    var F = ord("F");
-    
-    for (var i = 1; i <= string_length(_string); i++) {
-        var c = ord(string_char_at(string_upper(_string), i));
-        // you could also multiply by 16 but you get more nerd points for bitshifts
-        result = result << 4;
-        if (c >= ZERO && c <= NINE) {
-            result = result + (c - ZERO);
-        } else if (c >= A && c <= F) {
-            result = result + (c - A + 10);
-        } else {
-            throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(_string) + " as a hex value");
-        }
-    }
-    
-    return result;
 }
