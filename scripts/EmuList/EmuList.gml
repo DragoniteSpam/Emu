@@ -27,6 +27,8 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
     entries = ds_list_create();
     
     own_contents = true;
+	
+	dragging = false;
     SetList = function(_list) {
         if (own_contents) {
             ds_list_destroy(entries);
@@ -290,21 +292,23 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             var sby2 = sy + shalf;
             if (active) {
                 // Hover over the scroll bar: draw the hover color
-                if (getMouseHover(x2 - sw, sby1, x2, sby2)) {
+                if (getMouseHover(x2 - sw, sby1, x2, sby2) || dragging) {
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // Click: begin dragging the scroll bar
-                    if (getMousePressed(x2 - sw, sby1, x2, sby2)) {
+                    if (getMousePressed(x2 - sw, sby1, x2, sby2) && !dragging) {
                         Activate();
+						dragging = true;
                         click_x = mouse_x;
                         click_y = mouse_y;
                     }
                 }
                 // Hold while dragging: update the list position
-                if (getMouseHold(x2 - sw, sby1, x2, sby2) && click_y > -1) {
+                if (getMouseHold(0, 0, window_get_width(), window_get_height()) && click_y > -1) {
                     index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
                 }
                 // Release: stop dragging
-                if (getMouseReleased(x2 - sw, sby1, x2, sby2)) {
+                if (getMouseReleased(0, 0, window_get_width(), window_get_height())) {
+					dragging = false;
                     click_x = -1;
                     click_y = -1;
                 }

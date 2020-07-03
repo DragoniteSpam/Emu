@@ -165,24 +165,26 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
             draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
         }
         #endregion
-        
+
         #region interaction
         if (GetInteractive()) {
             if (isActiveElement()) {
                 var v0 = working_value;
                 working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
-                if (keyboard_check_pressed(vk_escape)) {
+
+				// press escape to clear input
+				if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
                     working_value = "";
                     keyboard_string = "";
                 }
+				
+				// add newline on pressing enter, if allowed
                 if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
                     working_value += "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
-        
-                value = working_value;
-                
+				
                 if (ValidateInput(working_value)) {
                     var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
@@ -190,10 +192,20 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                         if (is_real(cast)) {
                             execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
                         }
+						
                         if (execute_value_change) {
+							// only change actual value when it's allowed
+			                value = working_value;
                             callback();
                         }
                     }
+					// reset the keyboard string if value change didn't occur
+					// this is to fix the bug that occured before, where you could essentially 'type past'
+					// the contents of the textbox. the value didn't change but you had to backspace more than once 
+					// to remove the last character of the textbox.
+					if (!execute_value_change) {
+						keyboard_string = working_value;
+					}
                 }
             }
             // activation
