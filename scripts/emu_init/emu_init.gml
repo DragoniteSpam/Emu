@@ -23,7 +23,6 @@ scribble_init("emu", "fnt_emu_default", true);
 #macro EMU_TIME_HOLD_THRESHOLD 500
 
 #macro EMU_INPUT_BLINKING_SPEED 800
-#macro EMU_INPUT_BLINK_TYPING_DELAY 200
 #macro EMU_KEY_REPEAT_DELAY 60
 #macro EMU_KEY_REPEAT_RATE 2
 #endregion
