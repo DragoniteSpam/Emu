@@ -253,6 +253,7 @@ container.AddContent([
             new EmuText(32, EMU_AUTO, 560, 32, "The [rainbow][wave]Scribble[/wave][/rainbow]  text renderer is by @jujuadams"),
             new EmuText(32, EMU_AUTO, 560, 32, "Models are from Kenney's Nature Kit (www.kenney.nl)"),
             new EmuText(32, EMU_AUTO, 560, 32, "Emu iconography by @gart_gh"),
+            new EmuText(32, EMU_AUTO, 560, 32, "Duckling sprite by @AleMunin"),
             new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
         ]);
     }),
