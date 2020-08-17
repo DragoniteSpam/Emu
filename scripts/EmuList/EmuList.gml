@@ -142,6 +142,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             var txoffset = 0;
         }
         scribble_set_box_align(fa_left, fa_center);
+        scribble_set_wrap(width, height);
         scribble_draw(tx + txoffset, ty, text);
         #endregion
         
