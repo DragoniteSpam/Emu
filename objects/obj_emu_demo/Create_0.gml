@@ -207,8 +207,8 @@ tab_summary.AddContent([
 
 #region overview and credits
 container.AddContent([
-    new EmuButton(704, 32, 256, 32, "Show Character", function() {
-        var dialog = new EmuDialog(640, 384, "Show Credits");
+    new EmuButton(704, 32, 256, 32, "Show Character Summary", function() {
+        var dialog = new EmuDialog(640, 384, "Character Summary");
         var demo = obj_emu_demo;
         var pronouns_possessive = ["Their", "His", "Her"];
         var pronoun_possessive = pronouns_possessive[demo.data.pronouns];

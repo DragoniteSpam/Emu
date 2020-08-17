@@ -77,6 +77,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         
         #region work out the input color
         scribble_set_box_align(fa_left, fa_middle);
+        scribble_set_wrap(width, height);
         scribble_draw(tx, ty, string(text));
         
         if (ValidateInput(working_value)) {

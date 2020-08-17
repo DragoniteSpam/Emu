@@ -37,6 +37,7 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
         drawNineslice(0, bx1, by1, bx2, by2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
+        scribble_set_wrap(width, height);
         scribble_draw(x1 + box_size + offset * 2, floor(mean(y1, y2)), text);
     }
 }

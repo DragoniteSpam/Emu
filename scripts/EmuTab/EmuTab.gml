@@ -45,6 +45,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         drawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
         drawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
         scribble_set_box_align(alignment, valignment);
+        scribble_set_wrap(header_width, header_height);
         scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);
         #endregion
         

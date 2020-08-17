@@ -27,6 +27,7 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
         drawNineslice(0, x1, y1, x2, y2, color, 1);
         
         scribble_set_box_align(alignment, valignment);
+        scribble_set_wrap(width, height);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
     }
 }

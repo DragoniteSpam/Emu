@@ -45,6 +45,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         var ty = getTextY(y1);
         
         scribble_set_box_align(fa_left, fa_middle);
+        scribble_set_wrap(width, height);
         scribble_draw(tx, ty, text);
         
         drawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, EMU_COLOR_BACK, 1);

@@ -164,6 +164,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             drawNineslice(1, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
+            scribble_set_wrap(width, height);
             scribble_draw(tx - x1, ty - y2, text_vacant);
         } else {
             for (var i = 0; i < min(n, slots); i++) {
@@ -180,14 +181,16 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                 
                 var c = getListColors(current_index);
                 var index_text = numbered ? (string(current_index) + ". ") : "";
-        
+                
                 switch (entries_are) {
                     case E_ListEntryTypes.STRINGS: index_text += string(entries[| current_index]); break;
                     case E_ListEntryTypes.STRUCTS: index_text += entries[| current_index].name; break;
                     case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(entries[| current_index](current_index)); break;
                 }
+                
                 var base_color = global.scribble_state_starting_color;
                 global.scribble_state_starting_color = c;
+                scribble_set_wrap(width, height);
                 scribble_draw(tx - x1, tya - y2, index_text);
                 global.scribble_state_starting_color = base_color;
             }
