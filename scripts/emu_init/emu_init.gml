@@ -14,6 +14,10 @@ scribble_init("emu", "fnt_emu_default", true);
 #macro EMU_COLOR_SELECTED 0xffb8ac
 #macro EMU_COLOR_WINDOWSKIN 0x339900
 
+#macro EMU_9SLICE_OUT spr_emu_nineslice_out_symm;
+#macro EMU_9SLICE_BACK spr_emu_nineslice_back_symm;
+#macro EMU_9SLICE_MODE true;
+
 #macro EMU_DIALOG_SHADE_ALPHA 0.5
 #macro EMU_DIALOG_SHADE_COLOR 0x000000
 

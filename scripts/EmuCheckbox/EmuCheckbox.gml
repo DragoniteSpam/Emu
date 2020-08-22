@@ -31,10 +31,10 @@ function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x,
         var by1 = by - box_size / 2;
         var bx2 = bx + box_size / 2;
         var by2 = by + box_size / 2;
-        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
-        drawNineslice(sprite_nineslice, bx1, by1, bx2, by2, back_color, 1);
+		var _color_back = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        drawNineslice(sprite_nineslice_back, bx1, by1, bx2, by2, _color_back, 1, nineslice_mode, true);
         draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, color_active, 1);
-        drawNineslice(sprite_nineslice, bx1, by1, bx2, by2, color, 1);
+        drawNineslice(sprite_nineslice_out, bx1, by1, bx2, by2, color_out, 1, nineslice_mode, false);
         
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(width, height);

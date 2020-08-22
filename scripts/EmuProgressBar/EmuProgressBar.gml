@@ -93,7 +93,7 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         
         DrawProgress(2, bx1, by1, bx2, by2, 1, EMU_COLOR_BACK, 1);
         DrawProgress(0, bx1, by1, bx2, by2, f, color_bar, 1);
-        DrawProgress(1, bx1, by1, bx2, by2, 1, color, 1);
+        DrawProgress(1, bx1, by1, bx2, by2, 1, color_out, 1);
         
         if (draggable) {
             var w = bx2 - bx1;
@@ -101,8 +101,8 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
             var fw = max(w * f, 0);
             var scale = knob_scale * thickness / sprite_get_height(sprite_knob);
             draw_sprite_ext(sprite_knob, 2, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, knob_color, 1);
-            draw_sprite_ext(sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color, 1);
-            draw_sprite_ext(sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color, 1);
+            draw_sprite_ext(sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color_out, 1);
+            draw_sprite_ext(sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, color_out, 1);
         }
     }
 }

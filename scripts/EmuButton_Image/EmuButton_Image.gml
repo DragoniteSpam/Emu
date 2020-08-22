@@ -35,7 +35,8 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         var sprite_alpha = exists ? alpha : 1;
         var xscale = (exists && scale) ? min(width / sprite_get_width(sprite_image), 1) : 1;
         var yscale = (exists && scale) ? min(height / sprite_get_height(sprite_image), 1) : 1;
-        drawNineslice(sprite_nineslice, 0, 0, width, height, EMU_COLOR_BACK, 1);
+		drawNineslice(sprite_nineslice_back, 0, 0, width, height, color_back, 1, nineslice_mode, true);
+		drawNineslice(sprite_nineslice_out, 0, 0, width, height, color_out, 1, nineslice_mode, false);
         draw_sprite_ext(sprite_image, index, width / 2, height / 2, xscale, yscale, 0, sprite_color, sprite_alpha);
         surface_reset_target();
         #endregion
@@ -49,9 +50,9 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
             callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
-        draw_surface_ext(surface, x1, y1, 1, 1, 0, back_color, 1);
-        drawNineslice(sprite_nineslice, x1, y1, x2, y2, color, 1);
+        var _color_back = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : EMU_COLOR_DISABLED);
+        draw_surface_ext(surface, x1, y1, 1, 1, 0, _color_back, 1);
+		drawNineslice(sprite_nineslice_out, x1, y1, x2, y2, color_out, 1, nineslice_mode, false);
     }
     
     Destroy = function() {

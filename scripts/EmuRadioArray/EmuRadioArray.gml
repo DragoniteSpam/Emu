@@ -85,8 +85,8 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
             }
             
             draw_sprite_ext(spr_emu_radio, 2, tx + offset, ty, 1, 1, 0, EMU_COLOR_BACK, 1);
-            draw_sprite_ext(spr_emu_radio, 1, tx + offset, ty, 1, 1, 0, color, 1);
-            draw_sprite_ext(spr_emu_radio, 0, tx + offset, ty, 1, 1, 0, color, 1);
+            draw_sprite_ext(spr_emu_radio, 1, tx + offset, ty, 1, 1, 0, color_out, 1);
+            draw_sprite_ext(spr_emu_radio, 0, tx + offset, ty, 1, 1, 0, color_out, 1);
             if (value == root.value) {
                 draw_sprite_ext(spr_emu_radio, 3, tx + offset, ty, 1, 1, 0, color_active, GetInteractive());
             }

@@ -22,10 +22,10 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
             callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
-        drawNineslice(sprite_nineslice, x1, y1, x2, y2, back_color, 1);
-        drawNineslice(sprite_nineslice, x1, y1, x2, y2, color, 1);
-        
+        var _color_back = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        drawNineslice(sprite_nineslice_back, x1, y1, x2, y2, _color_back, 1, nineslice_mode, true);
+        drawNineslice(sprite_nineslice_out, x1, y1, x2, y2, color_out, 1, nineslice_mode, false);
+		
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(width, height);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);

@@ -59,7 +59,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         var y1 = y + base_y;
         var x2 = x1 + width;
         var y2 = y1 + height;
-        var c = color;
+        var c = color_out;
 
         var vx1 = x1 + value_x1;
         var vy1 = y1 + value_y1;
@@ -75,7 +75,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         var sw = string_width(working_value);
         var sw_end = sw + 4;
         
-        #region work out the input color
+        #region work out the input color_out
         scribble_set_box_align(fa_left, fa_middle);
         scribble_set_wrap(width, height);
         scribble_draw(tx, ty, string(text));
@@ -223,7 +223,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         #endregion
         
         draw_surface(surface, vx1, vy1)
-        draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
+        draw_rectangle_colour(vx1, vy1, vx2, vy2, color_out, color_out, color_out, color_out, true);
     }
     
     Destroy = function() {

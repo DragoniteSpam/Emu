@@ -12,7 +12,13 @@ function EmuCore(_x, _y, _w, _h) constructor {
     interactive = true;
     outline = true;             // not used in all element types
     tooltip = "";               // not used by all element types
-    color = EMU_COLOR_DEFAULT;
+	
+	color_out = EMU_COLOR_DEFAULT;
+    color_back = EMU_COLOR_BACK;
+    color_hover = EMU_COLOR_HOVER;
+	nineslice_mode = EMU_9SLICE_MODE;
+    sprite_nineslice_out = spr_emu_nineslice_out_symm;
+    sprite_nineslice_back = spr_emu_nineslice_back_symm;
     
     active_element = noone;
     
@@ -27,7 +33,6 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     next = noone;
     previous = noone;
-    sprite_nineslice = spr_emu_nineslice_out_asym;
     element_spacing_y = 16;
     sprite_checkers = spr_emu_checker;
     
@@ -139,10 +144,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    drawNineslice = function(spr, x1, y1, x2, y2, color, alpha, stretch) {
-        color = (color != undefined) ? color : c_white;
-        alpha = (alpha != undefined) ? alpha : 1;
-        
+    drawNineslice = function(spr, x1, y1, x2, y2, col, alpha, stretch, fill) {        
 		var sw = sprite_get_width(spr);
         var sh = sprite_get_height(spr);
 		var swh = sw / 2; // Half.
@@ -152,33 +154,41 @@ function EmuCore(_x, _y, _w, _h) constructor {
         
 		var assym = (sprite_get_number(spr) > 4);
 		var flip = -1 + assym * 2; // 1 if there are more than 4 subimages, -1 if there are not.
-		var xF = x2 - swh;
-		var yF = y2 - shh;
+		
+		// This could be made branchless. Idk if that would be faster.
+		if (fill) {
+			draw_rectangle_color(x1 + sw,
+				y1 + sh,
+				x2 - sw,
+				y2 - sh,
+				col, col, col, col, false
+			);
+		}
 		
 		// The 9-slice sprite's origin is at the top-right currently.
 		// This means that the co-ordinates mirrored and un-mirrored sprites are drawn at differs.
 		// Making the origin centered would streamline this math, but that may involve changing other systems as well.
 		
 		// Top left corner.
-        draw_sprite_ext(spr, 1, x1 + swh, y1 + shh, 1, 1, 0, color, alpha);
+	    draw_sprite_ext(spr, 1, x1 + swh, y1 + shh, 1, 1, 0, col, alpha);
 		// Top right corner.
-        draw_sprite_ext(spr, 1 + 4 * assym, x2 - swh, y1 + shh, flip, 1, 0, color, alpha);
+	    draw_sprite_ext(spr, 1 + 4 * assym, x2 - swh, y1 + shh, flip, 1, 0, col, alpha);
 		// Bottom right corner.
-        draw_sprite_ext(spr, 0 + 4 * assym, x2 - swh, y2 - shh, flip, 1, 0, color, alpha);
+	    draw_sprite_ext(spr, 0 + 4 * assym, x2 - swh, y2 - shh, flip, 1, 0, col, alpha);
 		// Bottom left corner.
-        draw_sprite_ext(spr, 0, x1 + swh, y2 - shh, 1, 1, 0, color, alpha);
-        
+	    draw_sprite_ext(spr, 0, x1 + swh, y2 - shh, 1, 1, 0, col, alpha);
+		
 		if (stretch) {
 			// STRETCH EDGES.
 			
 			// Top edge.
-			draw_sprite_part_ext(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw*2, 1, color, alpha);
-	        // Bottom edge.
-			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, 1, sh, x1 + sw, y2 - sh * assym, w - sw*2, flip, color, alpha);
-	        // Left edge.
-			draw_sprite_part_ext(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh*2, color, alpha);
-	        // Right edge.
-			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, 1, x2 - sw * assym, y1 + sh, flip, h - sh*2, color, alpha);
+			draw_sprite_part_ext(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw*2, 1, col, alpha);
+		    // Bottom edge.
+			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, 1, sh, x1 + sw, y2 - sh * assym, w - sw*2, flip, col, alpha);
+		    // Left edge.
+			draw_sprite_part_ext(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh*2, col, alpha);
+		    // Right edge.
+			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, 1, x2 - sw * assym, y1 + sh, flip, h - sh*2, col, alpha);
 		} else {
 			// TILE EDGES.
 			
@@ -186,21 +196,21 @@ function EmuCore(_x, _y, _w, _h) constructor {
 			
 			for (i = sw + swh; i < w - sw * 2; i += sw) {
 				// Top edge.
-				draw_sprite_ext(spr, 3, x1 + i, y1 + shh, 1, 1, 0, color, alpha);
+				draw_sprite_ext(spr, 3, x1 + i, y1 + shh, 1, 1, 0, col, alpha);
 				// Bottom edge.
-				draw_sprite_ext(spr, 3 + 4 * assym, x1 + i, yF, 1, flip, 0, color, alpha);
+				draw_sprite_ext(spr, 3 + 4 * assym, x1 + i, y2 - shh, 1, flip, 0, col, alpha);
 			}
-			draw_sprite_part_ext(spr, 3, 0, 0, w - swh - i, sh, x1 + i - swh, y1, 1, 1, color, alpha);
-			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, w - swh - i, sh, x1 + i - swh, y2 - sh * assym, 1, flip, color, alpha);
+			draw_sprite_part_ext(spr, 3, 0, 0, w - swh - i, sh, x1 + i - swh, y1, 1, 1, col, alpha);
+			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, w - swh - i, sh, x1 + i - swh, y2 - sh * assym, 1, flip, col, alpha);
 			
 			for (i = sh + shh; i < h - sh * 2; i += sh) {
 				// Left edge.
-				draw_sprite_ext(spr, 2, x1 + swh, y1 + i, 1, 1, 0, color, alpha);
+				draw_sprite_ext(spr, 2, x1 + swh, y1 + i, 1, 1, 0, col, alpha);
 				// Right edge.
-				draw_sprite_ext(spr, 2 + 4 * assym, xF, y1 + i, flip, 1, 0, color, alpha);
+				draw_sprite_ext(spr, 2 + 4 * assym, x2 - swh, y1 + i, flip, 1, 0, col, alpha);
 			}
-			draw_sprite_part_ext(spr, 2, 0, 0, sw, h - shh - i, x1, y1 + i - shh, 1, 1, color, alpha);
-			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, h - shh - i, x2 - sw * assym, y1 + i - shh, flip, 1, color, alpha);
+			draw_sprite_part_ext(spr, 2, 0, 0, sw, h - shh - i, x1, y1 + i - shh, 1, 1, col, alpha);
+			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, h - shh - i, x2 - sw * assym, y1 + i - shh, flip, 1, col, alpha);
 		}
 	}
     
@@ -323,6 +333,17 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
     setCallbackMiddle(emu_null);
     setCallbackRight(emu_null);
     setCallbackDouble(emu_null);
+}
+
+function EmuLoadStyle(_colorO, _colorB, _colorH, _alpha, _nineslice_out, _nineslice_back, _nineslice_mode) {
+    color_out = _colorO;
+    color_back = _colorB ;
+    color_hover = _colorH;
+	
+    alpha = _alpha;
+	sprite_nineslice_out = _nineslice_out;
+	sprite_nineslice_back = _nineslice_back;
+	nineslice_mode = _nineslice_mode;
 }
 
 function emu_null() {

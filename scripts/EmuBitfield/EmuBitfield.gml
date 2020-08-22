@@ -98,16 +98,16 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        var back_color = evaluate() ? color_active : color_inactive;
+        var _color_back = evaluate() ? color_active : color_inactive;
         
         if (root.GetInteractive()) {
-            back_color = merge_colour(back_color, getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : back_color, 0.5);
+            _color_back = merge_colour(_color_back, getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : _color_back, 0.5);
         } else {
-            back_color = merge_colour(back_color, EMU_COLOR_DISABLED, 0.5);
+            _color_back = merge_colour(_color_back, EMU_COLOR_DISABLED, 0.5);
         }
         
-        drawNineslice(sprite_nineslice, x1, y1, x2, y2, back_color, 1);
-        drawNineslice(sprite_nineslice, x1, y1, x2, y2, color, 1);
+        drawNineslice(sprite_nineslice_back, x1, y1, x2, y2, _color_back, 1, nineslice_mode, true);
+        drawNineslice(sprite_nineslice_out, x1, y1, x2, y2, color_out, 1, nineslice_mode, false);
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         

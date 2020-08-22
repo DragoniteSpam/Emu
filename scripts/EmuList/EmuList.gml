@@ -136,8 +136,8 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             } else {
                 draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_BACK, 1);
             }
-            draw_sprite_ext(sprite_help, 1, tx, ty, 1, 1, 0, color, 1);
-            draw_sprite_ext(sprite_help, 0, tx, ty, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_help, 1, tx, ty, 1, 1, 0, color_out, 1);
+            draw_sprite_ext(sprite_help, 0, tx, ty, 1, 1, 0, color_out, 1);
         } else {
             var txoffset = 0;
         }
@@ -162,7 +162,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
         index = clamp(n - slots, 0, index);
         
         if (n == 0) {
-            drawNineslice(sprite_nineslice, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
+            drawNineslice(sprite_nineslice_out, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1, nineslice_mode, false);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
             scribble_set_wrap(width, height);
@@ -197,7 +197,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             }
         }
         
-        draw_rectangle_colour(1, 1, ww - 2, hh - 2, color, color, color, color, true);
+        draw_rectangle_colour(1, 1, ww - 2, hh - 2, color_out, color_out, color_out, color_out, true);
         surface_reset_target();
         #endregion
         
@@ -288,14 +288,14 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             var sy = smin + srange * index / noutofrange;
             var active = GetInteractive();
             draw_rectangle_colour(x2 - sw, y2, x2, y3, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, false);
-            draw_line_colour(x2 - sw, y2 + sw, x2, y2 + sw, color, color);
-            draw_line_colour(x2 - sw, y3 - sw, x2, y3 - sw, color, color);
-            draw_rectangle_colour(x2 - sw, y2, x2, y3, color, color, color, color, true);
+            draw_line_colour(x2 - sw, y2 + sw, x2, y2 + sw, color_out, color_out);
+            draw_line_colour(x2 - sw, y3 - sw, x2, y3 - sw, color_out, color_out);
+            draw_rectangle_colour(x2 - sw, y2, x2, y3, color_out, color_out, color_out, color_out, true);
             
             var sby1 = sy - shalf;
             var sby2 = sy + shalf;
             if (active) {
-                // Hover over the scroll bar: draw the hover color
+                // Hover over the scroll bar: draw the hover color_out
                 if (getMouseHover(x2 - sw, sby1, x2, sby2) || dragging) {
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
                     // Click: begin dragging the scroll bar
@@ -318,10 +318,10 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                 }
             }
             
-            draw_rectangle_colour(x2 - sw, sby1, x2, sby2, color, color, color, color, true);
-            draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, color, color);
-            draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, color, color);
-            draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, color, color);
+            draw_rectangle_colour(x2 - sw, sby1, x2, sby2, color_out, color_out, color_out, color_out, true);
+            draw_line_colour(x2 - sw * 4 / 5, sy - 4, x2 - sw / 5, sy - 4, color_out, color_out);
+            draw_line_colour(x2 - sw * 4 / 5, sy, x2 - sw / 5, sy, color_out, color_out);
+            draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, color_out, color_out);
             
             if (active) {
                 var inbounds_top = getMouseHover(x2 - sw, y2, x2, y2 + sw);
@@ -353,8 +353,8 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                 }
             }
             
-            draw_sprite_ext(sprite_arrows, 0, x2 - sw, y2, 1, 1, 0, color, 1);
-            draw_sprite_ext(sprite_arrows, 1, x2 - sw, y3 - sw, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_arrows, 0, x2 - sw, y2, 1, 1, 0, color_out, 1);
+            draw_sprite_ext(sprite_arrows, 1, x2 - sw, y3 - sw, 1, 1, 0, color_out, 1);
             
             index = clamp(index + move_direction, 0, max(0, n - slots));
         }
