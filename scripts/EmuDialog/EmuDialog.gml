@@ -104,11 +104,11 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
             drawn_dialog_shade_time = current_time;
         }
         
-        drawNineslice(1, x1, y1, x2, y2, EMU_COLOR_BACK, 1);
-        drawNineslice(0, x1, y1, x2, y2, color, 1);
+        drawNineslice(x1, y1, x2, y2, EMU_COLOR_BACK, 1);
+        drawNineslice(x1, y1, x2, y2, color, 1);
         var ch = merge_colour(color_header, EMU_DIALOG_SHADE_COLOR, active ? 0 : 0.5);
-        drawNineslice(1, x1, y1, x2, y1 + header_height, ch, 1);
-        drawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
+        drawNineslice(x1, y1, x2, y1 + header_height, ch, 1);
+        drawNineslice(x1, y1, x2, y1 + header_height, color, 1);
         
         scribble_set_box_align(fa_left, fa_middle);
         scribble_set_wrap(header_width, header_height);
