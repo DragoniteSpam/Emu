@@ -43,10 +43,12 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
         
         var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
 		
+		var sprTemp = spr_emu_nineslice_in_symm;
+		// Draw interior.
+        drawNineslice(sprTemp, hx1, hy1, hx2, hy2, back_color, 1, true);
+		draw_rectangle_color(hx1 + sprite_get_width(sprTemp), hy1 + sprite_get_height(sprTemp), hx2 - sprite_get_width(sprTemp), hy2 - sprite_get_height(sprTemp), back_color, back_color, back_color, back_color, false);
 		// Draw outline.
-        drawNineslice(spr_emu_nineslice_in_asym, hx1, hy1, hx2, hy2, back_color, 1);
-		draw_rectangle_color(hx1 + sprite_get_width(spr_emu_nineslice_in_asym), hy1 + sprite_get_height(spr_emu_nineslice_in_asym), hx2 - sprite_get_width(spr_emu_nineslice_in_asym), hy2 - sprite_get_height(spr_emu_nineslice_in_asym), back_color, back_color, back_color, back_color, false);
-        drawNineslice(sprite_nineslice, hx1, hy1, hx2, hy2, color, 1);
+        drawNineslice(sprite_nineslice, hx1, hy1, hx2, hy2, color, 1, true);
 		
 		scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(header_width, header_height);

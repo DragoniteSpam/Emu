@@ -139,39 +139,69 @@ function EmuCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    drawNineslice = function(spr, x1, y1, x2, y2, color, alpha) {
+    drawNineslice = function(spr, x1, y1, x2, y2, color, alpha, stretch) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         
 		var sw = sprite_get_width(spr);
         var sh = sprite_get_height(spr);
+		var swh = sw / 2; // Half.
+		var shh = sh / 2; // Half.
 		var w = x2 - x1;
         var h = y2 - y1;
         
 		var assym = (sprite_get_number(spr) > 4);
-		var flipX = -1 + assym * 2; // 1 if there are more than 4 subimages, -1 if there are not.
-		var xF = x1 + w - sw * assym;
+		var flip = -1 + assym * 2; // 1 if there are more than 4 subimages, -1 if there are not.
+		var xF = x2 - swh;
+		var yF = y2 - shh;
+		
 		// The 9-slice sprite's origin is at the top-right currently.
 		// This means that the co-ordinates mirrored and un-mirrored sprites are drawn at differs.
 		// Making the origin centered would streamline this math, but that may involve changing other systems as well.
 		
 		// Top left corner.
-        draw_sprite_general(spr, 1, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_ext(spr, 1, x1 + swh, y1 + shh, 1, 1, 0, color, alpha);
 		// Top right corner.
-        draw_sprite_general(spr, 1 + 4 * assym, 0, 0, sw, sh, xF, y1, flipX, 1, 0, color, color, color, color, alpha);
+        draw_sprite_ext(spr, 1 + 4 * assym, x2 - swh, y1 + shh, flip, 1, 0, color, alpha);
 		// Bottom right corner.
-        draw_sprite_general(spr, 0 + 4 * assym, 0, 0, sw, sh, xF, y1 + h - sh, flipX, 1, 0, color, color, color, color, alpha);
+        draw_sprite_ext(spr, 0 + 4 * assym, x2 - swh, y2 - shh, flip, 1, 0, color, alpha);
 		// Bottom left corner.
-        draw_sprite_general(spr, 0, 0, 0, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_ext(spr, 0, x1 + swh, y2 - shh, 1, 1, 0, color, alpha);
         
-		// Top edge.
-		draw_sprite_general(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw * 2, 1, 0, color, color, color, color, alpha);
-        // Bottom edge.
-		draw_sprite_general(spr, 3, 0, 0, 1, sh, x1 + sw, y1 + h, w - sw * 2, -1, 0, color, color, color, color, alpha);
-        // Left edge.
-		draw_sprite_general(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh * 2, 0, color, color, color, color, alpha);
-        // Right edge.
-		draw_sprite_general(spr, 2 + 4 * assym, 0, 0, sw, 1, xF, y1 + sh, flipX, h - sh * 2, 0, color, color, color, color, alpha);
+		if (stretch) {
+			// STRETCH EDGES.
+			
+			// Top edge.
+			draw_sprite_part_ext(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw*2, 1, color, alpha);
+	        // Bottom edge.
+			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, 1, sh, x1 + sw, y2 - sh * assym, w - sw*2, flip, color, alpha);
+	        // Left edge.
+			draw_sprite_part_ext(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh*2, color, alpha);
+	        // Right edge.
+			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, 1, x2 - sw * assym, y1 + sh, flip, h - sh*2, color, alpha);
+		} else {
+			// TILE EDGES.
+			
+			var i;
+			
+			for (i = sw + swh; i < w - sw * 2; i += sw) {
+				// Top edge.
+				draw_sprite_ext(spr, 3, x1 + i, y1 + shh, 1, 1, 0, color, alpha);
+				// Bottom edge.
+				draw_sprite_ext(spr, 3 + 4 * assym, x1 + i, yF, 1, flip, 0, color, alpha);
+			}
+			draw_sprite_part_ext(spr, 3, 0, 0, w - swh - i, sh, x1 + i - swh, y1, 1, 1, color, alpha);
+			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, w - swh - i, sh, x1 + i - swh, y2 - sh * assym, 1, flip, color, alpha);
+			
+			for (i = sh + shh; i < h - sh * 2; i += sh) {
+				// Left edge.
+				draw_sprite_ext(spr, 2, x1 + swh, y1 + i, 1, 1, 0, color, alpha);
+				// Right edge.
+				draw_sprite_ext(spr, 2 + 4 * assym, xF, y1 + i, flip, 1, 0, color, alpha);
+			}
+			draw_sprite_part_ext(spr, 2, 0, 0, sw, h - shh - i, x1, y1 + i - shh, 1, 1, color, alpha);
+			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, h - shh - i, x2 - sw * assym, y1 + i - shh, flip, 1, color, alpha);
+		}
 	}
     
     drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
