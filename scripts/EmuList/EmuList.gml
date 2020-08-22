@@ -162,7 +162,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
         index = clamp(n - slots, 0, index);
         
         if (n == 0) {
-            drawNineslice(0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
+            drawNineslice(sprite_nineslice, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
             scribble_set_wrap(width, height);

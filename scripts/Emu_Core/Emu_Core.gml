@@ -27,7 +27,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     next = noone;
     previous = noone;
-    sprite_nineslice = spr_emu_nineslice_symm;
+    sprite_nineslice = spr_emu_nineslice_out_asym;
     element_spacing_y = 16;
     sprite_checkers = spr_emu_checker;
     
@@ -139,16 +139,16 @@ function EmuCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    drawNineslice = function(x1, y1, x2, y2, color, alpha) {
+    drawNineslice = function(spr, x1, y1, x2, y2, color, alpha) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         
-		var sw = sprite_get_width(sprite_nineslice);
-        var sh = sprite_get_height(sprite_nineslice);
+		var sw = sprite_get_width(spr);
+        var sh = sprite_get_height(spr);
 		var w = x2 - x1;
         var h = y2 - y1;
         
-		var assym = (sprite_get_number(sprite_nineslice) > 4);
+		var assym = (sprite_get_number(spr) > 4);
 		var flipX = -1 + assym * 2; // 1 if there are more than 4 subimages, -1 if there are not.
 		var xF = x1 + w - sw * assym;
 		// The 9-slice sprite's origin is at the top-right currently.
@@ -156,22 +156,22 @@ function EmuCore(_x, _y, _w, _h) constructor {
 		// Making the origin centered would streamline this math, but that may involve changing other systems as well.
 		
 		// Top left corner.
-        draw_sprite_general(sprite_nineslice, 1, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(spr, 1, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
 		// Top right corner.
-        draw_sprite_general(sprite_nineslice, 1 + 4 * assym, 0, 0, sw, sh, xF, y1, flipX, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(spr, 1 + 4 * assym, 0, 0, sw, sh, xF, y1, flipX, 1, 0, color, color, color, color, alpha);
 		// Bottom right corner.
-        draw_sprite_general(sprite_nineslice, 0 + 4 * assym, 0, 0, sw, sh, xF, y1 + h - sh, flipX, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(spr, 0 + 4 * assym, 0, 0, sw, sh, xF, y1 + h - sh, flipX, 1, 0, color, color, color, color, alpha);
 		// Bottom left corner.
-        draw_sprite_general(sprite_nineslice, 0, 0, 0, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(spr, 0, 0, 0, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
         
 		// Top edge.
-		draw_sprite_general(sprite_nineslice, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw * 2, 1, 0, color, color, color, color, alpha);
+		draw_sprite_general(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw * 2, 1, 0, color, color, color, color, alpha);
         // Bottom edge.
-		draw_sprite_general(sprite_nineslice, 3, 0, 0, 1, sh, x1 + sw, y1 + h, w - sw * 2, -1, 0, color, color, color, color, alpha);
+		draw_sprite_general(spr, 3, 0, 0, 1, sh, x1 + sw, y1 + h, w - sw * 2, -1, 0, color, color, color, color, alpha);
         // Left edge.
-		draw_sprite_general(sprite_nineslice, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh * 2, 0, color, color, color, color, alpha);
+		draw_sprite_general(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh * 2, 0, color, color, color, color, alpha);
         // Right edge.
-		draw_sprite_general(sprite_nineslice, 2 + 4 * assym, 0, 0, sw, 1, xF, y1 + sh, flipX, h - sh * 2, 0, color, color, color, color, alpha);
+		draw_sprite_general(spr, 2 + 4 * assym, 0, 0, sw, 1, xF, y1 + sh, flipX, h - sh * 2, 0, color, color, color, color, alpha);
 	}
     
     drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {

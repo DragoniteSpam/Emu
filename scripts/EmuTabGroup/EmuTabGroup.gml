@@ -92,7 +92,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         }
         
         // no sense making a tab group non-interactive
-        drawNineslice(x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
-        drawNineslice(x1, y1 + rows * row_height, x2, y2, color, 1);
+        drawNineslice(sprite_nineslice, x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
+        drawNineslice(sprite_nineslice, x1, y1 + rows * row_height, x2, y2, color, 1);
     }
 }
