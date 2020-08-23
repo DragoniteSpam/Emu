@@ -4,6 +4,9 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
     text = _text;
     alignment = fa_center;
     valignment = fa_middle;
+	
+    sprite_nineslice_out = spr_emu_nineslice_asym_out;
+    sprite_nineslice_back = spr_emu_nineslice_asym_back;
     
     Render = function(base_x, base_y) {
         processAdvancement();

@@ -11,6 +11,11 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     header_y = 0;
     header_width = 0;
     header_height = 0;
+	
+    sprite_nineslice_back = spr_emu_nineslice_tab_back;
+    sprite_nineslice_out = spr_emu_nineslice_tab_out;
+	// TODO: This variable lacks a setter method:
+    sprite_nineslice_out_active = spr_emu_nineslice_tab_out_active;
     
     Render = function(base_x, base_y) {
         processAdvancement();
@@ -35,15 +40,15 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
             root.RequestActivateTab(self);
         }
         
-        if (isActiveTab() || row < root.rows - 1) {
-            var index = 3;
+		if (isActiveTab() || row < root.rows - 1) {
+            var outlineSpr = sprite_nineslice_out_active;
         } else {
-            var index = 5;
+            var outlineSpr = sprite_nineslice_out;
         }
         
         var _color_back = getMouseHover(hx1, hy1, hx2, hy2) ? color_hover : (GetInteractive() ? color_back : EMU_COLOR_DISABLED);
         drawNineslice(sprite_nineslice_back, hx1, hy1, hx2, hy2, _color_back, 1, nineslice_mode, true);
-        drawNineslice(sprite_nineslice_out, hx1, hy1, hx2, hy2, color_out, 1, nineslice_mode, false);
+        drawNineslice(outlineSpr, hx1, hy1, hx2, hy2, color_out, 1, nineslice_mode, false);
 		
 		scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(header_width, header_height);

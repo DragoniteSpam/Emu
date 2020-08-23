@@ -17,8 +17,9 @@ function EmuCore(_x, _y, _w, _h) constructor {
     color_back = EMU_COLOR_BACK;
     color_hover = EMU_COLOR_HOVER;
 	nineslice_mode = EMU_9SLICE_MODE;
-    sprite_nineslice_out = spr_emu_nineslice_out_symm;
-    sprite_nineslice_back = spr_emu_nineslice_back_symm;
+	
+    sprite_nineslice_out = spr_emu_nineslice_folder_out;
+    sprite_nineslice_back = spr_emu_nineslice_folder_back;
     
     active_element = noone;
     
@@ -152,8 +153,8 @@ function EmuCore(_x, _y, _w, _h) constructor {
 		var w = x2 - x1;
         var h = y2 - y1;
         
-		var assym = (sprite_get_number(spr) > 4);
-		var flip = -1 + assym * 2; // 1 if there are more than 4 subimages, -1 if there are not.
+		var assym = (sprite_get_number(spr) > 5);
+		var flip = -1 + assym * 2; // 1 if there are more than 5 subimages, -1 if there are not.
 		
 		// This could be made branchless. Idk if that would be faster.
 		if (fill) {
@@ -172,9 +173,9 @@ function EmuCore(_x, _y, _w, _h) constructor {
 		// Top left corner.
 	    draw_sprite_ext(spr, 1, x1 + swh, y1 + shh, 1, 1, 0, col, alpha);
 		// Top right corner.
-	    draw_sprite_ext(spr, 1 + 4 * assym, x2 - swh, y1 + shh, flip, 1, 0, col, alpha);
+	    draw_sprite_ext(spr, 1 + 5 * assym, x2 - swh, y1 + shh, flip, 1, 0, col, alpha);
 		// Bottom right corner.
-	    draw_sprite_ext(spr, 0 + 4 * assym, x2 - swh, y2 - shh, flip, 1, 0, col, alpha);
+	    draw_sprite_ext(spr, 0 + 5 * assym, x2 - swh, y2 - shh, flip, 1, 0, col, alpha);
 		// Bottom left corner.
 	    draw_sprite_ext(spr, 0, x1 + swh, y2 - shh, 1, 1, 0, col, alpha);
 		
@@ -184,11 +185,11 @@ function EmuCore(_x, _y, _w, _h) constructor {
 			// Top edge.
 			draw_sprite_part_ext(spr, 3, 0, 0, 1, sh, x1 + sw, y1, w - sw*2, 1, col, alpha);
 		    // Bottom edge.
-			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, 1, sh, x1 + sw, y2 - sh * assym, w - sw*2, flip, col, alpha);
+			draw_sprite_part_ext(spr, 4, 0, 0, 1, sh, x1 + sw, y2 - sh, w - sw*2, 1, col, alpha);
 		    // Left edge.
 			draw_sprite_part_ext(spr, 2, 0, 0, sw, 1, x1, y1 + sh, 1, h - sh*2, col, alpha);
 		    // Right edge.
-			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, 1, x2 - sw * assym, y1 + sh, flip, h - sh*2, col, alpha);
+			draw_sprite_part_ext(spr, 2 + 5 * assym, 0, 0, sw, 1, x2 - sw * assym, y1 + sh, flip, h - sh*2, col, alpha);
 		} else {
 			// TILE EDGES.
 			
@@ -198,19 +199,19 @@ function EmuCore(_x, _y, _w, _h) constructor {
 				// Top edge.
 				draw_sprite_ext(spr, 3, x1 + i, y1 + shh, 1, 1, 0, col, alpha);
 				// Bottom edge.
-				draw_sprite_ext(spr, 3 + 4 * assym, x1 + i, y2 - shh, 1, flip, 0, col, alpha);
+				draw_sprite_ext(spr, 4, x1 + i, y2 - shh, 1, 1, 0, col, alpha);
 			}
 			draw_sprite_part_ext(spr, 3, 0, 0, w - swh - i, sh, x1 + i - swh, y1, 1, 1, col, alpha);
-			draw_sprite_part_ext(spr, 3 + 4 * assym, 0, 0, w - swh - i, sh, x1 + i - swh, y2 - sh * assym, 1, flip, col, alpha);
+			draw_sprite_part_ext(spr, 4, 0, 0, w - swh - i, sh, x1 + i - swh, y2 - sh, 1, 1, col, alpha);
 			
 			for (i = sh + shh; i < h - sh * 2; i += sh) {
 				// Left edge.
 				draw_sprite_ext(spr, 2, x1 + swh, y1 + i, 1, 1, 0, col, alpha);
 				// Right edge.
-				draw_sprite_ext(spr, 2 + 4 * assym, x2 - swh, y1 + i, flip, 1, 0, col, alpha);
+				draw_sprite_ext(spr, 2 + 5 * assym, x2 - swh, y1 + i, flip, 1, 0, col, alpha);
 			}
 			draw_sprite_part_ext(spr, 2, 0, 0, sw, h - shh - i, x1, y1 + i - shh, 1, 1, col, alpha);
-			draw_sprite_part_ext(spr, 2 + 4 * assym, 0, 0, sw, h - shh - i, x2 - sw * assym, y1 + i - shh, flip, 1, col, alpha);
+			draw_sprite_part_ext(spr, 2 + 5 * assym, 0, 0, sw, h - shh - i, x2 - sw * assym, y1 + i - shh, flip, 1, col, alpha);
 		}
 	}
     
