@@ -7,7 +7,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     
     SetCallback(function() { Close(); });
     
-    var size = ds_list_size(EmuOverlay.contents);
+	var size = ds_list_size(EmuOverlay.contents);
     x = 64 * (size + 1);
     y = 64 * (size + 1);
     

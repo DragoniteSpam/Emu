@@ -4,7 +4,10 @@
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_emu_react",
+    "path": "objects/obj_emu_react/obj_emu_react.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,

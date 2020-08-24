@@ -1,5 +1,12 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+
+/// @function		EmuCore(_x, _y, _w, _h);
+/// @param			x
+/// @param			y
+/// @param			width
+/// @param			height
+/// @description	Instantiate a container.
 function EmuCore(_x, _y, _w, _h) constructor {
     x = _x;
     y = _y;
@@ -240,6 +247,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     isActiveDialog = function() {
+		return true;
         var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
         return !top || (top == root);
     }
