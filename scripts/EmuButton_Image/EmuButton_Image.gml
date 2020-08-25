@@ -7,6 +7,10 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
     alpha = _alpha;
     fill = _scale_to_fit;
     
+    alignment = fa_center;
+    valignment = fa_middle;
+    text = "";
+    
     surface = noone;
     
     Render = function(base_x, base_y) {
@@ -33,6 +37,10 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
             var scale = fill ? min(max(width / sprite_get_width(sprite), 1), max(height / sprite_get_height(sprite), 1)) : 1;
             draw_sprite_ext(sprite, index, width / 2, height / 2, scale, scale, 0, blend, alpha);
         }
+        
+        scribble_set_box_align(alignment, valignment);
+        scribble_set_wrap(width, height);
+        scribble_draw(width div 2, height div 2, text);
         surface_reset_target();
         #endregion
         

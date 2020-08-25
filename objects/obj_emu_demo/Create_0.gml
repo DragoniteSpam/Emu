@@ -103,15 +103,17 @@ var list_sprites = new EmuList(32, EMU_AUTO, 256, 32, "Sprite:", 32, 8, function
 });
 list_sprites.AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]);
 
+var birb_button = new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
+    var dialog = new EmuDialog(256, 128, "Birb!");
+    dialog.AddContent([
+        new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
+        new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
+    ]);
+});
+
 tab_look.AddContent([
     list_sprites,
-    new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
-        var dialog = new EmuDialog(256, 128, "Birb!");
-        dialog.AddContent([
-            new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
-            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
-        ]);
-    })
+    birb_button,
 ]);
 #endregion
 
