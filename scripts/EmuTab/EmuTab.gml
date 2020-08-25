@@ -11,21 +11,22 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     header_y = 0;
     header_width = 0;
     header_height = 0;
+	parent_group_id = 0;
 	
     sprite_nineslice_back = spr_emu_nineslice_tab_back;
     sprite_nineslice_out = spr_emu_nineslice_tab_out;
 	// TODO: This variable lacks a setter method:
     sprite_nineslice_out_active = spr_emu_nineslice_tab_out_active;
 	
-	obj_emu_react.allTabs[array_length(obj_emu_react.allTabs)] = self;
+	ds_list_add(obj_emu_react.allTabs, self);
 	
 	// This method is accessible to outside classes.
 	MouseIsHovering = function() {
 		return getMouseHover(
 			header_x,
-			y + parent_group.rows * header_height - header_y,
+			y + parent_group_id.rows * header_height - header_y,
 			header_x + header_width,
-			y + parent_group.rows * header_height - header_y + header_height,
+			y + parent_group_id.rows * header_height - header_y + header_height,
 		);
 	}
     

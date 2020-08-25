@@ -1,2 +1,5 @@
 /// @description 
-allTabs[0] = 0;
+allTabs = ds_list_create();
+flyWindows = ds_list_create();
+
+_pressed_id = 0;

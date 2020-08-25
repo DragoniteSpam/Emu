@@ -37,13 +37,22 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
             _tab.root = self;
             _tab.row = row;
             _tab.index = ds_list_size(contents[| row].contents);
-            ds_list_add(_tab_row.contents, _tab);
+			_tab.parent_group_id = self;
+			
+			ds_list_add(_tab_row.contents, _tab);
             if (!active_tab && !active_tab_request) {
                 RequestActivateTab(_tab);
             }
         }
         arrangeRow(row);
     }
+	
+	RemoveTab = function(tab) {
+		var index = ds_list_find_index(container, tab);
+		tab.parent_group_id = 0;
+		activateTab(ds_list_find_value(container, max((index + 1) % (ds_list_size(container) - 1), index - 1)));
+		ds_list_delete(container, index);
+	}
     
     arrangeRow = function(row) {
         if (row > rows) {
@@ -58,7 +67,6 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
             tab.header_height = row_height;
             tab.header_x = tab.header_width * i;
             tab.header_y = tab.header_height * row;
-			tab.parent_group = self;
         }
     }
     
