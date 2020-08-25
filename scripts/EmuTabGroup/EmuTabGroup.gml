@@ -58,6 +58,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
             tab.header_height = row_height;
             tab.header_x = tab.header_width * i;
             tab.header_y = tab.header_height * row;
+			tab.parent_group = self;
         }
     }
     

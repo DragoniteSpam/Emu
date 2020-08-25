@@ -1,3 +1,5 @@
+event_inherited();
+
 randomize();
 
 data = {
@@ -33,18 +35,18 @@ ds_list_add(all_alignments, "Lawful Good", "Lawful Neutral", "Lawful Evil", "Neu
 #region Left tab
 	containerL = new EmuCore(0, 32, room_width / 4, 640);
 	
-	var tab_group = new EmuTabGroup(0, 0, containerL.width, containerL.height, 2, 32);
 	var tab_bio = new EmuTab("Bio");
 	var tab_look = new EmuTab("Appearance");
 	var tab_stats = new EmuTab("Stats");
 	var tab_skills = new EmuTab("Skills");
 	var tab_summary = new EmuTab("Summary");
 	
+	var tab_group = new EmuTabGroup(0, 0, containerL.width, containerL.height, 2, 32);
+	containerL.AddContent(tab_group);
 	tab_group.AddTabs(0, [tab_bio, tab_look]);
 	tab_group.AddTabs(1, [tab_stats, tab_skills, tab_summary]);
 	
-	containerL.AddContent(tab_group);
-	
+	/*
 	#region bio
 	tab_bio.AddContent([
 	    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Bio[/c]"),
@@ -259,7 +261,8 @@ ds_list_add(all_alignments, "Lawful Good", "Lawful Neutral", "Lawful Evil", "Neu
 	        ]);
 	    }),
 	]);
-#endregion
+	#endregion
+	*/
 #endregion
 
 #region Right container

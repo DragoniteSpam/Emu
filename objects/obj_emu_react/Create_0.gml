@@ -1,3 +1,2 @@
 /// @description 
-
-// Store array of tabs to operate with.
+allTabs[0] = 0;
