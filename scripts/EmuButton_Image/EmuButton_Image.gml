@@ -5,7 +5,7 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
     index = _index;
     blend = _blend;
     alpha = _alpha;
-    scale = _scale_to_fit;
+    fill = _scale_to_fit;
     
     surface = noone;
     
@@ -28,15 +28,11 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         
         surface_set_target(surface);
         draw_clear_alpha(c_black, 0);
-        var exists = sprite_exists(sprite);
-        var sprite_image = exists ? sprite : spr_emu_not_found;
-        var sprite_frame = exists ? index : 0;
-        var sprite_color = exists ? blend : c_white;
-        var sprite_alpha = exists ? alpha : 1;
-        var xscale = (exists && scale) ? min(width / sprite_get_width(sprite_image), 1) : 1;
-        var yscale = (exists && scale) ? min(height / sprite_get_height(sprite_image), 1) : 1;
         drawNineslice(1, 0, 0, width, height, EMU_COLOR_BACK, 1);
-        draw_sprite_ext(sprite_image, index, width / 2, height / 2, xscale, yscale, 0, sprite_color, sprite_alpha);
+        if (sprite_exists(sprite)) {
+            var scale = fill ? min(max(width / sprite_get_width(sprite), 1), max(height / sprite_get_height(sprite), 1)) : 1;
+            draw_sprite_ext(sprite, index, width / 2, height / 2, scale, scale, 0, blend, alpha);
+        }
         surface_reset_target();
         #endregion
         

@@ -105,7 +105,7 @@ list_sprites.AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]);
 
 tab_look.AddContent([
     list_sprites,
-    new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_yellow, 0, c_white, 1, true, function() {
+    new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
         var dialog = new EmuDialog(256, 128, "Birb!");
         dialog.AddContent([
             new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
