@@ -47,11 +47,14 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         arrangeRow(row);
     }
 	
-	RemoveTab = function(tab) {
-		var index = ds_list_find_index(container, tab);
-		tab.parent_group_id = 0;
-		activateTab(ds_list_find_value(container, max((index + 1) % (ds_list_size(container) - 1), index - 1)));
-		ds_list_delete(container, index);
+	RemoveTabs = function(row, tabs) {
+        for (var i = 0; i < array_length(tabs); i++) {
+            var _tab = tabs[i];
+			var index = ds_list_find_index(contents[| row], _tab);
+			_tab.parent_group_id = 0;
+			//activateTab(ds_list_find_value(container, max((index + 1) % (ds_list_size(container) - 1), index - 1)));
+			ds_list_delete(contents[| row], index);
+		}
 	}
     
     arrangeRow = function(row) {

@@ -10,6 +10,9 @@ function FlyWindow(_x, _y, _width, _height, _flyWindows) constructor {
 	dragging = false;
 	
 	container = new EmuCore(_x, _y, _width, _height);
+	tab_group = new EmuTabGroup(0, 0, container.width, container.height, 1, 32);
+	container.AddContent(tab_group);
+	
 	ds_list_add(_flyWindows, self);
 	
 	UpdateContainer = function() {
@@ -20,7 +23,7 @@ function FlyWindow(_x, _y, _width, _height, _flyWindows) constructor {
 	}
 	
 	AddContent = function(elements) {
-		container.AddContent(elements);
+		tab_group.AddContent(elements);
 	}
 	
 	Render = function(base_x, base_y) {
@@ -30,7 +33,6 @@ function FlyWindow(_x, _y, _width, _height, _flyWindows) constructor {
 
 // Dragging fly windows.
 for (var i = 0; i < ds_list_size(flyWindows); i++) {
-	show_debug_message(i);
 	if (flyWindows[| i].dragging) {
 		flyWindows[| i].x = mouse_x;
 		flyWindows[| i].y = mouse_y;
@@ -43,42 +45,46 @@ for (var i = 0; i < ds_list_size(flyWindows); i++) {
 // Mouse-driven events.
 if (mouse_check_button_pressed(mb_left)) {
 	for (var i = 0; i < ds_list_size(allTabs); i++) {
-		if (allTabs[| i].parent_group_id != 0) {
-			if (allTabs[| i].MouseIsHovering()) {
-				_pressed_id = allTabs[| i];
-				break;
-			}
+		if (allTabs[| i].MouseIsHovering()) {
+			_pressed_id = allTabs[| i];
+			break;
 		}
 	}
 }
 
 // Drag a tab out of its container.
 if (_pressed_id != 0) {
+	if (mouse_check_button(mb_left)) {
+		if (!_dragging) {
+			if (
+			true
+				// TODO: Give this correct coordinates.
+				//mouse_y > _pressed_id.y + _pressed_id.header_height
+				//|| mouse_y < _pressed_id.y
+				//|| mouse_x < _pressed_id.x
+				//|| mouse_x > _pressed_id.x + _pressed_id.header_width
+			) {
+				with (_pressed_id) {
+					parent_group_id.RemoveTabs(row, self);
+				}
+				
+				var newWindow = new FlyWindow(mouse_x, mouse_y, 200, 80, flyWindows);
+				var tabs = new EmuTabGroup(0, 0, newWindow.width, newWindow.height, 1, 1);
+				tabs.AddTabs(0, _pressed_id);
+				newWindow.AddContent(tabs);
+				newWindow.dragging = true;
+				_dragging = true;
+			}
+		}
+	}
+	
 	// TODO: Do something better than this.
-	if (mouse_check_button_released(mb_left)) {
+	else if (mouse_check_button_released(mb_left)) {
 		for (var i = 0; i < ds_list_size(flyWindows); i++) {
 			flyWindows[| i].dragging = false;
 		}
 		
 		_pressed_id = 0;
-	}
-	
-	if (mouse_check_button(mb_left)) {
-		if (
-			// TODO: Give this correct coordinates.
-			mouse_y > _pressed_id.y + _pressed_id.header_height
-			|| mouse_y < _pressed_id.y
-			|| mouse_x < _pressed_id.x
-			|| mouse_x > _pressed_id.x + _pressed_id.header_width
-		) {
-			//show_debug_message(_pressed_id.parent_group_id);
-			//_pressed_id.parent_group_id.RemoveTabs(_pressed_id);
-
-			var newWindow = new FlyWindow(mouse_x, mouse_y, 200, 80, flyWindows);
-			var tabs = new EmuTabGroup(0, 0, newWindow.width, newWindow.height, 1, 1);
-			tabs.AddTabs(0, _pressed_id);
-			newWindow.AddContent(tabs);
-			newWindow.dragging = true;
-		}
+		_dragging = false;
 	}
 }

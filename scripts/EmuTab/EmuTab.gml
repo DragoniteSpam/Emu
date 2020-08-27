@@ -23,10 +23,12 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
 	// This method is accessible to outside classes.
 	MouseIsHovering = function() {
 		return getMouseHover(
-			header_x,
-			y + parent_group_id.rows * header_height - header_y,
-			header_x + header_width,
-			y + parent_group_id.rows * header_height - header_y + header_height,
+			x + header_x,
+			//y + header_y - root.rows * root.row_height,
+			y + parent_group_id.rows * header_height + 0,
+			x + header_x + header_width,
+			//y + header_y - root.rows * root.row_height + header_height
+			y + parent_group_id.rows * header_height + 0 + header_height
 		);
 	}
     
