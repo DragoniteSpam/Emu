@@ -10,7 +10,7 @@ function FlyWindow(_x, _y, _width, _height, _flyWindows) constructor {
 	dragging = false;
 	
 	container = new EmuCore(_x, _y, _width, _height);
-	tab_group = new EmuTabGroup(0, 0, container.width, container.height, 1, 32);
+	tab_group = new EmuTabGroup(0, 0, container.width, container.height, 1, 16);
 	container.AddContent(tab_group);
 	
 	ds_list_add(_flyWindows, self);
@@ -37,7 +37,6 @@ for (var i = 0; i < ds_list_size(flyWindows); i++) {
 		flyWindows[| i].x = mouse_x;
 		flyWindows[| i].y = mouse_y;
 		flyWindows[| i].UpdateContainer();
-		flyWindows[| i].Render();
 		break;
 	}
 }
@@ -57,7 +56,7 @@ if (_pressed_id != 0) {
 	if (mouse_check_button(mb_left)) {
 		if (!_dragging) {
 			if (
-			true
+				true
 				// TODO: Give this correct coordinates.
 				//mouse_y > _pressed_id.y + _pressed_id.header_height
 				//|| mouse_y < _pressed_id.y

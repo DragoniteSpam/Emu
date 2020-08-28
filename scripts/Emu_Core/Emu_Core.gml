@@ -13,7 +13,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     width = _w;
     height = _h;
     root = noone;
-    
+	
     contents = ds_list_create();
     enabled = true;
     interactive = true;
@@ -38,12 +38,12 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     override_escape = false;
     override_tab = false;
-    
+	
     next = noone;
     previous = noone;
     element_spacing_y = 16;
     sprite_checkers = spr_emu_checker;
-    
+	
     AddContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -62,6 +62,14 @@ function EmuCore(_x, _y, _w, _h) constructor {
             thing.root = self;
         }
     }
+	
+	// End of recursive hierarchy call.
+	GetTopX = function() {
+		return self.x;
+	}
+	GetTopY = function() {
+		return self.y;
+	}
     
     getTextX = function(_x) {
         switch (alignment) {
