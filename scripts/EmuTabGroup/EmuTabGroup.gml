@@ -21,11 +21,11 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
     active_tab = noone;
     active_tab_request = noone;
 	
-	GetTopX = function() {
-		return root.GetTopX();
+	getTopX = function() {
+		return root.getTopX();
 	}
-	GetTopY = function() {
-		return root.GetTopY();
+	getTopY = function() {
+		return root.getTopY();
 	}
     
     AddTabs = function(row, tabs) {

@@ -56,12 +56,10 @@ if (_pressed_id != 0) {
 	if (mouse_check_button(mb_left)) {
 		if (!_dragging) {
 			if (
-				true
-				// TODO: Give this correct coordinates.
-				//mouse_y > _pressed_id.y + _pressed_id.header_height
-				//|| mouse_y < _pressed_id.y
-				//|| mouse_x < _pressed_id.x
-				//|| mouse_x > _pressed_id.x + _pressed_id.header_width
+				mouse_y < _pressed_id.getTopY() + _pressed_id.header_y
+				|| mouse_y > _pressed_id.getTopY() + _pressed_id.header_y + _pressed_id.header_height
+				|| mouse_x < _pressed_id.getTopX() + _pressed_id.header_x
+				|| mouse_x > _pressed_id.getTopX() + _pressed_id.header_x + _pressed_id.header_width
 			) {
 				with (_pressed_id) {
 					parent_group_id.RemoveTabs(row, self);

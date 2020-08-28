@@ -20,21 +20,21 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
 	
 	ds_list_add(obj_emu_react.allTabs, self);
 	
-	GetTopX = function() {
-		return root.GetTopX();
+	getTopX = function() {
+		return root.getTopX();
 	}
-	GetTopY = function() {
-		return root.GetTopY();
+	getTopY = function() {
+		return root.getTopY();
 	}
 	
 	// This method is accessible to outside classes.
 	MouseIsHovering = function() {
 		// This should be slightly faster than getMouseHover() in this case.
 		return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(),
-			GetTopX() + header_x,
-			GetTopY() + header_y,
-			GetTopX() + header_x + header_width,
-			GetTopY() + header_y + header_height
+			getTopX() + header_x,
+			getTopY() + header_y,
+			getTopX() + header_x + header_width,
+			getTopY() + header_y + header_height
 		);
 	}
     

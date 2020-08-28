@@ -64,10 +64,10 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
 	
 	// End of recursive hierarchy call.
-	GetTopX = function() {
+	getTopX = function() {
 		return self.x;
 	}
-	GetTopY = function() {
+	getTopY = function() {
 		return self.y;
 	}
     
