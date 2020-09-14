@@ -30,7 +30,32 @@ function EmuCore(_x, _y, _w, _h) constructor {
     sprite_nineslice = spr_emu_nineslice;
     element_spacing_y = 16;
     sprite_checkers = spr_emu_checker;
-    
+	
+    _textify = function() {
+		return "new EmuCore(" + string(x) + ", " + string(y) + ", " + string(width) + ", " + string(height) + ")";
+	}
+	
+	Textify = function(base_name) {
+		var s = "var " + base_name + " = " + _textify() + ";\n";
+		if (ds_list_size(contents) > 0) {
+			// control initialization
+			for (var i = 0; i < ds_list_size(contents); i++) {
+				var control = contents[| i];
+				s += control.Textify(base_name + "_" + string(i));
+			}
+			
+			// adding controls to base control
+			s += base_name + ".AddContents([";
+			for (var i = 0; i < ds_list_size(contents); i++) {
+				s += base_name + "_" + string(i);
+				if (i < ds_list_size(contents) - 1)
+					s += ", ";
+			}
+			s += "]);\n"
+		}
+		return s;
+	}
+	
     AddContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];

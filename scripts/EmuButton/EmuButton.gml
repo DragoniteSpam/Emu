@@ -4,7 +4,9 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
     text = _text;
     alignment = fa_center;
     valignment = fa_middle;
-    
+    _textify = function() {
+		return "new EmuButton(" + string(x) + ", " + string(y) + ", " + string(width) + ", " + string(height) + ", \"" + text + "\", function() {})";
+	}
     Render = function(base_x, base_y) {
         processAdvancement();
         
