@@ -47,10 +47,10 @@ container.AddContent(tab_group);
 #region bio
 tab_bio.AddContent([
     new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Bio[/c]"),
-    new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Name:", data.name, "enter a name", 32, E_InputTypes.STRING, function() {
+    new EmuTextbox(32, EMU_AUTO, 512, 32, "Name:", data.name, "enter a name", 32, E_InputTypes.STRING, function() {
         obj_emu_demo.data.name = value;
     }),
-    new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Nickname:", data.nickname, "enter a nickname", 32, E_InputTypes.STRING, function() {
+    new EmuTextbox(32, EMU_AUTO, 512, 32, "Nickname:", data.nickname, "enter a nickname", 32, E_InputTypes.STRING, function() {
         obj_emu_demo.data.nickname = value;
     }),
 ]);
@@ -119,31 +119,31 @@ tab_look.AddContent([
 
 #region stats
 
-var input_str = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Strength:", string(data.str), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_str = new EmuTextbox(32, EMU_AUTO, 512, 32, "Strength:", string(data.str), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.str = real(value);
 });
 input_str.SetRealNumberBounds(-5, 5);
-var input_dex = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Dexterity:", string(data.dex), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_dex = new EmuTextbox(32, EMU_AUTO, 512, 32, "Dexterity:", string(data.dex), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.str = real(value);
 });
 input_dex.SetRealNumberBounds(-5, 5);
-var input_con = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Constitution:", string(data.con), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_con = new EmuTextbox(32, EMU_AUTO, 512, 32, "Constitution:", string(data.con), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.con = real(value);
 });
 input_con.SetRealNumberBounds(-5, 5);
-var input_int = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Intelligence:", string(data.int), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_int = new EmuTextbox(32, EMU_AUTO, 512, 32, "Intelligence:", string(data.int), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.int = real(value);
 });
 input_int.SetRealNumberBounds(-5, 5);
-var input_wis = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Wisdom:", string(data.wis), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_wis = new EmuTextbox(32, EMU_AUTO, 512, 32, "Wisdom:", string(data.wis), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.wis = real(value);
 });
 input_wis.SetRealNumberBounds(-5, 5);
-var input_cha = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha), "-5 to +5", 2, E_InputTypes.INT, function() {
+var input_cha = new EmuTextbox(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha), "-5 to +5", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.cha = real(value);
 });
 input_cha.SetRealNumberBounds(-5, 5);
-var input_level = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "[#006600]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
+var input_level = new EmuTextbox(32, EMU_AUTO, 512, 32, "[#006600]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.level = real(value);
 });
 input_level.SetRealNumberBounds(1, 10);
@@ -186,7 +186,7 @@ tab_skills.AddContent([
     new EmuText(320, EMU_AUTO, 256, 32, "Skill Name:"),
 ]);
 
-var input_skill_name = new EmuTextbox_H(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
+var input_skill_name = new EmuTextbox(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
     var selection = list.GetSelection();
     if (selection > -1) {
         obj_emu_demo.data.skills[| selection] = value;
@@ -204,7 +204,7 @@ button_remove.list = list_your_skills;
 #endregion
 
 #region summary
-var input_summary = new EmuTextbox_H(32, EMU_AUTO, 512, 256, "Summary:", data.summary, "up to 500 characters", 500, E_InputTypes.STRING, function() {
+var input_summary = new EmuTextbox(32, EMU_AUTO, 512, 256, "Summary:", data.summary, "up to 500 characters", 500, E_InputTypes.STRING, function() {
     obj_emu_demo.data.summary = value;
 });
 input_summary.SetMultiLine(true);
