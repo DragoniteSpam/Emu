@@ -2,7 +2,9 @@
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
 function EmuText(_x, _y, _w, _h, _text) : EmuCore(_x, _y, _w, _h) constructor {
     text = _text;
-    
+    _textify = function(name) {
+		return _emu_string_concat("var ", name, " = new EmuText(", x, ", ", y, ", ", width, ", ", height, ", ", _emu_string_escape(text), ");\n"); 
+	}
     Render = function(base_x, base_y) {
         processAdvancement();
         

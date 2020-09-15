@@ -45,4 +45,31 @@ function _emu_active_element() {
     }
     return _active;
 }
+function _emu_string_escape(str) {
+	var s = "\"";	
+	for (var i = 0; i < string_length(str); i++) {
+		var c = string_char_at(str, i + 1);
+		/// TODO: add support for unicode, non-ascii bytes and figure out a better way of doing this
+		// Best case scenario, gms2 has a function that does this by itself.
+		if (c == "\"") s += "\\\""
+		else if (c == "\\") s += "\\\\"
+		else if (c == "\n") s += "\\n"
+		else if (c == "\r") s += "\\r"
+		else if (c == "\b") s += "\\b"
+		else if (c == "\f") s += "\\f"
+		else if (c == "\t") s += "\\t"
+		else if (c == "\v") s += "\\v"
+		else s += c;
+	}
+	s += "\"";
+	return s;
+}
+function _emu_string_concat() {
+	var s = "";
+	for (var i = 0; i < argument_count; i++) {
+		var arg = argument[i];
+		s += string(arg);
+	}
+	return s;
+}
 #endregion

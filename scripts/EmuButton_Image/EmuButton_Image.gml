@@ -13,6 +13,10 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
     
     surface = noone;
     
+	_textify = function(name) {
+		return _emu_string_concat("var ", name, " = new EmuButtonImage(", x, ", ", y, ", ", width, ", ", height, ", ", sprite_get_name(sprite), ", ", index, ", ", blend, ", ", alpha, ", ", fill, ", function() {/* IMPLEMENT BUTTON CALLBACK HERE */});\n");
+	}
+	
     Render = function(base_x, base_y) {
         processAdvancement();
         

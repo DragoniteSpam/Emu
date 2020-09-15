@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuTextbox(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
     text = _text;
     help_text = _help_text;
     character_limit = clamp(_character_limit, 1, 1000);
@@ -19,7 +19,9 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
     
     sprite_ring = spr_emu_ring
     sprite_enter = spr_emu_enter;
-
+	_textify = function(name) {
+		return _emu_string_concat("var ", name, " = new EmuTextbox(", x, ", ", y, ", ", width, ", ", height, ", ", _emu_string_escape(text), ", ", _emu_string_escape(value), ", ", _emu_string_escape(help_text), ", ", character_limit, ", ", value_type, ", function() {/* IMPLEMENT TEXTBOX CALLBACK HERE */});\n");
+	}
 	surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
 
 	working_value = "";

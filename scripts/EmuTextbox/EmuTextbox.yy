@@ -6,7 +6,7 @@
     "path": "folders/Emu/Core.yy",
   },
   "resourceVersion": "1.0",
-  "name": "EmuTextbox_H",
+  "name": "EmuTextbox",
   "tags": [],
   "resourceType": "GMScript",
 }
