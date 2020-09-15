@@ -11,7 +11,30 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
     
     active_tab = noone;
     active_tab_request = noone;
-    
+    _textify = function(name) {
+		var s = _emu_string_concat("var ", name, " = new EmuTabGroup(", x, ", ", y, ", ", width, ", ", height, ", ", rows, ", ", row_height, ");") + "\n";
+		if (rows > 0) {
+			for (var i = 0; i < rows; i++) {
+				var tab_row = contents[| i];
+				for (var z = 0; z < ds_list_size(tab_row.contents); z++) {
+					var tab = tab_row.contents[| z];
+					s += tab.Textify(name + "_" + string(z) + "x" + string(i));
+				}
+			}
+			for (var i = 0; i < rows; i++) {
+				s += name + ".AddTabs(" + string(i) + ", [";
+				var tab_row = contents[| i];
+				for (var z = 0; z < ds_list_size(tab_row.contents); z++) {
+					var tab = tab_row.contents[| z];
+					s += name + "_" + string(z) + "x" + string(i);
+					if (z < ds_list_size(tab_row.contents) - 1)
+						s += ", ";
+				}
+				s += "]);\n";
+			}
+		}
+		return s;
+	}
     AddTabs = function(row, tabs) {
         processAdvancement();
         

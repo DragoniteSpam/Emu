@@ -11,7 +11,11 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     header_y = 0;
     header_width = 0;
     header_height = 0;
-    
+    _textify = function(name) {
+		var s = _emu_string_concat("var ", name, " = new EmuTab(", _emu_string_escape(text), ");\n");	
+		s += _textify_recurse_contents(name);
+		return s;
+	}
     Render = function(base_x, base_y) {
         processAdvancement();
         

@@ -1,5 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+
 function EmuCore(_x, _y, _w, _h) constructor {
     x = _x;
     y = _y;
@@ -30,30 +31,33 @@ function EmuCore(_x, _y, _w, _h) constructor {
     sprite_nineslice = spr_emu_nineslice;
     element_spacing_y = 16;
     sprite_checkers = spr_emu_checker;
-	
-    _textify = function() {
-		return "new EmuCore(" + string(x) + ", " + string(y) + ", " + string(width) + ", " + string(height) + ")";
-	}
-	
-	Textify = function(base_name) {
-		var s = "var " + base_name + " = " + _textify() + ";\n";
+	_textify_recurse_contents = function(name) {
+		var s = "";
 		if (ds_list_size(contents) > 0) {
 			// control initialization
 			for (var i = 0; i < ds_list_size(contents); i++) {
 				var control = contents[| i];
-				s += control.Textify(base_name + "_" + string(i));
+				s += control.Textify(name + "_" + string(i));
 			}
 			
 			// adding controls to base control
-			s += base_name + ".AddContents([";
+			s += name + ".AddContents([";
 			for (var i = 0; i < ds_list_size(contents); i++) {
-				s += base_name + "_" + string(i);
+				s += name + "_" + string(i);
 				if (i < ds_list_size(contents) - 1)
 					s += ", ";
 			}
 			s += "]);\n"
 		}
 		return s;
+	}
+    _textify = function(name) {
+		var s = _emu_string_concat("var ", name, " = new EmuCore(", x, ", ", y, ", ", width, ", ", height, ");") + "\n";
+		s += _textify_recurse_contents(name);
+		return s;
+	}
+	Textify = function(base_name) {
+		return _textify(base_name);
 	}
 	
     AddContent = function(elements) {
