@@ -11,6 +11,8 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     value_x2 = width;
     value_y2 = height;
     
+    color_help_text = EMU_COLOR_HELP_TEXT;
+    
     override_escape = true;
     require_enter = false;
     multi_line = false;
@@ -159,7 +161,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         }
         
         if (string_length(value) == 0) {
-            draw_text_colour(vtx - vx1, vty - vy1, string(help_text), c_dkgray, c_dkgray, c_dkgray, c_dkgray, 1);
+            draw_text_colour(vtx - vx1, vty - vy1, string(help_text), color_help_text, color_help_text, color_help_text, color_help_text, 1);
         }
 
         if (require_enter) {
