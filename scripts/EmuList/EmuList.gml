@@ -80,7 +80,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
     }
     
     getListColors = function(list_index) {
-        return c_black;
+        return EMU_COLOR_LIST_TEXT;
     }
     
     GetSelection = function() {

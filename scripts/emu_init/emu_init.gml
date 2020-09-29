@@ -4,6 +4,7 @@ scribble_init("emu", "fnt_emu_default", true);
 
 #region some macros which you may want to set
 #macro EMU_COLOR_HELP_TEXT 0x404040
+#macro EMU_COLOR_LIST_TEXT 0x000000
 
 #macro EMU_COLOR_BACK 0xffffff
 #macro EMU_COLOR_DEFAULT 0x000000
