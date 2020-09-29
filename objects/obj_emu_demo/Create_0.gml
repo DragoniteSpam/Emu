@@ -46,7 +46,7 @@ container.AddContent(tab_group);
 
 #region bio
 tab_bio.AddContent([
-    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Bio[/c]"),
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Character Bio[/c]"),
     new EmuTextbox_H(32, EMU_AUTO, 512, 32, "Name:", data.name, "enter a name", 32, E_InputTypes.STRING, function() {
         obj_emu_demo.data.name = value;
     }),
@@ -86,7 +86,7 @@ tab_bio.AddContent(list_alignment);
 
 #region appearance
 tab_look.AddContent([
-    new EmuText(32, EMU_AUTO, 256, 32, "[c_blue]Visual Appearance[/c]"),
+    new EmuText(32, EMU_AUTO, 256, 32, "[c_aqua]Visual Appearance[/c]"),
     new EmuText(32, EMU_AUTO, 256, 32, "Size:"),
     new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0.4, 1, true, data.size, function() {
         obj_emu_demo.data.size = value;
@@ -148,7 +148,7 @@ var input_level = new EmuTextbox_H(32, EMU_AUTO, 512, 32, "[#006600]Level:[/c]",
 });
 input_level.SetRealNumberBounds(1, 10);
 tab_stats.AddContent([
-    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Character Stats[/c]"),
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Character Stats[/c]"),
     input_str,
     input_dex,
     input_con,
@@ -160,7 +160,7 @@ tab_stats.AddContent([
 #endregion
 
 #region skills
-tab_skills.AddContent(new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Skills[/c]"));
+tab_skills.AddContent(new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Skills[/c]"));
 
 var list_your_skills = new EmuList(32, EMU_AUTO, 256, 32, "Your skills:", 32, 12, function() {
     var selection = GetSelection();
@@ -211,7 +211,7 @@ input_summary.SetMultiLine(true);
 input_summary.SetInputBoxPosition(160, 0, 512, 256);
 
 tab_summary.AddContent([
-    new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Summary[/c]"),
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Summary[/c]"),
     input_summary,
 ]);
 #endregion
@@ -237,7 +237,7 @@ container.AddContent([
             pronoun_subject + " " + pronoun_verb + " Level " + string(demo.data.level) + " with [c_red]" + string(calc_stat(demo.data.str)) + "[/c] Strength, [c_red]" +
             string(calc_stat(demo.data.dex)) + "[/c] Dexterity, [c_red]" + string(calc_stat(demo.data.con)) + "[/c] Constitution, [c_red]" + string(calc_stat(demo.data.int)) +
             "[/c] Intelligence, [c_red]" + string(calc_stat(demo.data.wis)) + "[/c] Wisdom, and [c_red]" + string(calc_stat(demo.data.cha)) + "[/c] Charisma. " + pronoun_subject +
-            " know" + ((demo.data.pronouns != 0) ? "s" : "") + " [c_blue]" + string(skill_count) + "[/c] skill" + ((skill_count == 1) ? "" : "s");
+            " know" + ((demo.data.pronouns != 0) ? "s" : "") + " [c_aqua]" + string(skill_count) + "[/c] skill" + ((skill_count == 1) ? "" : "s");
         if (skill_count > 0) {
             if (skill_count > 3) {
                 str_summary += ", including ";
@@ -260,7 +260,7 @@ container.AddContent([
     new EmuButton(704, EMU_AUTO, 256, 32, "Credits", function() {
         var dialog = new EmuDialog(640, 320, "Credits");
         dialog.AddContent([
-            new EmuText(dialog.width / 2, EMU_AUTO, 560, 64, "[c_blue][fa_center]Emu UI, a user interface framework for GameMaker Studio 2.3 written by @dragonitespam[/c]"),
+            new EmuText(dialog.width / 2, EMU_AUTO, 560, 64, "[c_aqua][fa_center]Emu UI, a user interface framework for GameMaker Studio 2.3 written by @dragonitespam[/c]"),
             new EmuText(32, EMU_AUTO, 560, 32, "The [rainbow][wave]Scribble[/wave][/rainbow]  text renderer is by @jujuadams"),
             new EmuText(32, EMU_AUTO, 560, 32, "Models are from Kenney's Nature Kit (www.kenney.nl)"),
             new EmuText(32, EMU_AUTO, 560, 32, "Emu iconography by @gart_gh"),
