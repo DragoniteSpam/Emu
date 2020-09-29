@@ -5,6 +5,10 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
     alignment = fa_center;
     valignment = fa_middle;
     
+    color_hover = EMU_COLOR_HOVER;
+    color_back = EMU_COLOR_BACK;
+    color_disabled = EMU_COLOR_DISABLED;
+    
     Render = function(base_x, base_y) {
         processAdvancement();
         
@@ -22,7 +26,7 @@ function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _
             callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
         drawNineslice(1, x1, y1, x2, y2, back_color, 1);
         drawNineslice(0, x1, y1, x2, y2, color, 1);
         

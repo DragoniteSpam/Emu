@@ -89,6 +89,8 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
     text = _text;
     SetEval(_eval);
     
+    color_hover = EMU_COLOR_HOVER;
+    color_disabled = EMU_COLOR_DISABLED;
     color_active = EMU_COLOR_SELECTED;
     color_inactive = EMU_COLOR_BACK;
     
@@ -101,9 +103,9 @@ function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 
         var back_color = evaluate() ? color_active : color_inactive;
         
         if (root.GetInteractive()) {
-            back_color = merge_colour(back_color, getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : back_color, 0.5);
+            back_color = merge_colour(back_color, getMouseHover(x1, y1, x2, y2) ? color_hover : back_color, 0.5);
         } else {
-            back_color = merge_colour(back_color, EMU_COLOR_DISABLED, 0.5);
+            back_color = merge_colour(back_color, color_disabled, 0.5);
         }
         
         drawNineslice(1, x1, y1, x2, y2, back_color, 1);

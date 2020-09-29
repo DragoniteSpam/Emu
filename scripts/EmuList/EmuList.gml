@@ -11,6 +11,11 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
     click_x = -1;
     click_y = -1;
     
+    color_back = EMU_COLOR_BACK;
+    color_hover = EMU_COLOR_HOVER;
+    color_disabled = EMU_COLOR_DISABLED;
+    color_selected = EMU_COLOR_SELECTED;
+    
     auto_multi_select = false;
     allow_multi_select = false;
     allow_deselect = true;
@@ -131,10 +136,10 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             var txoffset = spr_width;
             
             if (getMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
-                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_HOVER, 1);
+                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, color_hover, 1);
                 ShowTooltip();
             } else {
-                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, EMU_COLOR_BACK, 1);
+                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, color_back, 1);
             }
             draw_sprite_ext(sprite_help, 1, tx, ty, 1, 1, 0, color, 1);
             draw_sprite_ext(sprite_help, 0, tx, ty, 1, 1, 0, color, 1);
@@ -156,13 +161,13 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
         }
         
         surface_set_target(surface);
-        draw_clear_alpha(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED, 1);
+        draw_clear_alpha(GetInteractive() ? color_back : color_disabled, 1);
         
         var n = ds_exists(entries, ds_type_list) ? ds_list_size(entries) : 0;
         index = clamp(n - slots, 0, index);
         
         if (n == 0) {
-            drawNineslice(1, 0, 0, x2 - x1, element_height, EMU_COLOR_DISABLED, 1);
+            drawNineslice(1, 0, 0, x2 - x1, element_height, color_disabled, 1);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
             scribble_set_wrap(width, height);
@@ -176,7 +181,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                 
                 if (GetInteractive()) {
                     if (GetSelected(current_index)) {
-                        draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, EMU_COLOR_SELECTED, false);
+                        draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, color_selected, color_selected, color_selected, color_selected, false);
                     }
                 }
                 
@@ -287,7 +292,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             var srange = smax - smin;
             var sy = smin + srange * index / noutofrange;
             var active = GetInteractive();
-            draw_rectangle_colour(x2 - sw, y2, x2, y3, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, EMU_COLOR_BACK, false);
+            draw_rectangle_colour(x2 - sw, y2, x2, y3, color_back, color_back, color_back, color_back, false);
             draw_line_colour(x2 - sw, y2 + sw, x2, y2 + sw, color, color);
             draw_line_colour(x2 - sw, y3 - sw, x2, y3 - sw, color, color);
             draw_rectangle_colour(x2 - sw, y2, x2, y3, color, color, color, color, true);
@@ -297,7 +302,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
             if (active) {
                 // Hover over the scroll bar: draw the hover color
                 if (getMouseHover(x2 - sw, sby1, x2, sby2) || dragging) {
-                    draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, color_hover, color_hover, color_hover, color_hover, false);
                     // Click: begin dragging the scroll bar
                     if (getMousePressed(x2 - sw, sby1, x2, sby2) && !dragging) {
                         Activate();
@@ -328,7 +333,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                 var inbounds_bottom = getMouseHover(x2 - sw, y3 - sw, x2, y3);
                 // Top button
                 if (inbounds_top) {
-                    draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, color_hover, color_hover, color_hover, color_hover, false);
                     if (getMousePressed(x2 - sw, y2, x2, y2 + sw)) {
                         Activate();
                         move_direction = -1;
@@ -339,7 +344,7 @@ function EmuList(_x, _y, _w, _h, _text, _element_height, _content_slots, _callba
                     }
                 // Bottom button
                 } else if (inbounds_bottom) {
-                    draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, EMU_COLOR_HOVER, false);
+                    draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, color_hover, color_hover, color_hover, color_hover, false);
                     // On click, scroll once
                     if (getMousePressed(x2 - sw, y3 - sw, x2, y3)) {
                         Activate();

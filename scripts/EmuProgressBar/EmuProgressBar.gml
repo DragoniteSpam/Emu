@@ -9,6 +9,8 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
     integers_only = false;
     
     color_bar = EMU_COLOR_PROGRESS_BAR;
+    color_back = EMU_COLOR_BACK;
+    
     sprite_bar = spr_emu_progress;
     sprite_knob = spr_emu_knob;
     knob_scale = 1.5;
@@ -91,7 +93,7 @@ function EmuProgressBar(_x, _y, _w, _h, _thickness, _min, _max, _draggable, _val
         
         var f = clamp((value - value_min) / (value_max - value_min), 0, 1);
         
-        DrawProgress(2, bx1, by1, bx2, by2, 1, EMU_COLOR_BACK, 1);
+        DrawProgress(2, bx1, by1, bx2, by2, 1, color_back, 1);
         DrawProgress(0, bx1, by1, bx2, by2, f, color_bar, 1);
         DrawProgress(1, bx1, by1, bx2, by2, 1, color, 1);
         

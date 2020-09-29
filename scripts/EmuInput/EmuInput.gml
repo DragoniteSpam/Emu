@@ -12,6 +12,11 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     value_y2 = height;
     
     color_help_text = EMU_COLOR_HELP_TEXT;
+    color_warn = EMU_COLOR_INPUT_WARN;
+    color_reject = EMU_COLOR_INPUT_REJECT;
+    color_back = EMU_COLOR_BACK;
+    color_disabled = EMU_COLOR_DISABLED;
+    color_selected = EMU_COLOR_SELECTED;
     
     override_escape = true;
     require_enter = false;
@@ -85,10 +90,10 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
         if (ValidateInput(working_value)) {
             var cast = CastInput(working_value);
             if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
-                c = EMU_COLOR_INPUT_WARN;
+                c = color_warn;
             }
         } else {
-            var c = EMU_COLOR_INPUT_REJECT;
+            var c = color_reject;
         }
         #endregion
         
@@ -107,7 +112,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
 
         surface_set_target(surface);
         surface_set_target(surface);
-        draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        draw_clear(GetInteractive() ? color_back : color_disabled);
         surface_reset_target();
         
         var display_text = working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
@@ -131,7 +136,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                 var steps = 32;
                 draw_sprite(sprite_ring, 0, remaining_x, remaining_y);
                 draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(sprite_ring, 0));
-                draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, EMU_COLOR_SELECTED, 1);
+                draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, color_selected, 1);
                 for (var i = 0; i <= steps * f; i++) {
                     var angle = 360 / steps * i - 90;
                     draw_vertex_texture_colour(
@@ -139,7 +144,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
                         clamp(remaining_y + r * dsin(angle), remaining_y - r, remaining_y + r),
                         clamp(0.5 + 0.5 * dcos(angle), 0, 1),
                         clamp(0.5 + 0.5 * dsin(angle), 0, 1),
-                    EMU_COLOR_SELECTED, 1);
+                    color_selected, 1);
                 }
                 draw_primitive_end();
             }

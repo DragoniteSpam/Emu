@@ -18,6 +18,11 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
     value_upper = 100;
     
     color_help_text = EMU_COLOR_HELP_TEXT;
+    color_warn = EMU_COLOR_INPUT_WARN;
+    color_reject = EMU_COLOR_INPUT_REJECT;
+    color_disabled = EMU_COLOR_DISABLED;
+    color_selected = EMU_COLOR_SELECTED;
+    color_back = EMU_COLOR_BACK;
     
     sprite_ring = spr_emu_ring
     sprite_enter = spr_emu_enter;
@@ -160,10 +165,10 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         if (ValidateInput(working_value)) {
             var cast = CastInput(working_value);
             if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
-                c = EMU_COLOR_INPUT_WARN;
+                c = color_warn;
             }
         } else {
-            var c = EMU_COLOR_INPUT_REJECT;
+            c = color_reject;
         }
         #endregion
         
@@ -182,7 +187,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
 
         surface_set_target(surface);
         surface_set_target(surface);
-        draw_clear(GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        draw_clear(GetInteractive() ? color_back : color_disabled);
         surface_reset_target();
         
 		var display_left = string_copy(working_value, 0, cursor_pos);
@@ -211,7 +216,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
                 var steps = 32;
                 draw_sprite(sprite_ring, 0, remaining_x, remaining_y);
                 draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(sprite_ring, 0));
-                draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, EMU_COLOR_SELECTED, 1);
+                draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, color_selected, 1);
                 for (var i = 0; i <= steps * f; i++) {
                     var angle = 360 / steps * i - 90;
                     draw_vertex_texture_colour(
@@ -219,7 +224,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
                         clamp(remaining_y + r * dsin(angle), remaining_y - r, remaining_y + r),
                         clamp(0.5 + 0.5 * dcos(angle), 0, 1),
                         clamp(0.5 + 0.5 * dsin(angle), 0, 1),
-                    EMU_COLOR_SELECTED, 1);
+                    color_selected, 1);
                 }
                 draw_primitive_end();
             }

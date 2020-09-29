@@ -12,6 +12,10 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
     header_width = 0;
     header_height = 0;
     
+    color_hover = EMU_COLOR_HOVER;
+    color_back = EMU_COLOR_BACK;
+    color_disabled = EMU_COLOR_DISABLED;
+    
     Render = function(base_x, base_y) {
         processAdvancement();
         
@@ -41,7 +45,7 @@ function EmuTab(_name) : EmuCore(0, 0, 0, 0) constructor {
             var index = 5;
         }
         
-        var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
         drawNineslice(4, hx1, hy1, hx2, hy2, back_color, 1);
         drawNineslice(index, hx1, hy1, hx2, hy2, color, 1);
         scribble_set_box_align(alignment, valignment);

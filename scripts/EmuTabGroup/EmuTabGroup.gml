@@ -9,6 +9,8 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         ds_list_add(contents, new EmuCore(0, 0, 0, 0));
     }
     
+    color_back = EMU_COLOR_BACK;
+    
     active_tab = noone;
     active_tab_request = noone;
     
@@ -80,7 +82,7 @@ function EmuTabGroup(_x, _y, _w, _h, _rows, _row_height) : EmuCore(_x, _y, _w, _
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        drawNineslice(1, x1, y1 + rows * row_height, x2, y2, EMU_COLOR_BACK, 1);
+        drawNineslice(1, x1, y1 + rows * row_height, x2, y2, color_back, 1);
         
         // Save this for the beginning of the next frame, because if you do it
         // in the middle you'll find the tabs become misaligned for one frame

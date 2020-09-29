@@ -11,6 +11,10 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
     valignment = fa_middle;
     text = "";
     
+    color_hover = EMU_COLOR_HOVER;
+    color_back = EMU_COLOR_BACK;
+    color_disabled = EMU_COLOR_DISABLED;
+    
     surface = noone;
     
     Render = function(base_x, base_y) {
@@ -32,7 +36,7 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
         
         surface_set_target(surface);
         draw_clear_alpha(c_black, 0);
-        drawNineslice(1, 0, 0, width, height, EMU_COLOR_BACK, 1);
+        drawNineslice(1, 0, 0, width, height, color_back, 1);
         if (sprite_exists(sprite)) {
             var scale = fill ? min(max(width / sprite_get_width(sprite), 1), max(height / sprite_get_height(sprite), 1)) : 1;
             draw_sprite_ext(sprite, index, width / 2, height / 2, scale, scale, 0, blend, alpha);
@@ -53,7 +57,7 @@ function EmuButtonImage(_x, _y, _w, _h, _sprite, _index, _blend, _alpha, _scale_
             callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? EMU_COLOR_HOVER : (GetInteractive() ? EMU_COLOR_BACK : EMU_COLOR_DISABLED);
+        var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
         draw_surface_ext(surface, x1, y1, 1, 1, 0, back_color, 1);
         drawNineslice(0, x1, y1, x2, y2, color, 1);
     }
