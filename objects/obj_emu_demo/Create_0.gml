@@ -3,7 +3,7 @@ randomize();
 data = {
     // bio
     name: "Sam",
-    nickname: choose("Samwise", "Samcastle", "Samwich", "I Sam Corrected", "Kpop Sam", "United We Sam", "Comic Sams", "Samsquatch", "Consamtinpole", "Green Eggs and Sam"),
+    nickname: choose("Samwise", "Samcastle", "Samwich", "I Sam Corrected", "Kpop Sam", "United We Sam", "Comic Sams", "Samsquatch", "Consamtinople", "Green Eggs and Sam"),
     pronouns: irandom(2),
     hometown: irandom(8),
     alignment: irandom(8),

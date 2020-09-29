@@ -49,7 +49,8 @@ function _emu_active_element() {
 }
 #endregion
 
-/* For a dark mode, you may wish to use colors similar to this:
+/*
+//For a dark mode, you may wish to use colors similar to this:
 #macro EMU_COLOR_BACK 0x1f1f1f
 #macro EMU_COLOR_DEFAULT 0xffffff
 #macro EMU_COLOR_DISABLED 0x4f4f4f
