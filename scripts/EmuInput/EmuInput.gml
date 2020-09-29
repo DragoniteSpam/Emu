@@ -26,7 +26,7 @@ function EmuInput(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _
     value_lower = 0;
     value_upper = 100;
     
-    sprite_ring = spr_emu_ring
+    sprite_ring = spr_emu_ring;
     sprite_enter = spr_emu_enter;
     
     SetMultiLine = function(_multi_line) {

@@ -16,6 +16,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
     
     color_back = EMU_COLOR_BACK;
     
+    sprite_crosshair = spr_emu_mask_crosshair;
+    sprite_mask_bar_h = spr_emu_mask_bar_h;
+    sprite_mask_bar_v = spr_emu_mask_bar_v;
+    
     SetAlphaUsed = function(_alpha_used) {
         allow_alpha = _alpha_used;
     }
@@ -206,7 +210,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                             var chx = vx1 + axis_w * w;
                             var chy = vy1 + (1 - axis_h) * h;
-                            draw_sprite(spr_emu_mask_crosshair, 0, chx, chy);
+                            draw_sprite(sprite_crosshair, 0, chx, chy);
                             gpu_set_blendmode(bm_normal);
                             #endregion
                             
@@ -239,7 +243,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             
                             var f = min(vy1 + h * axis_value, vy2 - 1);
                             gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
-                            draw_sprite_ext(spr_emu_mask_bar_h, 0, vx1, f, (vx2 - vx1) / sprite_get_width(spr_emu_mask_bar_h), 1, 0, c_white, 1);
+                            draw_sprite_ext(sprite_mask_bar_h, 0, vx1, f, (vx2 - vx1) / sprite_get_width(sprite_mask_bar_h), 1, 0, c_white, 1);
                             gpu_set_blendmode(bm_normal);
                             #endregion
                             
@@ -292,7 +296,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                                 
                                 var f = min(vx1 + w * alpha, vx2 - 1);
                                 gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
-                                draw_sprite_ext(spr_emu_mask_bar_v, 0, f, vy1, 1, (vy2 - vy1) / sprite_get_height(spr_emu_mask_bar_v), 0, c_white, 1);
+                                draw_sprite_ext(sprite_mask_bar_v, 0, f, vy1, 1, (vy2 - vy1) / sprite_get_height(sprite_mask_bar_v), 0, c_white, 1);
                                 gpu_set_blendmode(bm_normal);
                             }
                             #endregion

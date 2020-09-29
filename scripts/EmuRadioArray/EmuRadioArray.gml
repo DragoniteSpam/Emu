@@ -65,6 +65,8 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
         color_active = EMU_COLOR_RADIO_ACTIVE;
         color_back = EMU_COLOR_BACK;
         
+        sprite_radio = spr_emu_radio;
+        
         Render = function(base_x, base_y) {
             var x1 = x + base_x;
             var y1 = y + base_y;
@@ -85,16 +87,16 @@ function EmuRadioArray(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_
                 root.callback();
             }
             
-            draw_sprite_ext(spr_emu_radio, 2, tx + offset, ty, 1, 1, 0, color_back, 1);
-            draw_sprite_ext(spr_emu_radio, 1, tx + offset, ty, 1, 1, 0, color, 1);
-            draw_sprite_ext(spr_emu_radio, 0, tx + offset, ty, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_radio, 2, tx + offset, ty, 1, 1, 0, color_back, 1);
+            draw_sprite_ext(sprite_radio, 1, tx + offset, ty, 1, 1, 0, color, 1);
+            draw_sprite_ext(sprite_radio, 0, tx + offset, ty, 1, 1, 0, color, 1);
             if (value == root.value) {
-                draw_sprite_ext(spr_emu_radio, 3, tx + offset, ty, 1, 1, 0, color_active, GetInteractive());
+                draw_sprite_ext(sprite_radio, 3, tx + offset, ty, 1, 1, 0, color_active, GetInteractive());
             }
             
             scribble_set_box_align(fa_left, fa_center);
             scribble_set_wrap(width, height);
-            scribble_draw(tx + offset + sprite_get_width(spr_emu_radio), ty, text);
+            scribble_draw(tx + offset + sprite_get_width(sprite_radio), ty, text);
         }
         
         GetInteractive = function() {

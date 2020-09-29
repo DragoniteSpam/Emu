@@ -24,7 +24,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
     color_selected = EMU_COLOR_SELECTED;
     color_back = EMU_COLOR_BACK;
     
-    sprite_ring = spr_emu_ring
+    sprite_ring = spr_emu_ring;
     sprite_enter = spr_emu_enter;
 
 	surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
