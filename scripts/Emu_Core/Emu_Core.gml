@@ -132,6 +132,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         for (var i = 0; i < ds_list_size(contents); i++) {
             contents[| i].Destroy();
         }
+        ds_list_destroy(contents);
     }
     
     ShowTooltip = function() {
@@ -283,6 +284,4 @@ function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h
     setCallbackDouble(emu_null);
 }
 
-function emu_null() {
-    
-}
+function emu_null() { }
