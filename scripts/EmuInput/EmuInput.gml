@@ -202,19 +202,14 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input_typ
                         }
 						
                         if (execute_value_change) {
-							// only change actual value when it's allowed
-			                value = _working_value;
+                            value = _working_value;
                             callback();
                         }
                     }
-					// reset the keyboard string if value change didn't occur
-					// this is to fix the bug that occured before, where you could essentially 'type past'
-					// the _contents of the textbox. the value didn't change but you had to backspace more than once 
-					// to remove the last character of the textbox.
-					if (!execute_value_change) {
-						keyboard_string = _working_value;
-					}
                 }
+                
+				keyboard_string = string_copy(_working_value, 1, min(string_length(_working_value), character_limit));
+                value = keyboard_string;
             }
             // activation
             if (getMouseHover(vx1, vy1, vx2, vy2)) {
