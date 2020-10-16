@@ -64,7 +64,6 @@
     {"id":{"name":"scribble_add_autotype_character_delay","path":"scripts/scribble_add_autotype_character_delay/scribble_add_autotype_character_delay.yy",},"order":0,},
     {"id":{"name":"EmuCheckbox","path":"scripts/EmuCheckbox/EmuCheckbox.yy",},"order":6,},
     {"id":{"name":"scribble_set_blend","path":"scripts/scribble_set_blend/scribble_set_blend.yy",},"order":2,},
-    {"id":{"name":"EmuTextbox_H","path":"scripts/EmuTextbox_H/EmuTextbox_H.yy",},"order":17,},
     {"id":{"name":"scribble_bake_outline","path":"scripts/scribble_bake_outline/scribble_bake_outline.yy",},"order":3,},
     {"id":{"name":"scribble_autotype_fade_out","path":"scripts/scribble_autotype_fade_out/scribble_autotype_fade_out.yy",},"order":2,},
     {"id":{"name":"spr_emu_nineslice","path":"sprites/spr_emu_nineslice/spr_emu_nineslice.yy",},"order":0,},

@@ -49,7 +49,6 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input_typ
     
     SetValue = function(_value) {
         value = string(_value);
-        value = _value;
         if (isActiveElement()) {
             keyboard_string = value;
         }
@@ -174,13 +173,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input_typ
             draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
         }
         #endregion
-
+        
         #region interaction
         if (GetInteractive()) {
             if (isActiveElement()) {
                 var v0 = _working_value;
                 _working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
-
+                
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
