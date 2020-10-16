@@ -3,32 +3,32 @@
 
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason
-function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    text = _text;
+function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+    self.text = text;
     
-    allow_alpha = false;
-    active_shade = true;
+    self._allow_alpha = false;
+    self.active_shade = true;
     
-    value_x1 = width / 2;
-    value_y1 = 0;
-    value_x2 = width;
-    value_y2 = height;
+    self._value_x1 = self.width / 2;
+    self._value_y1 = 0;
+    self._value_x2 = self.width;
+    self._value_y2 = self.height;
     
-    color_back = EMU_COLOR_BACK;
+    self.color_back = EMU_COLOR_BACK;
     
-    sprite_crosshair = spr_emu_mask_crosshair;
-    sprite_mask_bar_h = spr_emu_mask_bar_h;
-    sprite_mask_bar_v = spr_emu_mask_bar_v;
-    
+    self.sprite_crosshair = spr_emu_mask_crosshair;
+    self.sprite_mask_bar_h = spr_emu_mask_bar_h;
+    self.sprite_mask_bar_v = spr_emu_mask_bar_v;
+        
     SetAlphaUsed = function(_alpha_used) {
-        allow_alpha = _alpha_used;
+        _allow_alpha = _alpha_used;
     }
     
     SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
-        value_x1 = _vx1;
-        value_y1 = _vy1;
-        value_x2 = _vx2;
-        value_y2 = _vy2;
+        _value_x1 = _vx1;
+        _value_y1 = _vy1;
+        _value_x2 = _vx2;
+        _value_y2 = _vy2;
     }
     
     Render = function(base_x, base_y) {
@@ -40,10 +40,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         var y2 = y1 + height;
         var c = color;
         
-        var vx1 = x1 + value_x1;
-        var vy1 = y1 + value_y1;
-        var vx2 = x1 + value_x2;
-        var vy2 = y1 + value_y2;
+        var vx1 = x1 + _value_x1;
+        var vy1 = y1 + _value_y1;
+        var vx2 = x1 + _value_x2;
+        var vy2 = y1 + _value_y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
@@ -56,7 +56,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
         
         drawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color_back, 1);
         drawCheckerbox(vx1 + 2, vy1 + 2, (vx2 - vx1) - 4, (vy2 - vy1) - 4);
-        drawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
+        drawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, _allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
         drawNineslice(0, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color, 1);
         
         if (GetInteractive()) {
@@ -78,41 +78,40 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                     var yy = 64;
                     var spacing = 16;
                     
-                    var controls = function(_x, _y, _w, _h, _value, _allow_alpha, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+                    static controls = function(x, y, w, h, value, allow_alpha, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
                         enum EmuColorChannels { R, G, B, A }
                         
-                        allow_alpha = _allow_alpha;
+                        self.axis_value = 0;
+                        self.axis_w = 0;
+                        self.axis_h = 0;
+                        self.axis_channel = EmuColorChannels.R;
+                        self.all_colors = true;
+                        self.alpha = 1;
                         
-                        override_escape = true;
+                        self._allow_alpha = allow_alpha;
+                        self._override_escape = true;
                         
-                        alpha = 1;
-                        color_x = 0;
-                        color_y = 0;
-                        main_size = 176;
-                        selecting_color = false;
+                        self._color_x = 0;
+                        self._color_y = 0;
+                        self._main_size = 176;
+                        self._selecting_color = false;
                         
-                        axis_x = color_x + main_size + 16;
-                        axis_y = color_y;
-                        axis_width = 32;
-                        // axis_height is main_size
-                        selecting_axis = false;
+                        self._axis_x = self._color_x + self._main_size + 16;
+                        self._axis_y = self._color_y;
+                        self._axis_width = 32;
+                        // axis_height is _main_size
+                        self._selecting_axis = false;
                         
-                        output_x = color_x + 48;
-                        output_y = color_y + main_size + 8;
-                        // output_width is main_size
-                        output_height = 16;
+                        self._output_x = self._color_x + 48;
+                        self._output_y = self._color_y + self._main_size + 8;
+                        // output_width is _main_size
+                        self._output_height = 16;
                         
-                        alpha_x = color_x + 48;
-                        alpha_y = output_y + output_height + 8;
-                        // alpha_width is main_size
-                        alpha_height = 16;
-                        selecting_alpha = false;
-                        
-                        axis_value = 0;
-                        axis_w = 0;
-                        axis_h = 0;
-                        axis_channel = EmuColorChannels.R;
-                        all_colors = true;
+                        self.alpha_x = self._color_x + 48;
+                        self.alpha_y = self._output_y + self._output_height + 8;
+                        // alpha_width is _main_size
+                        self._alpha_height = 16;
+                        self._selecting_alpha = false;
                         
                         SetValue = function(_value) {
                             value = _value;
@@ -147,10 +146,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             var alpha_initial = alpha;
                             
                             #region color picker
-                            var vx1 = x1 + color_x;
-                            var vy1 = y1 + color_y;
-                            var vx2 = vx1 + main_size;
-                            var vy2 = vy1 + main_size;
+                            var vx1 = x1 + _color_x;
+                            var vy1 = y1 + _color_y;
+                            var vx2 = vx1 + _main_size;
+                            var vy2 = vy1 + _main_size;
                             var w = vx2 - vx1;
                             var h = vy2 - vy1;
                             
@@ -181,14 +180,14 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             
                             if (getMouseHover(vx1, vy1, vx2, vy2)) {
                                 if (getMouseHold(vx1, vy1, vx2, vy2)) {
-                                    selecting_color = true;
+                                    _selecting_color = true;
                                 }
                             }
                             
-                            if (selecting_color) {
+                            if (_selecting_color) {
                                 axis_w = clamp((mouse_x - vx1) / w, 0, 1);
                                 axis_h = 1 - clamp((mouse_y - vy1) / h, 0, 1);
-                                selecting_color = getMouseHold(0, 0, window_get_width(), window_get_height());
+                                _selecting_color = getMouseHold(0, 0, window_get_width(), window_get_height());
                             }
                             
                             var current_axis = floor(axis_value * buckets) * 0xff / buckets;
@@ -215,22 +214,22 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             #endregion
                             
                             #region color axis
-                            vx1 = x1 + axis_x;
-                            vy1 = y1 + axis_y;
-                            vx2 = vx1 + axis_width;
-                            vy2 = vy1 + main_size;
+                            vx1 = x1 + _axis_x;
+                            vy1 = y1 + _axis_y;
+                            vx2 = vx1 + _axis_width;
+                            vy2 = vy1 + _main_size;
                             var w = vx2 - vx1;
                             var h = vy2 - vy1;
                             
                             if (getMouseHover(vx1, vy1, vx2, vy2)) {
                                 if (getMousePressed(vx1, vy1, vx2, vy2)) {
-                                    selecting_axis = true;
+                                    _selecting_axis = true;
                                 }
                             }
                             
-                            if (selecting_axis) {
+                            if (_selecting_axis) {
                                 axis_value = clamp((mouse_y - vy1) / h, 0, 1);
-                                selecting_axis = getMouseHold(0, 0, window_get_width(), window_get_height());
+                                _selecting_axis = getMouseHold(0, 0, window_get_width(), window_get_height());
                             }
                             
                             shader_set(shd_emu_color_buckets);
@@ -248,10 +247,10 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             #endregion
                             
                             #region output color
-                            vx1 = x1 + output_x;
-                            vy1 = y1 + output_y;
-                            vx2 = vx1 + main_size;
-                            vy2 = vy1 + output_height;
+                            vx1 = x1 + _output_x;
+                            vy1 = y1 + _output_y;
+                            vx2 = vx1 + _main_size;
+                            vy2 = vy1 + _output_height;
                             var w = vx2 - vx1;
                             var h = vy2 - vy1;
                             
@@ -263,23 +262,23 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                             #endregion
                             
                             #region alpha
-                            if (allow_alpha) {
+                            if (_allow_alpha) {
                                 vx1 = x1 + alpha_x;
                                 vy1 = y1 + alpha_y;
-                                vx2 = vx1 + main_size;
-                                vy2 = vy1 + alpha_height;
+                                vx2 = vx1 + _main_size;
+                                vy2 = vy1 + _alpha_height;
                                 var w = vx2 - vx1;
                                 var h = vy2 - vy1;
                                 
                                 if (getMouseHover(vx1, vy1, vx2, vy2)) {
                                     if (getMousePressed(vx1, vy1, vx2, vy2)) {
-                                        selecting_alpha = true;
+                                        _selecting_alpha = true;
                                     }
                                 }
                                 
-                                if (selecting_alpha) {
+                                if (_selecting_alpha) {
                                     alpha = clamp((mouse_x - vx1) / w, 0, 1);
-                                    selecting_alpha = getMouseHold(0, 0, window_get_width(), window_get_height());
+                                    _selecting_alpha = getMouseHold(0, 0, window_get_width(), window_get_height());
                                 }
                                 
                                 scribble_draw(getTextX(x + base_x), floor(mean(vy1, vy2)), "A:");
@@ -317,7 +316,7 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
                     dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
-                    dialog.el_picker = new controls(32, EMU_AUTO, ew, eh, value, allow_alpha, function() {
+                    dialog.el_picker = new controls(32, EMU_AUTO, ew, eh, value, _allow_alpha, function() {
                         root.base_color_element.value = value | (floor(alpha * 0xff) << 24);
                         root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
@@ -349,6 +348,6 @@ function EmuColorPicker(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(
     
     Destroy = function() {
         destroyContent();
-        if (surface_exists(surface)) surface_free(surface);
+        if (surface_exists(_surface)) surface_free(_surface);
     }
 }

@@ -1,34 +1,34 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : EmuCore(_x, _y, _w, _h) constructor {
-    SetRender = function(_render) {
-        callback_render = method(self, _render);
+function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x, y, w, h) constructor {
+    SetRender = function(render) {
+        callback_render = method(self, render);
     }
     
-    SetStep = function(_step) {
-        callback_step = method(self, _step);
+    SetStep = function(step) {
+        callback_step = method(self, step);
     }
     
-    SetRecreate = function(_recreate) {
-        callback_recreate = method(self, _recreate);
+    SetRecreate = function(recreate) {
+        callback_recreate = method(self, recreate);
     }
     
-    SetRender(_render);
-    SetStep(_step);
-    callback_destroy = method(self, _destroy);
+    SetRender(render);
+    SetStep(step);
+    callback_destroy = method(self, destroy);
     
     callback_recreate = function() {
         draw_clear(c_black);
     }
     
-    surface = surface_create(width, height);
-    surface_set_target(surface);
+    self._surface = surface_create(self.width, self.height);
+    surface_set_target(self._surface);
     draw_clear(c_black);
-    method(self, _create)();
+    method(self, create)();
     surface_reset_target();
     
     GetSurface = function() {
-        return surface;
+        return _surface;
     }
     
     Recreate = function() {
@@ -45,9 +45,9 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
         var mx = window_mouse_get_x() - x1;
         var my = window_mouse_get_y() - y1;
         
-        if (!surface_exists(surface)) {
-            surface = surface_create(width, height);
-            surface_set_target(surface);
+        if (!surface_exists(_surface)) {
+            _surface = surface_create(width, height);
+            surface_set_target(_surface);
             callback_recreate();
             surface_reset_target();
         }
@@ -61,7 +61,7 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
         
         callback_step(mx, my);
         
-        surface_set_target(surface);
+        surface_set_target(_surface);
         var camera = camera_get_active();
         var old_view_mat = camera_get_view_mat(camera);
         var old_proj_mat = camera_get_proj_mat(camera);
@@ -74,12 +74,12 @@ function EmuRenderSurface(_x, _y, _w, _h, _render, _step, _create, _destroy) : E
         ds_map_destroy(old_state);
         surface_reset_target();
         
-        draw_surface(surface, x1, y1);
+        draw_surface(_surface, x1, y1);
     }
     
     Destroy = function() {
         destroyContent();
-        if (surface_exists(surface)) surface_free(surface);
+        if (surface_exists(_surface)) surface_free(_surface);
         callback_destroy();
     }
 }

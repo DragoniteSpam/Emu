@@ -215,7 +215,7 @@ function scribble_init(argument0, argument1, argument2) {
 	//Normally, Scribble will try to sequentially store glyph data in an array for fast lookup.
 	//However, some font definitons may have disjointed character indexes (e.g. Chinese). Scribble will detect these fonts and use a ds_map instead for glyph data lookup
 #macro __SCRIBBLE_SEQUENTIAL_GLYPH_TRY        true
-#macro __SCRIBBLE_SEQUENTIAL_GLYPH_MAX_RANGE  300  //If the glyph range (min index to max index) exceeds this number, a font's glyphs will be indexed using a ds_map
+#macro __SCRIBBLE_SEQUENTIAL_GLYPH_MAX_RANGE  300  //If the glyph range (min _index to max _index) exceeds this number, a font's glyphs will be indexed using a ds_map
 #macro __SCRIBBLE_SEQUENTIAL_GLYPH_MAX_HOLES  0.50 //Fraction (0 -> 1). If the number of holes exceeds this proportion, a font's glyphs will be indexed using a ds_map
 
 #macro __SCRIBBLE_MAX_LINES  1000  //Maximum number of lines in a textbox. Thise constant must match the corresponding values in shd_scribble
@@ -296,8 +296,8 @@ function scribble_init(argument0, argument1, argument2) {
 	global.__scribble_font_directory       = _font_directory;
 	global.__scribble_font_data            = ds_map_create();  //Stores a data array for each font defined inside Scribble
 	global.__scribble_colours              = ds_map_create();  //Stores colour definitions, including custom colours
-	global.__scribble_effects              = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
-	global.__scribble_effects_slash        = ds_map_create();  //Bidirectional lookup - stores name:index as well as index:name
+	global.__scribble_effects              = ds_map_create();  //Bidirectional lookup - stores name:_index as well as _index:name
+	global.__scribble_effects_slash        = ds_map_create();  //Bidirectional lookup - stores name:_index as well as _index:name
 	global.__scribble_autotype_events      = ds_map_create();
 	global.__scribble_default_font         = _default_font;
 	global.__scribble_global_cache_map     = ds_map_create();
@@ -342,7 +342,7 @@ function scribble_init(argument0, argument1, argument2) {
 	global.__scribble_autotype_events[? "delay"] = undefined;
 
 	//Add bindings for default effect names
-	//Effect index 0 is reversed for sprites
+	//Effect _index 0 is reversed for sprites
 	global.__scribble_effects[?       "wave"    ] = 1;
 	global.__scribble_effects[?       "shake"   ] = 2;
 	global.__scribble_effects[?       "rainbow" ] = 3;
@@ -359,7 +359,7 @@ function scribble_init(argument0, argument1, argument2) {
 	//Create a vertex format for our text
 	vertex_format_begin();
 	vertex_format_add_position_3d(); //12 bytes
-	vertex_format_add_normal();      //12 bytes       //X = character index, Y = line index, Z = effect flags
+	vertex_format_add_normal();      //12 bytes       //X = character _index, Y = line _index, Z = effect flags
 	vertex_format_add_colour();      // 4 bytes
 	vertex_format_add_texcoord();    // 8 bytes
 	global.__scribble_vertex_format = vertex_format_end(); //36 bytes per vertex, 108 bytes per tri, 216 bytes per glyph

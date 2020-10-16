@@ -18,8 +18,8 @@
 /// [/colour] [/color] [/c]             Reset colour to the default
 /// [<name of font>] [/font] [/f]       Set font / Reset font
 /// [<name of sprite>]                  Insert an animated sprite starting on image 0 and animating using SCRIBBLE_DEFAULT_SPRITE_SPEED
-/// [<name of sprite>,<image>]          Insert a static sprite using the specified image index
-/// [<name of sprite>,<image>,<speed>]  Insert animated sprite using the specified image index and animation speed
+/// [<name of sprite>,<image>]          Insert a static sprite using the specified image _index
+/// [<name of sprite>,<image>,<speed>]  Insert animated sprite using the specified image _index and animation speed
 /// [fa_left]                           Align horizontally to the left. This will insert a line break if used in the middle of a line of text
 /// [fa_right]                          Align horizontally to the right. This will insert a line break if used in the middle of a line of text
 /// [fa_center] [fa_centre]             Align centrally. This will insert a line break if used in the middle of a line of text
@@ -105,7 +105,7 @@ function scribble_draw() {
 	                _occurance_array[@ __SCRIBBLE_OCCURANCE.DELAY_PAUSED] = false;
 	                var _typewriter_speed = _typewriter_adjusted_speed;
                 
-	                //Increment the window index
+	                //Increment the window _index
 	                var _old_head_pos = _typewriter_window_array[@ _typewriter_window];
 	                _typewriter_window = (_typewriter_window + 2) mod (2*__SCRIBBLE_WINDOW_COUNT);
 	                _occurance_array[@ __SCRIBBLE_OCCURANCE.WINDOW] = _typewriter_window;
@@ -154,13 +154,13 @@ function scribble_draw() {
 	                var _event                = _occurance_array[__SCRIBBLE_OCCURANCE.EVENT_PREVIOUS     ];
 	                var _events_visited_array = _occurance_array[__SCRIBBLE_OCCURANCE.EVENT_VISITED_ARRAY];
                 
-	                //Always start scanning at the next event
+	                //Always start scanning at the _next event
 	                ++_event;
 	                if (_event < _event_count)
 	                {
 	                    var _event_char = _events_char_array[_event];
                         
-	                    //Now iterate from our current character position to the next character position
+	                    //Now iterate from our current character position to the _next character position
 	                    var _break = false;
 	                    var _scan = _scan_a;
 	                    var _skipping = _occurance_array[__SCRIBBLE_OCCURANCE.SKIP];

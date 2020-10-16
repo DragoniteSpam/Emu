@@ -1138,7 +1138,7 @@ function scribble_cache() {
 	                                var _tell = _tell_a;
 	                                repeat((_tell_b - _tell_a) / __SCRIBBLE_VERTEX.__SIZE)
 	                                {
-	                                    //Increment the line index by 1
+	                                    //Increment the line _index by 1
 	                                    buffer_poke(_buffer, _tell + __SCRIBBLE_VERTEX.PACKED_INDEXES, buffer_f32, buffer_peek(_buffer, _tell + __SCRIBBLE_VERTEX.PACKED_INDEXES, buffer_f32) + 1);
                             
 	                                    //Adjust glyph centre position
@@ -1220,7 +1220,7 @@ function scribble_cache() {
 	                _element_pages_array[@ array_length(_element_pages_array)] = _new_page_array;
 	                ++_meta_element_pages;
         
-	                //Steal the last line from the previous page
+	                //Steal the last line from the _previous page
 	                _page_array[@ __SCRIBBLE_PAGE.LINES] = _meta_page_lines - 1;
 	                _page_lines_array[@ array_length(_page_lines_array)-1] = undefined;
         
@@ -1237,7 +1237,7 @@ function scribble_cache() {
 	                }
 	                else
 	                {
-	                    //Iterate over every vertex buffer on the previous page and steal vertices where we need to
+	                    //Iterate over every vertex buffer on the _previous page and steal vertices where we need to
 	                    var _v = 0;
 	                    repeat(array_length(_page_vbuffs_array))
 	                    {
@@ -1248,7 +1248,7 @@ function scribble_cache() {
 	                        var _line_tell_prev        = _vbuff_line_start_list[| _meta_page_lines];
 	                        var _line_tell             = buffer_tell(_buffer);
                         
-	                        if (_line_tell_prev < _line_tell) //If we've added anything to this buffer on the previous line
+	                        if (_line_tell_prev < _line_tell) //If we've added anything to this buffer on the _previous line
 	                        {
 	                            var _bytes = _line_tell - _line_tell_prev;
                             
@@ -1285,7 +1285,7 @@ function scribble_cache() {
 	                            var _tell = 0;
 	                            repeat(_bytes / __SCRIBBLE_VERTEX.__SIZE)
 	                            {
-	                                //Go through every vertex and set its line index to 0
+	                                //Go through every vertex and set its line _index to 0
 	                                buffer_poke(_new_buffer, _tell + __SCRIBBLE_VERTEX.PACKED_INDEXES, buffer_f32,
 	                                            __SCRIBBLE_MAX_LINES*(buffer_peek(_new_buffer, _tell + __SCRIBBLE_VERTEX.PACKED_INDEXES, buffer_f32) div __SCRIBBLE_MAX_LINES));
                         
@@ -1503,7 +1503,7 @@ function scribble_cache() {
 	                                        //Poke the new value by adding the offset to the old value
 	                                        buffer_poke(_buffer, _tell, buffer_f32, _offset + buffer_peek(_buffer, _tell, buffer_f32));
                                 
-	                                        //Now jump ahead to the next vertex. This means we're always writing to CENTRE_X!
+	                                        //Now jump ahead to the _next vertex. This means we're always writing to CENTRE_X!
 	                                        _tell += __SCRIBBLE_VERTEX.__SIZE;
 	                                    }
 	                                }
@@ -1520,7 +1520,7 @@ function scribble_cache() {
 	                                    //Poke the new value by adding the offset to the old value
 	                                    buffer_poke(_buffer, _tell, buffer_f32, _line_y + buffer_peek(_buffer, _tell, buffer_f32));
                             
-	                                    //Now jump ahead to the next vertex. This means we're always writing to CENTRE_Y!
+	                                    //Now jump ahead to the _next vertex. This means we're always writing to CENTRE_Y!
 	                                    _tell += __SCRIBBLE_VERTEX.__SIZE;
 	                                }
 	                            }
@@ -1600,7 +1600,7 @@ function scribble_cache() {
 	                            var _r = buffer_peek(_buffer, _tell + __SCRIBBLE_VERTEX.CENTRE_X, buffer_f32) + buffer_peek(_buffer, _tell + __SCRIBBLE_VERTEX.DELTA_X, buffer_f32);
 	                            var _b = buffer_peek(_buffer, _tell + __SCRIBBLE_VERTEX.CENTRE_Y, buffer_f32) + buffer_peek(_buffer, _tell + __SCRIBBLE_VERTEX.DELTA_Y, buffer_f32);
                             
-	                            //Move to the next quad
+	                            //Move to the _next quad
 	                            _tell += __SCRIBBLE_GLYPH_BYTE_SIZE - __SCRIBBLE_VERTEX.__SIZE;
                             
 	                            //Ignore null data in the vertex buffer
@@ -1619,7 +1619,7 @@ function scribble_cache() {
 	                                }
 	                                else
 	                                {
-	                                    //If we found some previous data, we need to add info to the multi array to figure out later
+	                                    //If we found some _previous data, we need to add info to the multi array to figure out later
 	                                    _glyph_ltrb_array[@ _char] = [min(_old_ltrb[0], _l   ),
 	                                                                  min(_old_ltrb[1], _t   ),
 	                                                                  max(_old_ltrb[2], _r   ),

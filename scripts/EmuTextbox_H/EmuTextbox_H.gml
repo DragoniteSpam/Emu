@@ -1,49 +1,49 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limit, _input_type, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    text = _text;
-    help_text = _help_text;
-    character_limit = clamp(_character_limit, 1, 1000);
-    value_x1 = width / 2;
-    value_y1 = 0;
-    value_x2 = width;
-    value_y2 = height;
+function EmuTextbox_H(x, y, w, h, text, value, help_text, character_limit, input_type, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+    self.text = text;
+    self.help_text = help_text;
+    self.character_limit = clamp(character_limit, 1, 1000);
     
-    override_escape = true;
-    require_enter = false;
-    multi_line = false;
-    input_font = EMU_FONT_DEFAULT;
-    value_type = _input_type;
-    value_lower = 0;
-    value_upper = 100;
+    self.input_font = EMU_FONT_DEFAULT;
+    self.color_help_text = EMU_COLOR_HELP_TEXT;
+    self.color_warn = EMU_COLOR_INPUT_WARN;
+    self.color_reject = EMU_COLOR_INPUT_REJECT;
+    self.color_disabled = EMU_COLOR_DISABLED;
+    self.color_selected = EMU_COLOR_SELECTED;
+    self.color_back = EMU_COLOR_BACK;
     
-    color_help_text = EMU_COLOR_HELP_TEXT;
-    color_warn = EMU_COLOR_INPUT_WARN;
-    color_reject = EMU_COLOR_INPUT_REJECT;
-    color_disabled = EMU_COLOR_DISABLED;
-    color_selected = EMU_COLOR_SELECTED;
-    color_back = EMU_COLOR_BACK;
+    self.sprite_ring = spr_emu_ring;
+    self.sprite_enter = spr_emu_enter;
     
-    sprite_ring = spr_emu_ring;
-    sprite_enter = spr_emu_enter;
-
-	surface = surface_create(value_x2 - value_x1, value_y2 - value_y1);
-
-	working_value = "";
+    self._override_escape = true;
+    self._require_enter = false;
+    self._multi_line = false;
+    self._value_type = input_type;
+    self._value_lower = 0;
+    self._value_upper = 100;
+    self._working_value = "";
+    
+    self._value_x1 = self.width / 2;
+    self._value_y1 = 0;
+    self._value_x2 = self.width;
+    self._value_y2 = self.height;
+    
+	self._surface = surface_create(self._value_x2 - self._value_x1, self._value_y2 - self._value_y1);
     
 	SetMultiLine = function(_multi_line) {
-        multi_line = _multi_line;
+        _multi_line = _multi_line;
     }
     
     SetRequireConfirm = function(_require) {
-        require_enter = _require;
+        _require_enter = _require;
     }
     
     SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
-        value_x1 = _vx1;
-        value_y1 = _vy1;
-        value_x2 = _vx2;
-        value_y2 = _vy2;
+        _value_x1 = _vx1;
+        _value_y1 = _vy1;
+        _value_x2 = _vx2;
+        _value_y2 = _vy2;
     }
     
     SetValue = function(_value) {
@@ -55,8 +55,8 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
     }
     
     SetRealNumberBounds = function(_lower, _upper) {
-        value_lower = min(_lower, _upper);
-        value_upper = max(_lower, _upper);
+        _value_lower = min(_lower, _upper);
+        _value_upper = max(_lower, _upper);
     }
     
 	cursor_pos = 1;
@@ -87,20 +87,20 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
 	KeyAction = function(action) {
 		if (action == H_KEY_ACTIONS.BACKSPACE) {
 			if (cursor_pos != 0) {
-				var left = string_copy(working_value, 0, cursor_pos - 1);
-				var right = string_copy(working_value, cursor_pos + 1, string_length(working_value) - cursor_pos + 1);
-				working_value = left + right;
+				var left = string_copy(_working_value, 0, cursor_pos - 1);
+				var right = string_copy(_working_value, cursor_pos + 1, string_length(_working_value) - cursor_pos + 1);
+				_working_value = left + right;
 				cursor_pos--;
 			}
 		} else if (action == H_KEY_ACTIONS.DELETE) {
-			if (cursor_pos != string_length(working_value)) {
-				var left = string_copy(working_value, 0, cursor_pos);
-				var right = string_copy(working_value, cursor_pos + 2, string_length(working_value) - cursor_pos + 1);
-				working_value = left + right;
+			if (cursor_pos != string_length(_working_value)) {
+				var left = string_copy(_working_value, 0, cursor_pos);
+				var right = string_copy(_working_value, cursor_pos + 2, string_length(_working_value) - cursor_pos + 1);
+				_working_value = left + right;
 			}
-		} else if (action == H_KEY_ACTIONS.NEWLINE && string_length(working_value) < character_limit) {
-		    if (multi_line && !require_enter) {
-				working_value = string_insert("\n", working_value, cursor_pos + 1);
+		} else if (action == H_KEY_ACTIONS.NEWLINE && string_length(_working_value) < character_limit) {
+		    if (_multi_line && !_require_enter) {
+				_working_value = string_insert("\n", _working_value, cursor_pos + 1);
 				cursor_pos += 1;
             }
 		} else if (action == H_KEY_ACTIONS.LEFT) {
@@ -108,30 +108,30 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
 				cursor_pos--;
 			}
 		} else if (action == H_KEY_ACTIONS.RIGHT) {
-			if (cursor_pos != string_length(working_value)) {
+			if (cursor_pos != string_length(_working_value)) {
 				cursor_pos++;
 			}
 		}
 		// TODO: how the heck
 		/* else if (action == H_KEY_ACTIONS.UP) {
-			if (!multi_line) {
+			if (!_multi_line) {
 				// TODO: add an option for disabling.
-				cursor_pos = string_length(working_value);
+				cursor_pos = string_length(_working_value);
 			} else {
-				var line_length = GetDistanceToNextNewline(working_value, cursor_pos) - GetDistanceFromLastNewline(working_value, cursor_pos);
+				var line_length = GetDistanceToNextNewline(_working_value, cursor_pos) - GetDistanceFromLastNewline(_working_value, cursor_pos);
 				show_debug_message(line_length);
 				cursor_pos += line_length;
-				cursor_pos = clamp(cursor_pos, 0, string_length(working_value));
+				cursor_pos = clamp(cursor_pos, 0, string_length(_working_value));
 			}
 		} else if (action == H_KEY_ACTIONS.DOWN) {
-			if (!multi_line) {
+			if (!_multi_line) {
 				// TODO: add an option for disabling.
 				cursor_pos = 0;
 			} else {
-				var line_length = GetDistanceToNextNewline(working_value, cursor_pos) - GetDistanceFromLastNewline(working_value, cursor_pos);
+				var line_length = GetDistanceToNextNewline(_working_value, cursor_pos) - GetDistanceFromLastNewline(_working_value, cursor_pos);
 				show_debug_message(line_length);
 				cursor_pos += line_length;
-				cursor_pos = clamp(cursor_pos, 0, string_length(working_value));
+				cursor_pos = clamp(cursor_pos, 0, string_length(_working_value));
 			}
 		}*/
 	};
@@ -144,27 +144,27 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         var y2 = y1 + height;
         var c = color;
 
-        var vx1 = x1 + value_x1;
-        var vy1 = y1 + value_y1;
-        var vx2 = x1 + value_x2;
-        var vy2 = y1 + value_y2;
+        var vx1 = x1 + _value_x1;
+        var vy1 = y1 + _value_y1;
+        var vx2 = x1 + _value_x2;
+        var vy2 = y1 + _value_y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        working_value = string(value);
-        var sw = string_width(working_value);
+        _working_value = string(value);
+        var sw = string_width(_working_value);
         var sw_end = sw + 4;
         
         #region work out the input color
         scribble_set_box_align(fa_left, fa_middle);
         scribble_draw(tx, ty, string(text));
         
-        if (ValidateInput(working_value)) {
-            var cast = CastInput(working_value);
-            if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
+        if (ValidateInput(_working_value)) {
+            var cast = CastInput(_working_value);
+            if (is_real(cast) && clamp(cast, _value_lower, _value_upper) != cast) {
                 c = color_warn;
             }
         } else {
@@ -177,31 +177,31 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         var spacing = 12;
         
         #region input drawing
-        if (surface_exists(surface) && (surface_get_width(surface) != ww || surface_get_height(surface) != hh)) {
-            surface_free(surface);
+        if (surface_exists(_surface) && (surface_get_width(_surface) != ww || surface_get_height(_surface) != hh)) {
+            surface_free(_surface);
         }
 
-        if (!surface_exists(surface)) {
-            surface = surface_create(ww, hh);
+        if (!surface_exists(_surface)) {
+            _surface = surface_create(ww, hh);
         }
 
-        surface_set_target(surface);
-        surface_set_target(surface);
+        surface_set_target(_surface);
+        surface_set_target(_surface);
         draw_clear(GetInteractive() ? color_back : color_disabled);
         surface_reset_target();
         
-		var display_left = string_copy(working_value, 0, cursor_pos);
-		var display_right = string_copy(working_value, cursor_pos + 1, string_length(working_value) - cursor_pos + 1);
+		var display_left = string_copy(_working_value, 0, cursor_pos);
+		var display_right = string_copy(_working_value, cursor_pos + 1, string_length(_working_value) - cursor_pos + 1);
 
 		// this looks bad. i'd use expletives but this is a public repo so no
 		// TODO: replace with like drawing a line instead or something
         var display_text = display_left + (isActiveElement() && ((floor((current_time / EMU_INPUT_BLINKING_SPEED) % 2) == 0) || key_delay_start) ? "|" : "") + display_right;
         
-        if (multi_line) {
+        if (_multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
-            var remaining = character_limit - string_length(working_value);
-            var f = string_length(working_value) / character_limit;
+            var remaining = character_limit - string_length(_working_value);
+            var f = string_length(_working_value) / character_limit;
             // hard limit on 99 for characters remaining
             if (f > 0.9 && remaining < 100) {
                 var remaining_w = string_width(string(remaining));
@@ -250,7 +250,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
             draw_text_colour(vtx - vx1, vty - vy1, string(help_text), color_help_text, color_help_text, color_help_text, color_help_text, 1);
         }
 
-        if (require_enter) {
+        if (_require_enter) {
             draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
         }
         #endregion
@@ -258,12 +258,12 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         #region interaction
         if (GetInteractive()) {
             if (isActiveElement()) {
-                var v0 = working_value;
+                var v0 = _working_value;
 
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
-                    working_value = "";
+                    _working_value = "";
                     keyboard_string = ""; // just in case, i guess?
                 }
 
@@ -304,23 +304,23 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
 						key_action = H_KEY_ACTIONS.NONE;
 					}
 				}
-				if (string_length(keyboard_string) > 0 && string_length(working_value) < character_limit) {
+				if (string_length(keyboard_string) > 0 && string_length(_working_value) < character_limit) {
 					// character/s was/were typed
-					working_value = string_insert(keyboard_string, working_value, cursor_pos + 1);
+					_working_value = string_insert(keyboard_string, _working_value, cursor_pos + 1);
 					keyboard_string = "";
 					cursor_pos++;
 				}
-				if (ValidateInput(working_value)) {
-                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
+				if (ValidateInput(_working_value)) {
+                    var execute_value_change = (!_require_enter && v0 != _working_value) || (_require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
-                        var cast = CastInput(working_value);
+                        var cast = CastInput(_working_value);
                         if (is_real(cast)) {
-                            execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
+                            execute_value_change = execute_value_change && (clamp(cast, _value_lower, _value_upper) == cast);
                         }
 						
                         if (execute_value_change) {
 							// only change actual value when it's allowed
-			                value = working_value;
+			                value = _working_value;
                             callback();
                         }
                     }
@@ -339,13 +339,13 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         surface_reset_target();
         #endregion
         
-        draw_surface(surface, vx1, vy1)
+        draw_surface(_surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, color, color, color, color, true);
     }
     
     Destroy = function() {
         destroyContent();
-        if (surface_exists(surface)) surface_free(surface);
+        if (surface_exists(_surface)) surface_free(_surface);
     }
     
     ValidateInput = function(_text) {
@@ -353,10 +353,10 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
         // try-catch in switch trees; if that issue has been fixed, feel
         // free to change it back if you think those look nicer
         var success = true;
-        if (value_type == E_InputTypes.STRING) {
+        if (_value_type == E_InputTypes.STRING) {
             return true;
         }
-        if (value_type == E_InputTypes.INT) {
+        if (_value_type == E_InputTypes.INT) {
             try {
                 var cast = real(_text);
                 if (floor(cast) != cast) success = false;
@@ -365,7 +365,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
             }
             return success;
         }
-        if (value_type == E_InputTypes.REAL) {
+        if (_value_type == E_InputTypes.REAL) {
             try {
                 var cast = real(_text);
             } catch (e) {
@@ -373,7 +373,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
             }
             return success;
         }
-        if (value_type == E_InputTypes.HEX) {
+        if (_value_type == E_InputTypes.HEX) {
             var success = true;
             try {
                 var cast = emu_hex(_text);
@@ -386,7 +386,7 @@ function EmuTextbox_H(_x, _y, _w, _h, _text, _value, _help_text, _character_limi
     }
     
     CastInput = function(_text) {
-        switch (value_type) {
+        switch (_value_type) {
             case E_InputTypes.STRING: return _text;
             case E_InputTypes.INT: return real(_text);
             case E_InputTypes.REAL: return real(_text);

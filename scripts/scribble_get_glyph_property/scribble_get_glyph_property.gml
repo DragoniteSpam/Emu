@@ -7,7 +7,7 @@
 /// SCRIBBLE_GLYPH_X_OFFSET:   The relative x-offset to draw the glyph
 /// SCRIBBLE_GLYPH_Y_OFFSET:   The relative y-offset to draw the glyph
 /// SCRIBBLE_GLYPH_SEPARATION: Effective width of the glyph, the distance between this glyph's left edge and the
-///                            left edge of the next glyph. This can be a negative value!
+///                            left edge of the _next glyph. This can be a negative value!
 function scribble_get_glyph_property(argument0, argument1, argument2) {
 
 	var _font      = argument0;

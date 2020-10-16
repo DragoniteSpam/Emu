@@ -1,14 +1,14 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuCheckbox(_x, _y, _w, _h, _text, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
-    text = _text;
+function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+    self.text = text;
     
-    box_size = 20;
-    sprite_check = spr_emu_checkbox;
-    color_active = EMU_COLOR_RADIO_ACTIVE;
-    color_hover = EMU_COLOR_HOVER
-    color_disabled = EMU_COLOR_DISABLED;
-    color_back = EMU_COLOR_BACK;
+    self.box_size = 20;
+    self.sprite_check = spr_emu_checkbox;
+    self.color_active = EMU_COLOR_RADIO_ACTIVE;
+    self.color_hover = EMU_COLOR_HOVER
+    self.color_disabled = EMU_COLOR_DISABLED;
+    self.color_back = EMU_COLOR_BACK;
     
     Render = function(base_x, base_y) {
         processAdvancement();

@@ -1,35 +1,36 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuCore(_x, _y, _w, _h) constructor {
-    x = _x;
-    y = _y;
-    width = _w;
-    height = _h;
-    root = noone;
+function EmuCore(x, y, w, h) constructor {
+    self.x = x;
+    self.y = y;
+    self.width = w;
+    self.height = h;
+    self.root = undefined;
     
-    contents = ds_list_create();
-    enabled = true;
-    interactive = true;
-    outline = true;             // not used in all element types
-    tooltip = "";               // not used by all element types
-    color = EMU_COLOR_DEFAULT;
+    self.enabled = true;
+    self.interactive = true;
+    self.outline = true;             // not used in all element types
+    self.tooltip = "";               // not used by all element types
+    self.color = EMU_COLOR_DEFAULT;
     
-    active_element = noone;
+    self.active_element = noone;
     
-    text = "core";
-    offset = 12;
+    self.text = "core";
+    self.offset = 12;
     
-    alignment = fa_left;
-    valignment = fa_middle;
+    self.alignment = fa_left;
+    self.valignment = fa_middle;
+    self.sprite_nineslice = spr_emu_nineslice;
+    self.sprite_checkers = spr_emu_checker;
     
-    override_escape = false;
-    override_tab = false;
+    self._contents = ds_list_create();
     
-    next = noone;
-    previous = noone;
-    sprite_nineslice = spr_emu_nineslice;
-    element_spacing_y = 16;
-    sprite_checkers = spr_emu_checker;
+    self._override_escape = false;
+    self._override_tab = false;
+    
+    self._next = noone;
+    self._previous = noone;
+    self._element_spacing_y = 16;
     
     AddContent = function(elements) {
         if (!is_array(elements)) {
@@ -38,14 +39,14 @@ function EmuCore(_x, _y, _w, _h) constructor {
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
             if (thing.y == undefined) {
-                var top = contents[| ds_list_size(contents) - 1];
+                var top = _contents[| ds_list_size(_contents) - 1];
                 if (top) {
-                    thing.y = top.y + top.GetHeight() + element_spacing_y;
+                    thing.y = top.y + top.GetHeight() + _element_spacing_y;
                 } else {
-                    thing.y = element_spacing_y;
+                    thing.y = _element_spacing_y;
                 }
             }
-            ds_list_add(contents, thing);
+            ds_list_add(_contents, thing);
             thing.root = self;
         }
     }
@@ -71,13 +72,13 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     SetNext = function(_element) {
-        next = _element;
-        if (next) next.previous = self;
+        _next = _element;
+        if (_next) _next._previous = self;
     }
     
     SetPrevious = function(_element) {
-        previous = _element;
-        if (previous) previous.next = self;
+        _previous = _element;
+        if (_previous) _previous._next = self;
     }
     
     RemoveContent = function(elements) {
@@ -86,7 +87,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
-            ds_list_delete(contents, ds_list_find_index(contents, thing));
+            ds_list_delete(_contents, ds_list_find_index(_contents, thing));
         }
     }
     
@@ -102,21 +103,21 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     renderContents = function(at_x, at_y) {
-        for (var i = 0; i < ds_list_size(contents); i++) {
-            if (contents[| i]) contents[| i].Render(at_x, at_y);
+        for (var i = 0; i < ds_list_size(_contents); i++) {
+            if (_contents[| i]) _contents[| i].Render(at_x, at_y);
         }
     }
     
     processAdvancement = function() {
         if (!isActiveElement()) return false;
-        if (!override_tab && keyboard_check_pressed(vk_tab)) {
-            if (keyboard_check(vk_shift) && previous) {
-                previous.Activate();
+        if (!_override_tab && keyboard_check_pressed(vk_tab)) {
+            if (keyboard_check(vk_shift) && _previous) {
+                _previous.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
-            if (next) {
-                next.Activate();
+            if (_next) {
+                _next.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
@@ -129,10 +130,10 @@ function EmuCore(_x, _y, _w, _h) constructor {
     
     destroyContent = function() {
         if (isActiveElement()) _emu_active_element(undefined);
-        for (var i = 0; i < ds_list_size(contents); i++) {
-            contents[| i].Destroy();
+        for (var i = 0; i < ds_list_size(_contents); i++) {
+            _contents[| i].Destroy();
         }
-        ds_list_destroy(contents);
+        ds_list_destroy(_contents);
     }
     
     ShowTooltip = function() {
@@ -140,7 +141,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
         // assign the element's "tooltip" text to be drawn on the UI somewhere
     }
     
-    drawNineslice = function(index, x1, y1, x2, y2, color, alpha) {
+    drawNineslice = function(_index, x1, y1, x2, y2, color, alpha) {
         color = (color != undefined) ? color : c_white;
         alpha = (alpha != undefined) ? alpha : 1;
         var w = x2 - x1;
@@ -148,19 +149,19 @@ function EmuCore(_x, _y, _w, _h) constructor {
         var sw = sprite_get_width(sprite_nineslice) / 3;
         var sh = sprite_get_height(sprite_nineslice) / 3;
         
-        draw_sprite_general(sprite_nineslice, index, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, 2 * sw, 0, sw, sh, x1 + w - sw, y1, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, 2 * sw, 2 * sh, sw, sh, x1 + w - sw, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, 0, 2 * sh, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 0, 0, sw, sh, x1, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 2 * sw, 0, sw, sh, x1 + w - sw, y1, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 2 * sw, 2 * sh, sw, sh, x1 + w - sw, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 0, 2 * sh, sw, sh, x1, y1 + h - sh, 1, 1, 0, color, color, color, color, alpha);
         
         var hxscale = (w - 2 * sw) / sw;
         var vyscale = (h - 2 * sh) / sh;
         
-        draw_sprite_general(sprite_nineslice, index, sw, 0, sw, sh, x1 + sw, y1, hxscale, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, sw, sh * 2, sw, sh, x1 + sw, y1 + h - sh, hxscale, 1, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, 0, sh, sw, sh, x1, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
-        draw_sprite_general(sprite_nineslice, index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, sw, 0, sw, sh, x1 + sw, y1, hxscale, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, sw, sh * 2, sw, sh, x1 + sw, y1 + h - sh, hxscale, 1, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 0, sh, sw, sh, x1, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, 2 * sw, sh, sw, sh, x1 + w - sw, y1 + sh, 1, vyscale, 0, color, color, color, color, alpha);
+        draw_sprite_general(sprite_nineslice, _index, sw, sh, sw, sh, x1 + sw, y1 + sh, hxscale, vyscale, 0, color, color, color, color, alpha);
     }
     
     drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
@@ -188,7 +189,7 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
     
     isActiveDialog = function() {
-        var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
+        var top = EmuOverlay._contents[| ds_list_size(EmuOverlay._contents) - 1];
         return !top || (top == root);
     }
     
@@ -255,29 +256,29 @@ function EmuCore(_x, _y, _w, _h) constructor {
     }
 }
 
-function EmuCallback(_x, _y, _w, _h, _value, _callback) : EmuCore(_x, _y, _w, _h) constructor {
-    SetCallback = function(_callback) {
-        callback = method(self, _callback);
+function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
+    SetCallback = function(callback) {
+        self.callback = method(self, callback);
     }
     
-    setCallbackMiddle = function(_callback) {
-        callback_middle = method(self, _callback);
+    setCallbackMiddle = function(callback) {
+        self.callback_middle = method(self, callback);
     }
     
-    setCallbackRight = function(_callback) {
-        callback_right = method(self, _callback);
+    setCallbackRight = function(callback) {
+        self.callback_right = method(self, callback);
     }
     
-    setCallbackDouble = function(_callback) {
-        callback_double = method(self, _callback);
+    setCallbackDouble = function(callback) {
+        self.callback_double = method(self, callback);
     }
     
-    SetValue = function(_value) {
-        value = _value;
+    SetValue = function(value) {
+        self.value = value;
     }
     
-    SetCallback(_callback);
-    SetValue(_value);
+    SetCallback(callback);
+    SetValue(value);
     
     setCallbackMiddle(emu_null);
     setCallbackRight(emu_null);

@@ -1,7 +1,7 @@
 /// Defines an effect name, allowing for behaviours to be set in scribble_draw() and passed to a shader
 /// 
 /// @param name    Effect name, as a string
-/// @param index   Integer effect index, from 1 to SCRIBBLE_MAX_MAX_EFFECTS-1 inclusive
+/// @param _index   Integer effect _index, from 1 to SCRIBBLE_MAX_MAX_EFFECTS-1 inclusive
 function scribble_add_shader_effect(argument0, argument1) {
 
 	var _name  = argument0;

@@ -1,4 +1,4 @@
-/// @param spriteIndex        Sprite index to whitelist
+/// @param spriteIndex        Sprite _index to whitelist
 /// @param [spriteIndex...]   Any additional sprite indexes to whitelist
 function scribble_whitelist_sprite() {
 
@@ -9,7 +9,7 @@ function scribble_whitelist_sprite() {
     
 		if (is_string(_sprite))
 		{
-		    show_error("Scribble:\nSprite index was a string but should be an asset index\n ", false);
+		    show_error("Scribble:\nSprite _index was a string but should be an asset _index\n ", false);
 		}
 		else
 		{

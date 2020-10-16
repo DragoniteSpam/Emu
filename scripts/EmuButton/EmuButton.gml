@@ -1,13 +1,13 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuButton(_x, _y, _w, _h, _text, _callback) : EmuCallback(_x, _y, _w, _h, 0, _callback) constructor {
-    text = _text;
-    alignment = fa_center;
-    valignment = fa_middle;
+function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, callback) constructor {
+    self.text = text;
+    self.alignment = fa_center;
+    self.valignment = fa_middle;
     
-    color_hover = EMU_COLOR_HOVER;
-    color_back = EMU_COLOR_BACK;
-    color_disabled = EMU_COLOR_DISABLED;
+    self.color_hover = EMU_COLOR_HOVER;
+    self.color_back = EMU_COLOR_BACK;
+    self.color_disabled = EMU_COLOR_DISABLED;
     
     Render = function(base_x, base_y) {
         processAdvancement();

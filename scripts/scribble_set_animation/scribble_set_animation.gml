@@ -1,6 +1,6 @@
 /// Sets the various properties of Scribble's dynamic rendering
 /// 
-/// @param animProperty  Integer index for the target animation property (see enum SCRIBBLE_ANIM)
+/// @param animProperty  Integer _index for the target animation property (see enum SCRIBBLE_ANIM)
 /// @param value         Value to set the property to
 /// 
 /// [ 0]   waveSize         Maximum pixel offset of the [wave] effect                                                                                

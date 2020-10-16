@@ -10,7 +10,7 @@
 /// @param bottomPad         "
 /// @param separationDelta   Change in every glyph's SCRIBBLE_GLYPH.SEPARATION value. For a shader that adds a border of 2px around the entire glyph, this value should be 4px
 /// @param smooth            Set to <true> to turn on linear interpolation
-/// @param [surfaceSize]     Size of the surface to use. Defaults to 2048x2048
+/// @param [surfaceSize]     Size of the _surface to use. Defaults to 2048x2048
 function scribble_bake_shader() {
 
 	var _source_font_name = argument[0];
@@ -250,7 +250,7 @@ function scribble_bake_shader() {
 		var _surface_0 = surface_create(_texture_size, _texture_size);
 		var _surface_1 = surface_create(_texture_size, _texture_size);
     
-		//Draw the source glyphs to a surface
+		//Draw the source glyphs to a _surface
 		surface_set_target(_surface_0);
 		draw_clear_alpha(c_white, 0.0);
 		gpu_set_blendenable(false);
@@ -260,7 +260,7 @@ function scribble_bake_shader() {
     
 		var _texture = surface_get_texture(_surface_0);
     
-		//Draw one surface to another using the shader
+		//Draw one _surface to another using the shader
 		surface_set_target(_surface_1);
 		draw_clear_alpha(c_white, 0.0);
     
@@ -277,7 +277,7 @@ function scribble_bake_shader() {
 		gpu_set_blendenable(true);
 		surface_reset_target();
     
-		//Make a sprite from the effect surface to make the texture stick
+		//Make a sprite from the effect _surface to make the texture stick
 		var _sprite = sprite_create_from_surface(_surface_1, 0, 0, _texture_size, _texture_size, false, false, 0, 0);
 		surface_free(_surface_0);
 		vertex_delete_buffer(_vbuff);

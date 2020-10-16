@@ -197,9 +197,9 @@ function scribble_add_font() {
 
 	if (__SCRIBBLE_SEQUENTIAL_GLYPH_TRY)
 	{
-    #region Sequential glyph index
+    #region Sequential glyph _index
     
-	    if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Trying sequential glyph index...");
+	    if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Trying sequential glyph _index...");
     
 	    var _glyph_map = ds_map_create();
     
@@ -272,7 +272,7 @@ function scribble_add_font() {
 	        }
 	        else
 	        {
-	            if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Using an array to index glyphs");
+	            if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Using an array to _index glyphs");
 	            _ds_map_fallback = false;
             
 	            var _font_glyphs_array = array_create(_glyph_count, undefined);
@@ -359,7 +359,7 @@ function scribble_add_font() {
 
 	if (_ds_map_fallback)
 	{
-	    if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Using a ds_map to index glyphs");
+	    if (SCRIBBLE_VERBOSE) show_debug_message("Scribble:   Using a ds_map to _index glyphs");
     
 	    var _font_glyphs_map = ds_map_create();
 	    _data[@ __SCRIBBLE_FONT.GLYPHS_MAP] = _font_glyphs_map;

@@ -20,7 +20,7 @@ function scribble_autotype_set_pause() {
 	    var _typewriter_window       = _occurance_array[__SCRIBBLE_OCCURANCE.WINDOW      ];
 	    var _typewriter_window_array = _occurance_array[__SCRIBBLE_OCCURANCE.WINDOW_ARRAY];
     
-	    //Increment the window index
+	    //Increment the window _index
 	    var _old_head_pos = _typewriter_window_array[@ _typewriter_window];
 	    _typewriter_window = (_typewriter_window + 2) mod (2*__SCRIBBLE_WINDOW_COUNT);
 	    _occurance_array[@ __SCRIBBLE_OCCURANCE.WINDOW] = _typewriter_window;

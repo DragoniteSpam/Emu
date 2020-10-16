@@ -1,48 +1,47 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor {
+function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
     
     _emu_active_element(undefined);
     
     SetCallback(function() { Close(); });
     
-    var size = ds_list_size(EmuOverlay.contents);
+    var size = ds_list_size(EmuOverlay._contents);
     x = 64 * (size + 1);
     y = 64 * (size + 1);
     
-    text = _title;
+    self.text = title;
     
-    active_shade = true;
-    close_button = true;
+    self.active_shade = true;
+    self.close_button = true;
     
-    header_height = 32;
-    changed = false;
-    sprite_close = spr_emu_close;
-    color_header = EMU_COLOR_WINDOWSKIN;
-    color_back = EMU_COLOR_BACK;
+    self.changed = false;
+    self.sprite_close = spr_emu_close;
+    self.color_header = EMU_COLOR_WINDOWSKIN;
+    self.color_back = EMU_COLOR_BACK;
     
-    click_x = -1;
-    click_y = -1;
+    self._header_height = 32;
+    self._click_x = -1;
+    self._click_y = -1;
+    self._dispose = false;
     
     EmuOverlay.AddContent(self);
     
-    dispose = false;
-    
     Dispose = function() {
-        dispose = true;
+        _dispose = true;
     }
     
     Close = function() {
         do {
-            var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
+            var top = EmuOverlay._contents[| ds_list_size(EmuOverlay._contents) - 1];
             top.Destroy();
-            ds_list_delete(EmuOverlay.contents, ds_list_size(EmuOverlay.contents) - 1);
+            ds_list_delete(EmuOverlay._contents, ds_list_size(EmuOverlay._contents) - 1);
         } until (top == self);
     }
     
     GetHeight = function() {
-        return height + header_height;
+        return height + _header_height;
     }
     
     Render = function() {
@@ -62,7 +61,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         
         if (active) {
             cbi = 0;
-            if (getMouseHover(x1, y1, x2, y1 + header_height)) {
+            if (getMouseHover(x1, y1, x2, y1 + _header_height)) {
                 if (close_button && getMouseHover(cbx1, cby1, cbx2, cby2)) {
                     cbi = 1;
                     if (getMouseReleased(cbx1, cby1, cbx2, cby2)) {
@@ -70,22 +69,22 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
                         _emu_active_element(undefined);
                     }
                 } else {
-                    if (getMousePressed(x1, y1, x2, y1 + header_height)) {
-                        click_x = window_mouse_get_x();
-                        click_y = window_mouse_get_y();
+                    if (getMousePressed(x1, y1, x2, y1 + _header_height)) {
+                        _click_x = window_mouse_get_x();
+                        _click_y = window_mouse_get_y();
                     }
-                    if (getMouseReleased(x1, y1, x2, y1 + header_height)) {
-                        click_x = -1;
-                        click_y = -1;
+                    if (getMouseReleased(x1, y1, x2, y1 + _header_height)) {
+                        _click_x = -1;
+                        _click_y = -1;
                     }
                 }
             }
             
-            if (getMouseHold(0, 0, window_get_width(), window_get_height()) && click_x > -1) {
-                x += (window_mouse_get_x() - click_x);
-                y += (window_mouse_get_y() - click_y);
-                click_x = window_mouse_get_x();
-                click_y = window_mouse_get_y();
+            if (getMouseHold(0, 0, window_get_width(), window_get_height()) && _click_x > -1) {
+                x += (window_mouse_get_x() - _click_x);
+                y += (window_mouse_get_y() - _click_y);
+                _click_x = window_mouse_get_x();
+                _click_y = window_mouse_get_y();
             }
         }
         
@@ -96,7 +95,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         var y2 = y1 + GetHeight();
         
         var tx = x1 + offset;
-        var ty = floor(mean(y1, y1 + header_height));
+        var ty = floor(mean(y1, y1 + _header_height));
         
         var cbx1 = x2 - sprite_get_width(sprite_close);
         var cbx2 = x2;
@@ -114,20 +113,20 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         drawNineslice(1, x1, y1, x2, y2, color_back, 1);
         drawNineslice(0, x1, y1, x2, y2, color, 1);
         var ch = merge_colour(color_header, EMU_DIALOG_SHADE_COLOR, active ? 0 : 0.5);
-        drawNineslice(1, x1, y1, x2, y1 + header_height, ch, 1);
-        drawNineslice(0, x1, y1, x2, y1 + header_height, color, 1);
+        drawNineslice(1, x1, y1, x2, y1 + _header_height, ch, 1);
+        drawNineslice(0, x1, y1, x2, y1 + _header_height, color, 1);
         
         scribble_set_box_align(fa_left, fa_middle);
-        scribble_set_wrap(width, header_height);
+        scribble_set_wrap(width, _header_height);
         scribble_draw(tx, ty, text);
         
         if (close_button) {
             draw_sprite(sprite_close, cbi, cbx1, cby1);
         }
         
-        renderContents(x1, y1 + header_height);
+        renderContents(x1, y1 + _header_height);
         
-        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement.override_escape)) || dispose;
+        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement._override_escape)) || _dispose;
         
         if (kill) {
             callback();
@@ -136,7 +135,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     
     // Override this function for dialogs
     isActiveDialog = function() {
-        return (EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1] == self);
+        return (EmuOverlay._contents[| ds_list_size(EmuOverlay._contents) - 1] == self);
     }
 }
 

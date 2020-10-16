@@ -1,23 +1,23 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w, _h, _value, _callback) constructor {
+function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
     enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     
-    fixed_spacing = -1;
-    orientation = E_BitfieldOrientations.HORIZONTAL;
+    self._fixed_spacing = -1;
+    self._orientation = E_BitfieldOrientations.HORIZONTAL;
     
-    SetOrientation = function(_orientation) {
-        orientation = _orientation;
+    SetOrientation = function(orientation) {
+        _orientation = orientation;
         ArrangeElements();
     }
     
     SetFixedSpacing = function(spacing) {
-        fixed_spacing = spacing;
+        _fixed_spacing = spacing;
         ArrangeElements();
     }
     
     SetAutoSpacing = function() {
-        fixed_spacing = -1;
+        _fixed_spacing = -1;
         ArrangeElements();
     }
     
@@ -28,7 +28,7 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
         
         for (var i = 0; i < array_length(elements); i++) {
             if (!is_struct(elements[i])) {
-                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (ds_list_size(contents) + i),
+                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (ds_list_size(_contents) + i),
                 function() {
                     root.value ^= value;
                     root.callback();
@@ -44,19 +44,19 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
     }
     
     ArrangeElements = function() {
-        if (orientation == E_BitfieldOrientations.HORIZONTAL) {
-            for (var i = 0; i < ds_list_size(contents); i++) {
-                var option = contents[| i];
-                option.width = (fixed_spacing == -1) ? floor(width / ds_list_size(contents)) : fixed_spacing;
+        if (_orientation == E_BitfieldOrientations.HORIZONTAL) {
+            for (var i = 0; i < ds_list_size(_contents); i++) {
+                var option = _contents[| i];
+                option.width = (_fixed_spacing == -1) ? floor(width / ds_list_size(_contents)) : _fixed_spacing;
                 option.height = height;
                 option.x = option.width * i;
                 option.y = 0;
             }
         } else {
-            for (var i = 0; i < ds_list_size(contents); i++) {
-                var option = contents[| i];
+            for (var i = 0; i < ds_list_size(_contents); i++) {
+                var option = _contents[| i];
                 option.width = width;
-                option.height = (fixed_spacing == -1) ? floor(height / ds_list_size(contents)) : fixed_spacing;
+                option.height = (_fixed_spacing == -1) ? floor(height / ds_list_size(_contents)) : _fixed_spacing;
                 option.x = 0;
                 option.y = option.height * i;
             }
@@ -64,8 +64,8 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
     }
     
     GetHeight = function() {
-        var first = contents[| 0];
-        var last = contents[| ds_list_size(contents) - 1];
+        var first = _contents[| 0];
+        var last = _contents[| ds_list_size(_contents) - 1];
         return (first == undefined) ? height : (last.y + last.height - first.y);
     }
     
@@ -81,18 +81,18 @@ function EmuBitfield(_x, _y, _w, _h, _value, _callback) : EmuCallback(_x, _y, _w
     }
 }
 
-function EmuBitfieldOption(_text, _value, _callback, _eval) : EmuCallback(0, 0, 0, 0, _value, _callback) constructor {
-    SetEval = function(_eval) {
-        evaluate = method(self, _eval);
+function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0, value, callback) constructor {
+    SetEval = function(eval) {
+        evaluate = method(self, eval);
     }
     
-    text = _text;
-    SetEval(_eval);
+    self.text = text;
+    SetEval(eval);
     
-    color_hover = EMU_COLOR_HOVER;
-    color_disabled = EMU_COLOR_DISABLED;
-    color_active = EMU_COLOR_SELECTED;
-    color_inactive = EMU_COLOR_BACK;
+    self.color_hover = EMU_COLOR_HOVER;
+    self.color_disabled = EMU_COLOR_DISABLED;
+    self.color_active = EMU_COLOR_SELECTED;
+    self.color_inactive = EMU_COLOR_BACK;
     
     Render = function(base_x, base_y) {
         var x1 = x + base_x;

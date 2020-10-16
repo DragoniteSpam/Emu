@@ -1,7 +1,7 @@
 /// Defines an event - a script that can be executed (with parameters) by an in-line command tag
 /// 
 /// @param name     Name of the new formatting tag to add e.g. portrait adds the tag [portrait] for use
-/// @param script   Script asset to execute N.B. This is the asset index, not a string
+/// @param script   Script asset to execute N.B. This is the asset _index, not a string
 /// 
 /// Events are scripts that are executed during an autotype fade in animation. As each character is revealed,
 /// Scribble will check if any events are present at that position in the text and, if so, Scribble will
