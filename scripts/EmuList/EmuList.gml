@@ -27,7 +27,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self._click_x = -1;
     self._click_y = -1;
     
-    self._selected_entries = ds_map_create();
+    self._selected_entries = { };
     self._surface = -1;
     self._entries = ds_list_create();
     self._own_contents = true;
@@ -80,7 +80,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     }
     
     GetSelected = function(list_index) {
-        return ds_map_exists(_selected_entries, list_index);
+        return variable_struct_exists(_selected_entries, string(list_index));
     }
     
     getListColors = function(list_index) {
@@ -88,20 +88,20 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     }
     
     GetSelection = function() {
-        if (ds_map_empty(_selected_entries)) return -1;
-        return _selected_entries[? "first"];
+        if (variable_struct_names_count(_selected_entries) == 0) return -1;
+        return _selected_entries[$ "first"];
     }
     
     ClearSelection = function() {
-        ds_map_clear(_selected_entries);
+        _selected_entries = { };
         callback();
     }
     
     Select = function(_list_index, _set_index) {
         if (_set_index == undefined) _set_index = false;
-        if (!ds_map_exists(_selected_entries, "first")) _selected_entries[? "first"] = _list_index;
-        _selected_entries[? "last"] = _list_index;
-        _selected_entries[? _list_index] = true;
+        if (!variable_struct_exists(_selected_entries, "first")) _selected_entries[$ "first"] = _list_index;
+        _selected_entries[$ "last"] = _list_index;
+        _selected_entries[$ string(_list_index)] = true;
         if (_set_index && clamp(_list_index, _index, _index + slots - 1) != _list_index) {
             _index = max(0, min(_list_index, ds_list_size(_entries) - slots));
         }
@@ -109,7 +109,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     }
     
     Deselect = function(_list_index) {
-        ds_map_delete(_selected_entries, _list_index);
+        variable_struct_remove(_selected_entries, _list_index);
         callback();
     }
     
@@ -367,7 +367,6 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     
     Destroy = function() {
         destroyContent();
-        ds_map_destroy(_selected_entries);
         if (own_entries) ds_list_destroy(_entries);
         if (_surface != -1) surface_free(_surface);
     }
