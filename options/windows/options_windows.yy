@@ -1,7 +1,7 @@
 {
   "option_windows_display_name": "Emu UI Framework",
   "option_windows_executable_name": "${project_name}.exe",
-  "option_windows_version": "1.0.1.0",
+  "option_windows_version": "1.0.2.0",
   "option_windows_company_info": "Wizarducks",
   "option_windows_product_info": "Emu UI Framework",
   "option_windows_copyright_info": "(c) 2019 - 2020 Michael Peng",
