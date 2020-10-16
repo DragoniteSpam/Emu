@@ -27,6 +27,12 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
     
     EmuOverlay.AddContent(self);
     
+    dispose = false;
+    
+    Dispose = function() {
+        dispose = true;
+    }
+    
     Close = function() {
         do {
             var top = EmuOverlay.contents[| ds_list_size(EmuOverlay.contents) - 1];
@@ -121,7 +127,7 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
         
         renderContents(x1, y1 + header_height);
         
-        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement.override_escape));
+        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement.override_escape)) || dispose;
         
         if (kill) {
             callback();
@@ -135,5 +141,5 @@ function EmuDialog(_w, _h, _title) : EmuCallback(0, 0, _w, _h, 0, 0) constructor
 }
 
 function emu_dialog_close_auto() {
-    root.Close();
+    root.Dispose();
 }
