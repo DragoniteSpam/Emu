@@ -1,7 +1,6 @@
 {
   "bboxMode": 0,
   "collisionKind": 1,
-  "separateMasks": false,
   "type": 0,
   "origin": 4,
   "preMultiplyAlpha": false,
@@ -26,25 +25,19 @@
   "gridY": 0,
   "frames": [
     {"compositeImage":{"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"1ae913c3-730a-4aae-bcc9-dbc9218edded","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"11f227aa-f77e-4b56-bcc7-0cbb68abb536","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+        {"FrameId":{"name":"c698f404-cd05-4493-b87c-50d7224d0aba","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_help","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"c698f404-cd05-4493-b87c-50d7224d0aba","tags":[],"resourceType":"GMSpriteFrame",},
     {"compositeImage":{"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"1ae913c3-730a-4aae-bcc9-dbc9218edded","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"11f227aa-f77e-4b56-bcc7-0cbb68abb536","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+        {"FrameId":{"name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_help","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"23db672a-7bfa-442b-9f7a-1772b0b07d48","tags":[],"resourceType":"GMSpriteFrame",},
     {"compositeImage":{"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"1ae913c3-730a-4aae-bcc9-dbc9218edded","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"","path":"",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"11f227aa-f77e-4b56-bcc7-0cbb68abb536","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+        {"FrameId":{"name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","path":"sprites/spr_emu_help/spr_emu_help.yy",},"LayerId":{"name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_help","path":"sprites/spr_emu_help/spr_emu_help.yy",},"resourceVersion":"1.0","name":"db44b5d1-9636-42c4-b8cc-2b8308112f88","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {

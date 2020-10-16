@@ -1,7 +1,6 @@
 {
   "bboxMode": 0,
   "collisionKind": 1,
-  "separateMasks": false,
   "type": 0,
   "origin": 4,
   "preMultiplyAlpha": false,
@@ -27,18 +26,14 @@
   "frames": [
     {"compositeImage":{"FrameId":{"name":"839cb718-6dcb-4017-bd25-0bbb7d634521","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
         {"FrameId":{"name":"839cb718-6dcb-4017-bd25-0bbb7d634521","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"839cb718-6dcb-4017-bd25-0bbb7d634521","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"839cb718-6dcb-4017-bd25-0bbb7d634521","tags":[],"resourceType":"GMSpriteFrame",},
     {"compositeImage":{"FrameId":{"name":"e7af7714-8c17-40af-8764-7a8993eba21f","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"e7af7714-8c17-40af-8764-7a8993eba21f","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"e7af7714-8c17-40af-8764-7a8993eba21f","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"e7af7714-8c17-40af-8764-7a8993eba21f","tags":[],"resourceType":"GMSpriteFrame",},
     {"compositeImage":{"FrameId":{"name":"11caf045-8129-438a-8b14-5a93415b6416","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
         {"FrameId":{"name":"11caf045-8129-438a-8b14-5a93415b6416","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-        {"FrameId":{"name":"11caf045-8129-438a-8b14-5a93415b6416","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"11caf045-8129-438a-8b14-5a93415b6416","tags":[],"resourceType":"GMSpriteFrame",},
     {"compositeImage":{"FrameId":{"name":"65306b48-500c-4972-ba81-6952e98e3051","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"65306b48-500c-4972-ba81-6952e98e3051","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
         {"FrameId":{"name":"65306b48-500c-4972-ba81-6952e98e3051","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"LayerId":{"name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
       ],"parent":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","name":"65306b48-500c-4972-ba81-6952e98e3051","tags":[],"resourceType":"GMSpriteFrame",},
   ],

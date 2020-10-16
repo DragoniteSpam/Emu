@@ -1,7 +1,6 @@
 {
   "bboxMode": 0,
   "collisionKind": 1,
-  "separateMasks": false,
   "type": 0,
   "origin": 1,
   "preMultiplyAlpha": false,
