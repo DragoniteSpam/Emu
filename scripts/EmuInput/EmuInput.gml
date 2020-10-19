@@ -203,7 +203,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
 						
                         if (execute_value_change) {
                             value = _working_value;
-                            callback(value);
+                            callback();
                         }
                     }
                 }
