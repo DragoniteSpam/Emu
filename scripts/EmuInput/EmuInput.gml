@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
-function EmuInput(x, y, w, h, text, value, help_text, character_limit, input_type, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
     enum E_InputTypes { STRING, INT, REAL, HEX };
     
     self.text = text;
@@ -26,7 +26,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input_typ
     self._override_escape = true;
     self._require_enter = false;
     self._multi_line = false;
-    self._value_type = input_type;
+    self._value_type = input;
     self._value_lower = 0;
     self._value_upper = 100;
     
