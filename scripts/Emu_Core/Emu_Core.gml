@@ -261,15 +261,15 @@ function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) construc
         self.callback = method(self, callback);
     }
     
-    setCallbackMiddle = function(callback) {
+    SetCallbackMiddle = function(callback) {
         self.callback_middle = method(self, callback);
     }
     
-    setCallbackRight = function(callback) {
+    SetCallbackRight = function(callback) {
         self.callback_right = method(self, callback);
     }
     
-    setCallbackDouble = function(callback) {
+    SetCallbackDouble = function(callback) {
         self.callback_double = method(self, callback);
     }
     
@@ -280,9 +280,9 @@ function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) construc
     SetCallback(callback);
     SetValue(value);
     
-    setCallbackMiddle(emu_null);
-    setCallbackRight(emu_null);
-    setCallbackDouble(emu_null);
+    SetCallbackMiddle(emu_null);
+    SetCallbackRight(emu_null);
+    SetCallbackDouble(emu_null);
 }
 
 function emu_null() { }
