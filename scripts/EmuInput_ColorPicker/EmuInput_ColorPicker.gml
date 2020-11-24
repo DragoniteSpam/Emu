@@ -16,10 +16,6 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     self.color_back = EMU_COLOR_BACK;
     
-    self.sprite_crosshair = spr_emu_mask_crosshair;
-    self.sprite_mask_bar_h = spr_emu_mask_bar_h;
-    self.sprite_mask_bar_v = spr_emu_mask_bar_v;
-        
     SetAlphaUsed = function(_alpha_used) {
         _allow_alpha = _alpha_used;
     }
@@ -95,6 +91,10 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                         self._color_y = 0;
                         self._main_size = 176;
                         self._selecting_color = false;
+                        
+                        self.sprite_crosshair = spr_emu_mask_crosshair;
+                        self.sprite_mask_bar_h = spr_emu_mask_bar_h;
+                        self.sprite_mask_bar_v = spr_emu_mask_bar_v;
                         
                         self._axis_x = self._color_x + self._main_size + 16;
                         self._axis_y = self._color_y;
