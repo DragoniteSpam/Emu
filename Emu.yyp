@@ -76,6 +76,7 @@
     {"id":{"name":"spr_emu_mask_crosshair","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"order":12,},
     {"id":{"name":"obj_emu_demo","path":"objects/obj_emu_demo/obj_emu_demo.yy",},"order":4,},
     {"id":{"name":"scribble_draw","path":"scripts/scribble_draw/scribble_draw.yy",},"order":9,},
+    {"id":{"name":"spr_emu_checkbox_border","path":"sprites/spr_emu_checkbox_border/spr_emu_checkbox_border.yy",},"order":17,},
     {"id":{"name":"spr_emu_mask_bar_h","path":"sprites/spr_emu_mask_bar_h/spr_emu_mask_bar_h.yy",},"order":13,},
     {"id":{"name":"spr_emu_radio","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"order":3,},
     {"id":{"name":"scribble_set_wrap","path":"scripts/scribble_set_wrap/scribble_set_wrap.yy",},"order":8,},
@@ -133,7 +134,7 @@
     {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},
   ],
   "TextureGroups": [
-    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
+    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":461609314234257646,"resourceVersion":"1.0","name":"Default","resourceType":"GMTextureGroup",},
   ],
   "IncludedFiles": [
     {"CopyToMask":-1,"filePath":"datafiles/emu_fonts","resourceVersion":"1.0","name":"fnt_emu_default.yy","resourceType":"GMIncludedFile",},
@@ -503,7 +504,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"tree4.d3d","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "23.1.1.193",
+    "IDEVersion": "2.3.1.536",
   },
   "resourceVersion": "1.4",
   "name": "Emu",
