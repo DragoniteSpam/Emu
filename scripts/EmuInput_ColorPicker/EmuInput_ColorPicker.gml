@@ -348,6 +348,5 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     Destroy = function() {
         destroyContent();
-        if (surface_exists(_surface)) surface_free(_surface);
     }
 }
