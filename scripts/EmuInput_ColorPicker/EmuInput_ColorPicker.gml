@@ -78,7 +78,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                     var yy = 64;
                     var spacing = 16;
                     
-                    static controls = function(x, y, w, h, value, allow_alpha, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+                    var controls = function(x, y, w, h, value, allow_alpha, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
                         enum EmuColorChannels { R, G, B, A }
                         
                         self.axis_value = 0;
