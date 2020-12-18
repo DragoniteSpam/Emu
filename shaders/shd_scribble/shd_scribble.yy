@@ -1,8 +1,8 @@
 {
   "type": 1,
   "parent": {
-    "name": "Scribble",
-    "path": "folders/Shaders/Scribble.yy",
+    "name": "Shaders",
+    "path": "folders/Scribble/Shaders.yy",
   },
   "resourceVersion": "1.0",
   "name": "shd_scribble",

@@ -9,8 +9,9 @@
 /// easily combined with the smoothness value to animate text as it fades out.
 /// 
 /// Events will not be executed as text fades out.
-function scribble_autotype_fade_out() {
 
+function scribble_autotype_fade_out()
+{
 	var _scribble_array = argument[0];
 	var _speed          = argument[1];
 	var _smoothness     = argument[2];
@@ -30,7 +31,7 @@ function scribble_autotype_fade_out() {
 	var _occurance_map = _scribble_array[SCRIBBLE.OCCURANCES_MAP];
 	var _occurance_array = _occurance_map[? _occurance_name];
 
-	var _pages_array = _scribble_array[@ SCRIBBLE.PAGES_ARRAY];
+	var _pages_array = _scribble_array[SCRIBBLE.PAGES_ARRAY];
 	var _page_array = _pages_array[_occurance_array[__SCRIBBLE_OCCURANCE.PAGE]];
 	var _window_array = array_create(2*__SCRIBBLE_WINDOW_COUNT, _page_array[__SCRIBBLE_PAGE.START_CHAR] - _smoothness);
 	_window_array[@ 0] += _smoothness;
@@ -43,6 +44,4 @@ function scribble_autotype_fade_out() {
 	_occurance_array[@ __SCRIBBLE_OCCURANCE.SMOOTHNESS  ] = _smoothness;
 	_occurance_array[@ __SCRIBBLE_OCCURANCE.FADE_IN     ] = false;
 	_occurance_array[@ __SCRIBBLE_OCCURANCE.SKIP        ] = false;
-
-
 }

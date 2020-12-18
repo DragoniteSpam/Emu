@@ -10,11 +10,19 @@
 /// 
 /// This script sets Scribble's draw state. All text drawn with scribble_draw() will use these settings until
 /// they're overwritten, either by calling this script again or by calling scribble_reset() or scribble_set_state().
-function scribble_set_blend(argument0, argument1) {
 
-	global.scribble_state_colour = argument0;
-	global.scribble_state_alpha  = argument1;
-
-
-
+function scribble_set_blend(_colour, _alpha)
+{
+    if (is_string(_colour))
+    {
+        _colour = global.__scribble_colours[? _colour];
+        if (_colour == undefined)
+        {
+            show_error("Scribble:\nColour name \"" + string(_colour) + "\" not recognised\n ", false);
+            exit;
+        }
+    }
+    
+    global.scribble_state_colour = _colour;
+    global.scribble_state_alpha  = _alpha;
 }

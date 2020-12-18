@@ -1,3 +1,6 @@
+//   @jujuadams   v6.0.14a   2020-10-18
+precision highp float;
+
 const float PI = 3.14159265359;
 
 varying vec2 v_vTexcoord;

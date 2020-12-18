@@ -4,8 +4,9 @@
 /// This function will skip the fade in or fade out animation that has been started by scribble_autotype_fade_in() or scribble_autotype_fade_out().
 /// 
 /// If text was fading in, all remaining events will be executed.
-function scribble_autotype_skip() {
 
+function scribble_autotype_skip()
+{
 	var _scribble_array = argument[0];
 	var _occurance_name = ((argument_count > 1) && (argument[1] != undefined))? argument[1] : SCRIBBLE_DEFAULT_OCCURANCE_NAME;
 
@@ -23,6 +24,7 @@ function scribble_autotype_skip() {
 	{
 	    case 1: var _max = _page_array[__SCRIBBLE_PAGE.LAST_CHAR] + 2; break; //Per character
 	    case 2: var _max = _page_array[__SCRIBBLE_PAGE.LINES    ];     break; //Per line
+        default: exit;
 	}
 
 	_occurance_array[@ __SCRIBBLE_OCCURANCE.WINDOW      ] = 0;
@@ -30,6 +32,4 @@ function scribble_autotype_skip() {
 	_occurance_array[@ __SCRIBBLE_OCCURANCE.SKIP        ] = true;
 
 	return _max;
-
-
 }

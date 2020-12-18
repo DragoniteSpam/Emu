@@ -1,3 +1,6 @@
+//   @jujuadams   v6.0.14a   2020-10-18
+precision highp float;
+
 attribute vec3 in_Position;
 attribute vec4 in_Colour;
 attribute vec2 in_TextureCoord;
