@@ -131,6 +131,7 @@
     {"folderPath":"folders/Scribble/Initialisation.yy","order":4,"resourceVersion":"1.0","name":"Initialisation","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scribble/Pages.yy","order":5,"resourceVersion":"1.0","name":"Pages","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scribble/Shaders.yy","order":6,"resourceVersion":"1.0","name":"Shaders","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Emu/Graphics/slices.yy","order":18,"resourceVersion":"1.0","name":"slices","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
