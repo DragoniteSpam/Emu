@@ -5,6 +5,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     
     self.alignment = fa_center;
     self.valignment = fa_middle;
+    self.sprite_nineslice = spr_emu_nineslice_tab;
     
     self.color_hover = EMU_COLOR_HOVER;
     self.color_back = EMU_COLOR_BACK;
@@ -40,14 +41,14 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
             root.RequestActivateTab(self);
         }
         
-        if (isActiveTab() || _row < root._rows - 1) {
-            var index = 3;
+        if (isActiveTab() || _row > 0) {
+            var index = 0;
         } else {
-            var index = 5;
+            var index = 2;
         }
         
         var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
-        draw_sprite_stretched_ext(sprite_nineslice, 4, hx1, hy1, hx2 - hx1, hy2 - hy1, back_color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, hx1, hy1, hx2 - hx1, hy2 - hy1, back_color, 1);
         draw_sprite_stretched_ext(sprite_nineslice, index, hx1, hy1, hx2 - hx1, hy2 - hy1, color, 1);
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(_header_width, _header_height);

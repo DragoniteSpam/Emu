@@ -4,6 +4,7 @@
     {"id":{"name":"emu_init","path":"scripts/emu_init/emu_init.yy",},"order":4,},
     {"id":{"name":"EmuDialog","path":"scripts/EmuDialog/EmuDialog.yy",},"order":16,},
     {"id":{"name":"scribble_bake_shader","path":"scripts/scribble_bake_shader/scribble_bake_shader.yy",},"order":3,},
+    {"id":{"name":"spr_emu_nineslice_tab","path":"sprites/spr_emu_nineslice_tab/spr_emu_nineslice_tab.yy",},"order":1,},
     {"id":{"name":"scribble_autotype_set_sound","path":"scripts/scribble_autotype_set_sound/scribble_autotype_set_sound.yy",},"order":6,},
     {"id":{"name":"scribble_get_bbox","path":"scripts/scribble_get_bbox/scribble_get_bbox.yy",},"order":10,},
     {"id":{"name":"spr_emu_enter","path":"sprites/spr_emu_enter/spr_emu_enter.yy",},"order":9,},
