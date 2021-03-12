@@ -83,6 +83,7 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"Layer 2","resourceVersion":"1.0","name":"11f227aa-f77e-4b56-bcc7-0cbb68abb536","tags":[],"resourceType":"GMImageLayer",},
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"791fc0cf-8e98-4d42-9fbd-49d39a241de7","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "Graphics",
     "path": "folders/Emu/Graphics.yy",
