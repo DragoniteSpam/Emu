@@ -28,7 +28,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         for (var i = 0; i < array_length(tabs); i++) {
             var _tab = tabs[i];
             _tab.root = self;
-            _tab.row = row;
+            _tab._row = row;
             _tab._index = ds_list_size(_contents[| row]._contents);
             ds_list_add(_tab_row._contents, _tab);
             if (!_active_tab && !_active_tab_request) {
@@ -46,7 +46,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         var tab_row = _contents[| row];
         for (var i = 0; i < ds_list_size(tab_row._contents); i++) {
             var tab = tab_row._contents[| i];
-            tab.row = row;
+            tab._row = row;
             tab._header_width = floor(width / ds_list_size(tab_row._contents));
             tab._header_height = _row_height;
             tab._header_x = tab._header_width * i;
@@ -64,11 +64,11 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         ds_list_copy(contents_clone, _contents);
         var _index = 0;
         for (var i = 0; i < ds_list_size(contents_clone); i++) {
-            if (i == tab.row) continue;
+            if (i == tab._row) continue;
             _contents[| _index] = contents_clone[| i];
             arrangeRow(_index++);
         }
-        _contents[| _rows - 1] = contents_clone[| tab.row];
+        _contents[| _rows - 1] = contents_clone[| tab._row];
         arrangeRow(_rows - 1);
     }
     
