@@ -39,7 +39,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         
         surface_set_target(_surface);
         draw_clear_alpha(c_black, 0);
-        drawNineslice(1, 0, 0, width, height, color_back, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, width, height, color_back, 1);
         if (sprite_exists(sprite)) {
             if (checker_background) drawCheckerbox(0, 0, width - 1, height - 1);
             if (allow_shrink) {
@@ -67,7 +67,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         
         var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
         draw_surface_ext(_surface, x1, y1, 1, 1, 0, back_color, 1);
-        drawNineslice(0, x1, y1, x2, y2, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, color, 1);
     }
     
     Destroy = function() {

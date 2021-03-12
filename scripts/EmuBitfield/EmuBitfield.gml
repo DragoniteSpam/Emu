@@ -108,8 +108,8 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
             back_color = merge_colour(back_color, color_disabled, 0.5);
         }
         
-        drawNineslice(1, x1, y1, x2, y2, back_color, 1);
-        drawNineslice(0, x1, y1, x2, y2, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, back_color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, color, 1);
         scribble_set_box_align(fa_center, fa_middle);
         scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
         

@@ -88,10 +88,10 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"a26d7055-b917-4731-959c-dac5248fad1e","tags":[],"resourceType":"GMImageLayer",},
   ],
   "nineSlice": {
-    "left": 2,
-    "top": 2,
-    "right": 2,
-    "bottom": 2,
+    "left": 6,
+    "top": 6,
+    "right": 6,
+    "bottom": 4,
     "guideColour": [
       4294902015,
       4294902015,

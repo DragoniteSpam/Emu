@@ -27,8 +27,8 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
         }
         
         var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
-        drawNineslice(1, x1, y1, x2, y2, back_color, 1);
-        drawNineslice(0, x1, y1, x2, y2, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, back_color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, color, 1);
         
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(width, height);

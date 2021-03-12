@@ -50,10 +50,10 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         scribble_set_wrap(width, height);
         scribble_draw(tx, ty, text);
         
-        drawNineslice(1, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color_back, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 1, vy1 + 1, vx2 - vx1 - 1, vy2 - vy1 - 1, color_back, 1);
         drawCheckerbox(vx1 + 2, vy1 + 2, (vx2 - vx1) - 4, (vy2 - vy1) - 4);
-        drawNineslice(1, vx1 + 2, vy1 + 2, vx2 - 2, vy2 - 2, value, _allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
-        drawNineslice(0, vx1 + 1, vy1 + 1, vx2 - 1, vy2 - 1, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 2, vy1 + 2, vx2 - vx1 - 2, vy2 - vy1 - 2, value, _allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, vx1 + 1, vy1 + 1, vx2 - vx1 - 1, vy2 - vy1 - 1, color, 1);
         
         if (GetInteractive()) {
             if (getMouseHover(vx1, vy1, vx2, vy2)) {

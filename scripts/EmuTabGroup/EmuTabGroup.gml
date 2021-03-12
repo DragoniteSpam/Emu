@@ -82,7 +82,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        drawNineslice(1, x1, y1 + _rows * _row_height, x2, y2, color_back, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1 + _rows * _row_height, x2 - x1, y2 - y1 - _rows * _row_height, color_back, 1);
         
         // Save this for the beginning of the _next frame, because if you do it
         // in the middle you'll find the tabs become misaligned for one frame
@@ -96,6 +96,6 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         }
         
         // no sense making a tab group non-interactive
-        drawNineslice(2, x1, y1 + _rows * _row_height, x2, y2, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 2, x1, y1 + _rows * _row_height, x2 - x1, y2 - y1 - _rows * _row_height, color, 1);
     }
 }

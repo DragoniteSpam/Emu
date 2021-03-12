@@ -167,7 +167,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         _index = clamp(n - slots, 0, _index);
         
         if (n == 0) {
-            drawNineslice(1, 0, 0, x2 - x1, element_height, color_disabled, 1);
+            draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, x2 - x1, element_height, color_disabled, 1);
             ty = mean(y2, y2 + height);
             scribble_set_box_align(fa_left, fa_center);
             scribble_set_wrap(width, height);
