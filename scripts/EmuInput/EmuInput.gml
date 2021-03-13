@@ -32,31 +32,31 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     self._surface = surface_create(self._value_x2 - self._value_x1, self._value_y2 - self._value_y1);
     
-    SetMultiLine = function(_multi_line) {
-        _multi_line = _multi_line;
+    SetMultiLine = function(multi_line) {
+        self._multi_line = multi_line;
     }
     
-    SetRequireConfirm = function(_require) {
-        _require_enter = _require;
+    SetRequireConfirm = function(require) {
+        self._require_enter = require;
     }
     
-    SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
-        _value_x1 = _vx1;
-        _value_y1 = _vy1;
-        _value_x2 = _vx2;
-        _value_y2 = _vy2;
+    SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
+        self._value_x1 = vx1;
+        self._value_y1 = vy1;
+        self._value_x2 = vx2;
+        self._value_y2 = vy2;
     }
     
-    SetValue = function(_value) {
-        value = string(_value);
+    SetValue = function(value) {
+        self.value = string(value);
         if (isActiveElement()) {
-            keyboard_string = value;
+            keyboard_string = self.value;
         }
     }
     
-    SetRealNumberBounds = function(_lower, _upper) {
-        _value_lower = min(_lower, _upper);
-        _value_upper = max(_lower, _upper);
+    SetRealNumberBounds = function(lower, upper) {
+        self._value_lower = min(lower, upper);
+        self._value_upper = max(lower, upper);
     }
     
     Render = function(base_x, base_y) {
@@ -233,35 +233,35 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         if (surface_exists(_surface)) surface_free(_surface);
     }
     
-    ValidateInput = function(_text) {
+    ValidateInput = function(text) {
         // this used to be a switch tree, but 23.1.1.159 has issues with
         // try-catch in switch trees; if that issue has been fixed, feel
         // free to change it back if you think those look nicer
         var success = true;
-        if (_value_type == E_InputTypes.STRING) {
+        if (self._value_type == E_InputTypes.STRING) {
             return true;
         }
-        if (_value_type == E_InputTypes.INT) {
+        if (self._value_type == E_InputTypes.INT) {
             try {
-                var cast = real(_text);
+                var cast = real(text);
                 if (floor(cast) != cast) success = false;
             } catch (e) {
                 success = false;
             }
             return success;
         }
-        if (_value_type == E_InputTypes.REAL) {
+        if (self._value_type == E_InputTypes.REAL) {
             try {
-                var cast = real(_text);
+                var cast = real(text);
             } catch (e) {
                 success = false;
             }
             return success;
         }
-        if (_value_type == E_InputTypes.HEX) {
+        if (self._value_type == E_InputTypes.HEX) {
             var success = true;
             try {
-                var cast = emu_hex(_text);
+                var cast = emu_hex(text);
             } catch (e) {
                 success = false;
             }
@@ -270,12 +270,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return success;
     }
     
-    CastInput = function(_text) {
-        switch (_value_type) {
-            case E_InputTypes.STRING: return _text;
-            case E_InputTypes.INT: return real(_text);
-            case E_InputTypes.REAL: return real(_text);
-            case E_InputTypes.HEX: return emu_hex(_text);
+    CastInput = function(text) {
+        switch (self._value_type) {
+            case E_InputTypes.STRING: return text;
+            case E_InputTypes.INT: return real(text);
+            case E_InputTypes.REAL: return real(text);
+            case E_InputTypes.HEX: return emu_hex(text);
         }
     }
 }
@@ -286,37 +286,37 @@ function emu_string_hex() {
     var _value = argument[0];
     var _padding = (argument_count > 1) ? argument[1] : 0;
     
-    var s = sign(_value);
-    var v = abs(_value);
-    var output = "";
+    var _s = sign(_value);
+    var _v = abs(_value);
+    var _output = "";
     
-    while (v > 0)  {
-        var c  = v & 0xf;
+    while (_v > 0)  {
+        var c  = _v & 0xf;
         // magic, do not touch
-        output = chr(c + ((c < 10) ? 48 : 55)) + output;
-        v = v >> 4;
+        _output = chr(c + ((c < 10) ? 48 : 55)) + _output;
+        _v = _v >> 4;
     }
     
-    if (string_length(output) == 0) {
-        output = "0";
+    if (string_length(_output) == 0) {
+        _output = "0";
     }
     
-    while (string_length(output) < _padding) {
-        output = "0" + output;
+    while (string_length(_output) < _padding) {
+        _output = "0" + _output;
     }
 
-    return ((s < 0) ? "-" : "") + output;
+    return ((_s < 0) ? "-" : "") + _output;
 }
 
-function emu_hex(_string) {
+function emu_hex(str) {
     var result = 0;
     var ZERO = ord("0");
     var NINE = ord("9");
     var A = ord("A");
     var F = ord("F");
     
-    for (var i = 1; i <= string_length(_string); i++) {
-        var c = ord(string_char_at(string_upper(_string), i));
+    for (var i = 1; i <= string_length(str); i++) {
+        var c = ord(string_char_at(string_upper(str), i));
         // you could also multiply by 16 but you get more nerd points for bitshifts
         result = result << 4;
         if (c >= ZERO && c <= NINE) {
@@ -324,7 +324,7 @@ function emu_hex(_string) {
         } else if (c >= A && c <= F) {
             result = result + (c - A + 10);
         } else {
-            throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(_string) + " as a hex value");
+            throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(str) + " as a hex value");
         }
     }
     
