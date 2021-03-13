@@ -280,31 +280,26 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     }
 }
 
-/// @param _value
-/// @param _padding
+/// @param value
+/// @param padding
 function emu_string_hex() {
     var _value = argument[0];
     var _padding = (argument_count > 1) ? argument[1] : 0;
-    
-    var _s = sign(_value);
-    var _v = abs(_value);
     var _output = "";
+    var _s = sign(_value);
     
-    while (_v > 0)  {
-        var c  = _v & 0xf;
-        // magic, do not touch
-        _output = chr(c + ((c < 10) ? 48 : 55)) + _output;
-        _v = _v >> 4;
-    }
+    if (_value != 0) {
+        _output = string(ptr(abs(_value)));
     
-    if (string_length(_output) == 0) {
-        _output = "0";
+        while (string_char_at(_output, 1) == "0") {
+            _output = string_copy(_output, 2, string_length(_output) - 1);
+        }
     }
     
     while (string_length(_output) < _padding) {
         _output = "0" + _output;
     }
-
+    
     return ((_s < 0) ? "-" : "") + _output;
 }
 
@@ -315,17 +310,10 @@ function emu_hex(str) {
     var A = ord("A");
     var F = ord("F");
     
-    for (var i = 1; i <= string_length(str); i++) {
-        var c = ord(string_char_at(string_upper(str), i));
-        // you could also multiply by 16 but you get more nerd points for bitshifts
-        result = result << 4;
-        if (c >= ZERO && c <= NINE) {
-            result = result + (c - ZERO);
-        } else if (c >= A && c <= F) {
-            result = result + (c - A + 10);
-        } else {
-            throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(str) + " as a hex value");
-        }
+    try {
+        result = real(ptr(str));
+    } catch (e) {
+        throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(str) + " as a hex value");
     }
     
     return result;
