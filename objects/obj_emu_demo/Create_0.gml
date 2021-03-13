@@ -25,7 +25,7 @@ data = {
     // skills
     skills: ds_list_create(),
     // summary
-    summary: choose("Likes bacon, lettuce and tomatoes.", "Once walked a tightrope between the Twin Towers.", "Actually dreams in code.", "Has a pet Mimic named Douglas the Dingbat.", "Always plays as a Nord.", "Grew up believing in Santa Claus."),
+    summary: choose("Likes bacon, lettuce and tomatoes.", "Once walked a tightrope between the Twin Towers. Nearly won a Darwin Award.", "Actually dreams in code.", "Has a pet Mimic named Douglas the Dingbat.", "Always plays as a Nord.", "Grew up believing in Santa Claus."),
 };
 
 all_hometowns = ds_list_create();
