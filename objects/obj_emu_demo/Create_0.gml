@@ -26,6 +26,7 @@ data = {
     skills: ds_list_create(),
     // summary
     summary: choose("Likes bacon, lettuce and tomatoes.", "Once walked a tightrope between the Twin Towers. Nearly won a Darwin Award.", "Actually dreams in code.", "Has a pet Mimic named Douglas the Dingbat.", "Always plays as a Nord.", "Grew up believing in Santa Claus."),
+    favorite_color: make_colour_hsv(irandom(255), 255, 255),
 };
 
 all_hometowns = ds_list_create();
@@ -107,6 +108,10 @@ var list_sprites = new EmuList(32, EMU_AUTO, 256, 32, "Sprite:", 32, 8, function
 });
 list_sprites.AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]);
 
+var favorite_color = new EmuColorPicker(32, EMU_AUTO, 256, 32, "Color:", data.favorite_color, function() {
+    obj_emu_demo.data.favorite_color = value;
+});
+
 var birb_button = new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
     var dialog = new EmuDialog(256, 128, "Birb!");
     dialog.AddContent([
@@ -117,6 +122,7 @@ var birb_button = new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 
 
 tab_look.AddContent([
     list_sprites,
+    favorite_color,
     birb_button,
 ]);
 #endregion
@@ -236,12 +242,16 @@ container.AddContent([
             return 2 * base + 10;
         }
         
+        var str_fav_color = emu_string_hex(colour_get_red(demo.data.favorite_color), 2) + emu_string_hex(colour_get_green(demo.data.favorite_color), 2) +
+            emu_string_hex(colour_get_blue(demo.data.favorite_color), 2);
+        
         var str_summary = "[rainbow][wave]" + demo.data.name + "[/wave][/rainbow] (or [rainbow][wave]" + demo.data.nickname + ",[/wave][/rainbow] according to " +
             string_lower(pronoun_possessive) + " friends) is a " + demo.all_alignments[| demo.data.alignment] + " duckling from " + demo.all_hometowns[| demo.data.hometown] + ". " +
             pronoun_subject + " " + pronoun_verb + " Level " + string(demo.data.level) + " with [c_red]" + string(calc_stat(demo.data.str)) + "[/c] Strength, [c_red]" +
             string(calc_stat(demo.data.dex)) + "[/c] Dexterity, [c_red]" + string(calc_stat(demo.data.con)) + "[/c] Constitution, [c_red]" + string(calc_stat(demo.data.int)) +
             "[/c] Intelligence, [c_red]" + string(calc_stat(demo.data.wis)) + "[/c] Wisdom, and [c_red]" + string(calc_stat(demo.data.cha)) + "[/c] Charisma. " + pronoun_subject +
-            " know" + ((demo.data.pronouns != 0) ? "s" : "") + " [c_blue]" + string(skill_count) + "[/c] skill" + ((skill_count == 1) ? "" : "s");
+            " know" + ((demo.data.pronouns != 0) ? "s" : "") + " [c_blue]" + string(skill_count) + "[/c] skill" + ((skill_count == 1) ? "" : "s") + ". " + pronoun_possessive +
+            " favorite color is [#" + str_fav_color + "]0x" + str_fav_color + "[/c]";
         if (skill_count > 0) {
             if (skill_count > 3) {
                 str_summary += ", including ";
