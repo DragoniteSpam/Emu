@@ -41,7 +41,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
             root.RequestActivateTab(self);
         }
         
-        if (isActiveTab() || _row > 0) {
+        if (isActiveTab() || root._active_tab && (root._active_tab._row != _row)) {
             var index = 0;
         } else {
             var index = 2;
