@@ -311,6 +311,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                             var value_as_real = emu_hex(string_copy(value, 5, 2) + string_copy(value, 3, 2) + string_copy(value, 1, 2));
                             root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
                             root.base_color_element.value = value_as_real | (floor(root.el_picker.alpha * 0xff) << 24);
+                            root.base_color_element.callback();
                         }
                     });
                     dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
