@@ -110,11 +110,11 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
             drawn_dialog_shade_time = current_time;
         }
         
-        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - y1, y2 - y1, color_back, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - y1, y2 - y1, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, color_back, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, color, 1);
         var ch = merge_colour(color_header, EMU_DIALOG_SHADE_COLOR, active ? 0 : 0.5);
-        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - y1, _header_height, ch, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - y1, _header_height, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, _header_height, ch, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, _header_height, color, 1);
         
         scribble_set_box_align(fa_left, fa_middle);
         scribble_set_wrap(width, _header_height);
