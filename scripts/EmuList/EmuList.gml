@@ -31,15 +31,14 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self._selected_entries = { };
     self._surface = -1;
     self._entries = ds_list_create();
-    self._own_contents = true;
 	self._dragging = false;
     
     SetList = function(_list) {
-        if (_own_contents) {
+        if (_own_entries) {
             ds_list_destroy(_entries);
         }
         _entries = _list;
-        _own_contents = false;
+        _own_entries = false;
         ClearSelection();
     }
     
@@ -58,7 +57,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     }
     
     AddEntries = function(elements) {
-        if (!_own_contents) {
+        if (!_own_entries) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its _entries.");
         }
         
