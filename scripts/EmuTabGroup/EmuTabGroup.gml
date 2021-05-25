@@ -89,7 +89,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         // in the middle you'll find the tabs become misaligned for one frame
         if (_active_tab_request) {
             activateTab(_active_tab_request);
-            _active_tab_request = noone;
+            _active_tab_request = undefined;
         }
         
         for (var i = 0; i < ds_list_size(_contents); i++) {

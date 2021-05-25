@@ -13,7 +13,7 @@ function EmuCore(x, y, w, h) constructor {
     self.tooltip = "";               // not used by all element types
     self.color = EMU_COLOR_DEFAULT;
     
-    self.active_element = noone;
+    self.active_element = undefined;
     
     self.text = "core";
     self.offset = 12;
@@ -29,8 +29,8 @@ function EmuCore(x, y, w, h) constructor {
     self._override_tab = false;
     self._override_root_check = false;
     
-    self._next = noone;
-    self._previous = noone;
+    self._next = undefined;
+    self._previous = undefined;
     self._element_spacing_y = 16;
     
     AddContent = function(elements) {
