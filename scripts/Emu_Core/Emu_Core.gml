@@ -203,6 +203,10 @@ function EmuCore(x, y, w, h) constructor {
         return enabled && interactive && isActiveDialog();
     }
     
+    static GetTop = function() {
+        return self._contents[| ds_list_size(self._contents) - 1];
+    };
+    
     getMouseHover = function(x1, y1, x2, y2) {
         return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2 - 1, y2 - 1);
     }
