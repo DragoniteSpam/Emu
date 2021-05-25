@@ -34,8 +34,7 @@ scribble_init("emu", "fnt_emu_default", true);
 #macro EmuOverlay (_emu_get_overlay())
 
 function _emu_get_overlay() {
-    static _overlay = noone;
-    if (!_overlay) _overlay = new EmuCore(0, 0, window_get_width(), window_get_height());
+    static _overlay = new EmuCore(0, 0, window_get_width(), window_get_height());
     return _overlay;
 }
 #macro EmuActiveElement (_emu_active_element())
