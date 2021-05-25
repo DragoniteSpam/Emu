@@ -6,6 +6,7 @@ function EmuCore(x, y, w, h) constructor {
     self.width = w;
     self.height = h;
     self.root = undefined;
+    self.flags = 0;
     
     self.enabled = true;
     self.interactive = true;
