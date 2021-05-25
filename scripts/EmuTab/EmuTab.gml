@@ -18,6 +18,8 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     self._header_width = 0;
     self._header_height = 0;
     
+    self._override_root_check = true;
+    
     Render = function(base_x, base_y) {
         processAdvancement();
         

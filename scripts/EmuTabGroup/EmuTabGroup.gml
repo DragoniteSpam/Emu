@@ -11,8 +11,9 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
     
     self.color_back = EMU_COLOR_BACK;
     
-    self._active_tab = noone;
-    self._active_tab_request = noone;
+    self._active_tab = undefined;
+    self._active_tab_request = undefined;
+    self._override_root_check = true;
     
     AddTabs = function(row, tabs) {
         processAdvancement();

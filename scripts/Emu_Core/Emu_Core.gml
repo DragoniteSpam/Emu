@@ -27,6 +27,7 @@ function EmuCore(x, y, w, h) constructor {
     
     self._override_escape = false;
     self._override_tab = false;
+    self._override_root_check = false;
     
     self._next = noone;
     self._previous = noone;
@@ -167,7 +168,15 @@ function EmuCore(x, y, w, h) constructor {
     
     isActiveDialog = function() {
         var top = EmuOverlay._contents[| ds_list_size(EmuOverlay._contents) - 1];
-        return !top || (top == root);
+        if (!top) return true;
+        
+        var root = self.root;
+        
+        while (root && root._override_root_check) {
+            root = root.root;
+        }
+        
+        return (top == root);
     }
     
     isActiveElement = function() {
