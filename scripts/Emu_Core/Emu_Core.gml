@@ -13,7 +13,7 @@ function EmuCore(x, y, w, h) constructor {
     self.tooltip = "";               // not used by all element types
     self.color = EMU_COLOR_DEFAULT;
     
-    self.active_element = undefined;
+    self.active_element = noone;
     
     self.text = "core";
     self.offset = 12;
@@ -29,8 +29,8 @@ function EmuCore(x, y, w, h) constructor {
     self._override_tab = false;
     self._override_root_check = false;
     
-    self._next = undefined;
-    self._previous = undefined;
+    self._next = noone;
+    self._previous = noone;
     self._element_spacing_y = 16;
     
     AddContent = function(elements) {
@@ -50,6 +50,7 @@ function EmuCore(x, y, w, h) constructor {
             ds_list_add(_contents, thing);
             thing.root = self;
         }
+        return self;
     }
     
     getTextX = function(_x) {
@@ -70,16 +71,19 @@ function EmuCore(x, y, w, h) constructor {
     
     SetInteractive = function(_interactive) {
         interactive = _interactive;
+        return self;
     }
     
     SetNext = function(_element) {
         _next = _element;
         if (_next) _next._previous = self;
+        return self;
     }
     
     SetPrevious = function(_element) {
         _previous = _element;
         if (_previous) _previous._next = self;
+        return self;
     }
     
     RemoveContent = function(elements) {
@@ -90,6 +94,7 @@ function EmuCore(x, y, w, h) constructor {
             var thing = elements[i];
             ds_list_delete(_contents, ds_list_find_index(_contents, thing));
         }
+        return self;
     }
     
     GetHeight = function() {
@@ -101,6 +106,7 @@ function EmuCore(x, y, w, h) constructor {
         if (base_y == undefined) base_y = 0;
         processAdvancement();
         renderContents(x + base_x, y + base_y);
+        return self;
     }
     
     renderContents = function(at_x, at_y) {
@@ -140,6 +146,7 @@ function EmuCore(x, y, w, h) constructor {
     ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere
+        return self;
     }
     
     drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
@@ -185,6 +192,7 @@ function EmuCore(x, y, w, h) constructor {
     
     Activate = function() {
         _emu_active_element(self);
+        return self;
     }
     
     time_click_left = -1;
