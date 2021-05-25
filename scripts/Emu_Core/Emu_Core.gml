@@ -34,123 +34,123 @@ function EmuCore(x, y, w, h) constructor {
     self._previous = noone;
     self._element_spacing_y = 16;
     
-    AddContent = function(elements) {
+    static AddContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
             if (thing.y == undefined) {
-                var top = _contents[| ds_list_size(_contents) - 1];
+                var top = self.GetTop();
                 if (top) {
-                    thing.y = top.y + top.GetHeight() + _element_spacing_y;
+                    thing.y = top.y + top.GetHeight() + self._element_spacing_y;
                 } else {
-                    thing.y = _element_spacing_y;
+                    thing.y = self._element_spacing_y;
                 }
             }
-            ds_list_add(_contents, thing);
+            ds_list_add(self._contents, thing);
             thing.root = self;
         }
         return self;
     }
     
-    getTextX = function(_x) {
-        switch (alignment) {
-            case fa_left: return _x + offset;
-            case fa_center: return _x + width / 2;
-            case fa_right: return _x + width - offset;
+    static getTextX = function(_x) {
+        switch (self.alignment) {
+            case fa_left: return _x + self.offset;
+            case fa_center: return _x + self.width / 2;
+            case fa_right: return _x + self.width - self.offset;
         }
     }
     
-    getTextY = function(_y) {
-        switch (valignment) {
-            case fa_top: return _y + offset;
-            case fa_middle: return _y + height / 2;
-            case fa_bottom: return _y + height - offset;
+    static getTextY = function(_y) {
+        switch (self.valignment) {
+            case fa_top: return _y + self.offset;
+            case fa_middle: return _y + self.height / 2;
+            case fa_bottom: return _y + self.height - self.offset;
         }
     }
     
-    SetInteractive = function(_interactive) {
-        interactive = _interactive;
+    static SetInteractive = function(_interactive) {
+        self.interactive = _interactive;
         return self;
     }
     
-    SetNext = function(_element) {
-        _next = _element;
-        if (_next) _next._previous = self;
+    static SetNext = function(_element) {
+        self._next = _element;
+        if (self._next) self._next._previous = self;
         return self;
     }
     
-    SetPrevious = function(_element) {
-        _previous = _element;
-        if (_previous) _previous._next = self;
+    static SetPrevious = function(_element) {
+        self._previous = _element;
+        if (self._previous) self._previous._next = self;
         return self;
     }
     
-    RemoveContent = function(elements) {
+    static RemoveContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
-            ds_list_delete(_contents, ds_list_find_index(_contents, thing));
+            ds_list_delete(self._contents, ds_list_find_index(self._contents, thing));
         }
         return self;
     }
     
-    GetHeight = function() {
-        return height;
+    static GetHeight = function() {
+        return self.height;
     }
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         if (base_x == undefined) base_x = 0;
         if (base_y == undefined) base_y = 0;
-        processAdvancement();
-        renderContents(x + base_x, y + base_y);
+        self.processAdvancement();
+        self.renderContents(self.x + base_x, self.y + base_y);
         return self;
     }
     
-    renderContents = function(at_x, at_y) {
-        for (var i = 0; i < ds_list_size(_contents); i++) {
-            if (_contents[| i]) _contents[| i].Render(at_x, at_y);
+    static renderContents = function(at_x, at_y) {
+        for (var i = 0; i < ds_list_size(self._contents); i++) {
+            if (self._contents[| i]) self._contents[| i].Render(at_x, at_y);
         }
     }
     
-    processAdvancement = function() {
-        if (!isActiveElement()) return false;
-        if (!_override_tab && keyboard_check_pressed(vk_tab)) {
-            if (keyboard_check(vk_shift) && _previous) {
-                _previous.Activate();
+    static processAdvancement = function() {
+        if (!self.isActiveElement()) return false;
+        if (!self._override_tab && keyboard_check_pressed(vk_tab)) {
+            if (keyboard_check(vk_shift) && self._previous) {
+                self._previous.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
-            if (_next) {
-                _next.Activate();
+            if (self._next) {
+                self._next.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
         }
     }
     
-    Destroy = function() {
-        destroyContent();
+    static Destroy = function() {
+        self.destroyContent();
     }
     
-    destroyContent = function() {
-        if (isActiveElement()) _emu_active_element(undefined);
-        for (var i = 0; i < ds_list_size(_contents); i++) {
-            _contents[| i].Destroy();
+    static destroyContent = function() {
+        if (self.isActiveElement()) _emu_active_element(undefined);
+        for (var i = 0; i < ds_list_size(self._contents); i++) {
+            self._contents[| i].Destroy();
         }
-        ds_list_destroy(_contents);
+        ds_list_destroy(self._contents);
     }
     
-    ShowTooltip = function() {
+    static ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere
         return self;
     }
     
-    drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
+    static drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
         if (_xscale == undefined) _xscale = 1;
         if (_yscale == undefined) _yscale = 1;
         if (_color == undefined) _color = c_white;
@@ -158,11 +158,11 @@ function EmuCore(x, y, w, h) constructor {
         
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
-        var _s = sprite_get_width(sprite_checkers);
+        var _s = sprite_get_width(self.sprite_checkers);
         var _xcount = _w / _s / _xscale;
         var _ycount = _h / _s / _yscale;
         
-        draw_primitive_begin_texture(pr_trianglelist, sprite_get_texture(sprite_checkers, 0));
+        draw_primitive_begin_texture(pr_trianglelist, sprite_get_texture(self.sprite_checkers, 0));
         draw_vertex_texture_colour(_x, _y, 0, 0, _color, _alpha);
         draw_vertex_texture_colour(_x + _w, _y, _xcount, 0, _color, _alpha);
         draw_vertex_texture_colour(_x + _w, _y + _h, _xcount, _ycount, _color, _alpha);
@@ -174,8 +174,8 @@ function EmuCore(x, y, w, h) constructor {
         gpu_set_texrepeat(old_repeat);
     }
     
-    isActiveDialog = function() {
-        var top = EmuOverlay._contents[| ds_list_size(EmuOverlay._contents) - 1];
+    static isActiveDialog = function() {
+        var top = EmuOverlay.GetTop();
         if (!top) return true;
         
         var root = self.root;
@@ -187,101 +187,101 @@ function EmuCore(x, y, w, h) constructor {
         return (top == root);
     }
     
-    isActiveElement = function() {
+    static isActiveElement = function() {
         return EmuActiveElement == self;
     }
     
-    Activate = function() {
+    static Activate = function() {
         _emu_active_element(self);
         return self;
     }
     
-    time_click_left = -1;
-    time_click_left_last = -10000;
+    self.time_click_left = -1;
+    self.time_click_left_last = -10000;
     
-    GetInteractive = function() {
-        return enabled && interactive && isActiveDialog();
+    static GetInteractive = function() {
+        return self.enabled && self.interactive && self.isActiveDialog();
     }
     
     static GetTop = function() {
         return self._contents[| ds_list_size(self._contents) - 1];
     };
     
-    getMouseHover = function(x1, y1, x2, y2) {
-        return GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2 - 1, y2 - 1);
+    static getMouseHover = function(x1, y1, x2, y2) {
+        return self.GetInteractive() && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2 - 1, y2 - 1);
     }
     
-    getMousePressed = function(x1, y1, x2, y2) {
-        var click = (getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (isActiveElement() && keyboard_check_pressed(vk_space));
+    static getMousePressed = function(x1, y1, x2, y2) {
+        var click = (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (self.isActiveElement() && keyboard_check_pressed(vk_space));
         // In the event that clicking is polled more than once per frame, don't
         // register two clicks per frame
-        if (click && time_click_left != current_time) {
-            time_click_left_last = time_click_left;
-            time_click_left = current_time;
+        if (click && self.time_click_left != current_time) {
+            self.time_click_left_last = self.time_click_left;
+            self.time_click_left = current_time;
         }
         return click;
     }
     
-    getMouseDouble = function(x1, y1, x2, y2) {
-        return getMousePressed(x1, y1, x2, y2) && (current_time - time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
+    static getMouseDouble = function(x1, y1, x2, y2) {
+        return self.getMousePressed(x1, y1, x2, y2) && (current_time - self.time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
     }
     
-    getMouseHold = function(x1, y1, x2, y2) {
-        return (getMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (isActiveElement() && keyboard_check(vk_space));
+    static getMouseHold = function(x1, y1, x2, y2) {
+        return (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (self.isActiveElement() && keyboard_check(vk_space));
     }
     
-    getMouseHoldDuration = function(x1, y1, x2, y2) {
-        return getMouseHold(x1, y1, x2, y2) ? (current_time - time_click_left) : 0;
+    static getMouseHoldDuration = function(x1, y1, x2, y2) {
+        return self.getMouseHold(x1, y1, x2, y2) ? (current_time - self.time_click_left) : 0;
     }
     
-    getMouseReleased = function(x1, y1, x2, y2) {
-        return (getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (isActiveElement() && keyboard_check_released(vk_space));
+    static getMouseReleased = function(x1, y1, x2, y2) {
+        return (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (self.isActiveElement() && keyboard_check_released(vk_space));
     }
     
-    getMouseMiddlePressed = function(x1, y1, x2, y2) {
-        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+    static getMouseMiddlePressed = function(x1, y1, x2, y2) {
+        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
     }
     
-    getMouseMiddleReleased = function(x1, y1, x2, y2) {
-        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
+    static getMouseMiddleReleased = function(x1, y1, x2, y2) {
+        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
     }
     
-    GetMouseRightPressed = function(x1, y1, x2, y2) {
-        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
+    static GetMouseRightPressed = function(x1, y1, x2, y2) {
+        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
     }
     
-    getMouseRightReleased = function(x1, y1, x2, y2) {
-        return getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
+    static getMouseRightReleased = function(x1, y1, x2, y2) {
+        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
     }
 }
 
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
-    SetCallback = function(callback) {
+    static SetCallback = function(callback) {
         self.callback = method(self, callback);
     }
     
-    SetCallbackMiddle = function(callback) {
+    static SetCallbackMiddle = function(callback) {
         self.callback_middle = method(self, callback);
     }
     
-    SetCallbackRight = function(callback) {
+    static SetCallbackRight = function(callback) {
         self.callback_right = method(self, callback);
     }
     
-    SetCallbackDouble = function(callback) {
+    static SetCallbackDouble = function(callback) {
         self.callback_double = method(self, callback);
     }
     
-    SetValue = function(value) {
+    static SetValue = function(value) {
         self.value = value;
     }
     
-    SetCallback(callback);
-    SetValue(value);
+    self.SetCallback(callback);
+    self.SetValue(value);
     
-    SetCallbackMiddle(emu_null);
-    SetCallbackRight(emu_null);
-    SetCallbackDouble(emu_null);
+    self.SetCallbackMiddle(emu_null);
+    self.SetCallbackRight(emu_null);
+    self.SetCallbackDouble(emu_null);
 }
 
 function emu_null() { }
