@@ -13,7 +13,7 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     
     self.text = title;
     
-    self.active_shade = true;
+    self.active_shade = EMU_DIALOG_SHADE_ALPHA;
     self.close_button = true;
     
     self.changed = false;
@@ -103,8 +103,8 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
         var cby2 = y1 + sprite_get_height(sprite_close);
         
         // tint the screen behind the active dialog (but only once per frame)
-        if (active && !!active_shade && (drawn_dialog_shade_time != current_time)) {
-            draw_set_alpha(EMU_DIALOG_SHADE_ALPHA);
+        if (active && (drawn_dialog_shade_time != current_time)) {
+            draw_set_alpha(self.active_shade);
             draw_rectangle_colour(0, 0, window_get_width(), window_get_height(), EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, EMU_DIALOG_SHADE_COLOR, false);
             draw_set_alpha(1);
             drawn_dialog_shade_time = current_time;
