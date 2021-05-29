@@ -1,5 +1,5 @@
 // Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
     self.text = text;
     

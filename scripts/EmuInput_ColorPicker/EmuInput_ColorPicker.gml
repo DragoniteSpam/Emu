@@ -1,5 +1,5 @@
 // Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason

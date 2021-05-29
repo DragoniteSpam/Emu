@@ -1,5 +1,5 @@
 // Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuException(_message, _longMessage) constructor {
     message = _message;
     longMessage = _longMessage;

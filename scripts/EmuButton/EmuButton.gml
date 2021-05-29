@@ -1,5 +1,5 @@
 // Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, callback) constructor {
     self.text = text;
     self.alignment = fa_center;

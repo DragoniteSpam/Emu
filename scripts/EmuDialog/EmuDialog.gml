@@ -1,5 +1,5 @@
 // Emu (c) 2020 @dragonitespam
-// See the Github wiki for documentation: https://github.com/DragoniteSpam/Emu/wiki
+// See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     static drawn_dialog_shade_time = -1;
     
