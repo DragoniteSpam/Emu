@@ -36,7 +36,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
         var bx2 = bx + box_size / 2;
         var by2 = by + box_size / 2;
         var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
-        draw_sprite_ext(sprite_check_border, 1, bx, by, 1, 1, 0, color_back, 1);
+        draw_sprite_ext(sprite_check_border, 1, bx, by, 1, 1, 0, back_color, 1);
         draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, color_active, 1);
         draw_sprite_ext(sprite_check_border, 0, bx, by, 1, 1, 0, color, 1);
         
