@@ -507,7 +507,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"tree4.d3d","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2.3.2.560",
+    "IDEVersion": "23.1.1.306",
   },
   "resourceVersion": "1.4",
   "name": "Emu",
