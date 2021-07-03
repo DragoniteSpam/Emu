@@ -207,7 +207,7 @@ function EmuCore(x, y, w, h) constructor {
         return self._contents[| ds_list_size(self._contents) - 1];
     };
     
-    static MouseIsOver = function() {
+    static GetMouseOver = function() {
         return point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), self.x, self.y, self.x + self.width, self.y + self.height);
     };
     
