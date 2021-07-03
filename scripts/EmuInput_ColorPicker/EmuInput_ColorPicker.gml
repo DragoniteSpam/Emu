@@ -319,12 +319,12 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
                     dialog.el_picker = new controls(32, EMU_AUTO, ew, eh, value, _allow_alpha, function() {
-                        root.base_color_element.value = value | (floor(alpha * 0xff) << 24);
+                        root.base_color_element.value = value | (self.root.base_color_element._allow_alpha ? (floor(alpha * 0xff) << 24) : 0);
                         root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
                     });
                     
-                    dialog.el_picker.alpha = ((value & 0xff000000) >> 24) / 0xff;
+                    dialog.el_picker.alpha = self._allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1;
                     dialog.el_picker.axis_value = (value & 0x0000ff) / 0xff;
                     dialog.el_picker.axis_w = ((value & 0x00ff00) >> 8) / 0xff;
                     dialog.el_picker.axis_h = ((value & 0xff0000) >> 16) / 0xff;
