@@ -7,9 +7,9 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     self.valignment = fa_middle;
     self.sprite_nineslice = spr_emu_nineslice_tab;
     
-    self.color_hover = EMU_COLOR_HOVER;
-    self.color_back = EMU_COLOR_BACK;
-    self.color_disabled = EMU_COLOR_DISABLED;
+    self.color_hover = function() { return EMU_COLOR_HOVER };
+    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED };
     
     self._row = 0;
     self._index = 0;
@@ -49,9 +49,9 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
             var index = 2;
         }
         
-        var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
+        var back_color = getMouseHover(hx1, hy1, hx2, hy2) ? self.color_hover() : (GetInteractive() ? self.color_back() : self.color_disabled());
         draw_sprite_stretched_ext(sprite_nineslice, 1, hx1, hy1, hx2 - hx1, hy2 - hy1, back_color, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, index, hx1, hy1, hx2 - hx1, hy2 - hy1, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, index, hx1, hy1, hx2 - hx1, hy2 - hy1, self.color(), 1);
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(_header_width, _header_height);
         scribble_draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)), text);

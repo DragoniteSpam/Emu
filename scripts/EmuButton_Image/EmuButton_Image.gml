@@ -11,9 +11,9 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     self.valignment = fa_middle;
     self.text = "";
     
-    self.color_hover = EMU_COLOR_HOVER;
-    self.color_back = EMU_COLOR_BACK;
-    self.color_disabled = EMU_COLOR_DISABLED;
+    self.color_hover = function() { return EMU_COLOR_HOVER };
+    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED };
     
     self.checker_background = false;
     
@@ -39,7 +39,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         
         surface_set_target(_surface);
         draw_clear_alpha(c_black, 0);
-        draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, width, height, color_back, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, width, height, self.color_back(), 1);
         if (sprite_exists(sprite)) {
             if (checker_background) drawCheckerbox(0, 0, width - 1, height - 1);
             if (allow_shrink) {
@@ -65,9 +65,9 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
             callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
+        var back_color = getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (GetInteractive() ? self.color_back() : self.color_disabled());
         draw_surface_ext(_surface, x1, y1, 1, 1, 0, back_color, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, color, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
     }
     
     Destroy = function() {

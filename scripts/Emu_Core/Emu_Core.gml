@@ -12,7 +12,7 @@ function EmuCore(x, y, w, h) constructor {
     self.interactive = true;
     self.outline = true;             // not used in all element types
     self.tooltip = "";               // not used by all element types
-    self.color = EMU_COLOR_DEFAULT;
+    self.color = function() { return EMU_COLOR_DEFAULT };
     
     self.active_element = noone;
     

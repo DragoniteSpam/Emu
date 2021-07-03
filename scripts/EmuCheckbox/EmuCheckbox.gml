@@ -6,10 +6,10 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     self.box_size = 20;
     self.sprite_check = spr_emu_checkbox;
     self.sprite_check_border = spr_emu_checkbox_border;
-    self.color_active = EMU_COLOR_RADIO_ACTIVE;
-    self.color_hover = EMU_COLOR_HOVER
-    self.color_disabled = EMU_COLOR_DISABLED;
-    self.color_back = EMU_COLOR_BACK;
+    self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE };
+    self.color_hover = function() { return EMU_COLOR_HOVER };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED };
+    self.color_back = function() { return EMU_COLOR_BACK };
     
     Render = function(base_x, base_y) {
         processAdvancement();
@@ -35,10 +35,10 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
         var by1 = by - box_size / 2;
         var bx2 = bx + box_size / 2;
         var by2 = by + box_size / 2;
-        var back_color = getMouseHover(x1, y1, x2, y2) ? color_hover : (GetInteractive() ? color_back : color_disabled);
+        var back_color = self.getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (self.GetInteractive() ? self.color_back() : self.color_disabled());
         draw_sprite_ext(sprite_check_border, 1, bx, by, 1, 1, 0, back_color, 1);
-        draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, color_active, 1);
-        draw_sprite_ext(sprite_check_border, 0, bx, by, 1, 1, 0, color, 1);
+        draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, self.color_active(), 1);
+        draw_sprite_ext(sprite_check_border, 0, bx, by, 1, 1, 0, self.color(), 1);
         
         scribble_set_box_align(alignment, valignment);
         scribble_set_wrap(width, height);
