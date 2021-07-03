@@ -33,30 +33,34 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self._entries = ds_list_create();
 	self._dragging = false;
     
-    SetList = function(_list) {
+    static SetList = function(_list) {
         if (_own_entries) {
             ds_list_destroy(_entries);
         }
         _entries = _list;
         _own_entries = false;
         ClearSelection();
+        return self;
     }
     
-    SetEntryTypes = function(_type) {
+    static SetEntryTypes = function(_type) {
         entries_are = _type;
+        return self;
     }
     
-    SetMultiSelect = function(_multi_select, _auto, _toggle) {
+    static SetMultiSelect = function(_multi_select, _auto, _toggle) {
         allow_multi_select = _multi_select;
         auto_multi_select = _auto;
         select_toggle = _toggle;
+        return self;
     }
     
-    SetVacantText = function(_text) {
+    static SetVacantText = function(_text) {
         text_vacant = _text;
+        return self;
     }
     
-    AddEntries = function(elements) {
+    static AddEntries = function(elements) {
         if (!_own_entries) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its _entries.");
         }
@@ -65,39 +69,42 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         for (var i = 0; i < array_length(elements); i++) {
             ds_list_add(_entries, elements[i]);
         }
+        return self;
     }
     
-    Clear = function() {
+    static Clear = function() {
         if (_own_entries) {
             ds_list_clear(_entries);
         } else {
             throw new EmuException("Trying to clear a list owned by someone else", "Please do not clear a list using an external list for its _entries.");
         }
+        return self;
     }
     
-    GetHeight = function() {
+    static GetHeight = function() {
         return height + element_height * slots;
     }
     
-    GetSelected = function(list_index) {
+    static GetSelected = function(list_index) {
         return variable_struct_exists(_selected_entries, string(list_index));
     }
     
-    getListColors = function(list_index) {
+    static getListColors = function(list_index) {
         return EMU_COLOR_LIST_TEXT;
     }
     
-    GetSelection = function() {
+    static GetSelection = function() {
         if (variable_struct_names_count(_selected_entries) == 0) return -1;
         return _selected_entries[$ "first"];
     }
     
-    ClearSelection = function() {
+    static ClearSelection = function() {
         _selected_entries = { };
         callback();
+        return self;
     }
     
-    Select = function(_list_index, _set_index) {
+    static Select = function(_list_index, _set_index) {
         if (_set_index == undefined) _set_index = false;
         if (!variable_struct_exists(_selected_entries, "first")) _selected_entries[$ "first"] = _list_index;
         _selected_entries[$ "last"] = _list_index;
@@ -106,14 +113,16 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
             _index = max(0, min(_list_index, ds_list_size(_entries) - slots));
         }
         callback();
+        return self;
     }
     
-    Deselect = function(_list_index) {
+    static Deselect = function(_list_index) {
         variable_struct_remove(_selected_entries, _list_index);
         callback();
+        return self;
     }
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         processAdvancement();
         
         var x1 = x + base_x;
@@ -365,7 +374,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         #endregion
     }
     
-    Destroy = function() {
+    static Destroy = function() {
         destroyContent();
         if (_own_entries) ds_list_destroy(_entries);
         if (_surface != -1) surface_free(_surface);

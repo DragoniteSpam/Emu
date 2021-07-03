@@ -34,10 +34,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     SetMultiLine = function(multi_line) {
         self._multi_line = multi_line;
+        return self;
     }
     
     SetRequireConfirm = function(require) {
         self._require_enter = require;
+        return self;
     }
     
     SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
@@ -45,6 +47,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         self._value_y1 = vy1;
         self._value_x2 = vx2;
         self._value_y2 = vy2;
+        return self;
     }
     
     SetValue = function(value) {
@@ -52,11 +55,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         if (isActiveElement()) {
             keyboard_string = self.value;
         }
+        return self;
     }
     
     SetRealNumberBounds = function(lower, upper) {
         self._value_lower = min(lower, upper);
         self._value_upper = max(lower, upper);
+        return self;
     }
     
     Render = function(base_x, base_y) {

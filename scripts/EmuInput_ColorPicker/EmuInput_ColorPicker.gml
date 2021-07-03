@@ -18,6 +18,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     SetAlphaUsed = function(_alpha_used) {
         _allow_alpha = _alpha_used;
+        return self;
     }
     
     SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
@@ -25,6 +26,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         _value_y1 = _vy1;
         _value_x2 = _vx2;
         _value_y2 = _vy2;
+        return self;
     }
     
     Render = function(base_x, base_y) {

@@ -3,14 +3,17 @@
 function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x, y, w, h) constructor {
     SetRender = function(render) {
         callback_render = method(self, render);
+        return self;
     }
     
     SetStep = function(step) {
         callback_step = method(self, step);
+        return self;
     }
     
     SetRecreate = function(recreate) {
         callback_recreate = method(self, recreate);
+        return self;
     }
     
     SetRender(render);
@@ -19,6 +22,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
     
     callback_recreate = function() {
         draw_clear(c_black);
+        return self;
     }
     
     self._surface = surface_create(self.width, self.height);

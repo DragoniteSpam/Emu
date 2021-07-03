@@ -71,6 +71,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     
     RequestActivate = function() {
         root.RequestActivateTab(self);
+        return self;
     }
     
     GetInteractive = function() {

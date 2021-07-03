@@ -37,6 +37,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             }
         }
         arrangeRow(row);
+        return self;
     }
     
     arrangeRow = function(row) {
@@ -75,6 +76,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
     
     RequestActivateTab = function(tab) {
         _active_tab_request = tab;
+        return self;
     }
     
     Render = function(base_x, base_y) {

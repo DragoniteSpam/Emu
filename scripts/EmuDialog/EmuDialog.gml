@@ -30,6 +30,7 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     
     Dispose = function() {
         _dispose = true;
+        return self;
     }
     
     Close = function() {
@@ -38,6 +39,7 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
             top.Destroy();
             ds_list_delete(EmuOverlay._contents, ds_list_size(EmuOverlay._contents) - 1);
         } until (top == self);
+        return self;
     }
     
     GetHeight = function() {
