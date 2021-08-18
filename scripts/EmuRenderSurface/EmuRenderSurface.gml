@@ -46,8 +46,8 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
         var y1 = y + base_y;
         var x2 = x1 + width;
         var y2 = y1 + height;
-        var mx = window_mouse_get_x() - x1;
-        var my = window_mouse_get_y() - y1;
+        var mx = device_mouse_x_to_gui(0) - x1;
+        var my = device_mouse_y_to_gui(0) - y1;
         
         if (!surface_exists(_surface)) {
             _surface = surface_create(width, height);

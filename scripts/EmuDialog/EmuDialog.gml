@@ -72,8 +72,8 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
                     }
                 } else {
                     if (getMousePressed(x1, y1, x2, y1 + _header_height)) {
-                        _click_x = window_mouse_get_x();
-                        _click_y = window_mouse_get_y();
+                        _click_x = device_mouse_x_to_gui(0);
+                        _click_y = device_mouse_y_to_gui(0);
                     }
                     if (getMouseReleased(x1, y1, x2, y1 + _header_height)) {
                         _click_x = -1;
@@ -83,10 +83,10 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
             }
             
             if (getMouseHold(0, 0, window_get_width(), window_get_height()) && _click_x > -1) {
-                x += (window_mouse_get_x() - _click_x);
-                y += (window_mouse_get_y() - _click_y);
-                _click_x = window_mouse_get_x();
-                _click_y = window_mouse_get_y();
+                x += (device_mouse_x_to_gui(0) - _click_x);
+                y += (device_mouse_y_to_gui(0) - _click_y);
+                _click_x = device_mouse_x_to_gui(0);
+                _click_y = device_mouse_y_to_gui(0);
             }
         }
         
