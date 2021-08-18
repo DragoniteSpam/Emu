@@ -216,7 +216,7 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static getMousePressed = function(x1, y1, x2, y2) {
-        var click = (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_left)) || (self.isActiveElement() && keyboard_check_pressed(vk_space));
+        var click = (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_left)) || (self.isActiveElement() && keyboard_check_pressed(vk_space));
         // In the event that clicking is polled more than once per frame, don't
         // register two clicks per frame
         if (click && self.time_click_left != current_time) {
@@ -231,7 +231,7 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static getMouseHold = function(x1, y1, x2, y2) {
-        return (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button(mb_left)) || (self.isActiveElement() && keyboard_check(vk_space));
+        return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button(0, mb_left)) || (self.isActiveElement() && keyboard_check(vk_space));
     }
     
     static getMouseHoldDuration = function(x1, y1, x2, y2) {
@@ -239,23 +239,23 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static getMouseReleased = function(x1, y1, x2, y2) {
-        return (self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_left)) || (self.isActiveElement() && keyboard_check_released(vk_space));
+        return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_left)) || (self.isActiveElement() && keyboard_check_released(vk_space));
     }
     
     static getMouseMiddlePressed = function(x1, y1, x2, y2) {
-        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_middle);
+        return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_middle);
     }
     
     static getMouseMiddleReleased = function(x1, y1, x2, y2) {
-        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_middle);
+        return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_middle);
     }
     
     static GetMouseRightPressed = function(x1, y1, x2, y2) {
-        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_pressed(mb_right);
+        return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_right);
     }
     
     static getMouseRightReleased = function(x1, y1, x2, y2) {
-        return self.getMouseHover(x1, y1, x2, y2) && mouse_check_button_released(mb_right);
+        return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_right);
     }
 }
 
