@@ -13,6 +13,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         }
         
         AddContent(elements);
+        return self;
     }
     
     static SetColumns = function(_column_capacity, _column_width) {
@@ -24,6 +25,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
             option.width = _column_width;
         }
         self.width = (ds_list_size(self._contents) div _column_capacity) * _column_width;
+        return self;
     }
     
     static GetHeight = function() {
