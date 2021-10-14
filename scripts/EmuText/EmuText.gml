@@ -3,8 +3,21 @@
 function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
     self.text = text;
     
+    self.update_text = undefined;
+    
+    static SetTextUpdate = function(f) {
+        if (f) {
+            self.update_text = method(self, f);
+        } else {
+            self.update_text = undefined;
+        }
+        return self;
+    };
+    
     Render = function(base_x, base_y) {
         processAdvancement();
+        
+        if (self.update_text) self.text = self.update_text();
         
         var x1 = x + base_x;
         var y1 = y + base_y;
