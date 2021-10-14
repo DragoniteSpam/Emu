@@ -50,6 +50,11 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     }
     
+    static SetInputType = function(input_type) {
+        self._value_type = input_type;
+        return self;
+    };
+    
     SetValue = function(value) {
         self.value = string(value);
         if (isActiveElement()) {
