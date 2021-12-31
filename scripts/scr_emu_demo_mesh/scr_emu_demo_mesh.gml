@@ -84,13 +84,9 @@ function EmuDemoMeshScene() constructor {
     vertex_format_begin();
     vertex_format_add_position_3d();
     vertex_format_add_normal();
+    vertex_format_add_texcoord();
     vertex_format_add_color();
     format = vertex_format_end();
-    
-    vertex_format_begin();
-    vertex_format_add_position_3d();
-    vertex_format_add_texcoord();
-    format_texture = vertex_format_end();
     
     mesh_list = ds_list_create();
     
@@ -143,10 +139,10 @@ function EmuDemoMeshScene() constructor {
         ds_list_add(mesh_list, mesh);
     }
     
-    birb = new MeshTexturedInstance("emu\\birb.d3d", format_texture, 0, 16, 0, "");
+    birb = new MeshTexturedInstance("emu\\birb.d3d", format, 0, 16, 0, "");
     birb.texture_sprite = spr_emu_demo_birb_blue;
     
-    skybox = new MeshTexturedInstance("emu\\skybox.d3d", format_texture, 0, 0, 0, "emu\\skybox.png");
+    skybox = new MeshTexturedInstance("emu\\skybox.d3d", format, 0, 0, 0, "emu\\skybox.png");
     
     Control = function() {
         camera_angle += 0.3;
@@ -165,7 +161,7 @@ function EmuDemoMeshScene() constructor {
         camera_set_proj_mat(camera, matrix_build_projection_perspective_fov(-60, 4 / 3, 1, 1000));
         camera_apply(camera);
         draw_clear(c_black);
-        shader_set(shd_emu_demo_mesh);
+        shader_set(shd_emu_demo);
         gpu_set_cullmode(cull_clockwise);
         gpu_set_ztestenable(false);
         gpu_set_zwriteenable(false);
@@ -178,13 +174,10 @@ function EmuDemoMeshScene() constructor {
         
         gpu_set_ztestenable(true);
         gpu_set_zwriteenable(true);
-        shader_set(shd_emu_demo_lighting);
         
         for (var i = 0; i < ds_list_size(mesh_list); i++) {
             mesh_list[| i].Render();
         }
-        
-        shader_set(shd_emu_demo_mesh);
         
         birb.Render();
         
