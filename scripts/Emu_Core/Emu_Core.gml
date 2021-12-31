@@ -11,6 +11,10 @@ function EmuCore(x, y, w, h) constructor {
     self.height = h;
     /// @ignore
     self.root = undefined;
+    /// @ignore
+    self.id = "";
+    /// @ignore
+    self.child_ids = { };
     
     /// @ignore
     self.enabled = true;
@@ -103,6 +107,20 @@ function EmuCore(x, y, w, h) constructor {
         if (self.previous) self.previous.next = self;
         return self;
     };
+    
+    static SetID = function(id) {
+        id = string(id);
+        if (self.root) {
+            if (self.root.child_ids[$ self.id] == self) {
+                variable_struct_remove(self.root.child_ids, self.id);
+            }
+            if (id != "") {
+                self.root.child_ids[$ id] = self;
+            }
+        }
+        self.id = id;
+        return self;
+    };
     #endregion
     
     #region accessors
@@ -131,6 +149,8 @@ function EmuCore(x, y, w, h) constructor {
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
+            thing.root = self;
+            
             if (thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
@@ -146,8 +166,13 @@ function EmuCore(x, y, w, h) constructor {
                     thing.y = self.element_spacing_y;
                 }
             }
+            
+            if (thing.id != "") {
+                self.child_ids[$ thing.id] = thing;
+            }
+            
             array_push(self.contents, thing);
-            thing.root = self;
+            
         }
         return self;
     };
@@ -159,7 +184,11 @@ function EmuCore(x, y, w, h) constructor {
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
             array_delete(self.contents, emu_array_search(self.contents, thing), 1);
+            if (self.child_ids[$ thing.id] == thing) {
+                variable_struct_remove(self.child_ids, thing.id);
+            }
         }
+        _emu_active_element(pointer_null);
         return self;
     };
     
