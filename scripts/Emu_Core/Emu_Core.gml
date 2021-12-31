@@ -163,10 +163,8 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static Render = function(base_x, base_y) {
+    static Render = function(base_x = 0, base_y = 0) {
         self.gc.Clean();
-        if (base_x == undefined) base_x = 0;
-        if (base_y == undefined) base_y = 0;
         self.processAdvancement();
         self.renderContents(self.x + base_x, self.y + base_y);
         return self;

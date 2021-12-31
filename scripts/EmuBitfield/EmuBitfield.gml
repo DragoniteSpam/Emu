@@ -69,9 +69,9 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     };
     
     static GetHeight = function() {
-        var first = contents[0];
-        var last = contents[array_length(contents) - 1];
-        return (first == undefined) ? height : (last.y + last.height - first.y);
+        var first = self.contents[0];
+        var last = self.contents[array_length(self.contents) - 1];
+        return (first == undefined) ? self.height : (last.y + last.height - first.y);
     };
     
     static Render = function(base_x, base_y) {
