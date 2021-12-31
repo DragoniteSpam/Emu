@@ -203,6 +203,7 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static GetTop = function() {
+        if (array_length(self._contents) == 0) return undefined;
         return self._contents[array_length(self._contents) - 1];
     };
     
