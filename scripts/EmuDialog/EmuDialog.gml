@@ -7,33 +7,71 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     _emu_active_element(undefined);
     
     var size = array_length(EmuOverlay.contents);
-    x = 64 * (size + 1);
-    y = 64 * (size + 1);
+    /// @ignore
+    self.x = 64 * (size + 1);
+    /// @ignore
+    self.y = 64 * (size + 1);
     
+    /// @ignore
     self.text = title;
     
+    /// @ignore
     self.active_shade = EMU_DIALOG_SHADE_ALPHA;
+    /// @ignore
     self.close_button = true;
     
+    /// @ignore
     self.changed = false;
+    /// @ignore
     self.sprite_close = spr_emu_close;
+    /// @ignore
     self.color_header = function() { return EMU_COLOR_WINDOWSKIN };
+    /// @ignore
     self.color_back = function() { return EMU_COLOR_BACK };
     
+    /// @ignore
     self.header_height = 32;
+    /// @ignore
     self.click_x = -1;
+    /// @ignore
     self.click_y = -1;
+    /// @ignore
     self.disposed = false;
     
     EmuOverlay.AddContent(self);
     
+    #region mutators
+    static SetCloseButton = function(show) {
+        self.close_button = show;
+        return self;
+    };
+    
+    static SetSpriteClose = function(sprite) {
+        self.sprite_close = sprite;
+        return self;
+    };
+    
+    static SetActiveShade = function(shade) {
+        self.active_shade = shade;
+        return self;
+    };
+    
+    static SetTitle = function(text) {
+        self.text = text;
+        return self;
+    };
+    #endregion
+    
+    #region accessors
+    static GetHeight = function() {
+        return height + header_height;
+    };
+    #endregion
+    
+    #region public methods
     static Close = function() {
         // this needs to be done after the entire dialog box is finished rendering
         disposed = true;
-    };
-    
-    static GetHeight = function() {
-        return height + header_height;
     };
     
     static Render = function() {
@@ -126,11 +164,14 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
             callback();
         }
     };
+    #endregion
     
+    #region private methods
     // Override this function for dialogs
     static isActiveDialog = function() {
         return (EmuOverlay.contents[array_length(EmuOverlay.contents) - 1] == self);
     };
+    #endregion
 }
 
 function emu_dialog_close_auto() {
