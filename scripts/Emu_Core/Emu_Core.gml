@@ -268,6 +268,17 @@ function EmuCore(x, y, w, h) constructor {
         }
         return { surface: surface, changed: false };
     };
+    
+    static gc = new (function() constructor {
+        self.frequency = 250;               // ms between cleanings
+        self.batch_size = 10;               // items per cleanings
+        
+        self.last_clean_time = current_time;
+        static Clean = function() {
+            if (current_time < self.last_clean_time + self.frequency) return;
+            self.last_clean_time = current_time;
+        };
+    })();
 }
 
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
