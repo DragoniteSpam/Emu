@@ -1,73 +1,12 @@
 function EmuDemoMeshScene() constructor {
-    MeshInstance = function(_filename, _format, _x, _y, _z) constructor {
-        model = vertex_create_buffer();
-        vertex_begin(model, _format);
-        
-        var file = file_text_open_read(_filename);
-        file_text_read_real(file);
-        var n = file_text_read_real(file);
-        file_text_readln(file);
-        
-        var line = array_create(10, 0);
-        
-        for (var i = 0; i < n; i++){
-        	for (var j = 0; j < 11; j++){
-        		line[j] = file_text_read_real(file);
-        	}
-    	    
-        	if (line[0] == 9) {
-        		vertex_position_3d(model, line[1], line[2], line[3]);
-                vertex_normal(model, line[4], line[5], line[6]);
-                vertex_color(model, line[9], line[10]);
-        	}
-        }
-        
-        file_text_close(file);
-        vertex_end(model);
-        vertex_freeze(model);
-        
-        position = { x: _x, y: _y, z: _z };
-        rotation = { x: 0, y: 0, z: 0 };
-        scale = { x: 1, y: 1, z: 1 };
-        
-        Render = function() {
-            matrix_set(matrix_world, matrix_build(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z));
-            vertex_submit(model, pr_trianglelist, -1);
-            matrix_set(matrix_world, matrix_build_identity());
-        };
-    }
-    
-    MeshTexturedInstance = function(_filename, _format, _x, _y, _z, _texturefile) constructor {
-        model = vertex_create_buffer();
-        vertex_begin(model, _format);
-        
-        var file = file_text_open_read(_filename);
-        file_text_read_real(file);
-        var n = file_text_read_real(file);
-        file_text_readln(file);
-        
-        var line = array_create(10, 0);
-        
-        for (var i = 0; i < n; i++){
-        	for (var j = 0; j < 11; j++){
-        		line[j] = file_text_read_real(file);
-        	}
-    	    
-        	if (line[0] == 9) {
-        		vertex_position_3d(model, line[1], line[2], line[3]);
-                vertex_texcoord(model, line[7], line[8]);
-        	}
-        }
-        
-        file_text_close(file);
-        vertex_end(model);
-        vertex_freeze(model);
+    MeshInstance = function(_filename, _format, _x, _y, _z, _texturefile = "") constructor {
+        model = scr_emu_demo_load_vbuff(_filename, _format);
+        own_textue = false;
+        texture = -1;
         
         if (file_exists(_texturefile)) {
             own_texture = true;
-            texture_sprite = sprite_add(_texturefile, 0, false, false, 0, 0);
-        } else {
-            own_textrue = false;
+            texture = sprite_get_texture(sprite_add(_texturefile, 0, false, false, 0, 0), 0);
         }
         
         position = { x: _x, y: _y, z: _z };
@@ -76,7 +15,7 @@ function EmuDemoMeshScene() constructor {
         
         Render = function() {
             matrix_set(matrix_world, matrix_build(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z));
-            vertex_submit(model, pr_trianglelist, sprite_get_texture(texture_sprite, 0));
+            vertex_submit(model, pr_trianglelist, texture);
             matrix_set(matrix_world, matrix_build_identity());
         };
     }
@@ -99,17 +38,17 @@ function EmuDemoMeshScene() constructor {
     };
     
     ds_list_add(mesh_list,
-        new MeshInstance("emu\\floor.d3d", format, 0, 0, 0),
-        new MeshInstance("emu\\campfire.d3d", format, 20, 20, 0),
-        new MeshInstance("emu\\logstack.d3d", format, 20, 20, 0),
-        new MeshInstance("emu\\tent.d3d", format, -20, -20, 0),
-        new MeshInstance("emu\\logstackbig.d3d", format, 0, -20, 0),
+        new MeshInstance("emu\\floor.vbuff", format, 0, 0, 0),
+        new MeshInstance("emu\\campfire.vbuff", format, 20, 20, 0),
+        new MeshInstance("emu\\logstack.vbuff", format, 20, 20, 0),
+        new MeshInstance("emu\\tent.vbuff", format, -20, -20, 0),
+        new MeshInstance("emu\\logstackbig.vbuff", format, 0, -20, 0),
     );
     
     repeat (32) {
         var dist = random_range(80, 200);
         var angle = random(360);
-        var mesh = new MeshInstance("emu\\tree" + string(irandom(4)) + ".d3d", format, dist * dcos(angle), -dist * dsin(angle), 0);
+        var mesh = new MeshInstance("emu\\tree" + string(irandom(4)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0);
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -120,7 +59,7 @@ function EmuDemoMeshScene() constructor {
     repeat (6) {
         var dist = random_range(40, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu\\rock" + string(irandom(3)) + ".d3d", format, dist * dcos(angle), -dist * dsin(angle), 0));
+        ds_list_add(mesh_list, new MeshInstance("emu\\rock" + string(irandom(3)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0));
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -131,7 +70,7 @@ function EmuDemoMeshScene() constructor {
     repeat (64) {
         var dist = random_range(36, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu\\plant" + string(irandom(7)) + ".d3d", format, dist * dcos(angle), -dist * dsin(angle), 0));
+        ds_list_add(mesh_list, new MeshInstance("emu\\plant" + string(irandom(7)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0));
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -139,10 +78,10 @@ function EmuDemoMeshScene() constructor {
         ds_list_add(mesh_list, mesh);
     }
     
-    birb = new MeshTexturedInstance("emu\\birb.d3d", format, 0, 16, 0, "");
+    birb = new MeshInstance("emu\\birb.vbuff", format, 0, 16, 0);
     birb.texture_sprite = spr_emu_demo_birb_blue;
     
-    skybox = new MeshTexturedInstance("emu\\skybox.d3d", format, 0, 0, 0, "emu\\skybox.png");
+    skybox = new MeshInstance("emu\\skybox.vbuff", format, 0, 0, 0, "emu\\skybox.png");
     
     Control = function() {
         camera_angle += 0.3;
