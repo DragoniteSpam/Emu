@@ -30,7 +30,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self._value_lower = 0;
     self._value_upper = 100;
     
-    self._surface = surface_create(self._value_x2 - self._value_x1, self._value_y2 - self._value_y1);
+    self._surface = self.surfaceVerify(-1, self._value_x2 - self._value_x1, self._value_y2 - self._value_y1).surface;
     
     SetMultiLine = function(multi_line) {
         self._multi_line = multi_line;
@@ -113,13 +113,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var spacing = 12;
         
         #region input drawing
-        if (surface_exists(_surface) && (surface_get_width(_surface) != ww || surface_get_height(_surface) != hh)) {
-            surface_free(_surface);
-        }
-
-        if (!surface_exists(_surface)) {
-            _surface = surface_create(ww, hh);
-        }
+        self._surface = self.surfaceVerify(self._surface, ww, hh).surface;
 
         surface_set_target(_surface);
         surface_set_target(_surface);

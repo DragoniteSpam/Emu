@@ -165,13 +165,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         #endregion
         
         #region list drawing
-        if (surface_exists(_surface) && (surface_get_width(_surface) != ww || surface_get_height(_surface) != hh)) {
-            surface_free(_surface);
-        }
-        
-        if (!surface_exists(_surface)) {
-            _surface = surface_create(ww, hh);
-        }
+        self._surface = self.surfaceVerify(self._surface, ww, hh).surface;
         
         surface_set_target(_surface);
         draw_clear_alpha(GetInteractive() ? col_back : col_disabled, 1);

@@ -29,13 +29,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         var y2 = y1 + height;
         
         #region draw the image to the _surface
-        if (surface_exists(_surface) && (surface_get_width(_surface) != width || surface_get_height(_surface) != height)) {
-            surface_free(_surface);
-        }
-        
-        if (!surface_exists(_surface)) {
-            _surface = surface_create(width, height);
-        }
+        self._surface = self.surfaceVerify(self._surface, self.width, self.height).surface;
         
         surface_set_target(_surface);
         draw_clear_alpha(c_black, 0);

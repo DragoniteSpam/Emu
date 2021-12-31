@@ -25,7 +25,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
         return self;
     }
     
-    self._surface = surface_create(self.width, self.height);
+    self._surface = self.surfaceVerify(-1, self.width, self.height).surface;
     surface_set_target(self._surface);
     draw_clear(c_black);
     method(self, create)();
@@ -49,9 +49,11 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
         var mx = device_mouse_x_to_gui(0) - x1;
         var my = device_mouse_y_to_gui(0) - y1;
         
-        if (!surface_exists(_surface)) {
-            _surface = surface_create(width, height);
-            surface_set_target(_surface);
+        var verify = self.surfaceVerify(self._surface, self.width, self.height);
+        self._surface = verify.surface;
+        
+        if (verify.changed) {
+            surface_set_target(self._surface);
             callback_recreate();
             surface_reset_target();
         }
