@@ -30,6 +30,8 @@
 #macro EMU_DEFAULT_FONT                 "fnt_emu_default"
 #endregion
 
+scribble_font_set_default(EMU_DEFAULT_FONT);
+
 #region macros which it is not very useful to touch
 #macro EMU_AUTO                         undefined
 #macro EmuOverlay                       (_emu_get_overlay())
