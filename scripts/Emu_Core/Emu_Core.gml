@@ -259,12 +259,24 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static surfaceVerify = function(surface, width, height) {
+        static gc_ref = function(ref, surface) constructor {
+            self.ref = ref;
+            self.surface = surface;
+            
+            static Clean = function() {
+                if (surface_exists(self.surface)) surface_free(self.surface);
+            };
+        };
         if (!surface_exists(surface)) {
-            return { surface: surface_create(width, height), changed: true };
+            var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            gc[$ string(ptr(ref))] = ref;
+            return { surface: ref.surface, changed: true };
         }
         if (surface_get_width(surface) != width || surface_get_height(surface) != height) {
             surface_free(surface);
-            return { surface: surface_create(width, height), changed: true };
+            var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            gc[$ string(ptr(ref))] = ref;
+            return { surface: ref.surface, changed: true };
         }
         return { surface: surface, changed: false };
     };
@@ -273,10 +285,23 @@ function EmuCore(x, y, w, h) constructor {
         self.frequency = 250;               // ms between cleanings
         self.batch_size = 10;               // items per cleanings
         
+        self.refs = { };
+        
         self.last_clean_time = current_time;
         static Clean = function() {
             if (current_time < self.last_clean_time + self.frequency) return;
             self.last_clean_time = current_time;
+            
+            var cleaned = 0;
+            var keys = variable_struct_get_names(self.refs);
+            for (var i = 0, n = array_length(keys); i < n; i++) {
+                var ref = self.refs[$ keys[i]];
+                if (!weak_ref_alive(ref.ref)) {
+                    ref.Clean();
+                    variable_struct_remove(self.refs, keys[i]);
+                    if (++cleaned >= self.batch_size) break;
+                }
+            }
         };
     })();
 }
