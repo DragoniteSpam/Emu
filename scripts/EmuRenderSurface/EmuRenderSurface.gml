@@ -40,6 +40,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
     }
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;

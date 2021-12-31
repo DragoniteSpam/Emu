@@ -10,6 +10,7 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
     self.color_disabled = function() { return EMU_COLOR_DISABLED };
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;

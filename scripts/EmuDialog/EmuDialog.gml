@@ -47,6 +47,7 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     }
     
     Render = function() {
+        self.gc.Clean();
         var x1 = x;
         var y1 = y;
         var x2 = x1 + width;

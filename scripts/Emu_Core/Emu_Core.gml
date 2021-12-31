@@ -103,6 +103,7 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static Render = function(base_x, base_y) {
+        self.gc.Clean();
         if (base_x == undefined) base_x = 0;
         if (base_y == undefined) base_y = 0;
         self.processAdvancement();
@@ -282,7 +283,7 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static gc = new (function() constructor {
-        self.frequency = 250;               // ms between cleanings
+        self.frequency = 500;               // ms between cleanings
         self.batch_size = 10;               // items per cleanings
         
         self.refs = { };

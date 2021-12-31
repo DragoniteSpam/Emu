@@ -37,6 +37,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
     }
     
     static Render = function(base_x, base_y) {
+        self.gc.Clean();
         self.processAdvancement();
         
         var x1 = x + base_x;
@@ -69,6 +70,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         self.sprite_radio = spr_emu_radio;
         
         static Render = function(base_x, base_y) {
+            self.gc.Clean();
             var x1 = x + base_x;
             var y1 = y + base_y;
             var x2 = x1 + self.width;

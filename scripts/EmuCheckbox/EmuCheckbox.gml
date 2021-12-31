@@ -12,6 +12,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     self.color_back = function() { return EMU_COLOR_BACK };
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;

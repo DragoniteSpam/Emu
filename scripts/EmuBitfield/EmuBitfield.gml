@@ -75,6 +75,7 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     }
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;
@@ -100,6 +101,7 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
     self.color_inactive = function() { return EMU_COLOR_BACK };
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + width;

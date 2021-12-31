@@ -21,6 +21,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     self._override_root_check = true;
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;

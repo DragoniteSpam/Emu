@@ -70,6 +70,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     }
     
     Render = function(base_x, base_y) {
+        self.gc.Clean();
         processAdvancement();
         
         var x1 = x + base_x;
