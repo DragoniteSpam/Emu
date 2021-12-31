@@ -150,7 +150,7 @@ var input_cha = new EmuInput(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha
     obj_emu_demo.data.cha = real(value);
 });
 input_cha.SetRealNumberBounds(-5, 5);
-var input_level = new EmuInput(32, EMU_AUTO, 512, 32, "[#006600]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
+var input_level = new EmuInput(32, EMU_AUTO, 512, 32, "[c_lime]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
     obj_emu_demo.data.level = real(value);
 });
 input_level.SetRealNumberBounds(1, 10);
@@ -261,7 +261,7 @@ container.AddContent([
                 default: str_summary += demo.data.skills[0] + ", " + demo.data.skills[1] + " and " + demo.data.skills[2]; break;
             }
         }
-        str_summary += ".\n\n[#006600]" + demo.data.summary + "[/rainbow]";
+        str_summary += ".\n\n[c_lime]" + demo.data.summary;
         
         dialog.AddContent([
             new EmuText(32, EMU_AUTO, 560, 320, str_summary),
