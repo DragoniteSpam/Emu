@@ -79,7 +79,7 @@ function EmuDemoMeshScene() constructor {
     }
     
     birb = new MeshInstance("emu\\birb.vbuff", format, 0, 16, 0);
-    birb.texture_sprite = spr_emu_demo_birb_blue;
+    birb.texture = sprite_get_texture(spr_emu_demo_birb_blue, 0);
     
     skybox = new MeshInstance("emu\\skybox.vbuff", format, 0, 0, 0, "emu\\skybox.png");
     
@@ -91,7 +91,7 @@ function EmuDemoMeshScene() constructor {
         birb.scale.x = obj_emu_demo.data.size;
         birb.scale.y = obj_emu_demo.data.size;
         birb.scale.z = obj_emu_demo.data.size;
-        birb.texture_sprite = obj_emu_demo.data.sprite;
+        birb.texture = sprite_get_texture(obj_emu_demo.data.sprite, 0);
     }
     
     Render = function() {
