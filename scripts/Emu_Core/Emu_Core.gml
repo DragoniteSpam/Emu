@@ -82,12 +82,12 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static SetTooltip = function(sprite) {
+    static SetSpriteNineslice = function(sprite) {
         self.sprite_nineslice = sprite;
         return self;
     };
     
-    static SetTooltip = function(sprite) {
+    static SetSpriteCheckers = function(sprite) {
         self.sprite_checkers = sprite;
         return self;
     };
