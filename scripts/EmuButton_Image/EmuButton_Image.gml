@@ -7,8 +7,11 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     self.fill = scale_to_fit;
     self.allow_shrink = true;
     
-    self.alignment = fa_center;
-    self.valignment = fa_middle;
+    self.align = {
+        h: fa_center,
+        v: fa_middle,
+    };
+    
     self.text = "";
     
     self.color_hover = function() { return EMU_COLOR_HOVER };
@@ -47,7 +50,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         
         scribble(self.text)
             .wrap(self.width, self.height)
-            .align(self.alignment, self.valignment)
+            .align(self.align.h, self.align.v)
             .draw(self.width div 2, self.height div 2);
         surface_reset_target();
         #endregion

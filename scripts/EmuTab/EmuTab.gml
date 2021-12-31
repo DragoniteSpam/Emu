@@ -3,8 +3,11 @@
 function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     self.text = name;
     
-    self.alignment = fa_center;
-    self.valignment = fa_middle;
+    self.align = {
+        h: fa_center,
+        v: fa_middle,
+    };
+    
     self.sprite_nineslice = spr_emu_nineslice_tab;
     
     self.color_hover = function() { return EMU_COLOR_HOVER };
@@ -56,7 +59,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
         
         scribble(self.text)
             .wrap(self._header_width, self._header_height)
-            .align(self.alignment, self.valignment)
+            .align(self.align.h, self.align.v)
             .draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)));
         #endregion
         

@@ -2,8 +2,11 @@
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, callback) constructor {
     self.text = text;
-    self.alignment = fa_center;
-    self.valignment = fa_middle;
+    
+    self.align = {
+        h: fa_center,
+        v: fa_middle,
+    };
     
     self.color_hover = function() { return EMU_COLOR_HOVER };
     self.color_back = function() { return EMU_COLOR_BACK };
@@ -33,7 +36,7 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
         
         scribble(self.text)
             .wrap(self.width, self.height)
-            .align(self.alignment, self.valignment)
+            .align(self.align.h, self.align.v)
             .draw(floor(mean(x1, x2)), floor(mean(y1, y2)));
     };
 }

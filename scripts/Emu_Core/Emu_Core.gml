@@ -19,8 +19,12 @@ function EmuCore(x, y, w, h) constructor {
     self.text = "core";
     self.offset = 12;
     
-    self.alignment = fa_left;
-    self.valignment = fa_middle;
+    
+    self.align = {
+        h: fa_left,
+        v: fa_middle,
+    };
+    
     self.sprite_nineslice = spr_emu_nineslice;
     self.sprite_checkers = spr_emu_checker;
     
@@ -62,7 +66,7 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static getTextX = function(_x) {
-        switch (self.alignment) {
+        switch (self.align.h) {
             case fa_left: return _x + self.offset;
             case fa_center: return _x + self.width / 2;
             case fa_right: return _x + self.width - self.offset;
@@ -70,7 +74,7 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static getTextY = function(_y) {
-        switch (self.valignment) {
+        switch (self.align.v) {
             case fa_top: return _y + self.offset;
             case fa_middle: return _y + self.height / 2;
             case fa_bottom: return _y + self.height - self.offset;

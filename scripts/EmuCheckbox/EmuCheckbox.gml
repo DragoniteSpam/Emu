@@ -43,7 +43,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
         
         scribble(self.text)
             .wrap(self.width, self.height)
-            .align(self.alignment, self.valignment)
+            .align(self.align.h, self.align.v)
             .draw(x1 + self.box_size + self.offset * 2, floor(mean(y1, y2)));
     };
 }

@@ -37,7 +37,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
         
         scribble(self.text)
             .wrap(self.width, self.height)
-            .align(self.alignment, self.valignment)
+            .align(self.align.h, self.align.v)
             .draw(tx, ty);
     };
 }
