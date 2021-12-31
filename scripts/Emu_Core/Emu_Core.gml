@@ -260,13 +260,13 @@ function EmuCore(x, y, w, h) constructor {
     
     static surfaceVerify = function(surface, width, height) {
         if (!surface_exists(surface)) {
-            return surface_create(width, height);
+            return { surface: surface_create(width, height), changed: true };
         }
         if (surface_get_width(surface) != width || surface_get_height(surface) != height) {
             surface_free(surface);
-            return surface_create(width, height);
+            return { surface: surface_create(width, height), changed: true };
         }
-        return surface;
+        return { surface: surface, changed: false };
     };
 }
 
