@@ -100,10 +100,12 @@ function EmuDemoMeshScene() constructor {
         camera_set_proj_mat(camera, matrix_build_projection_perspective_fov(-60, 4 / 3, 1, 1000));
         camera_apply(camera);
         draw_clear(c_black);
+        
         shader_set(shd_emu_demo);
         gpu_set_cullmode(cull_clockwise);
         gpu_set_ztestenable(false);
         gpu_set_zwriteenable(false);
+        shader_set_uniform_f(shader_get_uniform(shd_emu_demo, "u_lightEnabled"), 0);
         
         skybox.position = camera_position;
         skybox.Render();
@@ -113,6 +115,7 @@ function EmuDemoMeshScene() constructor {
         
         gpu_set_ztestenable(true);
         gpu_set_zwriteenable(true);
+        shader_set_uniform_f(shader_get_uniform(shd_emu_demo, "u_lightEnabled"), 1);
         
         for (var i = 0; i < ds_list_size(mesh_list); i++) {
             mesh_list[| i].Render();
