@@ -282,27 +282,23 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     }
 }
 
-/// @param value
-/// @param padding
-function emu_string_hex() {
-    var _value = argument[0];
-    var _padding = (argument_count > 1) ? argument[1] : 0;
-    var _output = "";
-    var _s = sign(_value);
+function emu_string_hex(value, padding = 0) {
+    var output = "";
+    var s = sign(value);
     
-    if (_value != 0) {
-        _output = string(ptr(abs(_value)));
+    if (value != 0) {
+        output = string(ptr(abs(value)));
     
-        while (string_char_at(_output, 1) == "0") {
-            _output = string_copy(_output, 2, string_length(_output) - 1);
+        while (string_char_at(output, 1) == "0") {
+            output = string_copy(output, 2, string_length(output) - 1);
         }
     }
     
-    while (string_length(_output) < _padding) {
-        _output = "0" + _output;
+    while (string_length(output) < padding) {
+        output = "0" + output;
     }
     
-    return ((_s < 0) ? "-" : "") + _output;
+    return ((s < 0) ? "-" : "") + output;
 }
 
 function emu_hex(str) {
