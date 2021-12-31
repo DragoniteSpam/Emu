@@ -91,8 +91,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        var _working_value = string(value);
-        var sw = string_width(_working_value);
+        var working_value = string(self.value);
+        var sw = string_width(working_value);
         var sw_end = sw + 4;
         
         #region work out the input color
@@ -101,8 +101,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             .align(fa_left, fa_middle)
             .draw(tx, ty);
         
-        if (ValidateInput(_working_value)) {
-            var cast = CastInput(_working_value);
+        if (ValidateInput(working_value)) {
+            var cast = CastInput(working_value);
             if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
                 c = self.color_warn();
             }
@@ -123,13 +123,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         draw_clear(GetInteractive() ? self.color_back() : self.color_disabled());
         surface_reset_target();
         
-        var display_text = _working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         
         if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
-            var remaining = character_limit - string_length(_working_value);
-            var f = string_length(_working_value) / character_limit;
+            var remaining = character_limit - string_length(working_value);
+            var f = string_length(working_value) / character_limit;
             // hard limit on 99 for characters remaining
             if (f > 0.9 && remaining < 100) {
                 var remaining_w = string_width(string(remaining));
@@ -186,38 +186,38 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         #region interaction
         if (GetInteractive()) {
             if (isActiveElement()) {
-                var v0 = _working_value;
-                _working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
+                var v0 = working_value;
+                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
                 
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
                     keyboard_clear(vk_escape);
-                    _working_value = "";
+                    working_value = "";
                     keyboard_string = "";
                 }
 				
 				// add newline on pressing enter, if allowed
                 if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
-                    _working_value += "\n";
+                    working_value += "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
 				
-                if (ValidateInput(_working_value)) {
-                    var execute_value_change = (!require_enter && v0 != _working_value) || (require_enter && keyboard_check_pressed(vk_enter));
+                if (ValidateInput(working_value)) {
+                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
-                        var cast = CastInput(_working_value);
+                        var cast = CastInput(working_value);
                         if (is_real(cast)) {
                             execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
                         }
 						
                         if (execute_value_change) {
-                            value = _working_value;
+                            value = working_value;
                             callback();
                         }
                     }
                 }
                 
-				keyboard_string = string_copy(_working_value, 1, min(string_length(_working_value), character_limit));
+				keyboard_string = string_copy(working_value, 1, min(string_length(working_value), character_limit));
                 value = keyboard_string;
             }
             // activation

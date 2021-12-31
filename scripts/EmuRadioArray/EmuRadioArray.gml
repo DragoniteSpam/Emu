@@ -16,15 +16,15 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         return self;
     };
     
-    static SetColumns = function(_column_capacity, _column_width) {
-        if (_column_capacity <= 0) _column_capacity = 10000;
+    static SetColumns = function(column_capacity, column_width) {
+        if (column_capacity <= 0) column_capacity = 10000;
         for (var i = 0, n = array_length(contents); i < n; i++) {
             var option = self.contents[i];
-            option.x = (i div _column_capacity) * _column_width;
-            option.y = self.height * (1 + (i % _column_capacity));
-            option.width = _column_width;
+            option.x = (i div column_capacity) * column_width;
+            option.y = self.height * (1 + (i % column_capacity));
+            option.width = column_width;
         }
-        self.width = (array_length(self.contents) div _column_capacity) * _column_width;
+        self.width = (array_length(self.contents) div column_capacity) * column_width;
         return self;
     };
     

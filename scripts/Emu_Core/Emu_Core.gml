@@ -65,35 +65,35 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static getTextX = function(_x) {
+    static getTextX = function(x) {
         switch (self.align.h) {
-            case fa_left: return _x + self.offset;
-            case fa_center: return _x + self.width / 2;
-            case fa_right: return _x + self.width - self.offset;
+            case fa_left: return x + self.offset;
+            case fa_center: return x + self.width / 2;
+            case fa_right: return x + self.width - self.offset;
         }
     };
     
-    static getTextY = function(_y) {
+    static getTextY = function(y) {
         switch (self.align.v) {
-            case fa_top: return _y + self.offset;
-            case fa_middle: return _y + self.height / 2;
-            case fa_bottom: return _y + self.height - self.offset;
+            case fa_top: return y + self.offset;
+            case fa_middle: return y + self.height / 2;
+            case fa_bottom: return y + self.height - self.offset;
         }
     };
     
-    static SetInteractive = function(_interactive) {
-        self.interactive = _interactive;
+    static SetInteractive = function(interactive) {
+        self.interactive = interactive;
         return self;
     };
     
-    static SetNext = function(_element) {
-        self.next = _element;
+    static SetNext = function(element) {
+        self.next = element;
         if (self.next) self.next.previous = self;
         return self;
     };
     
-    static SetPrevious = function(_element) {
-        self.previous = _element;
+    static SetPrevious = function(element) {
+        self.previous = element;
         if (self.previous) self.previous.next = self;
         return self;
     };
@@ -150,25 +150,20 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
-        if (_xscale == undefined) _xscale = 1;
-        if (_yscale == undefined) _yscale = 1;
-        if (_color == undefined) _color = c_white;
-        if (_alpha == undefined) _alpha = 1;
-        
+    static drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
-        var _s = sprite_get_width(self.sprite_checkers);
-        var _xcount = _w / _s / _xscale;
-        var _ycount = _h / _s / _yscale;
+        var s = sprite_get_width(self.sprite_checkers);
+        var xcount = w / s / xscale;
+        var ycount = h / s / yscale;
         
         draw_primitive_begin_texture(pr_trianglelist, sprite_get_texture(self.sprite_checkers, 0));
-        draw_vertex_texture_colour(_x, _y, 0, 0, _color, _alpha);
-        draw_vertex_texture_colour(_x + _w, _y, _xcount, 0, _color, _alpha);
-        draw_vertex_texture_colour(_x + _w, _y + _h, _xcount, _ycount, _color, _alpha);
-        draw_vertex_texture_colour(_x + _w, _y + _h, _xcount, _ycount, _color, _alpha);
-        draw_vertex_texture_colour(_x, _y + _h, 0, _ycount, _color, _alpha);
-        draw_vertex_texture_colour(_x, _y, 0, 0, _color, _alpha);
+        draw_vertex_texture_colour(x, y, 0, 0, color, alpha);
+        draw_vertex_texture_colour(x + w, y, xcount, 0, color, alpha);
+        draw_vertex_texture_colour(x + w, y + h, xcount, ycount, color, alpha);
+        draw_vertex_texture_colour(x + w, y + h, xcount, ycount, color, alpha);
+        draw_vertex_texture_colour(x, y + h, 0, ycount, color, alpha);
+        draw_vertex_texture_colour(x, y, 0, 0, color, alpha);
         draw_primitive_end();
         
         gpu_set_texrepeat(old_repeat);

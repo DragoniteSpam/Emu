@@ -39,20 +39,20 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
-    static SetEntryTypes = function(_type) {
-        entries_are = _type;
+    static SetEntryTypes = function(type) {
+        entries_are = type;
         return self;
     };
     
-    static SetMultiSelect = function(_multi_select, _auto, _toggle) {
-        allow_multi_select = _multi_select;
-        auto_multi_select = _auto;
-        select_toggle = _toggle;
+    static SetMultiSelect = function(multi_select, auto, toggle) {
+        allow_multi_select = multi_select;
+        auto_multi_select = auto;
+        select_toggle = toggle;
         return self;
     };
     
-    static SetVacantText = function(_text) {
-        text_vacant = _text;
+    static SetVacantText = function(text) {
+        text_vacant = text;
         return self;
     };
     
@@ -100,20 +100,19 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
-    static Select = function(_list_index, _set_index) {
-        if (_set_index == undefined) _set_index = false;
-        if (!variable_struct_exists(selected_entries, "first")) selected_entries[$ "first"] = _list_index;
-        selected_entries[$ "last"] = _list_index;
-        selected_entries[$ string(_list_index)] = true;
-        if (_set_index && clamp(_list_index, index, index + slots - 1) != _list_index) {
-            index = max(0, min(_list_index, array_length(entries) - slots));
+    static Select = function(list_index, set_index = false) {
+        if (!variable_struct_exists(selected_entries, "first")) selected_entries[$ "first"] = list_index;
+        selected_entries[$ "last"] = list_index;
+        selected_entries[$ string(list_index)] = true;
+        if (set_index && clamp(list_index, index, index + slots - 1) != list_index) {
+            index = max(0, min(list_index, array_length(entries) - slots));
         }
         callback();
         return self;
     };
     
-    static Deselect = function(_list_index) {
-        variable_struct_remove(selected_entries, _list_index);
+    static Deselect = function(list_index) {
+        variable_struct_remove(selected_entries, list_index);
         callback();
         return self;
     };

@@ -1,15 +1,15 @@
 function EmuDemoMeshScene() constructor {
-    MeshInstance = function(_filename, _format, _x, _y, _z, _texturefile = "") constructor {
-        model = scr_emu_demo_load_vbuff(_filename, _format);
+    MeshInstance = function(filename, format, x, y, z, texturefile = "") constructor {
+        model = scr_emu_demo_load_vbuff(filename, format);
         own_textue = false;
         texture = -1;
         
-        if (file_exists(_texturefile)) {
+        if (file_exists(texturefile)) {
             own_texture = true;
-            texture = sprite_get_texture(sprite_add(_texturefile, 0, false, false, 0, 0), 0);
+            texture = sprite_get_texture(sprite_add(texturefile, 0, false, false, 0, 0), 0);
         }
         
-        position = { x: _x, y: _y, z: _z };
+        position = { x: x, y: y, z: z };
         rotation = { x: 0, y: 0, z: 0 };
         scale = { x: 1, y: 1, z: 1 };
         

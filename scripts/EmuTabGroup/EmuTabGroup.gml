@@ -25,15 +25,14 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             tabs = [tabs];
         }
         
-        var _tab_row = contents[row];
         for (var i = 0; i < array_length(tabs); i++) {
-            var _tab = tabs[i];
-            _tab.root = self;
-            _tab.row = row;
-            _tab.index = array_length(contents[row].contents);
-            array_push(_tab_row.contents, _tab);
+            var tab = tabs[i];
+            tab.root = self;
+            tab.row = row;
+            tab.index = array_length(contents[row].contents);
+            array_push(self.contents[row].contents, tab);
             if (!active_tab && !active_tab_request) {
-                RequestActivateTab(_tab);
+                RequestActivateTab(tab);
             }
         }
         arrangeRow(row);
