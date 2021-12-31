@@ -37,6 +37,7 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
         do {
             array_delete(EmuOverlay._contents, array_length(EmuOverlay._contents) - 1, 1);
         } until (array_length(EmuOverlay._contents) == 0 || EmuOverlay._contents[array_length(EmuOverlay._contents) - 1] == self);
+        _emu_active_element(pointer_null);
         return self;
     }
     

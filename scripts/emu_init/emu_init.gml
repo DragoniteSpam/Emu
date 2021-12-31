@@ -44,7 +44,8 @@ function _emu_get_overlay() {
 
 function _emu_active_element(element = undefined) {
     static inst = undefined;
-    if (element) inst = element;
+    if (element == pointer_null) inst = undefined;
+    else if (element) inst = element;
     return inst;
 }
 #endregion
