@@ -24,14 +24,14 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         return self;
     };
     
-    self._surface = self.surfaceVerify(-1, self.width, self.height).surface;
-    surface_set_target(self._surface);
+    self.surface = self.surfaceVerify(-1, self.width, self.height).surface;
+    surface_set_target(self.surface);
     draw_clear(c_black);
     method(self, create)();
     surface_reset_target();
     
     static GetSurface = function() {
-        return _surface;
+        return surface;
     };
     
     static Recreate = function() {
@@ -49,11 +49,11 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         var mx = device_mouse_x_to_gui(0) - x1;
         var my = device_mouse_y_to_gui(0) - y1;
         
-        var verify = self.surfaceVerify(self._surface, self.width, self.height);
-        self._surface = verify.surface;
+        var verify = self.surfaceVerify(self.surface, self.width, self.height);
+        self.surface = verify.surface;
         
         if (verify.changed) {
-            surface_set_target(self._surface);
+            surface_set_target(self.surface);
             callback_recreate();
             surface_reset_target();
         }
@@ -67,7 +67,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         
         callback_step(mx, my);
         
-        surface_set_target(_surface);
+        surface_set_target(surface);
         var camera = camera_get_active();
         var old_view_mat = camera_get_view_mat(camera);
         var old_proj_mat = camera_get_proj_mat(camera);
@@ -80,6 +80,6 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         ds_map_destroy(old_state);
         surface_reset_target();
         
-        draw_surface(_surface, x1, y1);
+        draw_surface(surface, x1, y1);
     };
 }

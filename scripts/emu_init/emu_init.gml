@@ -48,7 +48,7 @@ function _emu_get_overlay() {
         };
         
         static Pop = function() {
-            array_delete(self._contents, array_length(self._contents) - 1, 1);
+            array_delete(self.contents, array_length(self.contents) - 1, 1);
             _emu_active_element(pointer_null);
         };
     };

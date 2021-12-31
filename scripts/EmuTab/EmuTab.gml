@@ -14,14 +14,14 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     self.color_back = function() { return EMU_COLOR_BACK };
     self.color_disabled = function() { return EMU_COLOR_DISABLED };
     
-    self._row = 0;
-    self._index = 0;
-    self._header_x = 0;
-    self._header_y = 0;
-    self._header_width = 0;
-    self._header_height = 0;
+    self.row = 0;
+    self.index = 0;
+    self.header_x = 0;
+    self.header_y = 0;
+    self.header_width = 0;
+    self.header_height = 0;
     
-    self._override_root_check = true;
+    self.override_root_check = true;
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
@@ -33,10 +33,10 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
         var y2 = y1 + height;
         
         #region header stuff
-        var hx1 = _header_x + base_x;
-        var hy1 = _header_y + base_y - root._rows * root._row_height;
-        var hx2 = hx1 + _header_width;
-        var hy2 = hy1 + _header_height;
+        var hx1 = header_x + base_x;
+        var hy1 = header_y + base_y - root.rows * root.row_height;
+        var hx2 = hx1 + header_width;
+        var hy2 = hy1 + header_height;
         
         if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();
@@ -47,7 +47,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
             root.RequestActivateTab(self);
         }
         
-        if (isActiveTab() || root._active_tab && (root._active_tab._row != _row)) {
+        if (isActiveTab() || root.active_tab && (root.active_tab.row != row)) {
             var index = 0;
         } else {
             var index = 2;
@@ -58,7 +58,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
         draw_sprite_stretched_ext(sprite_nineslice, index, hx1, hy1, hx2 - hx1, hy2 - hy1, self.color(), 1);
         
         scribble(self.text)
-            .wrap(self._header_width, self._header_height)
+            .wrap(self.header_width, self.header_height)
             .align(self.align.h, self.align.v)
             .draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)));
         #endregion
@@ -72,7 +72,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
     // tab in the tab group, rather than the UI element which will respond to
     // keyboard input
     static isActiveTab = function() {
-        return (root._active_tab == self);
+        return (root.active_tab == self);
     };
     
     static RequestActivate = function() {

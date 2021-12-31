@@ -3,23 +3,23 @@
 function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
     enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     
-    self._fixed_spacing = -1;
-    self._orientation = E_BitfieldOrientations.HORIZONTAL;
+    self.fixed_spacing = -1;
+    self.orientation = E_BitfieldOrientations.HORIZONTAL;
     
     static SetOrientation = function(orientation) {
-        _orientation = orientation;
+        orientation = orientation;
         ArrangeElements();
         return self;
     };
     
     static SetFixedSpacing = function(spacing) {
-        _fixed_spacing = spacing;
+        fixed_spacing = spacing;
         ArrangeElements();
         return self;
     };
     
     static SetAutoSpacing = function() {
-        _fixed_spacing = -1;
+        fixed_spacing = -1;
         ArrangeElements();
         return self;
     };
@@ -31,7 +31,7 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
         
         for (var i = 0; i < array_length(elements); i++) {
             if (!is_struct(elements[i])) {
-                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (array_length(self._contents) + i),
+                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (array_length(self.contents) + i),
                 function() {
                     root.value ^= value;
                     root.callback();
@@ -48,19 +48,19 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     };
     
     static ArrangeElements = function() {
-        if (_orientation == E_BitfieldOrientations.HORIZONTAL) {
-            for (var i = 0, n = array_length(_contents); i < n; i++) {
-                var option = _contents[i];
-                option.width = (_fixed_spacing == -1) ? floor(width / n) : _fixed_spacing;
+        if (orientation == E_BitfieldOrientations.HORIZONTAL) {
+            for (var i = 0, n = array_length(contents); i < n; i++) {
+                var option = contents[i];
+                option.width = (fixed_spacing == -1) ? floor(width / n) : fixed_spacing;
                 option.height = height;
                 option.x = option.width * i;
                 option.y = 0;
             }
         } else {
-            for (var i = 0, n = array_length(_contents); i < n; i++) {
-                var option = _contents[i];
+            for (var i = 0, n = array_length(contents); i < n; i++) {
+                var option = contents[i];
                 option.width = width;
-                option.height = (_fixed_spacing == -1) ? floor(height / n) : _fixed_spacing;
+                option.height = (fixed_spacing == -1) ? floor(height / n) : fixed_spacing;
                 option.x = 0;
                 option.y = option.height * i;
             }
@@ -69,8 +69,8 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     };
     
     static GetHeight = function() {
-        var first = _contents[0];
-        var last = _contents[array_length(_contents) - 1];
+        var first = contents[0];
+        var last = contents[array_length(contents) - 1];
         return (first == undefined) ? height : (last.y + last.height - first.y);
     };
     

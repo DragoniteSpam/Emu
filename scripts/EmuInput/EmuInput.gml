@@ -18,40 +18,42 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.sprite_ring = spr_emu_ring;
     self.sprite_enter = spr_emu_enter;
     
-    self._value_x1 = self.width / 2;
-    self._value_y1 = 0;
-    self._value_x2 = self.width;
-    self._value_y2 = self.height;
+    self.box = {
+        x1: self.width / 2,
+        y1: 0,
+        x2: self.width,
+        y2: self.height,
+    };
     
-    self._override_escape = true;
-    self._require_enter = false;
-    self._multi_line = false;
-    self._value_type = input;
-    self._value_lower = 0;
-    self._value_upper = 100;
+    self.override_escape = true;
+    self.require_enter = false;
+    self.multi_line = false;
+    self.value_type = input;
+    self.value_lower = 0;
+    self.value_upper = 100;
     
-    self._surface = self.surfaceVerify(-1, self._value_x2 - self._value_x1, self._value_y2 - self._value_y1).surface;
+    self.surface = self.surfaceVerify(-1, self.box.x2 - self.box.x1, self.box.y2 - self.box.y1).surface;
     
     static SetMultiLine = function(multi_line) {
-        self._multi_line = multi_line;
+        self.multi_line = multi_line;
         return self;
     };
     
     static SetRequireConfirm = function(require) {
-        self._require_enter = require;
+        self.require_enter = require;
         return self;
     };
     
     static SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
-        self._value_x1 = vx1;
-        self._value_y1 = vy1;
-        self._value_x2 = vx2;
-        self._value_y2 = vy2;
+        self.box.x1 = vx1;
+        self.box.y1 = vy1;
+        self.box.x2 = vx2;
+        self.box.y2 = vy2;
         return self;
     };
     
     static SetInputType = function(input_type) {
-        self._value_type = input_type;
+        self.value_type = input_type;
         return self;
     };
     
@@ -64,8 +66,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     };
     
     static SetRealNumberBounds = function(lower, upper) {
-        self._value_lower = min(lower, upper);
-        self._value_upper = max(lower, upper);
+        self.value_lower = min(lower, upper);
+        self.value_upper = max(lower, upper);
         return self;
     };
     
@@ -79,10 +81,10 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var y2 = y1 + height;
         var c = self.color();
         
-        var vx1 = x1 + _value_x1;
-        var vy1 = y1 + _value_y1;
-        var vx2 = x1 + _value_x2;
-        var vy2 = y1 + _value_y2;
+        var vx1 = x1 + box.x1;
+        var vy1 = y1 + box.y1;
+        var vx2 = x1 + box.x2;
+        var vy2 = y1 + box.y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
@@ -101,7 +103,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         
         if (ValidateInput(_working_value)) {
             var cast = CastInput(_working_value);
-            if (is_real(cast) && clamp(cast, _value_lower, _value_upper) != cast) {
+            if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
                 c = self.color_warn();
             }
         } else {
@@ -114,16 +116,16 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var spacing = 12;
         
         #region input drawing
-        self._surface = self.surfaceVerify(self._surface, ww, hh).surface;
+        self.surface = self.surfaceVerify(self.surface, ww, hh).surface;
 
-        surface_set_target(_surface);
-        surface_set_target(_surface);
+        surface_set_target(surface);
+        surface_set_target(surface);
         draw_clear(GetInteractive() ? self.color_back() : self.color_disabled());
         surface_reset_target();
         
         var display_text = _working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         
-        if (_multi_line) {
+        if (multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
             var remaining = character_limit - string_length(_working_value);
@@ -176,7 +178,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             draw_text_colour(vtx - vx1, vty - vy1, string(help_text), self.color_help_text(), self.color_help_text(), self.color_help_text(), self.color_help_text(), 1);
         }
 
-        if (_require_enter) {
+        if (require_enter) {
             draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
         }
         #endregion
@@ -195,17 +197,17 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                 }
 				
 				// add newline on pressing enter, if allowed
-                if (_multi_line && !_require_enter && keyboard_check_pressed(vk_enter)) {
+                if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
                     _working_value += "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
 				
                 if (ValidateInput(_working_value)) {
-                    var execute_value_change = (!_require_enter && v0 != _working_value) || (_require_enter && keyboard_check_pressed(vk_enter));
+                    var execute_value_change = (!require_enter && v0 != _working_value) || (require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
                         var cast = CastInput(_working_value);
                         if (is_real(cast)) {
-                            execute_value_change = execute_value_change && (clamp(cast, _value_lower, _value_upper) == cast);
+                            execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
                         }
 						
                         if (execute_value_change) {
@@ -231,7 +233,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         surface_reset_target();
         #endregion
         
-        draw_surface(_surface, vx1, vy1)
+        draw_surface(surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
     };
     
@@ -240,10 +242,10 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         // try-catch in switch trees; if that issue has been fixed, feel
         // free to change it back if you think those look nicer
         var success = true;
-        if (self._value_type == E_InputTypes.STRING) {
+        if (self.value_type == E_InputTypes.STRING) {
             return true;
         }
-        if (self._value_type == E_InputTypes.INT) {
+        if (self.value_type == E_InputTypes.INT) {
             try {
                 var cast = real(text);
                 if (floor(cast) != cast) success = false;
@@ -252,7 +254,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             }
             return success;
         }
-        if (self._value_type == E_InputTypes.REAL) {
+        if (self.value_type == E_InputTypes.REAL) {
             try {
                 var cast = real(text);
             } catch (e) {
@@ -260,7 +262,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             }
             return success;
         }
-        if (self._value_type == E_InputTypes.HEX) {
+        if (self.value_type == E_InputTypes.HEX) {
             var success = true;
             try {
                 var cast = emu_hex(text);
@@ -273,7 +275,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     };
     
     static CastInput = function(text) {
-        switch (self._value_type) {
+        switch (self.value_type) {
             case E_InputTypes.STRING: return text;
             case E_InputTypes.INT: return real(text);
             case E_InputTypes.REAL: return real(text);

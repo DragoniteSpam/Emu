@@ -6,25 +6,27 @@
 function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
     self.text = text;
     
-    self._allow_alpha = false;
+    self.allow_alpha = false;
     
-    self._value_x1 = self.width / 2;
-    self._value_y1 = 0;
-    self._value_x2 = self.width;
-    self._value_y2 = self.height;
+    self.box = {
+        x1: self.width / 2,
+        y1: 0,
+        x2: self.width,
+        y2: self.height,
+    };
     
     self.color_back = function() { return EMU_COLOR_BACK };
     
     static SetAlphaUsed = function(_alpha_used) {
-        _allow_alpha = _alpha_used;
+        allow_alpha = _alpha_used;
         return self;
     };
     
     static SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
-        _value_x1 = _vx1;
-        _value_y1 = _vy1;
-        _value_x2 = _vx2;
-        _value_y2 = _vy2;
+        self.box.x1 = _vx1;
+        self.box.y1 = _vy1;
+        self.box.x2 = _vx2;
+        self.box.y2 = _vy2;
         return self;
     };
     
@@ -38,10 +40,10 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         var y2 = y1 + height;
         var col_main = self.color();
         
-        var vx1 = x1 + _value_x1;
-        var vy1 = y1 + _value_y1;
-        var vx2 = x1 + _value_x2;
-        var vy2 = y1 + _value_y2;
+        var vx1 = x1 + box.x1;
+        var vy1 = y1 + box.y1;
+        var vx2 = x1 + box.x2;
+        var vy2 = y1 + box.y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
@@ -55,7 +57,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         
         draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 1, vy1 + 1, vx2 - vx1 - 1, vy2 - vy1 - 1, self.color_back(), 1);
         drawCheckerbox(vx1 + 2, vy1 + 2, (vx2 - vx1) - 4, (vy2 - vy1) - 4);
-        draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 2, vy1 + 2, vx2 - vx1 - 2, vy2 - vy1 - 2, value, _allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 2, vy1 + 2, vx2 - vx1 - 2, vy2 - vy1 - 2, value, allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, vx1 + 1, vy1 + 1, vx2 - vx1 - 1, vy2 - vy1 - 1, col_main, 1);
         
         if (GetInteractive()) {
@@ -86,8 +88,8 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                         self.all_colors = true;
                         self.alpha = 1;
                         
-                        self._allow_alpha = allow_alpha;
-                        self._override_escape = true;
+                        self.allow_alpha = allow_alpha;
+                        self.override_escape = true;
                         
                         self._color_x = 0;
                         self._color_y = 0;
@@ -266,7 +268,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                             #endregion
                             
                             #region alpha
-                            if (_allow_alpha) {
+                            if (allow_alpha) {
                                 vx1 = x1 + alpha_x;
                                 vy1 = y1 + alpha_y;
                                 vx2 = vx1 + _main_size;
@@ -322,13 +324,13 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                     dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
                     dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
-                    dialog.el_picker = new controls(32, EMU_AUTO, ew, eh, value, _allow_alpha, function() {
-                        root.base_color_element.value = value | (self.root.base_color_element._allow_alpha ? (floor(alpha * 0xff) << 24) : 0);
+                    dialog.el_picker = new controls(32, EMU_AUTO, ew, eh, value, allow_alpha, function() {
+                        root.base_color_element.value = value | (self.root.base_color_element.allow_alpha ? (floor(alpha * 0xff) << 24) : 0);
                         root.el_picker_code.SetValue(emu_string_hex(((value & 0xff0000) >> 16) | (value & 0x00ff00) | ((value & 0x0000ff) << 16), 6));
                         root.base_color_element.callback();
                     });
                     
-                    dialog.el_picker.alpha = self._allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1;
+                    dialog.el_picker.alpha = self.allow_alpha ? (((value & 0xff000000) >> 24) / 0xff) : 1;
                     dialog.el_picker.axis_value = (value & 0x0000ff) / 0xff;
                     dialog.el_picker.axis_w = ((value & 0x00ff00) >> 8) / 0xff;
                     dialog.el_picker.axis_h = ((value & 0xff0000) >> 16) / 0xff;

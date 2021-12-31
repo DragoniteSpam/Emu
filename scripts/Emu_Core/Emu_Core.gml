@@ -28,15 +28,15 @@ function EmuCore(x, y, w, h) constructor {
     self.sprite_nineslice = spr_emu_nineslice;
     self.sprite_checkers = spr_emu_checker;
     
-    self._contents = [];
+    self.contents = [];
     
-    self._override_escape = false;
-    self._override_tab = false;
-    self._override_root_check = false;
+    self.override_escape = false;
+    self.override_tab = false;
+    self.override_root_check = false;
     
-    self._next = noone;
-    self._previous = noone;
-    self._element_spacing_y = 16;
+    self.next = noone;
+    self.previous = noone;
+    self.element_spacing_y = 16;
     
     static AddContent = function(elements) {
         if (!is_array(elements)) {
@@ -47,19 +47,19 @@ function EmuCore(x, y, w, h) constructor {
             if (thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
-                    thing.y = top.y + top.GetHeight() + self._element_spacing_y;
+                    thing.y = top.y + top.GetHeight() + self.element_spacing_y;
                 } else {
-                    thing.y = self._element_spacing_y;
+                    thing.y = self.element_spacing_y;
                 }
             } else if (thing.y == EMU_INLINE) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y;
                 } else {
-                    thing.y = self._element_spacing_y;
+                    thing.y = self.element_spacing_y;
                 }
             }
-            array_push(self._contents, thing);
+            array_push(self.contents, thing);
             thing.root = self;
         }
         return self;
@@ -87,14 +87,14 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static SetNext = function(_element) {
-        self._next = _element;
-        if (self._next) self._next._previous = self;
+        self.next = _element;
+        if (self.next) self.next.previous = self;
         return self;
     };
     
     static SetPrevious = function(_element) {
-        self._previous = _element;
-        if (self._previous) self._previous._next = self;
+        self.previous = _element;
+        if (self.previous) self.previous.next = self;
         return self;
     };
     
@@ -104,7 +104,7 @@ function EmuCore(x, y, w, h) constructor {
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
-            array_delete(self._contents, emu_array_search(self._contents, thing), 1);
+            array_delete(self.contents, emu_array_search(self.contents, thing), 1);
         }
         return self;
     };
@@ -123,21 +123,21 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static renderContents = function(at_x, at_y) {
-        for (var i = 0, n = array_length(self._contents); i < n; i++) {
-            if (self._contents[i]) self._contents[i].Render(at_x, at_y);
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
+            if (self.contents[i]) self.contents[i].Render(at_x, at_y);
         }
     };
     
     static processAdvancement = function() {
         if (!self.isActiveElement()) return false;
-        if (!self._override_tab && keyboard_check_pressed(vk_tab)) {
-            if (keyboard_check(vk_shift) && self._previous) {
-                self._previous.Activate();
+        if (!self.override_tab && keyboard_check_pressed(vk_tab)) {
+            if (keyboard_check(vk_shift) && self.previous) {
+                self.previous.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
-            if (self._next) {
-                self._next.Activate();
+            if (self.next) {
+                self.next.Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
@@ -180,7 +180,7 @@ function EmuCore(x, y, w, h) constructor {
         
         var root = self.root;
         
-        while (root && root._override_root_check) {
+        while (root && root.override_root_check) {
             root = root.root;
         }
         
@@ -204,8 +204,8 @@ function EmuCore(x, y, w, h) constructor {
     };
     
     static GetTop = function() {
-        if (array_length(self._contents) == 0) return undefined;
-        return self._contents[array_length(self._contents) - 1];
+        if (array_length(self.contents) == 0) return undefined;
+        return self.contents[array_length(self.contents) - 1];
     };
     
     static GetMouseOver = function() {

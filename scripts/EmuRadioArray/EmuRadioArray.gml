@@ -18,20 +18,20 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
     
     static SetColumns = function(_column_capacity, _column_width) {
         if (_column_capacity <= 0) _column_capacity = 10000;
-        for (var i = 0, n = array_length(_contents); i < n; i++) {
-            var option = self._contents[i];
+        for (var i = 0, n = array_length(contents); i < n; i++) {
+            var option = self.contents[i];
             option.x = (i div _column_capacity) * _column_width;
             option.y = self.height * (1 + (i % _column_capacity));
             option.width = _column_width;
         }
-        self.width = (array_length(self._contents) div _column_capacity) * _column_width;
+        self.width = (array_length(self.contents) div _column_capacity) * _column_width;
         return self;
     };
     
     static GetHeight = function() {
         var maximum_height = self.height;
-        for (var i = 0, n = array_length(_contents); i < n; i++) {
-            maximum_height = max(self._contents[i].y + self.height, maximum_height);
+        for (var i = 0, n = array_length(contents); i < n; i++) {
+            maximum_height = max(self.contents[i].y + self.height, maximum_height);
         }
         return maximum_height;
     };

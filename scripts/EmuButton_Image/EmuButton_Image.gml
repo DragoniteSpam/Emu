@@ -20,8 +20,8 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     
     self.checker_background = false;
     
-    self._surface = noone;
-    self._index = index;
+    self.surface = -1;
+    self.index = index;
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
@@ -32,10 +32,10 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         var x2 = x1 + width;
         var y2 = y1 + height;
         
-        #region draw the image to the _surface
-        self._surface = self.surfaceVerify(self._surface, self.width, self.height).surface;
+        #region draw the image to the surface
+        self.surface = self.surfaceVerify(self.surface, self.width, self.height).surface;
         
-        surface_set_target(_surface);
+        surface_set_target(surface);
         draw_clear_alpha(c_black, 0);
         draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, width, height, self.color_back(), 1);
         if (sprite_exists(sprite)) {
@@ -45,7 +45,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
             } else {
                 var scale = fill ? min(max(width / sprite_get_width(sprite), 1), max(height / sprite_get_height(sprite), 1)) : 1;
             }
-            draw_sprite_ext(sprite, _index, width / 2, height / 2, scale, scale, 0, blend, alpha);
+            draw_sprite_ext(sprite, index, width / 2, height / 2, scale, scale, 0, blend, alpha);
         }
         
         scribble(self.text)
@@ -65,7 +65,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         }
         
         var back_color = getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (GetInteractive() ? self.color_back() : self.color_disabled());
-        draw_surface_ext(_surface, x1, y1, 1, 1, 0, back_color, 1);
+        draw_surface_ext(surface, x1, y1, 1, 1, 0, back_color, 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
     };
 }

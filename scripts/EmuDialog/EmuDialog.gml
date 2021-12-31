@@ -6,7 +6,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     
     _emu_active_element(undefined);
     
-    var size = array_length(EmuOverlay._contents);
+    var size = array_length(EmuOverlay.contents);
     x = 64 * (size + 1);
     y = 64 * (size + 1);
     
@@ -20,20 +20,20 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     self.color_header = function() { return EMU_COLOR_WINDOWSKIN };
     self.color_back = function() { return EMU_COLOR_BACK };
     
-    self._header_height = 32;
-    self._click_x = -1;
-    self._click_y = -1;
-    self._dispose = false;
+    self.header_height = 32;
+    self.click_x = -1;
+    self.click_y = -1;
+    self.disposed = false;
     
     EmuOverlay.AddContent(self);
     
     static Close = function() {
         // this needs to be done after the entire dialog box is finished rendering
-        _dispose = true;
+        disposed = true;
     };
     
     static GetHeight = function() {
-        return height + _header_height;
+        return height + header_height;
     };
     
     static Render = function() {
@@ -54,7 +54,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         
         if (active) {
             cbi = 0;
-            if (getMouseHover(x1, y1, x2, y1 + _header_height)) {
+            if (getMouseHover(x1, y1, x2, y1 + header_height)) {
                 if (close_button && getMouseHover(cbx1, cby1, cbx2, cby2)) {
                     cbi = 1;
                     if (getMouseReleased(cbx1, cby1, cbx2, cby2)) {
@@ -62,22 +62,22 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
                         _emu_active_element(undefined);
                     }
                 } else {
-                    if (getMousePressed(x1, y1, x2, y1 + _header_height)) {
-                        _click_x = device_mouse_x_to_gui(0);
-                        _click_y = device_mouse_y_to_gui(0);
+                    if (getMousePressed(x1, y1, x2, y1 + header_height)) {
+                        click_x = device_mouse_x_to_gui(0);
+                        click_y = device_mouse_y_to_gui(0);
                     }
-                    if (getMouseReleased(x1, y1, x2, y1 + _header_height)) {
-                        _click_x = -1;
-                        _click_y = -1;
+                    if (getMouseReleased(x1, y1, x2, y1 + header_height)) {
+                        click_x = -1;
+                        click_y = -1;
                     }
                 }
             }
             
-            if (getMouseHold(0, 0, window_get_width(), window_get_height()) && _click_x > -1) {
-                x += (device_mouse_x_to_gui(0) - _click_x);
-                y += (device_mouse_y_to_gui(0) - _click_y);
-                _click_x = device_mouse_x_to_gui(0);
-                _click_y = device_mouse_y_to_gui(0);
+            if (getMouseHold(0, 0, window_get_width(), window_get_height()) && click_x > -1) {
+                x += (device_mouse_x_to_gui(0) - click_x);
+                y += (device_mouse_y_to_gui(0) - click_y);
+                click_x = device_mouse_x_to_gui(0);
+                click_y = device_mouse_y_to_gui(0);
             }
         }
         
@@ -88,7 +88,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         var y2 = y1 + GetHeight();
         
         var tx = x1 + offset;
-        var ty = floor(mean(y1, y1 + _header_height));
+        var ty = floor(mean(y1, y1 + header_height));
         
         var cbx1 = x2 - sprite_get_width(sprite_close);
         var cbx2 = x2;
@@ -106,11 +106,11 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, self.color_back(), 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
         var ch = merge_colour(self.color_header(), EMU_DIALOG_SHADE_COLOR, active ? 0 : 0.5);
-        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, _header_height, ch, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, _header_height, self.color(), 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, header_height, ch, 1);
+        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, header_height, self.color(), 1);
         
         scribble(text)
-            .wrap(self.width, self._header_height)
+            .wrap(self.width, self.header_height)
             .align(fa_left, fa_middle)
             .draw(tx, ty);
         
@@ -118,9 +118,9 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
             draw_sprite(sprite_close, cbi, cbx1, cby1);
         }
         
-        renderContents(x1, y1 + _header_height);
+        renderContents(x1, y1 + header_height);
         
-        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement._override_escape)) || _dispose;
+        kill |= (active && close_button && keyboard_check_released(vk_escape) && !(EmuActiveElement && EmuActiveElement.override_escape)) || disposed;
         
         if (kill) {
             callback();
@@ -129,7 +129,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     
     // Override this function for dialogs
     static isActiveDialog = function() {
-        return (EmuOverlay._contents[array_length(EmuOverlay._contents) - 1] == self);
+        return (EmuOverlay.contents[array_length(EmuOverlay.contents) - 1] == self);
     };
 }
 

@@ -243,7 +243,7 @@ container.AddContent([
 ]);
 #endregion
 
-#region render _surface
+#region render window
 container.AddContent(
     new EmuRenderSurface(704, 144, 540, 400,
         function(mx, my) { scene.Render(); },
