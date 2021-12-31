@@ -272,7 +272,7 @@ container.AddContent([
         var dialog = new EmuDialog(640, 320, "Credits");
         dialog.AddContent([
             new EmuText(dialog.width / 2, EMU_AUTO, 560, 64, "[c_blue][fa_center]Emu UI, a user interface framework for GameMaker Studio 2.3 written by @dragonitespam[/c]"),
-            new EmuText(32, EMU_AUTO, 560, 32, "The [rainbow][wave]Scribble[/wave][/rainbow]  text renderer is by @jujuadams"),
+            new EmuText(32, EMU_AUTO, 560, 32, "The [rainbow][wave]Scribble[/wave][/rainbow] text renderer is by @jujuadams"),
             new EmuText(32, EMU_AUTO, 560, 32, "Models are from Kenney's Nature Kit (www.kenney.nl)"),
             new EmuText(32, EMU_AUTO, 560, 32, "Emu iconography by @gart_gh"),
             new EmuText(32, EMU_AUTO, 560, 32, "Duckling sprite by @AleMunin"),
