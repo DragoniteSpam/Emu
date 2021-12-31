@@ -303,25 +303,14 @@ function EmuCore(x, y, w, h) constructor {
 }
 
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
-    static SetCallback = function(callback) {
-        self.callback = method(self, callback);
-    };
-    
-    static SetCallbackMiddle = function(callback) {
-        self.callback_middle = method(self, callback);
-    };
-    
-    static SetCallbackRight = function(callback) {
-        self.callback_right = method(self, callback);
-    };
-    
-    static SetCallbackDouble = function(callback) {
-        self.callback_double = method(self, callback);
-    };
-    
-    static SetValue = function(value) {
-        self.value = value;
-    };
+    /// @ignore
+    self.callback = undefined;
+    /// @ignore
+    self.callback_middle = undefined;
+    /// @ignore
+    self.callback_right = undefined;
+    /// @ignore
+    self.callback_double = undefined;
     
     self.SetCallback(callback);
     self.SetValue(value);
@@ -329,6 +318,33 @@ function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) construc
     self.SetCallbackMiddle(emu_null);
     self.SetCallbackRight(emu_null);
     self.SetCallbackDouble(emu_null);
+    
+    #region mutators
+    static SetCallback = function(callback) {
+        self.callback = method(self, callback);
+        return self;
+    };
+    
+    static SetCallbackMiddle = function(callback) {
+        self.callback_middle = method(self, callback);
+        return self;
+    };
+    
+    static SetCallbackRight = function(callback) {
+        self.callback_right = method(self, callback);
+        return self;
+    };
+    
+    static SetCallbackDouble = function(callback) {
+        self.callback_double = method(self, callback);
+        return self;
+    };
+    
+    static SetValue = function(value) {
+        self.value = value;
+        return self;
+    };
+    #endregion
 }
 
 function emu_null() { }
