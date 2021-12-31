@@ -1,5 +1,15 @@
 function EmuDemoMeshScene() constructor {
-    MeshInstance = function(filename, format, x, y, z, texturefile = "") constructor {
+    MeshInstance = function(filename, x, y, z, texturefile = "") constructor {
+        static format = undefined;
+        if (format == undefined) {
+            vertex_format_begin();
+            vertex_format_add_position_3d();
+            vertex_format_add_normal();
+            vertex_format_add_texcoord();
+            vertex_format_add_color();
+            format = vertex_format_end();
+        }
+        
         model = scr_emu_demo_load_vbuff(filename, format);
         own_textue = false;
         texture = -1;
@@ -20,13 +30,6 @@ function EmuDemoMeshScene() constructor {
         };
     }
     
-    vertex_format_begin();
-    vertex_format_add_position_3d();
-    vertex_format_add_normal();
-    vertex_format_add_texcoord();
-    vertex_format_add_color();
-    format = vertex_format_end();
-    
     mesh_list = ds_list_create();
     
     camera_distance = 96;
@@ -38,17 +41,17 @@ function EmuDemoMeshScene() constructor {
     };
     
     ds_list_add(mesh_list,
-        new MeshInstance("emu/floor.vbuff", format, 0, 0, 0),
-        new MeshInstance("emu/campfire.vbuff", format, 20, 20, 0),
-        new MeshInstance("emu/logstack.vbuff", format, 20, 20, 0),
-        new MeshInstance("emu/tent.vbuff", format, -20, -20, 0),
-        new MeshInstance("emu/logstackbig.vbuff", format, 0, -20, 0),
+        new MeshInstance("emu/floor.vbuff", 0, 0, 0),
+        new MeshInstance("emu/campfire.vbuff", 20, 20, 0),
+        new MeshInstance("emu/logstack.vbuff", 20, 20, 0),
+        new MeshInstance("emu/tent.vbuff", -20, -20, 0),
+        new MeshInstance("emu/logstackbig.vbuff", 0, -20, 0),
     );
     
     repeat (32) {
         var dist = random_range(80, 200);
         var angle = random(360);
-        var mesh = new MeshInstance("emu/tree" + string(irandom(4)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0);
+        var mesh = new MeshInstance("emu/tree" + string(irandom(4)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0);
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -59,7 +62,7 @@ function EmuDemoMeshScene() constructor {
     repeat (6) {
         var dist = random_range(40, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu/rock" + string(irandom(3)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0));
+        ds_list_add(mesh_list, new MeshInstance("emu/rock" + string(irandom(3)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0));
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -70,7 +73,7 @@ function EmuDemoMeshScene() constructor {
     repeat (64) {
         var dist = random_range(36, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu/plant" + string(irandom(7)) + ".vbuff", format, dist * dcos(angle), -dist * dsin(angle), 0));
+        ds_list_add(mesh_list, new MeshInstance("emu/plant" + string(irandom(7)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0));
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -78,10 +81,10 @@ function EmuDemoMeshScene() constructor {
         ds_list_add(mesh_list, mesh);
     }
     
-    birb = new MeshInstance("emu/birb.vbuff", format, 0, 16, 0);
+    birb = new MeshInstance("emu/birb.vbuff", 0, 16, 0);
     birb.texture = sprite_get_texture(spr_emu_demo_birb_blue, 0);
     
-    skybox = new MeshInstance("emu/skybox.vbuff", format, 0, 0, 0, "emu/skybox.png");
+    skybox = new MeshInstance("emu/skybox.vbuff", 0, 0, 0, "emu/skybox.png");
     
     Control = function() {
         camera_angle += 0.3;
