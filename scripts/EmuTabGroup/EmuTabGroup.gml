@@ -6,7 +6,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
     
     // Initialize the tab _rows - which are just empty EmuCores
     repeat (self._rows) {
-        ds_list_add(self._contents, new EmuCore(0, 0, 0, 0));
+        array_push(self._contents, new EmuCore(0, 0, 0, 0));
     }
     
     self.color_back = function() { return EMU_COLOR_BACK };
@@ -25,13 +25,13 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             tabs = [tabs];
         }
         
-        var _tab_row = _contents[| row];
+        var _tab_row = _contents[row];
         for (var i = 0; i < array_length(tabs); i++) {
             var _tab = tabs[i];
             _tab.root = self;
             _tab._row = row;
-            _tab._index = ds_list_size(_contents[| row]._contents);
-            ds_list_add(_tab_row._contents, _tab);
+            _tab._index = array_length(_contents[row]._contents);
+            array_push(_tab_row._contents, _tab);
             if (!_active_tab && !_active_tab_request) {
                 RequestActivateTab(_tab);
             }
@@ -45,11 +45,11 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             throw new EmuException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(_rows) + " are available");
         }
         
-        var tab_row = _contents[| row];
-        for (var i = 0; i < ds_list_size(tab_row._contents); i++) {
-            var tab = tab_row._contents[| i];
+        var tab_row = _contents[row];
+        for (var i = 0, n = array_length(tab_row._contents); i < n; i++) {
+            var tab = tab_row._contents[i];
             tab._row = row;
-            tab._header_width = floor(width / ds_list_size(tab_row._contents));
+            tab._header_width = floor(width / n);
             tab._header_height = _row_height;
             tab._header_x = tab._header_width * i;
             tab._header_y = tab._header_height * row;
@@ -62,15 +62,15 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         }
         
         _active_tab = tab;
-        var contents_clone = ds_list_create();
-        ds_list_copy(contents_clone, _contents);
+        var contents_clone = [];
+        array_copy(contents_clone, 0, self._contents, 0, array_length(self._contents));
         var _index = 0;
-        for (var i = 0; i < ds_list_size(contents_clone); i++) {
+        for (var i = 0, n = array_length(contents_clone); i < n; i++) {
             if (i == tab._row) continue;
-            _contents[| _index] = contents_clone[| i];
+            _contents[_index] = contents_clone[i];
             arrangeRow(_index++);
         }
-        _contents[| _rows - 1] = contents_clone[| tab._row];
+        _contents[_rows - 1] = contents_clone[tab._row];
         arrangeRow(_rows - 1);
     }
     
@@ -94,8 +94,8 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             _active_tab_request = undefined;
         }
         
-        for (var i = 0; i < ds_list_size(_contents); i++) {
-            _contents[| i].Render(x1, y1 + _rows * _row_height);
+        for (var i = 0, n = array_length(_contents); i < n; i++) {
+            _contents[i].Render(x1, y1 + _rows * _row_height);
         }
         
         // no sense making a tab group non-interactive

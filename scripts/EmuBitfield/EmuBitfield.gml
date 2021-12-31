@@ -31,7 +31,7 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
         
         for (var i = 0; i < array_length(elements); i++) {
             if (!is_struct(elements[i])) {
-                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (ds_list_size(_contents) + i),
+                elements[i] = new EmuBitfieldOption(string(elements[i]), 1 << (array_length(self._contents) + i),
                 function() {
                     root.value ^= value;
                     root.callback();
@@ -49,18 +49,18 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     
     ArrangeElements = function() {
         if (_orientation == E_BitfieldOrientations.HORIZONTAL) {
-            for (var i = 0; i < ds_list_size(_contents); i++) {
-                var option = _contents[| i];
-                option.width = (_fixed_spacing == -1) ? floor(width / ds_list_size(_contents)) : _fixed_spacing;
+            for (var i = 0, n = array_length(_contents); i < n; i++) {
+                var option = _contents[i];
+                option.width = (_fixed_spacing == -1) ? floor(width / n) : _fixed_spacing;
                 option.height = height;
                 option.x = option.width * i;
                 option.y = 0;
             }
         } else {
-            for (var i = 0; i < ds_list_size(_contents); i++) {
-                var option = _contents[| i];
+            for (var i = 0, n = array_length(_contents); i < n; i++) {
+                var option = _contents[i];
                 option.width = width;
-                option.height = (_fixed_spacing == -1) ? floor(height / ds_list_size(_contents)) : _fixed_spacing;
+                option.height = (_fixed_spacing == -1) ? floor(height / n) : _fixed_spacing;
                 option.x = 0;
                 option.y = option.height * i;
             }
@@ -69,8 +69,8 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     }
     
     GetHeight = function() {
-        var first = _contents[| 0];
-        var last = _contents[| ds_list_size(_contents) - 1];
+        var first = _contents[0];
+        var last = _contents[array_length(_contents) - 1];
         return (first == undefined) ? height : (last.y + last.height - first.y);
     }
     

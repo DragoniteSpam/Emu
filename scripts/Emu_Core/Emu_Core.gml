@@ -24,7 +24,7 @@ function EmuCore(x, y, w, h) constructor {
     self.sprite_nineslice = spr_emu_nineslice;
     self.sprite_checkers = spr_emu_checker;
     
-    self._contents = ds_list_create();
+    self._contents = [];
     
     self._override_escape = false;
     self._override_tab = false;
@@ -48,7 +48,7 @@ function EmuCore(x, y, w, h) constructor {
                     thing.y = self._element_spacing_y;
                 }
             }
-            ds_list_add(self._contents, thing);
+            array_push(self._contents, thing);
             thing.root = self;
         }
         return self;
@@ -93,7 +93,7 @@ function EmuCore(x, y, w, h) constructor {
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
-            ds_list_delete(self._contents, ds_list_find_index(self._contents, thing));
+            array_delete(self._contents, emu_array_search(self._contents, thing), 1);
         }
         return self;
     }
@@ -111,8 +111,8 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static renderContents = function(at_x, at_y) {
-        for (var i = 0; i < ds_list_size(self._contents); i++) {
-            if (self._contents[| i]) self._contents[| i].Render(at_x, at_y);
+        for (var i = 0, n = array_length(self._contents); i < n; i++) {
+            if (self._contents[i]) self._contents[i].Render(at_x, at_y);
         }
     }
     
@@ -138,10 +138,9 @@ function EmuCore(x, y, w, h) constructor {
     
     static destroyContent = function() {
         if (self.isActiveElement()) _emu_active_element(undefined);
-        for (var i = 0; i < ds_list_size(self._contents); i++) {
-            self._contents[| i].Destroy();
+        for (var i = 0,n = array_length(self._contents); i < n; i++) {
+            self._contents[i].Destroy();
         }
-        ds_list_destroy(self._contents);
     }
     
     static ShowTooltip = function() {
@@ -204,7 +203,7 @@ function EmuCore(x, y, w, h) constructor {
     }
     
     static GetTop = function() {
-        return self._contents[| ds_list_size(self._contents) - 1];
+        return self._contents[array_length(self._contents) - 1];
     };
     
     static GetMouseOver = function() {
