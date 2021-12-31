@@ -55,35 +55,28 @@ tab_bio.AddContent([
     new EmuInput(32, EMU_AUTO, 512, 32, "Nickname:", data.nickname, "enter a nickname", 32, E_InputTypes.STRING, function() {
         obj_emu_demo.data.nickname = value;
     }),
+    new EmuRadioArray(32, EMU_AUTO, 512, 32, "Pronouns:", data.pronouns, function() {
+        obj_emu_demo.data.pronouns = value;
+    })
+        .AddOptions(["They/them", "He/him", "She/her"])
+        .SetColumns(1, 160),
+    new EmuList(32, EMU_AUTO, 256, 32, "Hometown:", 32, 8, function() {
+        var selection = GetSelection();
+        if (selection > -1) {
+            obj_emu_demo.data.hometown = selection;
+        }
+    })
+        .SetList(all_hometowns)
+        .Select(data.hometown, true),
+    new EmuList(320, EMU_INLINE, 256, 32, "Alignment:", 32, 8, function() {
+        var selection = GetSelection();
+        if (selection > -1) {
+            obj_emu_demo.data.alignment = selection;
+        }
+    })
+        .SetList(all_alignments)
+        .Select(data.alignment, true)
 ]);
-
-var radio_gender = new EmuRadioArray(32, EMU_AUTO, 512, 32, "Pronouns:", data.pronouns, function() {
-    obj_emu_demo.data.pronouns = value;
-});
-
-radio_gender.AddOptions(["They/them", "He/him", "She/her"]);
-radio_gender.SetColumns(1, 160);
-tab_bio.AddContent(radio_gender);
-
-var list_hometown = new EmuList(32, EMU_AUTO, 256, 32, "Hometown:", 32, 8, function() {
-    var selection = GetSelection();
-    if (selection > -1) {
-        obj_emu_demo.data.hometown = selection;
-    }
-});
-list_hometown.SetList(all_hometowns);
-list_hometown.Select(data.hometown, true);
-tab_bio.AddContent(list_hometown);
-
-var list_alignment = new EmuList(320, list_hometown.y, 256, 32, "Alignment:", 32, 8, function() {
-    var selection = GetSelection();
-    if (selection > -1) {
-        obj_emu_demo.data.alignment = selection;
-    }
-});
-list_alignment.SetList(all_alignments);
-list_alignment.Select(data.alignment, true);
-tab_bio.AddContent(list_alignment);
 #endregion
 
 #region appearance
@@ -93,133 +86,101 @@ tab_look.AddContent([
     new EmuProgressBar(32, EMU_AUTO, 256, 32, 12, 0.4, 1, true, data.size, function() {
         obj_emu_demo.data.size = value;
     }),
-]);
-
-var list_sprites = new EmuList(32, EMU_AUTO, 256, 32, "Sprite:", 32, 8, function() {
-    var selection = GetSelection();
-    switch (selection) {
-        case 0: obj_emu_demo.data.sprite = spr_emu_demo_birb_yellow; break;
-        case 1: obj_emu_demo.data.sprite = spr_emu_demo_birb_red; break;
-        case 2: obj_emu_demo.data.sprite = spr_emu_demo_birb_blue; break;
-    }
-});
-list_sprites.AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]);
-
-var favorite_color = new EmuColorPicker(32, EMU_AUTO, 256, 32, "Color:", data.favorite_color, function() {
-    obj_emu_demo.data.favorite_color = value;
-});
-
-var birb_button = new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
-    var dialog = new EmuDialog(256, 128, "Birb!");
-    dialog.AddContent([
-        new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
-        new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
-    ]);
-});
-
-tab_look.AddContent([
-    list_sprites,
-    favorite_color,
-    birb_button,
+    new EmuList(32, EMU_AUTO, 256, 32, "Sprite:", 32, 8, function() {
+        var selection = GetSelection();
+        switch (selection) {
+            case 0: obj_emu_demo.data.sprite = spr_emu_demo_birb_yellow; break;
+            case 1: obj_emu_demo.data.sprite = spr_emu_demo_birb_red; break;
+            case 2: obj_emu_demo.data.sprite = spr_emu_demo_birb_blue; break;
+        }
+    })
+        .AddEntries(["Yellow Birb", "Red Birb", "Blue Birb"]),
+    new EmuColorPicker(32, EMU_AUTO, 256, 32, "Color:", data.favorite_color, function() {
+        obj_emu_demo.data.favorite_color = value;
+    }),
+    new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
+        var dialog = new EmuDialog(256, 128, "Birb!");
+        dialog.AddContent([
+            new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
+            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
+        ]);
+    }),
 ]);
 #endregion
 
 #region stats
-
-var input_str = new EmuInput(32, EMU_AUTO, 512, 32, "Strength:", string(data.str), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.str = real(value);
-});
-input_str.SetRealNumberBounds(-5, 5);
-var input_dex = new EmuInput(32, EMU_AUTO, 512, 32, "Dexterity:", string(data.dex), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.str = real(value);
-});
-input_dex.SetRealNumberBounds(-5, 5);
-var input_con = new EmuInput(32, EMU_AUTO, 512, 32, "Constitution:", string(data.con), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.con = real(value);
-});
-input_con.SetRealNumberBounds(-5, 5);
-var input_int = new EmuInput(32, EMU_AUTO, 512, 32, "Intelligence:", string(data.int), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.int = real(value);
-});
-input_int.SetRealNumberBounds(-5, 5);
-var input_wis = new EmuInput(32, EMU_AUTO, 512, 32, "Wisdom:", string(data.wis), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.wis = real(value);
-});
-input_wis.SetRealNumberBounds(-5, 5);
-var input_cha = new EmuInput(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha), "-5 to +5", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.cha = real(value);
-});
-input_cha.SetRealNumberBounds(-5, 5);
-var input_level = new EmuInput(32, EMU_AUTO, 512, 32, "[c_lime]Level:[/c]", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
-    obj_emu_demo.data.level = real(value);
-});
-input_level.SetRealNumberBounds(1, 10);
 tab_stats.AddContent([
-    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Character Stats[/c]"),
-    input_str,
-    input_dex,
-    input_con,
-    input_int,
-    input_wis,
-    input_cha,
-    input_level,
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Character Stats"),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Strength:", string(data.str), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.str = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Dexterity:", string(data.dex), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.dex = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Constitution:", string(data.con), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.con = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Intelligence:", string(data.int), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.int = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Wisdom:", string(data.wis), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.wis = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "Charisma:", string(data.cha), "-5 to -5", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.cha = real(value);
+        })
+        .SetRealNumberBounds(-5, 5),
+    new EmuInput(32, EMU_AUTO, 512, 32, "[c_lime]Level:", string(data.level), "1 to 10", 2, E_InputTypes.INT, function() {
+            obj_emu_demo.data.level = real(value);
+        })
+        .SetRealNumberBounds(1, 10),
 ]);
 #endregion
 
 #region skills
-tab_skills.AddContent(new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Skills[/c]"));
-
-var list_your_skills = new EmuList(32, EMU_AUTO, 256, 32, "Your skills:", 32, 12, function() {
-    var selection = GetSelection();
-    if (selection > -1) {
-        name.SetValue(obj_emu_demo.data.skills[selection]);
-    }
-});
-list_your_skills.SetList(data.skills);
-tab_skills.AddContent(list_your_skills);
-
-var button_add = new EmuButton(320, list_your_skills.y, 256, 32, "Add Skill", function() {
-    array_push(obj_emu_demo.data.skills, "Skill " + string(array_length(obj_emu_demo.data.skills)));
-});
-var button_remove = new EmuButton(320, EMU_AUTO, 256, 32, "Remove Skill", function() {
-    var selection = list.GetSelection();
-    if (selection > -1) {
-        array_delete(obj_emu_demo.data.skills, selection, 1);
-    }
-});
 tab_skills.AddContent([
-    button_add,
-    button_remove,
+    new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Skills[/c]"),
+    new EmuList(32, EMU_AUTO, 256, 32, "Your skills:", 32, 12, function() {
+        var selection = GetSelection();
+        if (selection > -1) {
+            name.SetValue(obj_emu_demo.data.skills[selection]);
+        }
+    })
+        .SetList(data.skills)
+        .AddContent(self.data.skills),
+    new EmuButton(320, EMU_INLINE, 256, 32, "Add Skill", function() {
+        array_push(obj_emu_demo.data.skills, "Skill " + string(array_length(obj_emu_demo.data.skills)));
+    }),
+    new EmuButton(320, EMU_AUTO, 256, 32, "Remove Skill", function() {
+        var selection = obj_emu_demo.list_your_skills.GetSelection();
+        if (selection > -1) {
+            array_delete(obj_emu_demo.data.skills, selection, 1);
+        }
+    }),
     new EmuText(320, EMU_AUTO, 256, 32, "Skill Name:"),
+    new EmuInput(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
+        var selection = obj_emu_demo.list_your_skills.GetSelection();
+        if (selection > -1) {
+            obj_emu_demo.data.skills[@ selection] = value;
+        }
+    })
+        .SetInputBoxPosition(0, 0, 256, 32)
 ]);
-
-var input_skill_name = new EmuInput(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
-    var selection = list.GetSelection();
-    if (selection > -1) {
-        obj_emu_demo.data.skills[@ selection] = value;
-    }
-});
-input_skill_name.SetInputBoxPosition(0, 0, 256, 32);
-
-tab_skills.AddContent(input_skill_name);
-
-list_your_skills.name = input_skill_name;
-input_skill_name.list = list_your_skills;
-
-button_add.list = list_your_skills;
-button_remove.list = list_your_skills;
 #endregion
 
 #region summary
-var input_summary = new EmuInput(32, EMU_AUTO, 512, 256, "Summary:", data.summary, "up to 500 characters", 500, E_InputTypes.STRING, function() {
-    obj_emu_demo.data.summary = value;
-});
-input_summary.SetMultiLine(true);
-input_summary.SetInputBoxPosition(160, 0, 512, 256);
-
 tab_summary.AddContent([
     new EmuText(32, EMU_AUTO, 512, 32, "[c_aqua]Summary[/c]"),
-    input_summary,
+    new EmuInput(32, EMU_AUTO, 512, 256, "Summary:", data.summary, "up to 500 characters", 500, E_InputTypes.STRING, function() {
+        obj_emu_demo.data.summary = value;
+    })
+        .SetMultiLine(true)
+        .SetInputBoxPosition(160, 0, 512, 256),
 ]);
 #endregion
 
