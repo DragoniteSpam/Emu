@@ -1,11 +1,10 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
+
+function EmuDialog(w, h, title, callback = function() { self.Close(); }) : EmuCallback(0, 0, w, h, 0, callback) constructor {
     static drawn_dialog_shade_time = -1;
     
     _emu_active_element(undefined);
-    
-    SetCallback(function() { Close(); });
     
     var size = array_length(EmuOverlay._contents);
     x = 64 * (size + 1);
