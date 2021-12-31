@@ -9,7 +9,7 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
     self.color_back = function() { return EMU_COLOR_BACK };
     self.color_disabled = function() { return EMU_COLOR_DISABLED };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -35,5 +35,5 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
             .wrap(self.width, self.height)
             .align(self.alignment, self.valignment)
             .draw(floor(mean(x1, x2)), floor(mean(y1, y2)));
-    }
+    };
 }

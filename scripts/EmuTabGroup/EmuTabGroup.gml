@@ -15,7 +15,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
     self._active_tab_request = undefined;
     self._override_root_check = true;
     
-    AddTabs = function(row, tabs) {
+    static AddTabs = function(row, tabs) {
         processAdvancement();
         
         if (row > _rows) {
@@ -38,9 +38,9 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         }
         arrangeRow(row);
         return self;
-    }
+    };
     
-    arrangeRow = function(row) {
+    static arrangeRow = function(row) {
         if (row > _rows) {
             throw new EmuException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(_rows) + " are available");
         }
@@ -54,9 +54,9 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
             tab._header_x = tab._header_width * i;
             tab._header_y = tab._header_height * row;
         }
-    }
+    };
     
-    activateTab = function(tab) {
+    static activateTab = function(tab) {
         if (tab.root != self) {
             throw new EmuException("Tab is not included in group", "You are trying to activate a tab in a group that it does not belong to. Please only activate tabs that are members of a group.");
         }
@@ -72,14 +72,14 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         }
         _contents[_rows - 1] = contents_clone[tab._row];
         arrangeRow(_rows - 1);
-    }
+    };
     
-    RequestActivateTab = function(tab) {
+    static RequestActivateTab = function(tab) {
         _active_tab_request = tab;
         return self;
-    }
+    };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -101,5 +101,5 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constru
         
         // no sense making a tab group non-interactive
         draw_sprite_stretched_ext(sprite_nineslice, 2, x1, y1 + _rows * _row_height, x2 - x1, y2 - y1 - _rows * _row_height, self.color(), 1);
-    }
+    };
 }

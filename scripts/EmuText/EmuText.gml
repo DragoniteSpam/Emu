@@ -14,7 +14,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -39,5 +39,5 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
             .wrap(self.width, self.height)
             .align(self.alignment, self.valignment)
             .draw(tx, ty);
-    }
+    };
 }

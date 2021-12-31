@@ -16,16 +16,16 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
     self._integers_only = false;
     self._currently_dragging = false;
     
-    SetIntegersOnly = function(integers) {
+    static SetIntegersOnly = function(integers) {
         _integers_only = integers;
         return self;
-    }
+    };
     
-    DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
+    static DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
         draw_sprite_stretched_ext(sprite_bar, index, x1, y1, max((x2 - x1) * f, 0), y2 - y1, c, alpha);
-    }
+    };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -81,5 +81,5 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
             draw_sprite_ext(sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
             draw_sprite_ext(sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
         }
-    }
+    };
 }

@@ -15,20 +15,20 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     self.color_back = function() { return EMU_COLOR_BACK };
     
-    SetAlphaUsed = function(_alpha_used) {
+    static SetAlphaUsed = function(_alpha_used) {
         _allow_alpha = _alpha_used;
         return self;
-    }
+    };
     
-    SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
+    static SetInputBoxPosition = function(_vx1, _vy1, _vx2, _vy2) {
         _value_x1 = _vx1;
         _value_y1 = _vy1;
         _value_x2 = _vx2;
         _value_y2 = _vy2;
         return self;
-    }
+    };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -115,7 +115,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                         self._alpha_height = 16;
                         self._selecting_alpha = false;
                         
-                        SetValue = function(_value) {
+                        static SetValue = function(_value) {
                             value = _value;
                             
                             switch (axis_channel) {
@@ -135,9 +135,9 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                                     axis_value = ((value & 0xff0000) >> 16) / 0xff;
                                     break;
                             }
-                        }
+                        };
                         
-                        Render = function(base_x, base_y) {
+                        static Render = function(base_x, base_y) {
                             self.gc.Clean();
                             var x1 = x + base_x;
                             var y1 = y + base_y;
@@ -180,7 +180,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                                     var c3 = colour_replace_green(c2, 0);
                                     var c4 = (axis_value * 0xff) << 16;
                                     break;
-                            }
+                            };
                             
                             if (getMouseHover(vx1, vy1, vx2, vy2)) {
                                 if (getMouseHold(vx1, vy1, vx2, vy2)) {
@@ -350,5 +350,5 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                 ShowTooltip();
             }
         }
-    }
+    };
 }

@@ -59,7 +59,7 @@ function EmuCore(x, y, w, h) constructor {
             thing.root = self;
         }
         return self;
-    }
+    };
     
     static getTextX = function(_x) {
         switch (self.alignment) {
@@ -67,7 +67,7 @@ function EmuCore(x, y, w, h) constructor {
             case fa_center: return _x + self.width / 2;
             case fa_right: return _x + self.width - self.offset;
         }
-    }
+    };
     
     static getTextY = function(_y) {
         switch (self.valignment) {
@@ -75,24 +75,24 @@ function EmuCore(x, y, w, h) constructor {
             case fa_middle: return _y + self.height / 2;
             case fa_bottom: return _y + self.height - self.offset;
         }
-    }
+    };
     
     static SetInteractive = function(_interactive) {
         self.interactive = _interactive;
         return self;
-    }
+    };
     
     static SetNext = function(_element) {
         self._next = _element;
         if (self._next) self._next._previous = self;
         return self;
-    }
+    };
     
     static SetPrevious = function(_element) {
         self._previous = _element;
         if (self._previous) self._previous._next = self;
         return self;
-    }
+    };
     
     static RemoveContent = function(elements) {
         if (!is_array(elements)) {
@@ -103,11 +103,11 @@ function EmuCore(x, y, w, h) constructor {
             array_delete(self._contents, emu_array_search(self._contents, thing), 1);
         }
         return self;
-    }
+    };
     
     static GetHeight = function() {
         return self.height;
-    }
+    };
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
@@ -116,13 +116,13 @@ function EmuCore(x, y, w, h) constructor {
         self.processAdvancement();
         self.renderContents(self.x + base_x, self.y + base_y);
         return self;
-    }
+    };
     
     static renderContents = function(at_x, at_y) {
         for (var i = 0, n = array_length(self._contents); i < n; i++) {
             if (self._contents[i]) self._contents[i].Render(at_x, at_y);
         }
-    }
+    };
     
     static processAdvancement = function() {
         if (!self.isActiveElement()) return false;
@@ -138,13 +138,13 @@ function EmuCore(x, y, w, h) constructor {
                 return true;
             }
         }
-    }
+    };
     
     static ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere
         return self;
-    }
+    };
     
     static drawCheckerbox = function(_x, _y, _w, _h, _xscale, _yscale, _color, _alpha) {
         if (_xscale == undefined) _xscale = 1;
@@ -168,7 +168,7 @@ function EmuCore(x, y, w, h) constructor {
         draw_primitive_end();
         
         gpu_set_texrepeat(old_repeat);
-    }
+    };
     
     static isActiveDialog = function() {
         var top = EmuOverlay.GetTop();
@@ -181,23 +181,23 @@ function EmuCore(x, y, w, h) constructor {
         }
         
         return (top == root);
-    }
+    };
     
     static isActiveElement = function() {
         return EmuActiveElement == self;
-    }
+    };
     
     static Activate = function() {
         _emu_active_element(self);
         return self;
-    }
+    };
     
     self.time_click_left = -1;
     self.time_click_left_last = -10000;
     
     static GetInteractive = function() {
         return self.enabled && self.interactive && self.isActiveDialog();
-    }
+    };
     
     static GetTop = function() {
         if (array_length(self._contents) == 0) return undefined;
@@ -210,7 +210,7 @@ function EmuCore(x, y, w, h) constructor {
     
     static getMouseHover = function(x1, y1, x2, y2) {
         return self.GetInteractive() && point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), x1, y1, x2 - 1, y2 - 1);
-    }
+    };
     
     static getMousePressed = function(x1, y1, x2, y2) {
         var click = (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_left)) || (self.isActiveElement() && keyboard_check_pressed(vk_space));
@@ -221,39 +221,39 @@ function EmuCore(x, y, w, h) constructor {
             self.time_click_left = current_time;
         }
         return click;
-    }
+    };
     
     static getMouseDouble = function(x1, y1, x2, y2) {
         return self.getMousePressed(x1, y1, x2, y2) && (current_time - self.time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
-    }
+    };
     
     static getMouseHold = function(x1, y1, x2, y2) {
         return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button(0, mb_left)) || (self.isActiveElement() && keyboard_check(vk_space));
-    }
+    };
     
     static getMouseHoldDuration = function(x1, y1, x2, y2) {
         return self.getMouseHold(x1, y1, x2, y2) ? (current_time - self.time_click_left) : 0;
-    }
+    };
     
     static getMouseReleased = function(x1, y1, x2, y2) {
         return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_left)) || (self.isActiveElement() && keyboard_check_released(vk_space));
-    }
+    };
     
     static getMouseMiddlePressed = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_middle);
-    }
+    };
     
     static getMouseMiddleReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_middle);
-    }
+    };
     
     static GetMouseRightPressed = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_right);
-    }
+    };
     
     static getMouseRightReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_right);
-    }
+    };
     
     static surfaceVerify = function(surface, width, height) {
         static gc_ref = function(ref, surface) constructor {
@@ -306,23 +306,23 @@ function EmuCore(x, y, w, h) constructor {
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
     static SetCallback = function(callback) {
         self.callback = method(self, callback);
-    }
+    };
     
     static SetCallbackMiddle = function(callback) {
         self.callback_middle = method(self, callback);
-    }
+    };
     
     static SetCallbackRight = function(callback) {
         self.callback_right = method(self, callback);
-    }
+    };
     
     static SetCallbackDouble = function(callback) {
         self.callback_double = method(self, callback);
-    }
+    };
     
     static SetValue = function(value) {
         self.value = value;
-    }
+    };
     
     self.SetCallback(callback);
     self.SetValue(value);

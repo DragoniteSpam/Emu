@@ -14,7 +14,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         
         AddContent(elements);
         return self;
-    }
+    };
     
     static SetColumns = function(_column_capacity, _column_width) {
         if (_column_capacity <= 0) _column_capacity = 10000;
@@ -26,7 +26,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         }
         self.width = (array_length(self._contents) div _column_capacity) * _column_width;
         return self;
-    }
+    };
     
     static GetHeight = function() {
         var maximum_height = self.height;
@@ -34,7 +34,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
             maximum_height = max(self._contents[i].y + self.height, maximum_height);
         }
         return maximum_height;
-    }
+    };
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
@@ -57,7 +57,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
             .align(fa_left, fa_middle);
         
         self.renderContents(x1, y1);
-    }
+    };
     
     static emu_radio_array_option = function(x, y, w, h, text, value) : EmuCore(x, y, w, h) constructor {
         self.text = text;
@@ -106,5 +106,5 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         static GetInteractive = function() {
             return self.enabled && self.interactive && self.root.interactive && self.root.isActiveDialog();
         }
-    }
+    };
 }

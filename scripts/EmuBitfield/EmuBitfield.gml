@@ -6,25 +6,25 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
     self._fixed_spacing = -1;
     self._orientation = E_BitfieldOrientations.HORIZONTAL;
     
-    SetOrientation = function(orientation) {
+    static SetOrientation = function(orientation) {
         _orientation = orientation;
         ArrangeElements();
         return self;
-    }
+    };
     
-    SetFixedSpacing = function(spacing) {
+    static SetFixedSpacing = function(spacing) {
         _fixed_spacing = spacing;
         ArrangeElements();
         return self;
-    }
+    };
     
-    SetAutoSpacing = function() {
+    static SetAutoSpacing = function() {
         _fixed_spacing = -1;
         ArrangeElements();
         return self;
-    }
+    };
     
-    AddOptions = function(elements) {
+    static AddOptions = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
         }
@@ -45,9 +45,9 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
         AddContent(elements);
         ArrangeElements();
         return self;
-    }
+    };
     
-    ArrangeElements = function() {
+    static ArrangeElements = function() {
         if (_orientation == E_BitfieldOrientations.HORIZONTAL) {
             for (var i = 0, n = array_length(_contents); i < n; i++) {
                 var option = _contents[i];
@@ -66,15 +66,15 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
             }
         }
         return self;
-    }
+    };
     
-    GetHeight = function() {
+    static GetHeight = function() {
         var first = _contents[0];
         var last = _contents[array_length(_contents) - 1];
         return (first == undefined) ? height : (last.y + last.height - first.y);
-    }
+    };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -84,13 +84,13 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, valu
         var y2 = y1 + height;
         
         renderContents(x1, y1);
-    }
+    };
 }
 
 function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0, value, callback) constructor {
-    SetEval = function(eval) {
+    static SetEval = function(eval) {
         evaluate = method(self, eval);
-    }
+    };
     
     self.text = text;
     SetEval(eval);
@@ -100,7 +100,7 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
     self.color_active = function() { return EMU_COLOR_SELECTED };
     self.color_inactive = function() { return EMU_COLOR_BACK };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -129,11 +129,11 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
         if (getMousePressed(x1, y1, x2, y2)) {
             callback();
         }
-    }
+    };
     
-    GetInteractive = function() {
+    static GetInteractive = function() {
         return enabled && interactive && root.interactive && root.isActiveDialog();
-    }
+    };
 }
 
 // You may find yourself using these particularly often

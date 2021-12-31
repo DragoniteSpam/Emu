@@ -32,44 +32,44 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     self._surface = self.surfaceVerify(-1, self._value_x2 - self._value_x1, self._value_y2 - self._value_y1).surface;
     
-    SetMultiLine = function(multi_line) {
+    static SetMultiLine = function(multi_line) {
         self._multi_line = multi_line;
         return self;
-    }
+    };
     
-    SetRequireConfirm = function(require) {
+    static SetRequireConfirm = function(require) {
         self._require_enter = require;
         return self;
-    }
+    };
     
-    SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
+    static SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
         self._value_x1 = vx1;
         self._value_y1 = vy1;
         self._value_x2 = vx2;
         self._value_y2 = vy2;
         return self;
-    }
+    };
     
     static SetInputType = function(input_type) {
         self._value_type = input_type;
         return self;
     };
     
-    SetValue = function(value) {
+    static SetValue = function(value) {
         self.value = string(value);
         if (isActiveElement()) {
             keyboard_string = self.value;
         }
         return self;
-    }
+    };
     
-    SetRealNumberBounds = function(lower, upper) {
+    static SetRealNumberBounds = function(lower, upper) {
         self._value_lower = min(lower, upper);
         self._value_upper = max(lower, upper);
         return self;
-    }
+    };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -233,9 +233,9 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         
         draw_surface(_surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
-    }
+    };
     
-    ValidateInput = function(text) {
+    static ValidateInput = function(text) {
         // this used to be a switch tree, but 23.1.1.159 has issues with
         // try-catch in switch trees; if that issue has been fixed, feel
         // free to change it back if you think those look nicer
@@ -270,16 +270,16 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             return success;
         }
         return success;
-    }
+    };
     
-    CastInput = function(text) {
+    static CastInput = function(text) {
         switch (self._value_type) {
             case E_InputTypes.STRING: return text;
             case E_InputTypes.INT: return real(text);
             case E_InputTypes.REAL: return real(text);
             case E_InputTypes.HEX: return emu_hex(text);
         }
-    }
+    };
 }
 
 function emu_string_hex(value, padding = 0) {

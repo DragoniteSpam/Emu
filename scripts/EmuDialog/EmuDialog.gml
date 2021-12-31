@@ -27,16 +27,16 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     
     EmuOverlay.AddContent(self);
     
-    Close = function() {
+    static Close = function() {
         // this needs to be done after the entire dialog box is finished rendering
         _dispose = true;
-    }
+    };
     
-    GetHeight = function() {
+    static GetHeight = function() {
         return height + _header_height;
-    }
+    };
     
-    Render = function() {
+    static Render = function() {
         self.gc.Clean();
         var x1 = x;
         var y1 = y;
@@ -125,12 +125,12 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         if (kill) {
             callback();
         }
-    }
+    };
     
     // Override this function for dialogs
-    isActiveDialog = function() {
+    static isActiveDialog = function() {
         return (EmuOverlay._contents[array_length(EmuOverlay._contents) - 1] == self);
-    }
+    };
 }
 
 function emu_dialog_close_auto() {

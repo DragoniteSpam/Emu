@@ -11,7 +11,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     self.color_disabled = function() { return EMU_COLOR_DISABLED };
     self.color_back = function() { return EMU_COLOR_BACK };
     
-    Render = function(base_x, base_y) {
+    static Render = function(base_x, base_y) {
         self.gc.Clean();
         processAdvancement();
         
@@ -45,5 +45,5 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
             .wrap(self.width, self.height)
             .align(self.alignment, self.valignment)
             .draw(x1 + self.box_size + self.offset * 2, floor(mean(y1, y2)));
-    }
+    };
 }
