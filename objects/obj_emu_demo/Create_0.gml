@@ -23,17 +23,14 @@ data = {
     cha: irandom_range(-5, 5),
     level: irandom_range(1, 5),
     // skills
-    skills: ds_list_create(),
+    skills: [],
     // summary
     summary: choose("Likes bacon, lettuce and tomatoes.", "Once walked a tightrope between the Twin Towers. Nearly won a Darwin Award.", "Actually dreams in code.", "Has a pet Mimic named Douglas the Dingbat.", "Always plays as a Nord.", "Grew up believing in Santa Claus."),
     favorite_color: make_colour_hsv(irandom(255), 255, 255),
 };
 
-all_hometowns = ds_list_create();
-ds_list_add(all_hometowns, "Alcamoth", "Hogwarts", "Markarth", "Mordor", "Narnia", "New Bark", "The Shire", "Wyoming", "Zanarkand");
-
-all_alignments = ds_list_create();
-ds_list_add(all_alignments, "Lawful Good", "Lawful Neutral", "Lawful Evil", "Neutral Good", "Boring", "Neutral Evil", "Chaotic Good", "Chaotic Neutral", "Chaotic Evil");
+all_hometowns = ["Alcamoth", "Hogwarts", "Markarth", "Mordor", "Narnia", "New Bark", "The Shire", "Wyoming", "Zanarkand"];
+all_alignments = ["Lawful Good", "Lawful Neutral", "Lawful Evil", "Neutral Good", "Boring", "Neutral Evil", "Chaotic Good", "Chaotic Neutral", "Chaotic Evil"];
 
 container = new EmuCore(32, 32, 640, 640);
 
@@ -175,19 +172,19 @@ tab_skills.AddContent(new EmuText(32, EMU_AUTO, 512, 32, "[c_blue]Skills[/c]"));
 var list_your_skills = new EmuList(32, EMU_AUTO, 256, 32, "Your skills:", 32, 12, function() {
     var selection = GetSelection();
     if (selection > -1) {
-        name.SetValue(obj_emu_demo.data.skills[| selection]);
+        name.SetValue(obj_emu_demo.data.skills[selection]);
     }
 });
 list_your_skills.SetList(data.skills);
 tab_skills.AddContent(list_your_skills);
 
 var button_add = new EmuButton(320, list_your_skills.y, 256, 32, "Add Skill", function() {
-    ds_list_add(obj_emu_demo.data.skills, "Skill " + string(ds_list_size(obj_emu_demo.data.skills)));
+    array_push(obj_emu_demo.data.skills, "Skill " + string(array_length(obj_emu_demo.data.skills)));
 });
 var button_remove = new EmuButton(320, EMU_AUTO, 256, 32, "Remove Skill", function() {
     var selection = list.GetSelection();
     if (selection > -1) {
-        ds_list_delete(obj_emu_demo.data.skills, selection);
+        array_delete(obj_emu_demo.data.skills, selection, 1);
     }
 });
 tab_skills.AddContent([
@@ -199,7 +196,7 @@ tab_skills.AddContent([
 var input_skill_name = new EmuInput(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
     var selection = list.GetSelection();
     if (selection > -1) {
-        obj_emu_demo.data.skills[| selection] = value;
+        obj_emu_demo.data.skills[selection] = value;
     }
 });
 input_skill_name.SetInputBoxPosition(0, 0, 256, 32);
@@ -237,7 +234,7 @@ container.AddContent([
         var pronoun_subject = pronouns_subject[demo.data.pronouns];
         var pronouns_verb = ["are", "is", "is"];
         var pronoun_verb = pronouns_verb[demo.data.pronouns];
-        var skill_count = ds_list_size(demo.data.skills);
+        var skill_count = array_length(demo.data.skills);
         var calc_stat = function(base) {
             return 2 * base + 10;
         }
@@ -246,7 +243,7 @@ container.AddContent([
             emu_string_hex(colour_get_blue(demo.data.favorite_color), 2);
         
         var str_summary = "[rainbow][wave]" + demo.data.name + "[/wave][/rainbow] (or [rainbow][wave]" + demo.data.nickname + ",[/wave][/rainbow] according to " +
-            string_lower(pronoun_possessive) + " friends) is a " + demo.all_alignments[| demo.data.alignment] + " duckling from " + demo.all_hometowns[| demo.data.hometown] + ". " +
+            string_lower(pronoun_possessive) + " friends) is a " + demo.all_alignments[demo.data.alignment] + " duckling from " + demo.all_hometowns[demo.data.hometown] + ". " +
             pronoun_subject + " " + pronoun_verb + " Level " + string(demo.data.level) + " with [c_red]" + string(calc_stat(demo.data.str)) + "[/c] Strength, [c_red]" +
             string(calc_stat(demo.data.dex)) + "[/c] Dexterity, [c_red]" + string(calc_stat(demo.data.con)) + "[/c] Constitution, [c_red]" + string(calc_stat(demo.data.int)) +
             "[/c] Intelligence, [c_red]" + string(calc_stat(demo.data.wis)) + "[/c] Wisdom, and [c_red]" + string(calc_stat(demo.data.cha)) + "[/c] Charisma. " + pronoun_subject +
@@ -259,9 +256,9 @@ container.AddContent([
                 str_summary += ": ";
             }
             switch (skill_count) {
-                case 1: str_summary += demo.data.skills[| 0]; break;
-                case 2: str_summary += demo.data.skills[| 0] + " and " + demo.data.skills[| 1]; break;
-                default: str_summary += demo.data.skills[| 0] + ", " + demo.data.skills[| 1] + " and " + demo.data.skills[| 2]; break;
+                case 1: str_summary += demo.data.skills[0]; break;
+                case 2: str_summary += demo.data.skills[0] + " and " + demo.data.skills[1]; break;
+                default: str_summary += demo.data.skills[0] + ", " + demo.data.skills[1] + " and " + demo.data.skills[2]; break;
             }
         }
         str_summary += ".\n\n[#006600]" + demo.data.summary + "[/rainbow]";

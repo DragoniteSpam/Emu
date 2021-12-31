@@ -30,14 +30,11 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     
     self._selected_entries = { };
     self._surface = -1;
-    self._entries = ds_list_create();
+    self._entries = [];
 	self._dragging = false;
     
-    static SetList = function(_list) {
-        if (_own_entries) {
-            ds_list_destroy(_entries);
-        }
-        _entries = _list;
+    static SetList = function(array) {
+        _entries = array;
         _own_entries = false;
         ClearSelection();
         return self;
@@ -67,14 +64,14 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         
         if (!is_array(elements)) elements = [elements];
         for (var i = 0; i < array_length(elements); i++) {
-            ds_list_add(_entries, elements[i]);
+            array_push(_entries, elements[i]);
         }
         return self;
     }
     
     static Clear = function() {
         if (_own_entries) {
-            ds_list_clear(_entries);
+            _entries = [];
         } else {
             throw new EmuException("Trying to clear a list owned by someone else", "Please do not clear a list using an external list for its _entries.");
         }
@@ -110,7 +107,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         _selected_entries[$ "last"] = _list_index;
         _selected_entries[$ string(_list_index)] = true;
         if (_set_index && clamp(_list_index, _index, _index + slots - 1) != _list_index) {
-            _index = max(0, min(_list_index, ds_list_size(_entries) - slots));
+            _index = max(0, min(_list_index, array_length(_entries) - slots));
         }
         callback();
         return self;
@@ -177,7 +174,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         surface_set_target(_surface);
         draw_clear_alpha(GetInteractive() ? col_back : col_disabled, 1);
         
-        var n = ds_exists(_entries, ds_type_list) ? ds_list_size(_entries) : 0;
+        var n = array_length(_entries);
         _index = clamp(n - slots, 0, _index);
         
         if (n == 0) {
@@ -203,9 +200,9 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
                 var index_text = numbered ? (string(current_index) + ". ") : "";
                 
                 switch (entries_are) {
-                    case E_ListEntryTypes.STRINGS: index_text += string(_entries[| current_index]); break;
-                    case E_ListEntryTypes.STRUCTS: index_text += _entries[| current_index].name; break;
-                    case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(_entries[| current_index](current_index)); break;
+                    case E_ListEntryTypes.STRINGS: index_text += string(_entries[current_index]); break;
+                    case E_ListEntryTypes.STRUCTS: index_text += _entries[current_index].name; break;
+                    case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(_entries[current_index](current_index)); break;
                 }
                 
                 var base_color = global.scribble_state_starting_color;
@@ -382,7 +379,6 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     
     static Destroy = function() {
         destroyContent();
-        if (_own_entries) ds_list_destroy(_entries);
         if (_surface != -1) surface_free(_surface);
     }
 }
