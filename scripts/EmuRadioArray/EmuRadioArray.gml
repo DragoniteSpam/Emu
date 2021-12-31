@@ -51,9 +51,9 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
             self.ShowTooltip();
         }
         
-        scribble_set_wrap(self.width, self.height);
-        scribble_set_box_align(fa_left, fa_middle);
-        scribble_draw(tx, ty, self.text);
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(fa_left, fa_middle);
         
         self.renderContents(x1, y1);
     }
@@ -95,9 +95,10 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
                 draw_sprite_ext(self.sprite_radio, 3, tx + self.offset, ty, 1, 1, 0, self.color_active(), self.GetInteractive());
             }
             
-            scribble_set_box_align(fa_left, fa_center);
-            scribble_set_wrap(self.width, self.height);
-            scribble_draw(tx + self.offset + sprite_get_width(self.sprite_radio), ty, self.text);
+            scribble(self.text)
+                .wrap(self.width, self.height)
+                .align(fa_left, fa_center)
+                .draw(tx + self.offset + sprite_get_width(self.sprite_radio), ty);
         }
         
         static GetInteractive = function() {

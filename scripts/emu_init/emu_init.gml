@@ -27,6 +27,8 @@ scribble_init("emu", "fnt_emu_default", true);
 #macro EMU_INPUT_BLINKING_SPEED         800
 #macro EMU_KEY_REPEAT_DELAY             60
 #macro EMU_KEY_REPEAT_RATE              2
+
+#macro EMU_DEFAULT_FONT                 "fnt_emu_default"
 #endregion
 
 #region macros which it is not very useful to touch

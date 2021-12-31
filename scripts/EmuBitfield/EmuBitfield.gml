@@ -115,8 +115,10 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
         
         draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, back_color, 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
-        scribble_set_box_align(fa_center, fa_middle);
-        scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
+        
+        scribble(self.text)
+            .align(fa_center, fa_middle)
+            .draw(floor(mean(x1, x2)), floor(mean(y1, y2)));
         
         if (getMouseHover(x1, y1, x2, y2)) {
             ShowTooltip();

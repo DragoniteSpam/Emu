@@ -34,8 +34,9 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h) constructor {
             }
         }
         
-        scribble_set_wrap(width, height);
-        scribble_set_box_align(alignment, valignment);
-        scribble_draw(tx, ty, text);
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(self.alignment, self.valignment)
+            .draw(tx, ty);
     }
 }

@@ -47,9 +47,10 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         var tx = getTextX(x1);
         var ty = getTextY(y1);
         
-        scribble_set_box_align(fa_left, fa_middle);
-        scribble_set_wrap(width, height);
-        scribble_draw(tx, ty, text);
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(fa_left, fa_middle)
+            .draw(tx, ty);
         
         draw_sprite_stretched_ext(sprite_nineslice, 1, vx1 + 1, vy1 + 1, vx2 - vx1 - 1, vy2 - vy1 - 1, self.color_back(), 1);
         drawCheckerbox(vx1 + 2, vy1 + 2, (vx2 - vx1) - 4, (vy2 - vy1) - 4);
@@ -282,7 +283,8 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                                     _selecting_alpha = getMouseHold(0, 0, window_get_width(), window_get_height());
                                 }
                                 
-                                scribble_draw(getTextX(x + base_x), floor(mean(vy1, vy2)), "A:");
+                                scribble("A:")
+                                    .draw(self.getTextX(x + base_x), floor(mean(vy1, vy2)));
                                 drawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                                 draw_primitive_begin(pr_trianglelist);
                                 draw_vertex_colour(vx1, vy1, value, 0);

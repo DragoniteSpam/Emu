@@ -30,8 +30,9 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, 0, call
         draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, y2 - y1, back_color, 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
         
-        scribble_set_box_align(alignment, valignment);
-        scribble_set_wrap(width, height);
-        scribble_draw(floor(mean(x1, x2)), floor(mean(y1, y2)), text);
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(self.alignment, self.valignment)
+            .draw(floor(mean(x1, x2)), floor(mean(y1, y2)));
     }
 }

@@ -157,9 +157,11 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         } else {
             var txoffset = 0;
         }
-        scribble_set_box_align(fa_left, fa_center);
-        scribble_set_wrap(width, height);
-        scribble_draw(tx + txoffset, ty, text);
+        
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(fa_left, fa_center)
+            .draw(tx + txoffset, ty);
         #endregion
         
         #region list drawing
@@ -180,9 +182,11 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         if (n == 0) {
             draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, x2 - x1, element_height, col_disabled, 1);
             ty = mean(y2, y2 + height);
-            scribble_set_box_align(fa_left, fa_center);
-            scribble_set_wrap(width, height);
-            scribble_draw(tx - x1, ty - y2, text_vacant);
+            
+            scribble(self.text_vacant)
+                .wrap(self.width, self.height)
+                .align(fa_left, fa_center)
+                .draw(tx - x1, ty - y2);
         } else {
             for (var i = 0; i < min(n, slots); i++) {
                 var current_index = i + _index;
@@ -205,11 +209,10 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
                     case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(_entries[current_index](current_index)); break;
                 }
                 
-                var base_color = global.scribble_state_starting_color;
-                global.scribble_state_starting_color = c;
-                scribble_set_wrap(width, height);
-                scribble_draw(tx - x1, tya - y2, index_text);
-                global.scribble_state_starting_color = base_color;
+                scribble(index_text)
+                    .starting_format(EMU_DEFAULT_FONT, c)
+                    .wrap(self.width, self.height)
+                    .draw(tx - x1, tya - y2);
             }
         }
         

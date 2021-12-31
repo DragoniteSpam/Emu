@@ -40,8 +40,9 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
         draw_sprite_ext(sprite_check, value, bx, by, 1, 1, 0, self.color_active(), 1);
         draw_sprite_ext(sprite_check_border, 0, bx, by, 1, 1, 0, self.color(), 1);
         
-        scribble_set_box_align(alignment, valignment);
-        scribble_set_wrap(width, height);
-        scribble_draw(x1 + box_size + offset * 2, floor(mean(y1, y2)), text);
+        scribble(self.text)
+            .wrap(self.width, self.height)
+            .align(self.alignment, self.valignment)
+            .draw(x1 + self.box_size + self.offset * 2, floor(mean(y1, y2)));
     }
 }

@@ -118,9 +118,10 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
         draw_sprite_stretched_ext(sprite_nineslice, 1, x1, y1, x2 - x1, _header_height, ch, 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, _header_height, self.color(), 1);
         
-        scribble_set_box_align(fa_left, fa_middle);
-        scribble_set_wrap(width, _header_height);
-        scribble_draw(tx, ty, text);
+        scribble(text)
+            .wrap(self.width, self._header_height)
+            .align(fa_left, fa_middle)
+            .draw(tx, ty);
         
         if (close_button) {
             draw_sprite(sprite_close, cbi, cbx1, cby1);
