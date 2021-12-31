@@ -40,10 +40,17 @@ function EmuCore(x, y, w, h) constructor {
         }
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
-            if (thing.y == undefined) {
+            if (thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y + top.GetHeight() + self._element_spacing_y;
+                } else {
+                    thing.y = self._element_spacing_y;
+                }
+            } else if (thing.y == EMU_INLINE) {
+                var top = self.GetTop();
+                if (top) {
+                    thing.y = top.y;
                 } else {
                     thing.y = self._element_spacing_y;
                 }
