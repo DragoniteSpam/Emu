@@ -257,6 +257,17 @@ function EmuCore(x, y, w, h) constructor {
     static getMouseRightReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_right);
     }
+    
+    static surfaceVerify = function(surface, width, height) {
+        if (!surface_exists(surface)) {
+            return surface_create(width, height);
+        }
+        if (surface_get_width(surface) != width || surface_get_height(surface) != height) {
+            surface_free(surface);
+            return surface_create(width, height);
+        }
+        return surface;
+    };
 }
 
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
