@@ -1,7 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
-function EmuDialog(w, h, title, callback = function() { self.Close(); }) : EmuCallback(0, 0, w, h, 0, callback) constructor {
+function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : EmuCallback(0, 0, w, h, 0, callback) constructor {
     static drawn_dialog_shade_time = -1;
     
     _emu_active_element(undefined);
@@ -27,17 +27,9 @@ function EmuDialog(w, h, title, callback = function() { self.Close(); }) : EmuCa
     
     EmuOverlay.AddContent(self);
     
-    Dispose = function() {
-        _dispose = true;
-        return self;
-    }
-    
     Close = function() {
-        do {
-            array_delete(EmuOverlay._contents, array_length(EmuOverlay._contents) - 1, 1);
-        } until (array_length(EmuOverlay._contents) == 0 || EmuOverlay._contents[array_length(EmuOverlay._contents) - 1] == self);
-        _emu_active_element(pointer_null);
-        return self;
+        // this needs to be done after the entire dialog box is finished rendering
+        _dispose = true;
     }
     
     GetHeight = function() {
@@ -142,5 +134,5 @@ function EmuDialog(w, h, title, callback = function() { self.Close(); }) : EmuCa
 }
 
 function emu_dialog_close_auto() {
-    root.Dispose();
+    self.root.Close();
 }
