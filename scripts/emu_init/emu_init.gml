@@ -34,20 +34,18 @@ scribble_font_set_default(EMU_DEFAULT_FONT);
 
 #region macros which it is not very useful to touch
 #macro EMU_AUTO                         undefined
-#macro EmuOverlay                       (_emu_get_overlay())
+#macro EmuOverlay                       _emu_get_overlay()
+#macro EmuActiveElement                 _emu_active_element()
 
 function _emu_get_overlay() {
-    static _overlay = new EmuCore(0, 0, window_get_width(), window_get_height());
-    return _overlay;
+    static inst = new EmuCore(0, 0, window_get_width(), window_get_height());
+    return inst;
 }
-#macro EmuActiveElement                 (_emu_active_element())
 
-function _emu_active_element() { 
-    static _active = undefined;
-    if (argument_count > 0) {
-        _active = argument[0];
-    }
-    return _active;
+function _emu_active_element(element = undefined) {
+    static inst = undefined;
+    if (element) inst = element;
+    return inst;
 }
 #endregion
 
