@@ -196,7 +196,7 @@ tab_skills.AddContent([
 var input_skill_name = new EmuInput(320, EMU_AUTO, 256, 32, "", "", "skill name", 32, E_InputTypes.STRING, function() {
     var selection = list.GetSelection();
     if (selection > -1) {
-        obj_emu_demo.data.skills[selection] = value;
+        obj_emu_demo.data.skills[@ selection] = value;
     }
 });
 input_skill_name.SetInputBoxPosition(0, 0, 256, 32);
