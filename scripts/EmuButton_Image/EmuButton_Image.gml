@@ -65,9 +65,4 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         draw_surface_ext(_surface, x1, y1, 1, 1, 0, back_color, 1);
         draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
     }
-    
-    Destroy = function() {
-        if (surface_exists(_surface)) surface_free(_surface);
-        destroyContent();
-    }
 }

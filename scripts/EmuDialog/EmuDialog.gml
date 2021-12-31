@@ -35,10 +35,8 @@ function EmuDialog(w, h, title) : EmuCallback(0, 0, w, h, 0, 0) constructor {
     
     Close = function() {
         do {
-            var top = EmuOverlay._contents[array_length(EmuOverlay._contents) - 1];
-            top.Destroy();
             array_delete(EmuOverlay._contents, array_length(EmuOverlay._contents) - 1, 1);
-        } until (top == self);
+        } until (array_length(EmuOverlay._contents) == 0 || EmuOverlay._contents[array_length(EmuOverlay._contents) - 1] == self);
         return self;
     }
     

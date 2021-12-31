@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x, y, w, h) constructor {
+function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h) constructor {
     SetRender = function(render) {
         callback_render = method(self, render);
         return self;
@@ -18,7 +18,6 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
     
     SetRender(render);
     SetStep(step);
-    callback_destroy = method(self, destroy);
     
     callback_recreate = function() {
         draw_clear(c_black);
@@ -82,11 +81,5 @@ function EmuRenderSurface(x, y, w, h, render, step, create, destroy) : EmuCore(x
         surface_reset_target();
         
         draw_surface(_surface, x1, y1);
-    }
-    
-    Destroy = function() {
-        destroyContent();
-        if (surface_exists(_surface)) surface_free(_surface);
-        callback_destroy();
     }
 }

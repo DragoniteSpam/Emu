@@ -287,8 +287,7 @@ container.AddContent(
     new EmuRenderSurface(704, 144, 540, 400,
         function(mx, my) { scene.Render(); },
         function(mx, my) { scene.Control(); },
-        function() { scene = new EmuDemoMeshScene(); },
-        function() { scene.Destroy(); }
+        function() { scene = new EmuDemoMeshScene(); }
     )
 );
 #endregion

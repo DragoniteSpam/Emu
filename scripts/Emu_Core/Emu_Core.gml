@@ -133,17 +133,6 @@ function EmuCore(x, y, w, h) constructor {
         }
     }
     
-    static Destroy = function() {
-        self.destroyContent();
-    }
-    
-    static destroyContent = function() {
-        if (self.isActiveElement()) _emu_active_element(undefined);
-        for (var i = 0,n = array_length(self._contents); i < n; i++) {
-            self._contents[i].Destroy();
-        }
-    }
-    
     static ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere

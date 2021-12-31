@@ -235,11 +235,6 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
     }
     
-    Destroy = function() {
-        destroyContent();
-        if (surface_exists(_surface)) surface_free(_surface);
-    }
-    
     ValidateInput = function(text) {
         // this used to be a switch tree, but 23.1.1.159 has issues with
         // try-catch in switch trees; if that issue has been fixed, feel

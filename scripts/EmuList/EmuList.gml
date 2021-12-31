@@ -375,9 +375,4 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         }
         #endregion
     }
-    
-    static Destroy = function() {
-        destroyContent();
-        if (_surface != -1) surface_free(_surface);
-    }
 }

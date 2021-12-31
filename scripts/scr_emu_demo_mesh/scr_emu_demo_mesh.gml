@@ -34,11 +34,7 @@ function EmuDemoMeshScene() constructor {
             matrix_set(matrix_world, matrix_build(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z));
             vertex_submit(model, pr_trianglelist, -1);
             matrix_set(matrix_world, matrix_build_identity());
-        }
-        
-        Destroy = function() {
-            vertex_delete_buffer(model);
-        }
+        };
     }
     
     MeshTexturedInstance = function(_filename, _format, _x, _y, _z, _texturefile) constructor {
@@ -82,14 +78,7 @@ function EmuDemoMeshScene() constructor {
             matrix_set(matrix_world, matrix_build(position.x, position.y, position.z, rotation.x, rotation.y, rotation.z, scale.x, scale.y, scale.z));
             vertex_submit(model, pr_trianglelist, sprite_get_texture(texture_sprite, 0));
             matrix_set(matrix_world, matrix_build_identity());
-        }
-        
-        Destroy = function() {
-            vertex_delete_buffer(model);
-            if (own_texture) {
-                sprite_delete(texture_sprite);
-            }
-        }
+        };
     }
     
     vertex_format_begin();
@@ -200,16 +189,5 @@ function EmuDemoMeshScene() constructor {
         birb.Render();
         
         shader_reset();
-    }
-    
-    Destroy = function() {
-        for (var i = 0; i < ds_list_size(mesh_list); i++) {
-            mesh_list[| i].Destroy();
-        }
-        ds_list_destroy(mesh_list);
-        skybox.Destroy();
-        birb.Destroy();
-        vertex_format_delete(format);
-        vertex_format_delete(format_texture);
-    }
+    };
 }

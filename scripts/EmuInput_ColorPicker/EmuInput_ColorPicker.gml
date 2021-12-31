@@ -351,8 +351,4 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
             }
         }
     }
-    
-    Destroy = function() {
-        destroyContent();
-    }
 }
