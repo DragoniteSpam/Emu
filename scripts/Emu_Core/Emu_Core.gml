@@ -140,6 +140,16 @@ function EmuCore(x, y, w, h) constructor {
     static GetMouseOver = function() {
         return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
     };
+    
+    static GetChild = function(id) {
+        id = string(id);
+        return self.child_ids[$ id];
+    };
+    
+    static GetSibling = function(id) {
+        if (!self.root) return undefined;
+        return self.root.GetChild(id);
+    };
     #endregion
     
     #region other public methods
