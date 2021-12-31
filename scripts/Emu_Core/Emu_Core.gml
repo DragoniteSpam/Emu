@@ -1,43 +1,130 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuCore(x, y, w, h) constructor {
+    /// @ignore
     self.x = x;
+    /// @ignore
     self.y = y;
+    /// @ignore
     self.width = w;
+    /// @ignore
     self.height = h;
+    /// @ignore
     self.root = undefined;
-    self.flags = 0;
     
+    /// @ignore
     self.enabled = true;
+    /// @ignore
     self.interactive = true;
+    /// @ignore
     self.outline = true;             // not used in all element types
+    /// @ignore
     self.tooltip = "";               // not used by all element types
+    /// @ignore
     self.color = function() { return EMU_COLOR_DEFAULT };
     
+    /// @ignore
     self.active_element = noone;
     
+    /// @ignore
     self.text = "core";
+    /// @ignore
     self.offset = 12;
     
-    
+    /// @ignore
     self.align = {
         h: fa_left,
         v: fa_middle,
     };
     
+    /// @ignore
     self.sprite_nineslice = spr_emu_nineslice;
+    /// @ignore
     self.sprite_checkers = spr_emu_checker;
     
+    /// @ignore
     self.contents = [];
     
+    /// @ignore
     self.override_escape = false;
+    /// @ignore
     self.override_tab = false;
+    /// @ignore
     self.override_root_check = false;
     
+    /// @ignore
     self.next = noone;
+    /// @ignore
     self.previous = noone;
+    /// @ignore
+    self.element_spacing_x = 32;
+    /// @ignore
     self.element_spacing_y = 16;
     
+    /// @ignore
+    self.time_click_left = -1;
+    /// @ignore
+    self.time_click_left_last = -10000;
+    
+    #region mutators
+    static SetInteractive = function(interactive) {
+        self.interactive = interactive;
+        return self;
+    };
+    
+    static SetEnabled = function(enabled) {
+        self.enabled = enabled;
+        return self;
+    };
+    
+    static SetTooltip = function(text) {
+        self.tooltip = text;
+        return self;
+    };
+    
+    static SetTooltip = function(sprite) {
+        self.sprite_nineslice = sprite;
+        return self;
+    };
+    
+    static SetTooltip = function(sprite) {
+        self.sprite_checkers = sprite;
+        return self;
+    };
+    
+    static SetNext = function(element) {
+        self.next = element;
+        if (self.next) self.next.previous = self;
+        return self;
+    };
+    
+    static SetPrevious = function(element) {
+        self.previous = element;
+        if (self.previous) self.previous.next = self;
+        return self;
+    };
+    #endregion
+    
+    #region accessors
+    static GetHeight = function() {
+        return self.height;
+    };
+    
+    static GetInteractive = function() {
+        return self.enabled && self.interactive && self.isActiveDialog();
+    };
+    
+    static GetTop = function() {
+        if (array_length(self.contents) == 0) return undefined;
+        return self.contents[array_length(self.contents) - 1];
+    };
+    
+    static GetMouseOver = function() {
+        return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
+    };
+    #endregion
+    
+    #region other public methods
     static AddContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -65,39 +152,6 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static getTextX = function(x) {
-        switch (self.align.h) {
-            case fa_left: return x + self.offset;
-            case fa_center: return x + self.width / 2;
-            case fa_right: return x + self.width - self.offset;
-        }
-    };
-    
-    static getTextY = function(y) {
-        switch (self.align.v) {
-            case fa_top: return y + self.offset;
-            case fa_middle: return y + self.height / 2;
-            case fa_bottom: return y + self.height - self.offset;
-        }
-    };
-    
-    static SetInteractive = function(interactive) {
-        self.interactive = interactive;
-        return self;
-    };
-    
-    static SetNext = function(element) {
-        self.next = element;
-        if (self.next) self.next.previous = self;
-        return self;
-    };
-    
-    static SetPrevious = function(element) {
-        self.previous = element;
-        if (self.previous) self.previous.next = self;
-        return self;
-    };
-    
     static RemoveContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -109,10 +163,6 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
-    static GetHeight = function() {
-        return self.height;
-    };
-    
     static Render = function(base_x, base_y) {
         self.gc.Clean();
         if (base_x == undefined) base_x = 0;
@@ -122,12 +172,45 @@ function EmuCore(x, y, w, h) constructor {
         return self;
     };
     
+    static ShowTooltip = function() {
+        // The implementation of this is up to you - but you probably want to
+        // assign the element's "tooltip" text to be drawn on the UI somewhere
+        return self;
+    };
+    
+    static Activate = function() {
+        _emu_active_element(self);
+        return self;
+    };
+    #endregion
+    
+    #region private methods
+    /// @ignore
+    static getTextX = function(x) {
+        switch (self.align.h) {
+            case fa_left: return x + self.offset;
+            case fa_center: return x + self.width / 2;
+            case fa_right: return x + self.width - self.offset;
+        }
+    };
+    
+    /// @ignore
+    static getTextY = function(y) {
+        switch (self.align.v) {
+            case fa_top: return y + self.offset;
+            case fa_middle: return y + self.height / 2;
+            case fa_bottom: return y + self.height - self.offset;
+        }
+    };
+    
+    /// @ignore
     static renderContents = function(at_x, at_y) {
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
             if (self.contents[i]) self.contents[i].Render(at_x, at_y);
         }
     };
     
+    /// @ignore
     static processAdvancement = function() {
         if (!self.isActiveElement()) return false;
         if (!self.override_tab && keyboard_check_pressed(vk_tab)) {
@@ -144,12 +227,7 @@ function EmuCore(x, y, w, h) constructor {
         }
     };
     
-    static ShowTooltip = function() {
-        // The implementation of this is up to you - but you probably want to
-        // assign the element's "tooltip" text to be drawn on the UI somewhere
-        return self;
-    };
-    
+    /// @ignore
     static drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
@@ -169,6 +247,7 @@ function EmuCore(x, y, w, h) constructor {
         gpu_set_texrepeat(old_repeat);
     };
     
+    /// @ignore
     static isActiveDialog = function() {
         var top = EmuOverlay.GetTop();
         if (!top) return true;
@@ -182,31 +261,13 @@ function EmuCore(x, y, w, h) constructor {
         return (top == root);
     };
     
+    /// @ignore
     static isActiveElement = function() {
         return EmuActiveElement == self;
     };
+    #endregion
     
-    static Activate = function() {
-        _emu_active_element(self);
-        return self;
-    };
-    
-    self.time_click_left = -1;
-    self.time_click_left_last = -10000;
-    
-    static GetInteractive = function() {
-        return self.enabled && self.interactive && self.isActiveDialog();
-    };
-    
-    static GetTop = function() {
-        if (array_length(self.contents) == 0) return undefined;
-        return self.contents[array_length(self.contents) - 1];
-    };
-    
-    static GetMouseOver = function() {
-        return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
-    };
-    
+    #region cursor detection methods
     static getMouseHover = function(x1, y1, x2, y2) {
         return self.GetInteractive() && point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), x1, y1, x2 - 1, y2 - 1);
     };
@@ -253,7 +314,10 @@ function EmuCore(x, y, w, h) constructor {
     static getMouseRightReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_right);
     };
+    #endregion
     
+    #region garbage collector stuff
+    /// @ignore
     static surfaceVerify = function(surface, width, height) {
         static gc_ref = function(ref, surface) constructor {
             self.ref = ref;
@@ -277,6 +341,7 @@ function EmuCore(x, y, w, h) constructor {
         return { surface: surface, changed: false };
     };
     
+    /// @ignore
     static gc = new (function() constructor {
         self.frequency = 500;               // ms between cleanings
         self.batch_size = 10;               // items per cleanings
@@ -300,6 +365,7 @@ function EmuCore(x, y, w, h) constructor {
             }
         };
     })();
+    #endregion
 }
 
 function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
