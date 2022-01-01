@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCore(x, y, w, h) constructor {
+function EmuCore(x, y, w, h, text) constructor {
     /// @ignore
     self.x = x;
     /// @ignore
@@ -31,7 +31,7 @@ function EmuCore(x, y, w, h) constructor {
     self.active_element = noone;
     
     /// @ignore
-    self.text = "core";
+    self.text = text;
     /// @ignore
     self.offset = 12;
     
@@ -71,6 +71,11 @@ function EmuCore(x, y, w, h) constructor {
     self.time_click_left_last = -10000;
     
     #region mutators
+    static SetText = function(text) {
+        self.text = text;
+        return self;
+    };
+    
     static SetInteractive = function(interactive) {
         self.interactive = interactive;
         return self;
@@ -405,7 +410,7 @@ function EmuCore(x, y, w, h) constructor {
     #endregion
 }
 
-function EmuCallback(x, y, w, h, value, callback) : EmuCore(x, y, w, h) constructor {
+function EmuCallback(x, y, w, h, text, value, callback) : EmuCore(x, y, w, h, text) constructor {
     /// @ignore
     self.callback = undefined;
     /// @ignore

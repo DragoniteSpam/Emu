@@ -3,9 +3,7 @@
 
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason
-function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
-    self.text = text;
-    
+function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
     self.allow_alpha = false;
     
     self.box = {
@@ -78,7 +76,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                     var yy = 64;
                     var spacing = 16;
                     
-                    var controls = function(x, y, w, h, value, allow_alpha, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+                    var controls = function(x, y, w, h, value, allow_alpha, callback) : EmuCallback(x, y, w, h, "", value, callback) constructor {
                         enum EmuColorChannels { R, G, B, A }
                         
                         self.axis_value = 0;

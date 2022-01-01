@@ -1,12 +1,12 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h) constructor {
+function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab group") constructor {
     self.rows = rows;
     self.row_height = row_height;
     
     // Initialize the tab rows - which are just empty EmuCores
     repeat (self.rows) {
-        array_push(self.contents, new EmuCore(0, 0, 0, 0));
+        array_push(self.contents, new EmuCore(0, 0, 0, 0, ""));
     }
     
     self.color_back = function() { return EMU_COLOR_BACK };

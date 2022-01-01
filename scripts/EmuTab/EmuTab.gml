@@ -1,12 +1,8 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuTab(name) : EmuCore(0, 0, 0, 0) constructor {
-    self.text = name;
-    
-    self.align = {
-        h: fa_center,
-        v: fa_middle,
-    };
+function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
+    self.align.h = fa_center;
+    self.align.v = fa_middle;
     
     self.sprite_nineslice = spr_emu_nineslice_tab;
     

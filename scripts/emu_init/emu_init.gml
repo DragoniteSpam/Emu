@@ -39,7 +39,7 @@ scribble_font_set_default(EMU_DEFAULT_FONT);
 #macro EmuActiveElement                 _emu_active_element()
 
 function _emu_get_overlay() {
-    static EmuCoreOverlay = function() : EmuCore(0, 0, 1, 1) constructor {
+    static EmuCoreOverlay = function() : EmuCore(0, 0, 1, 1, "overlay") constructor {
         static baseRender = self.Render;
         static Render = function() {
             self.width = window_get_width();

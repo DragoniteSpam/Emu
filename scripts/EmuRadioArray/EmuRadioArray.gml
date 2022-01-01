@@ -1,8 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
-    self.text = text;
-    
+function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
     static AddOptions = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -59,8 +57,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         self.renderContents(x1, y1);
     };
     
-    static emu_radio_array_option = function(x, y, w, h, text, value) : EmuCore(x, y, w, h) constructor {
-        self.text = text;
+    static emu_radio_array_option = function(x, y, w, h, text, value) : EmuCore(x, y, w, h, text) constructor {
         self.value = value;
         
         self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE };
