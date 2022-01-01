@@ -28,30 +28,25 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
         return self;
     };
     
-    
     static SetSpriteBorder = function(sprite) {
         self.box_size = sprite;
         return self;
     };
-    
     
     static SetColorActive = function(color_function) {
         self.color_active = method(self, color_function);
         return self;
     };
     
-    
     static SetColorHover = function(color_function) {
         self.color_hover = method(self, color_function);
         return self;
     };
     
-    
     static SetColorDisabled = function(color_function) {
         self.color_disabled = method(self, color_function);
         return self;
     };
-    
     
     static SetColorBack = function(color_function) {
         self.color_back = method(self, color_function);
