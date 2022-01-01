@@ -1,25 +1,12 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h) constructor {
-    static SetRender = function(render) {
-        callback_render = method(self, render);
-        return self;
-    };
-    
-    static SetStep = function(step) {
-        callback_step = method(self, step);
-        return self;
-    };
-    
-    static SetRecreate = function(recreate) {
-        callback_recreate = method(self, recreate);
-        return self;
-    };
-    
-    SetRender(render);
-    SetStep(step);
-    
-    static callback_recreate = function() {
+    /// @ignore
+    self.callback_render = method(self, render);
+    /// @ignore
+    self.callback_step = method(self, step);
+    /// @ignore
+    self.callback_recreate = function() {
         draw_clear(c_black);
         return self;
     };
@@ -30,22 +17,38 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
     method(self, create)();
     surface_reset_target();
     
+    #region mutators
+    static SetRender = function(render) {
+        self.callback_render = method(self, render);
+        return self;
+    };
+    
+    static SetStep = function(step) {
+        self.callback_step = method(self, step);
+        return self;
+    };
+    
+    static SetRecreate = function(recreate) {
+        self.callback_recreate = method(self, recreate);
+        return self;
+    };
+    #endregion
+    
+    #region accessors
     static GetSurface = function() {
-        return surface;
+        return self.surface;
     };
+    #endregion
     
-    static Recreate = function() {
-        
-    };
-    
-    static Render = function(base_x, base_y) {
+    #region other methods
+    static Render = function(x, y) {
         self.gc.Clean();
-        processAdvancement();
+        self.processAdvancement();
         
-        var x1 = x + base_x;
-        var y1 = y + base_y;
-        var x2 = x1 + width;
-        var y2 = y1 + height;
+        var x1 = self.x + x;
+        var y1 = self.y + y;
+        var x2 = x1 + self.width;
+        var y2 = y1 + self.height;
         var mx = device_mouse_x_to_gui(0) - x1;
         var my = device_mouse_y_to_gui(0) - y1;
         
@@ -54,25 +57,25 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         
         if (verify.changed) {
             surface_set_target(self.surface);
-            callback_recreate();
+            self.callback_recreate();
             surface_reset_target();
         }
         
-        if (getMouseHover(x1, y1, x2, y2)) {
-            ShowTooltip();
-            if (getMousePressed(x1, y1, x2, y2)) {
-                Activate();
+        if (self.getMouseHover(x1, y1, x2, y2)) {
+            self.ShowTooltip();
+            if (self.getMousePressed(x1, y1, x2, y2)) {
+                self.Activate();
             }
         }
         
-        callback_step(mx, my);
+        self.callback_step(mx, my);
         
-        surface_set_target(surface);
+        surface_set_target(self.surface);
         var camera = camera_get_active();
         var old_view_mat = camera_get_view_mat(camera);
         var old_proj_mat = camera_get_proj_mat(camera);
         var old_state = gpu_get_state();
-        callback_render(mx, my);
+        self.callback_render(mx, my);
         camera_set_view_mat(camera, old_view_mat);
         camera_set_proj_mat(camera, old_proj_mat);
         camera_apply(camera);
@@ -80,6 +83,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         ds_map_destroy(old_state);
         surface_reset_target();
         
-        draw_surface(surface, x1, y1);
+        draw_surface(self.surface, x1, y1);
     };
+    #endregion
 }
