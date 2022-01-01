@@ -1,85 +1,144 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, value, callback) : EmuCallback(x, y, w, h, value, callback) constructor {
+    /// @region
     self.thickness = thickness;
+    /// @region
     self.value_min = min(value_min, value_max);
+    /// @region
     self.value_max = max(value_min, value_max);
+    /// @region
     self.draggable = draggable;
     
     self.color_bar = function() { return EMU_COLOR_PROGRESS_BAR };
+    /// @region
     self.color_back = function() { return EMU_COLOR_BACK };
     
+    /// @region
     self.sprite_bar = spr_emu_progress;
+    /// @region
     self.sprite_knob = spr_emu_knob;
+    /// @region
     self.knob_scale = 2;
     
+    /// @region
     self.integers_only = false;
+    /// @region
     self.dragging = false;
     
-    static SetIntegersOnly = function(integers) {
-        integers_only = integers;
+    #region mutators
+    static SetThickness = function(thickness) {
+        self.thickness = thickness;
         return self;
     };
     
-    static DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
-        draw_sprite_stretched_ext(sprite_bar, index, x1, y1, max((x2 - x1) * f, 0), y2 - y1, c, alpha);
+    
+    static SetValueRange = function(value_min, value_max) {
+        self.value_min = value_min;
+        self.value_max = value_max;
+        return self;
     };
     
-    static Render = function(base_x, base_y) {
+    
+    static SetDraggable = function(draggable) {
+        self.draggable = draggable;
+        return self;
+    };
+    
+    
+    static SetSpriteBar = function(sprite) {
+        self.sprite_bar = sprite;
+        return self;
+    };
+    
+    
+    static SetSpriteKnob = function(sprite) {
+        self.sprite_knob = sprite;
+        return self;
+    };
+    
+    static SetColorBar = function(color_function) {
+        self.color_bar = method(self, color_function);
+        return self;
+    };
+    
+    static SetColorBack = function(color_function) {
+        self.color_back = method(self, color_function);
+        return self;
+    };
+    
+    static SetKnobScale = function(scale) {
+        self.knob_scale = scale;
+        return self;
+    };
+    
+    static SetIntegersOnly = function(integers) {
+        self.integers_only = integers;
+        return self;
+    };
+    #endregion
+    
+    #region other methods
+    static DrawProgress = function(index, x1, y1, x2, y2, f, c, alpha) {
+        draw_sprite_stretched_ext(self.sprite_bar, index, x1, y1, max((x2 - x1) * f, 0), y2 - y1, c, alpha);
+    };
+    
+    static Render = function(x, y) {
         self.gc.Clean();
-        processAdvancement();
+        self.processAdvancement();
         
-        var x1 = x + base_x;
-        var y1 = y + base_y;
-        var x2 = x1 + width;
-        var y2 = y1 + height;
+        var x1 = self.x + x;
+        var y1 = self.y + y;
+        var x2 = x1 + self.width;
+        var y2 = y1 + self.height;
         
-        var bx1 = x1 + offset;
-        var by1 = floor(mean(y1, y2) - thickness / 2);
-        var bx2 = x2 - offset;
-        var by2 = floor(mean(y1, y2) + thickness / 2);
+        var bx1 = x1 + self.offset;
+        var by1 = floor(mean(y1, y2) - self.thickness / 2);
+        var bx2 = x2 - self.offset;
+        var by2 = floor(mean(y1, y2) + self.thickness / 2);
         
         var knob_color = EMU_COLOR_BACK;
         
-        if (getMouseHover(x1, y1, x2, y2)) {
-            ShowTooltip();
+        if (self.getMouseHover(x1, y1, x2, y2)) {
+            self.ShowTooltip();
             knob_color = EMU_COLOR_HOVER;
         }
         
-        if (draggable) {
-            if (getMousePressed(x1, y1, x2, y2)) {
-                Activate();
-                dragging = true;
+        if (self.draggable) {
+            if (self.getMousePressed(x1, y1, x2, y2)) {
+                self.Activate();
+                self.dragging = true;
             }
             
-            if (dragging) {
-                if (getMouseHold(0, 0, window_get_width(), window_get_height())) {
+            if (self.dragging) {
+                if (self.getMouseHold(0, 0, window_get_width(), window_get_height())) {
                     knob_color = EMU_COLOR_SELECTED;
-                    value = clamp((device_mouse_x_to_gui(0) - bx1) / (bx2 - bx1) * (value_max - value_min) + value_min, value_min, value_max);
-                    if (integers_only) {
-                        value = round(value);
+                    self.value = clamp((device_mouse_x_to_gui(0) - bx1) / (bx2 - bx1) * (self.value_max - self.value_min) + self.value_min, self.value_min, self.value_max);
+                    if (self.integers_only) {
+                        self.value = round(self.value);
                     }
-                    callback();
+                    self.callback();
                 } else {
-                    dragging = false;
+                    self.dragging = false;
                 }
             }
         }
         
-        var f = clamp((value - value_min) / (value_max - value_min), 0, 1);
+        var f = clamp((self.value - self.value_min) / (self.value_max - self.value_min), 0, 1);
         
-        DrawProgress(2, bx1, by1, bx2, by2, 1, self.color_back(), 1);
-        DrawProgress(0, bx1, by1, bx2, by2, f, self.color_bar(), 1);
-        DrawProgress(1, bx1, by1, bx2, by2, 1, self.color(), 1);
+        self.DrawProgress(2, bx1, by1, bx2, by2, 1, self.color_back(), 1);
+        self.DrawProgress(0, bx1, by1, bx2, by2, f, self.color_bar(), 1);
+        self.DrawProgress(1, bx1, by1, bx2, by2, 1, self.color(), 1);
         
-        if (draggable) {
+        if (self.draggable) {
             var w = bx2 - bx1;
             var h = by2 - by1;
             var fw = max(w * f, 0);
-            var scale = knob_scale * thickness / sprite_get_height(sprite_knob);
-            draw_sprite_ext(sprite_knob, 2, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, knob_color, 1);
-            draw_sprite_ext(sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
-            draw_sprite_ext(sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
+            var scale = self.knob_scale * self.thickness / sprite_get_height(self.sprite_knob);
+            draw_sprite_ext(self.sprite_knob, 2, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, knob_color, 1);
+            draw_sprite_ext(self.sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
+            draw_sprite_ext(self.sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
         }
     };
+    #endregion
 }
