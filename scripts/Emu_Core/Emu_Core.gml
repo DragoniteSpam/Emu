@@ -12,7 +12,7 @@ function EmuCore(x, y, w, h, text) constructor {
     /// @ignore
     self.root = undefined;
     /// @ignore
-    self.id = "";
+    self.identifier = "";
     /// @ignore
     self.child_ids = { };
     
@@ -113,17 +113,17 @@ function EmuCore(x, y, w, h, text) constructor {
         return self;
     };
     
-    static SetID = function(id) {
-        id = string(id);
+    static SetID = function(identifier) {
+        identifier = string(identifier);
         if (self.root) {
-            if (self.root.child_ids[$ self.id] == self) {
-                variable_struct_remove(self.root.child_ids, self.id);
+            if (self.root.child_ids[$ self.identifier] == self) {
+                variable_struct_remove(self.root.child_ids, self.identifier);
             }
-            if (id != "") {
-                self.root.child_ids[$ id] = self;
+            if (identifier != "") {
+                self.root.child_ids[$ identifier] = self;
             }
         }
-        self.id = id;
+        self.identifier = identifier;
         return self;
     };
     #endregion
@@ -146,14 +146,14 @@ function EmuCore(x, y, w, h, text) constructor {
         return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
     };
     
-    static GetChild = function(id) {
-        id = string(id);
-        return self.child_ids[$ id];
+    static GetChild = function(identifier) {
+        identifier = string(identifier);
+        return self.child_ids[$ identifier];
     };
     
-    static GetSibling = function(id) {
+    static GetSibling = function(identifier) {
         if (!self.root) return undefined;
-        return self.root.GetChild(id);
+        return self.root.GetChild(identifier);
     };
     #endregion
     
@@ -182,8 +182,8 @@ function EmuCore(x, y, w, h, text) constructor {
                 }
             }
             
-            if (thing.id != "") {
-                self.child_ids[$ thing.id] = thing;
+            if (thing.identifier != "") {
+                self.child_ids[$ thing.identifier] = thing;
             }
             
             array_push(self.contents, thing);
@@ -199,8 +199,8 @@ function EmuCore(x, y, w, h, text) constructor {
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
             array_delete(self.contents, emu_array_search(self.contents, thing), 1);
-            if (self.child_ids[$ thing.id] == thing) {
-                variable_struct_remove(self.child_ids, thing.id);
+            if (self.child_ids[$ thing.identifier] == thing) {
+                variable_struct_remove(self.child_ids, thing.identifier);
             }
         }
         _emu_active_element(pointer_null);
