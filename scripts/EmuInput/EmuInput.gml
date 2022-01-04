@@ -237,40 +237,31 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     };
     
     static ValidateInput = function(text) {
-        // this used to be a switch tree, but 23.1.1.159 has issues with
-        // try-catch in switch trees; if that issue has been fixed, feel
-        // free to change it back if you think those look nicer
-        var success = true;
-        if (self.value_type == E_InputTypes.STRING) {
-            return true;
+        switch (self._value_type) {
+        	case E_InputTypes.STRING:
+        		return true;
+        	case E_InputTypes.INT:
+	        	if (string_count(".", text) > 0) return false;
+	        	if (string_count("e", text) > 0) return false;
+	            try {
+	                real(text);
+	            } catch (e) {
+	                return false;
+	            }
+        	case E_InputTypes.REAL:
+	            try {
+	                real(text);
+	            } catch (e) {
+	                return false;
+	            }
+            case E_InputTypes.HEX:
+	            try {
+	                emu_hex(text);
+	            } catch (e) {
+	                return false;
+	            }
         }
-        if (self.value_type == E_InputTypes.INT) {
-            try {
-                var cast = real(text);
-                if (floor(cast) != cast) success = false;
-            } catch (e) {
-                success = false;
-            }
-            return success;
-        }
-        if (self.value_type == E_InputTypes.REAL) {
-            try {
-                var cast = real(text);
-            } catch (e) {
-                success = false;
-            }
-            return success;
-        }
-        if (self.value_type == E_InputTypes.HEX) {
-            var success = true;
-            try {
-                var cast = emu_hex(text);
-            } catch (e) {
-                success = false;
-            }
-            return success;
-        }
-        return success;
+        return true;
     };
     
     static CastInput = function(text) {
