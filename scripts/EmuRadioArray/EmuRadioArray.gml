@@ -52,7 +52,8 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         
         scribble(self.text)
             .wrap(self.width, self.height)
-            .align(fa_left, fa_middle);
+            .align(fa_left, fa_middle)
+            .draw(tx, ty);
         
         self.renderContents(x1, y1);
     };
