@@ -35,6 +35,7 @@ scribble_font_set_default(EMU_DEFAULT_FONT);
 #region macros which it is not very useful to touch
 #macro EMU_AUTO                         ptr(0)
 #macro EMU_INLINE                       ptr(1)
+#macro EMU_BASE                         ptr(2)
 #macro EmuOverlay                       _emu_get_overlay()
 #macro EmuActiveElement                 _emu_active_element()
 

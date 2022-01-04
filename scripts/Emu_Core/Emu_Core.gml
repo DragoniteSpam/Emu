@@ -180,6 +180,8 @@ function EmuCore(x, y, w, h, text = "") constructor {
                 } else {
                     thing.y = self.element_spacing_y;
                 }
+            } else if (thing.y == EMU_BASE) {
+                thing.y = self.element_spacing_y;
             }
             
             if (thing.identifier != "") {
