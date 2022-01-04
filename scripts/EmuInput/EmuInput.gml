@@ -237,7 +237,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     };
     
     static ValidateInput = function(text) {
-        switch (self._value_type) {
+        switch (self.value_type) {
         	case E_InputTypes.STRING:
         		return true;
         	case E_InputTypes.INT:
