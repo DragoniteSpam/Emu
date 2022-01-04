@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCore(x, y, w, h, text) constructor {
+function EmuCore(x, y, w, h, text = "") constructor {
     /// @ignore
     self.x = x;
     /// @ignore
