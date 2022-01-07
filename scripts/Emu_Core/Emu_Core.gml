@@ -76,6 +76,12 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
+    static SetAlign = function(h, v) {
+        self.align.h = h;
+        self.align.v = v;
+        return self;
+    };
+    
     static SetInteractive = function(interactive) {
         self.interactive = interactive;
         return self;
