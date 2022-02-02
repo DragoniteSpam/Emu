@@ -58,7 +58,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     static SetValue = function(value) {
         self.value = string(value);
-        if (isActiveElement()) {
+        if (self.isActiveElement()) {
             keyboard_string = self.value;
         }
         return self;
@@ -72,23 +72,23 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
-        processAdvancement();
+        self.processAdvancement();
         
         var x1 = x + base_x;
         var y1 = y + base_y;
-        var x2 = x1 + width;
-        var y2 = y1 + height;
+        var x2 = x1 + self.width;
+        var y2 = y1 + self.height;
         var c = self.color();
         
-        var vx1 = x1 + box.x1;
-        var vy1 = y1 + box.y1;
-        var vx2 = x1 + box.x2;
-        var vy2 = y1 + box.y2;
+        var vx1 = x1 + self.box.x1;
+        var vy1 = y1 + self.box.y1;
+        var vx2 = x1 + self.box.x2;
+        var vy2 = y1 + self.box.y2;
         var ww = vx2 - vx1;
         var hh = vy2 - vy1;
         
-        var tx = getTextX(x1);
-        var ty = getTextY(y1);
+        var tx = self.getTextX(x1);
+        var ty = self.getTextY(y1);
         
         var working_value = string(self.value);
         var sw = string_width(working_value);
@@ -100,9 +100,9 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             .align(fa_left, fa_middle)
             .draw(tx, ty);
         
-        if (ValidateInput(working_value)) {
-            var cast = CastInput(working_value);
-            if (is_real(cast) && clamp(cast, value_lower, value_upper) != cast) {
+        if (self.ValidateInput(working_value)) {
+            var cast = self.CastInput(working_value);
+            if (is_real(cast) && clamp(cast, self.value_lower, self.value_upper) != cast) {
                 c = self.color_warn();
             }
         } else {
@@ -117,18 +117,18 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         #region input drawing
         self.surface = self.surfaceVerify(self.surface, ww, hh).surface;
 
-        surface_set_target(surface);
-        surface_set_target(surface);
-        draw_clear(GetInteractive() ? self.color_back() : self.color_disabled());
+        surface_set_target(self.surface);
+        surface_set_target(self.surface);
+        draw_clear(self.GetInteractive() ? self.color_back() : self.color_disabled());
         surface_reset_target();
         
-        var display_text = working_value + (isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (self.isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
         
-        if (multi_line) {
+        if (self.multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
             #region the "how many characters remaining" counter
-            var remaining = character_limit - string_length(working_value);
-            var f = string_length(working_value) / character_limit;
+            var remaining = self.character_limit - string_length(working_value);
+            var f = string_length(working_value) / self.character_limit;
             // hard limit on 99 for characters remaining
             if (f > 0.9 && remaining < 100) {
                 var remaining_w = string_width(string(remaining));
@@ -142,8 +142,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                 var remaining_y = hh - 16;
                 var r = 12;
                 var steps = 32;
-                draw_sprite(sprite_ring, 0, remaining_x, remaining_y);
-                draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(sprite_ring, 0));
+                draw_sprite(self.sprite_ring, 0, remaining_x, remaining_y);
+                draw_primitive_begin_texture(pr_trianglefan, sprite_get_texture(self.sprite_ring, 0));
                 draw_vertex_texture_colour(remaining_x, remaining_y, 0.5, 0.5, self.color_selected(), 1);
                 for (var i = 0; i <= steps * f; i++) {
                     var angle = 360 / steps * i - 90;
@@ -160,33 +160,33 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             
             draw_set_halign(fa_left);
             draw_set_valign(fa_top);
-            draw_set_font(input_font);
+            draw_set_font(self.input_font);
             var sh = string_height_ext(display_text, -1, vx2 - vx1 - (vtx - vx1) * 2);
-            var vty = vy1 + offset;
+            var vty = vy1 + self.offset;
             draw_text_ext_colour(vtx - vx1, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
         } else {
             draw_set_halign(fa_left);
             draw_set_valign(fa_middle);
-            draw_set_font(input_font);
-            var sw_begin = min(vtx - vx1, ww - offset - sw);
+            draw_set_font(self.input_font);
+            var sw_begin = min(vtx - vx1, ww - self.offset - sw);
             draw_text_colour(sw_begin, vty - vy1, display_text, c, c, c, c, 1);
             sw_end = sw_begin + sw + 4;
         }
         
-        if (string_length(value) == 0) {
-            draw_text_colour(vtx - vx1, vty - vy1, string(help_text), self.color_help_text(), self.color_help_text(), self.color_help_text(), self.color_help_text(), 1);
+        if (string_length(self.value) == 0) {
+            draw_text_colour(vtx - vx1, vty - vy1, string(self.help_text), self.color_help_text(), self.color_help_text(), self.color_help_text(), self.color_help_text(), 1);
         }
 
-        if (require_enter) {
-            draw_sprite(sprite_enter, 0, vx2 - vx1 - sprite_get_width(sprite_enter) - 4, vty - vy1);
+        if (self.require_enter) {
+            draw_sprite(self.sprite_enter, 0, vx2 - vx1 - sprite_get_width(self.sprite_enter) - 4, vty - vy1);
         }
         #endregion
         
         #region interaction
-        if (GetInteractive()) {
-            if (isActiveElement()) {
+        if (self.GetInteractive()) {
+            if (self.isActiveElement()) {
                 var v0 = working_value;
-                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), character_limit));
+                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), self.character_limit));
                 
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
@@ -196,43 +196,43 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                 }
 				
 				// add newline on pressing enter, if allowed
-                if (multi_line && !require_enter && keyboard_check_pressed(vk_enter)) {
+                if (self.multi_line && !self.require_enter && keyboard_check_pressed(vk_enter)) {
                     working_value += "\n";
                     keyboard_string = keyboard_string + "\n";
                 }
 				
-                if (ValidateInput(working_value)) {
-                    var execute_value_change = (!require_enter && v0 != working_value) || (require_enter && keyboard_check_pressed(vk_enter));
+                if (self.ValidateInput(working_value)) {
+                    var execute_value_change = (!self.require_enter && v0 != working_value) || (self.require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
-                        var cast = CastInput(working_value);
+                        var cast = self.CastInput(working_value);
                         if (is_real(cast)) {
-                            execute_value_change = execute_value_change && (clamp(cast, value_lower, value_upper) == cast);
+                            execute_value_change = execute_value_change && (clamp(cast, self.value_lower, self.value_upper) == cast);
                         }
 						
                         if (execute_value_change) {
-                            value = working_value;
-                            callback();
+                            self.value = working_value;
+                            self.callback();
                         }
                     }
                 }
                 
-				keyboard_string = string_copy(working_value, 1, min(string_length(working_value), character_limit));
-                value = keyboard_string;
+				keyboard_string = string_copy(working_value, 1, min(string_length(working_value), self.character_limit));
+                self.value = keyboard_string;
             }
             // activation
-            if (getMouseHover(vx1, vy1, vx2, vy2)) {
-                if (getMouseReleased(vx1, vy1, vx2, vy2)) {
-                    keyboard_string = value;
-                    Activate();
+            if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
+                if (self.getMouseReleased(vx1, vy1, vx2, vy2)) {
+                    keyboard_string = self.value;
+                    self.Activate();
                 }
-                ShowTooltip();
+                self.ShowTooltip();
             }
         }
         
         surface_reset_target();
         #endregion
         
-        draw_surface(surface, vx1, vy1)
+        draw_surface(self.surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
     };
     

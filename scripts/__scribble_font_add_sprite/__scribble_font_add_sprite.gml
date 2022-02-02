@@ -136,7 +136,7 @@ function __scribble_font_add_sprite_common(_sprite, _spritefont, _proportional, 
             else
             {
                 var _bidi = _global_glyph_bidi_map[? _unicode];
-                if (_bidi == undefined) _bidi = __SCRIBBLE_BIDI.L2R;
+                _bidi ??= __SCRIBBLE_BIDI.L2R;
             }
             
             var _w = _image_info.crop_width;

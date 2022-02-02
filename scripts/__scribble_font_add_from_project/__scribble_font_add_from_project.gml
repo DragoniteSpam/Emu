@@ -74,7 +74,7 @@ function __scribble_font_add_from_project(_font)
         else
         {
             var _bidi = _global_glyph_bidi_map[? _unicode];
-            if (_bidi == undefined) _bidi = __SCRIBBLE_BIDI.L2R;
+            _bidi ??= __SCRIBBLE_BIDI.L2R;
         }
         
         var _x = _glyph_dict.x;

@@ -7,16 +7,16 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         }
         
         for (var i = 0; i < array_length(elements); i++) {
-            elements[i] = new emu_radio_array_option(0, height * (1 + i), width, height, elements[i], i);
+            elements[i] = new self.emu_radio_array_option(0, self.height * (1 + i), self.width, self.height, elements[i], i);
         }
         
-        AddContent(elements);
+        self.AddContent(elements);
         return self;
     };
     
     static SetColumns = function(column_capacity, column_width) {
         if (column_capacity <= 0) column_capacity = 10000;
-        for (var i = 0, n = array_length(contents); i < n; i++) {
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
             var option = self.contents[i];
             option.x = (i div column_capacity) * column_width;
             option.y = self.height * (1 + (i % column_capacity));
@@ -28,7 +28,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
     
     static GetHeight = function() {
         var maximum_height = self.height;
-        for (var i = 0, n = array_length(contents); i < n; i++) {
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
             maximum_height = max(self.contents[i].y + self.height, maximum_height);
         }
         return maximum_height;

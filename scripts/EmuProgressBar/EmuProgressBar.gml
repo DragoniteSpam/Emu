@@ -113,7 +113,8 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
             if (self.dragging) {
                 if (self.getMouseHold(0, 0, window_get_width(), window_get_height())) {
                     knob_color = EMU_COLOR_SELECTED;
-                    self.value = clamp((device_mouse_x_to_gui(0) - bx1) / (bx2 - bx1) * (self.value_max - self.value_min) + self.value_min, self.value_min, self.value_max);
+                    /// @todo this will need to be redone when the system has the interactivity/rendering separated
+                    self.value = clamp(((device_mouse_x_to_gui(0) - view_get_xport(view_current)) - bx1) / (bx2 - bx1) * (self.value_max - self.value_min) + self.value_min, self.value_min, self.value_max);
                     if (self.integers_only) {
                         self.value = round(self.value);
                     }

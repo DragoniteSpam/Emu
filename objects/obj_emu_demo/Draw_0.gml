@@ -1,2 +1,2 @@
-container.Render();
+self.container.Render();
 EmuOverlay.Render();

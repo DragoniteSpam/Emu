@@ -21,27 +21,25 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
-        processAdvancement();
+        self.processAdvancement();
         
         var x1 = x + base_x;
         var y1 = y + base_y;
-        var x2 = x1 + width;
-        var y2 = y1 + height;
+        var x2 = x1 + self.width;
+        var y2 = y1 + self.height;
         
         #region draw the image to the surface
         self.surface = self.surfaceVerify(self.surface, self.width, self.height).surface;
         
-        surface_set_target(surface);
+        surface_set_target(self.surface);
         draw_clear_alpha(c_black, 0);
-        draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, width, height, self.color_back(), 1);
-        if (sprite_exists(sprite)) {
-            if (checker_background) drawCheckerbox(0, 0, width - 1, height - 1);
-            if (allow_shrink) {
-                var scale = fill ? min(width / sprite_get_width(sprite), height / sprite_get_height(sprite)) : 1;
-            } else {
-                var scale = fill ? min(max(width / sprite_get_width(sprite), 1), max(height / sprite_get_height(sprite), 1)) : 1;
-            }
-            draw_sprite_ext(sprite, index, width / 2, height / 2, scale, scale, 0, blend, alpha);
+        draw_sprite_stretched_ext(self.sprite_nineslice, 1, 0, 0, self.width, self.height, self.color_back(), 1);
+        if (sprite_exists(self.sprite)) {
+            if (self.checker_background) self.drawCheckerbox(0, 0, self.width - 1, self.height - 1);
+            var scale = self.allow_shrink ?
+                (self.fill ? min(self.width / sprite_get_width(self.sprite), self.height / sprite_get_height(self.sprite)) : 1) :
+                (self.fill ? min(max(self.width / sprite_get_width(self.sprite), 1), max(self.height / sprite_get_height(self.sprite), 1)) : 1);
+            draw_sprite_ext(self.sprite, self.index, self.width / 2, self.height / 2, scale, scale, 0, self.blend, self.alpha);
         }
         
         scribble(self.text)
@@ -51,17 +49,17 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
         surface_reset_target();
         #endregion
         
-        if (getMouseHover(x1, y1, x2, y2)) {
-            ShowTooltip();
+        if (self.getMouseHover(x1, y1, x2, y2)) {
+            self.ShowTooltip();
         }
         
-        if (getMouseReleased(x1, y1, x2, y2)) {
-            Activate();
-            callback();
+        if (self.getMouseReleased(x1, y1, x2, y2)) {
+            self.Activate();
+            self.callback();
         }
         
-        var back_color = getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (GetInteractive() ? self.color_back() : self.color_disabled());
-        draw_surface_ext(surface, x1, y1, 1, 1, 0, back_color, 1);
-        draw_sprite_stretched_ext(sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
+        var back_color = self.getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (self.GetInteractive() ? self.color_back() : self.color_disabled());
+        draw_surface_ext(self.surface, x1, y1, 1, 1, 0, back_color, 1);
+        draw_sprite_stretched_ext(self.sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
     };
 }

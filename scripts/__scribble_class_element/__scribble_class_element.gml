@@ -691,7 +691,7 @@ function __scribble_class_element(_string, _unique_id) constructor
         var _region_array = _page.__region_array;
         
         var _matrix = __update_matrix(_element_x, _element_y);
-        if (__matrix_inverse == undefined) __matrix_inverse = __scribble_matrix_inverse(matrix_multiply(_matrix, matrix_get(matrix_world)));
+        __matrix_inverse ??= __scribble_matrix_inverse(matrix_multiply(_matrix, matrix_get(matrix_world)));
         var _vector = matrix_transform_vertex(__matrix_inverse, _pointer_x, _pointer_y, 0);
         var _x = _vector[0];
         var _y = _vector[1];

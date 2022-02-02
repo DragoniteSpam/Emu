@@ -131,7 +131,7 @@ function __scribble_font_add_msdf_from_project(_sprite)
         else
         {
             var _bidi = _global_glyph_bidi_map[? _unicode];
-            if (_bidi == undefined) _bidi = __SCRIBBLE_BIDI.L2R;
+            _bidi ??= __SCRIBBLE_BIDI.L2R;
         }
         
         _font_glyph_data_grid[# _i, SCRIBBLE_GLYPH.CHARACTER   ] = _char;

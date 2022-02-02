@@ -1,6 +1,5 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuList(x, y, w, h, text, element_height, content_slots, callback) : EmuCallback(x, y, w, h, 0, callback) constructor {
 function EmuList(x, y, w, h, text, element_height, content_slots, callback) : EmuCallback(x, y, w, h, text, 0, callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     
@@ -34,44 +33,44 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
 	self.dragging = false;
     
     static SetList = function(array) {
-        entries = array;
-        own_entries = false;
-        ClearSelection();
+        self.entries = array;
+        self.own_entries = false;
+        self.ClearSelection();
         return self;
     };
     
     static SetEntryTypes = function(type) {
-        entries_are = type;
+        self.entries_are = type;
         return self;
     };
     
     static SetMultiSelect = function(multi_select, auto, toggle) {
-        allow_multi_select = multi_select;
-        auto_multi_select = auto;
-        select_toggle = toggle;
+        self.allow_multi_select = multi_select;
+        self.auto_multi_select = auto;
+        self.select_toggle = toggle;
         return self;
     };
     
     static SetVacantText = function(text) {
-        text_vacant = text;
+        self.text_vacant = text;
         return self;
     };
     
     static AddEntries = function(elements) {
-        if (!own_entries) {
+        if (!self.own_entries) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its entries.");
         }
         
         if (!is_array(elements)) elements = [elements];
         for (var i = 0; i < array_length(elements); i++) {
-            array_push(entries, elements[i]);
+            array_push(self.entries, elements[i]);
         }
         return self;
     };
     
     static Clear = function() {
-        if (own_entries) {
-            entries = [];
+        if (self.own_entries) {
+            self.entries = [];
         } else {
             throw new EmuException("Trying to clear a list owned by someone else", "Please do not clear a list using an external list for its entries.");
         }
@@ -79,11 +78,11 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     };
     
     static GetHeight = function() {
-        return height + element_height * slots;
+        return self.height + self.element_height * self.slots;
     };
     
     static GetSelected = function(list_index) {
-        return variable_struct_exists(selected_entries, string(list_index));
+        return variable_struct_exists(self.selected_entries, string(list_index));
     };
     
     static getListColors = function(list_index) {
@@ -91,36 +90,36 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     };
     
     static GetSelection = function() {
-        if (variable_struct_names_count(selected_entries) == 0) return -1;
-        return selected_entries[$ "first"];
+        if (variable_struct_names_count(self.selected_entries) == 0) return -1;
+        return self.selected_entries[$ "first"];
     };
     
     static ClearSelection = function() {
-        selected_entries = { };
-        callback();
+        self.selected_entries = { };
+        self.callback();
         return self;
     };
     
     static Select = function(list_index, set_index = false) {
-        if (!variable_struct_exists(selected_entries, "first")) selected_entries[$ "first"] = list_index;
-        selected_entries[$ "last"] = list_index;
-        selected_entries[$ string(list_index)] = true;
-        if (set_index && clamp(list_index, index, index + slots - 1) != list_index) {
-            index = max(0, min(list_index, array_length(entries) - slots));
+        if (!variable_struct_exists(self.selected_entries, "first")) self.selected_entries[$ "first"] = list_index;
+        self.selected_entries[$ "last"] = list_index;
+        self.selected_entries[$ string(list_index)] = true;
+        if (set_index && clamp(list_index, self.index, self.index + self.slots - 1) != list_index) {
+            self.index = max(0, min(list_index, array_length(self.entries) - self.slots));
         }
-        callback();
+        self.callback();
         return self;
     };
     
     static Deselect = function(list_index) {
-        variable_struct_remove(selected_entries, list_index);
-        callback();
+        variable_struct_remove(self.selected_entries, list_index);
+        self.callback();
         return self;
     };
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
-        processAdvancement();
+        self.processAdvancement();
         
         var col_main = self.color();
         var col_back = self.color_back();
@@ -130,30 +129,30 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         
         var x1 = x + base_x;
         var y1 = y + base_y;
-        var x2 = x1 + width;
-        var y2 = y1 + height;
-        var y3 = y2 + slots * height;
+        var x2 = x1 + self.width;
+        var y2 = y1 + self.height;
+        var y3 = y2 + self.slots * self.height;
         var ww = x2 - x1;
         var hh = y3 - y2;
-        var tx = getTextX(x1);
-        var ty = getTextY(y1);
+        var tx = self.getTextX(x1);
+        var ty = self.getTextY(y1);
         
         #region list header
-        if (string_length(tooltip) > 0) {
-            var spr_xoffset = sprite_get_xoffset(sprite_help);
-            var spr_yoffset = sprite_get_yoffset(sprite_help);
-            var spr_width = sprite_get_width(sprite_help);
-            var spr_height = sprite_get_height(sprite_help);
+        if (string_length(self.tooltip) > 0) {
+            var spr_xoffset = sprite_get_xoffset(self.sprite_help);
+            var spr_yoffset = sprite_get_yoffset(self.sprite_help);
+            var spr_width = sprite_get_width(self.sprite_help);
+            var spr_height = sprite_get_height(self.sprite_help);
             var txoffset = spr_width;
             
-            if (getMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
-                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, col_hover, 1);
-                ShowTooltip();
+            if (self.getMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
+                draw_sprite_ext(self.sprite_help, 2, tx, ty, 1, 1, 0, col_hover, 1);
+                self.ShowTooltip();
             } else {
-                draw_sprite_ext(sprite_help, 2, tx, ty, 1, 1, 0, col_back, 1);
+                draw_sprite_ext(self.sprite_help, 2, tx, ty, 1, 1, 0, col_back, 1);
             }
-            draw_sprite_ext(sprite_help, 1, tx, ty, 1, 1, 0, col_main, 1);
-            draw_sprite_ext(sprite_help, 0, tx, ty, 1, 1, 0, col_main, 1);
+            draw_sprite_ext(self.sprite_help, 1, tx, ty, 1, 1, 0, col_main, 1);
+            draw_sprite_ext(self.sprite_help, 0, tx, ty, 1, 1, 0, col_main, 1);
         } else {
             var txoffset = 0;
         }
@@ -167,40 +166,40 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         #region list drawing
         self.surface = self.surfaceVerify(self.surface, ww, hh).surface;
         
-        surface_set_target(surface);
-        draw_clear_alpha(GetInteractive() ? col_back : col_disabled, 1);
+        surface_set_target(self.surface);
+        draw_clear_alpha(self.GetInteractive() ? col_back : col_disabled, 1);
         
-        var n = array_length(entries);
-        index = clamp(n - slots, 0, index);
+        var n = array_length(self.entries);
+        self.index = clamp(n - self.slots, 0, self.index);
         
         if (n == 0) {
-            draw_sprite_stretched_ext(sprite_nineslice, 1, 0, 0, x2 - x1, element_height, col_disabled, 1);
-            ty = mean(y2, y2 + height);
+            draw_sprite_stretched_ext(self.sprite_nineslice, 1, 0, 0, x2 - x1, self.element_height, col_disabled, 1);
+            ty = mean(y2, y2 + self.height);
             
             scribble(self.text_vacant)
                 .wrap(self.width, self.height)
                 .align(fa_left, fa_center)
                 .draw(tx - x1, ty - y2);
         } else {
-            for (var i = 0; i < min(n, slots); i++) {
-                var current_index = i + index;
-                var ya = y2 + height * i;
-                var yb = ya + height;
+            for (var i = 0; i < min(n, self.slots); i++) {
+                var current_index = i + self.index;
+                var ya = y2 + self.height * i;
+                var yb = ya + self.height;
                 var tya = mean(ya, yb);
                 
-                if (GetInteractive()) {
-                    if (GetSelected(current_index)) {
+                if (self.GetInteractive()) {
+                    if (self.GetSelected(current_index)) {
                         draw_rectangle_colour(0, ya - y2, x2 - x1, yb - y2, col_selected, col_selected, col_selected, col_selected, false);
                     }
                 }
                 
-                var c = getListColors(current_index);
-                var index_text = numbered ? (string(current_index) + ". ") : "";
+                var c = self.getListColors(current_index);
+                var index_text = self.numbered ? (string(current_index) + ". ") : "";
                 
-                switch (entries_are) {
-                    case E_ListEntryTypes.STRINGS: index_text += string(entries[current_index]); break;
-                    case E_ListEntryTypes.STRUCTS: index_text += entries[current_index].name; break;
-                    case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(entries[current_index](current_index)); break;
+                switch (self.entries_are) {
+                    case E_ListEntryTypes.STRINGS: index_text += string(self.entries[current_index]); break;
+                    case E_ListEntryTypes.STRUCTS: index_text += self.entries[current_index].name; break;
+                    case E_ListEntryTypes.SCRIPTS: index_text = index_text + string(self.entries[current_index](current_index)); break;
                 }
                 
                 scribble(index_text)
@@ -215,10 +214,10 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         surface_reset_target();
         #endregion
         
-        draw_surface(surface, x1, y2);
+        draw_surface(self.surface, x1, y2);
         
         #region interaction
-        var offset = (n > slots) ? 16 : 0;
+        var offset = (n > self.slots) ? 16 : 0;
         var lx1 = x1;
         var ly1 = y2;
         var lx2 = x2 - offset;
@@ -226,45 +225,45 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         
         var move_direction = 0;
         
-        if (getMouseHover(lx1, ly1, lx2, ly2)) {
-            var mn = min(((mouse_y - ly1) div height) + index, n - 1);
-            if (getMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
-                callback_middle(mn);
-            } else if (getMouseDouble(lx1, ly1, lx2, ly2)) {
-                callback_double(mn);
-            } else if (getMousePressed(lx1, ly1, lx2, ly2)) {
-                Activate();
+        if (self.getMouseHover(lx1, ly1, lx2, ly2)) {
+            var mn = min(((mouse_y - ly1) div self.height) + self.index, n - 1);
+            if (self.getMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
+                self.callback_middle(mn);
+            } else if (self.getMouseDouble(lx1, ly1, lx2, ly2)) {
+                self.callback_double(mn);
+            } else if (self.getMousePressed(lx1, ly1, lx2, ly2)) {
+                self.Activate();
                 // deselect the list if that's what yo uwould expect to happen
-                if (!auto_multi_select) {
-                    if ((!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !select_toggle) || !allow_multi_select) {
-                        ClearSelection();
+                if (!self.auto_multi_select) {
+                    if ((!keyboard_check(vk_control) && !keyboard_check(vk_shift) && !self.select_toggle) || !self.allow_multi_select) {
+                        self.ClearSelection();
                     }
                 }
                 // toggle selection over a range
-                if (allow_multi_select && keyboard_check(vk_shift)) {
-                    if (last_index > -1) {
-                        var d = sign(mn - last_index);
-                        for (var i = last_index; i != (mn + d); i = i + d) {
-                            if (!GetSelected(i)) {
-                                Select(i);
-                            } else if (select_toggle && allow_deselect) {
-                                Deselect(i);
+                if (self.allow_multi_select && keyboard_check(vk_shift)) {
+                    if (self.last_index > -1) {
+                        var d = sign(mn - self.last_index);
+                        for (var i = self.last_index; i != (mn + d); i += d) {
+                            if (!self.GetSelected(i)) {
+                                self.Select(i);
+                            } else if (self.select_toggle && self.allow_deselect) {
+                                self.Deselect(i);
                             }
                         }
                     }
                 // toggle single selections
                 } else {
-                    if (!GetSelected(mn)) {
-                        Select(mn);
-                    } else if (select_toggle && allow_deselect) {
-                        Deselect(mn);
+                    if (!self.GetSelected(mn)) {
+                        self.Select(mn);
+                    } else if (self.select_toggle && self.allow_deselect) {
+                        self.Deselect(mn);
                     }
                 }
-                last_index = mn;
-            } else if (getMouseRightReleased(lx1, ly1, lx2, ly2)) {
-                Activate();
-                if (allow_deselect) {
-                    ClearSelection();
+                self.last_index = mn;
+            } else if (self.getMouseRightReleased(lx1, ly1, lx2, ly2)) {
+                self.Activate();
+                if (self.allow_deselect) {
+                    self.ClearSelection();
                 }
             }
             
@@ -274,14 +273,14 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
                 move_direction = 1;
             }
             
-            if (allow_multi_select) {
+            if (self.allow_multi_select) {
                 if (keyboard_check(vk_control) && keyboard_check_pressed(ord("A"))) {
-                    Activate();
+                    self.Activate();
                     for (var i = 0; i < n; i++) {
-                        if (!GetSelected(i)) {
-                            Select(i);
-                        } else if (select_toggle) {
-                            Deselect(i);
+                        if (!self.GetSelected(i)) {
+                            self.Select(i);
+                        } else if (self.select_toggle) {
+                            self.Deselect(i);
                         }
                     }
                 }
@@ -290,17 +289,17 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         #endregion
         
         #region slider
-        if (n > slots) {
+        if (n > self.slots) {
             var sw = 16;
-            var noutofrange = n - slots; // at minimum, one
+            var noutofrange = n - self.slots; // at minimum, one
             // the minimum slider height will never be below 20, but it'll scale up for longer lists;
             // otherwise it's simply proportional to the fraction of the entries that are visible in the list
-            var shalf = max(20 + 20 * log10(slots), (y3 - y2 - sw * 2) * slots / n) / 2;
+            var shalf = max(20 + 20 * log10(self.slots), (y3 - y2 - sw * 2) * self.slots / n) / 2;
             var smin = y2 + sw + shalf;
             var smax = y3 - sw - shalf;
             var srange = smax - smin;
-            var sy = smin + srange * index / noutofrange;
-            var active = GetInteractive();
+            var sy = smin + srange * self.index / noutofrange;
+            var active = self.GetInteractive();
             draw_rectangle_colour(x2 - sw, y2, x2, y3, col_back, col_back, col_back, col_back, false);
             draw_line_colour(x2 - sw, y2 + sw, x2, y2 + sw, col_main, col_main);
             draw_line_colour(x2 - sw, y3 - sw, x2, y3 - sw, col_main, col_main);
@@ -310,25 +309,25 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
             var sby2 = sy + shalf;
             if (active) {
                 // Hover over the scroll bar: draw the hover col_main
-                if (getMouseHover(x2 - sw, sby1, x2, sby2) || dragging) {
+                if (self.getMouseHover(x2 - sw, sby1, x2, sby2) || self.dragging) {
                     draw_rectangle_colour(x2 - sw + 1, sby1 + 1, x2 - 1, sby2 - 1, col_hover, col_hover, col_hover, col_hover, false);
                     // Click: begin dragging the scroll bar
-                    if (getMousePressed(x2 - sw, sby1, x2, sby2) && !dragging) {
-                        Activate();
-						dragging = true;
-                        click_x = mouse_x;
-                        click_y = mouse_y;
+                    if (self.getMousePressed(x2 - sw, sby1, x2, sby2) && !self.dragging) {
+                        self.Activate();
+						self.dragging = true;
+                        self.click_x = mouse_x;
+                        self.click_y = mouse_y;
                     }
                 }
                 // Hold while dragging: update the list position
-                if (getMouseHold(0, 0, window_get_width(), window_get_height()) && click_y > -1) {
-                    index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
+                if (self.getMouseHold(0, 0, window_get_width(), window_get_height()) && self.click_y > -1) {
+                    self.index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
                 }
                 // Release: stop dragging
-                if (getMouseReleased(0, 0, window_get_width(), window_get_height())) {
-					dragging = false;
-                    click_x = -1;
-                    click_y = -1;
+                if (self.getMouseReleased(0, 0, window_get_width(), window_get_height())) {
+					self.dragging = false;
+                    self.click_x = -1;
+                    self.click_y = -1;
                 }
             }
             
@@ -338,16 +337,16 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
             draw_line_colour(x2 - sw * 4 / 5, sy + 4, x2 - sw / 5, sy + 4, col_main, col_main);
             
             if (active) {
-                var inbounds_top = getMouseHover(x2 - sw, y2, x2, y2 + sw);
-                var inbounds_bottom = getMouseHover(x2 - sw, y3 - sw, x2, y3);
+                var inbounds_top = self.getMouseHover(x2 - sw, y2, x2, y2 + sw);
+                var inbounds_bottom = self.getMouseHover(x2 - sw, y3 - sw, x2, y3);
                 // Top button
                 if (inbounds_top) {
                     draw_rectangle_colour(x2 - sw + 1, y2 + 1, x2 - 1, y2 + sw - 1, col_hover, col_hover, col_hover, col_hover, false);
-                    if (getMousePressed(x2 - sw, y2, x2, y2 + sw)) {
-                        Activate();
+                    if (self.getMousePressed(x2 - sw, y2, x2, y2 + sw)) {
+                        self.Activate();
                         move_direction = -1;
-                    } else if (getMouseHold(x2 - sw, y2, x2, y2 + sw)) {
-                        if (getMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
+                    } else if (self.getMouseHold(x2 - sw, y2, x2, y2 + sw)) {
+                        if (self.getMouseHoldDuration(x2 - sw, y2, x2, y2 + sw) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = -1;
                         }
                     }
@@ -355,22 +354,22 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
                 } else if (inbounds_bottom) {
                     draw_rectangle_colour(x2 - sw + 1, y3 - sw + 1, x2 - 1, y3 - 1, col_hover, col_hover, col_hover, col_hover, false);
                     // On click, scroll once
-                    if (getMousePressed(x2 - sw, y3 - sw, x2, y3)) {
-                        Activate();
+                    if (self.getMousePressed(x2 - sw, y3 - sw, x2, y3)) {
+                        self.Activate();
                         move_direction = 1;
                     // On hold, scroll after an amount of time
-                    } else if (getMouseHold(x2 - sw, y3 - sw, x2, y3)) {
-                        if (getMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_TIME_HOLD_THRESHOLD) {
+                    } else if (self.getMouseHold(x2 - sw, y3 - sw, x2, y3)) {
+                        if (self.getMouseHoldDuration(x2 - sw, y3 - sw, x2, y3) > EMU_TIME_HOLD_THRESHOLD) {
                             move_direction = 1;
                         }
                     }
                 }
             }
             
-            draw_sprite_ext(sprite_arrows, 0, x2 - sw, y2, 1, 1, 0, col_main, 1);
-            draw_sprite_ext(sprite_arrows, 1, x2 - sw, y3 - sw, 1, 1, 0, col_main, 1);
+            draw_sprite_ext(self.sprite_arrows, 0, x2 - sw, y2, 1, 1, 0, col_main, 1);
+            draw_sprite_ext(self.sprite_arrows, 1, x2 - sw, y3 - sw, 1, 1, 0, col_main, 1);
             
-            index = clamp(index + move_direction, 0, max(0, n - slots));
+            self.index = clamp(self.index + move_direction, 0, max(0, n - self.slots));
         }
         #endregion
     };

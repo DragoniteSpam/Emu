@@ -123,7 +123,7 @@ function __scribble_gen_2_parser()
             else
             {
                 var _bidi = _global_glyph_bidi_map[? _glyph_ord];
-                if (_bidi == undefined) _bidi = __SCRIBBLE_BIDI.L2R;
+                _bidi ??= __SCRIBBLE_BIDI.L2R;
             }
             
             if (_bidi == __SCRIBBLE_BIDI.L2R)
@@ -831,11 +831,8 @@ function __scribble_gen_2_parser()
                 //Handle vertical alignment changes
                 if (_new_valign != undefined)
                 {
-                    if (__valign == undefined)
-                    {
-                        __valign = _new_valign;
-                    }
-                    else if (__valign != _new_valign)
+                    __valign ??= _new_valign;
+                    if (__valign != _new_valign)
                     {
                         __scribble_error("In-line vertical alignment cannot be set more than once");
                     }
@@ -1144,7 +1141,7 @@ function __scribble_gen_2_parser()
     if (__has_arabic || __has_hebrew) __has_r2l = true;
     
     //Set our vertical alignment if it hasn't been overrided
-    if (__valign == undefined) __valign = _starting_valign;
+    __valign ??= _starting_valign;
     
     //Create a null terminator so we correctly handle the last character in the string
     _glyph_grid[# _glyph_count, __SCRIBBLE_GEN_GLYPH.UNICODE      ] = 0x00; //ASCII line break (dec = 10)
