@@ -145,7 +145,6 @@
   ],
   "isDnDProject": false,
   "isEcma": false,
-  "tutorialPath": "",
   "configs": {
     "name": "Default",
     "children": [],
@@ -218,7 +217,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"tree1.vbuff","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2.3.7.606",
+    "IDEVersion": "2022.100.0.470",
   },
   "resourceVersion": "1.4",
   "name": "Emu",
