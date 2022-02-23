@@ -10,9 +10,9 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     self.align.h = fa_center;
     self.align.v = fa_middle;
     
-    self.color_hover = function() { return EMU_COLOR_HOVER };
-    self.color_back = function() { return EMU_COLOR_BACK };
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
+    self.color_hover = function() { return EMU_COLOR_HOVER; };
+    self.color_back = function() { return EMU_COLOR_BACK; };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
     
     self.checker_background = false;
     

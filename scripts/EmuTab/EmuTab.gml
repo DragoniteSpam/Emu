@@ -6,9 +6,9 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
     
     self.sprite_nineslice = spr_emu_nineslice_tab;
     
-    self.color_hover = function() { return EMU_COLOR_HOVER };
-    self.color_back = function() { return EMU_COLOR_BACK };
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
+    self.color_hover = function() { return EMU_COLOR_HOVER; };
+    self.color_back = function() { return EMU_COLOR_BACK; };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
     
     self.row = 0;
     self.index = 0;

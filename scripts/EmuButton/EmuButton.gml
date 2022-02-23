@@ -5,11 +5,11 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, text, 0
     self.align.v = fa_middle;
     
     /// @ignore
-    self.color_hover = function() { return EMU_COLOR_HOVER };
+    self.color_hover = function() { return EMU_COLOR_HOVER; };
     /// @ignore
-    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_back = function() { return EMU_COLOR_BACK; };
     /// @ignore
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
     
     #region mutators
     static SetColorHover = function(color_function) {

@@ -6,10 +6,10 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self.element_height = element_height;
     self.slots = content_slots;
     
-    self.color_back = function() { return EMU_COLOR_BACK };
-    self.color_hover = function() { return EMU_COLOR_HOVER };
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
-    self.color_selected = function() { return EMU_COLOR_SELECTED };
+    self.color_back = function() { return EMU_COLOR_BACK; };
+    self.color_hover = function() { return EMU_COLOR_HOVER; };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
+    self.color_selected = function() { return EMU_COLOR_SELECTED; };
     
     self.auto_multi_select = false;
     self.allow_multi_select = false;

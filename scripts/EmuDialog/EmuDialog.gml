@@ -20,9 +20,9 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     /// @ignore
     self.sprite_close = spr_emu_close;
     /// @ignore
-    self.color_header = function() { return EMU_COLOR_WINDOWSKIN };
+    self.color_header = function() { return EMU_COLOR_WINDOWSKIN; };
     /// @ignore
-    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_back = function() { return EMU_COLOR_BACK; };
     
     /// @ignore
     self.header_height = 32;

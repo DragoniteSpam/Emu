@@ -3,7 +3,8 @@
 
 #region some macros which you may want to set
 #macro EMU_COLOR_BACK                   0x1f1f1f
-#macro EMU_COLOR_DEFAULT                0xffffff
+#macro EMU_COLOR_DEFAULT                0x5f5f5f
+#macro EMU_COLOR_TEXT                   0xffffff
 #macro EMU_COLOR_DISABLED               0x4f4f4f
 #macro EMU_COLOR_HELP_TEXT              0x606060
 #macro EMU_COLOR_HOVER                  0x4f4f4f

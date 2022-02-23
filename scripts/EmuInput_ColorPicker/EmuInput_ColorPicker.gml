@@ -13,7 +13,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         y2: self.height,
     };
     
-    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_back = function() { return EMU_COLOR_BACK; };
     
     static SetAlphaUsed = function(alpha_used) {
         self.allow_alpha = alpha_used;

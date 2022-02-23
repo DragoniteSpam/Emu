@@ -6,12 +6,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.help_text = help_text;
     self.character_limit = clamp(character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
     
-    self.color_help_text = function() { return EMU_COLOR_HELP_TEXT };
-    self.color_warn = function() { return EMU_COLOR_INPUT_WARN };
-    self.color_reject = function() { return EMU_COLOR_INPUT_REJECT };
-    self.color_back = function() { return EMU_COLOR_BACK };
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
-    self.color_selected = function() { return EMU_COLOR_SELECTED };
+    self.color_text = function() { return EMU_COLOR_TEXT; };
+    self.color_help_text = function() { return EMU_COLOR_HELP_TEXT; };
+    self.color_warn = function() { return EMU_COLOR_INPUT_WARN; };
+    self.color_reject = function() { return EMU_COLOR_INPUT_REJECT; };
+    self.color_back = function() { return EMU_COLOR_BACK; };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
+    self.color_selected = function() { return EMU_COLOR_SELECTED; };
     self.input_font = EMU_FONT_DEFAULT;
     
     self.sprite_ring = spr_emu_ring;
@@ -78,7 +79,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var y1 = y + base_y;
         var x2 = x1 + self.width;
         var y2 = y1 + self.height;
-        var c = self.color();
+        var c = self.color_text();
         
         var vx1 = x1 + self.box.x1;
         var vy1 = y1 + self.box.y1;

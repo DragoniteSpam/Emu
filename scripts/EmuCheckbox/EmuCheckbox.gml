@@ -9,13 +9,13 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     self.sprite_check_border = spr_emu_checkbox_border;
     
     /// @ignore
-    self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE };
+    self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE; };
     /// @ignore
-    self.color_hover = function() { return EMU_COLOR_HOVER };
+    self.color_hover = function() { return EMU_COLOR_HOVER; };
     /// @ignore
-    self.color_disabled = function() { return EMU_COLOR_DISABLED };
+    self.color_disabled = function() { return EMU_COLOR_DISABLED; };
     /// @ignore
-    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_back = function() { return EMU_COLOR_BACK; };
     
     #region mutators
     static SetBoxSize = function(size) {

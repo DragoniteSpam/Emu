@@ -9,7 +9,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         array_push(self.contents, new EmuCore(0, 0, 0, 0, ""));
     }
     
-    self.color_back = function() { return EMU_COLOR_BACK };
+    self.color_back = function() { return EMU_COLOR_BACK; };
     
     self.active_tab = undefined;
     self.active_tab_request = undefined;

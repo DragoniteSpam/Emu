@@ -61,9 +61,9 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
     static emu_radio_array_option = function(x, y, w, h, text, value) : EmuCore(x, y, w, h, text) constructor {
         self.value = value;
         
-        self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE };
-        self.color_back_disabled = function() { return EMU_COLOR_DISABLED };
-        self.color_back = function() { return EMU_COLOR_BACK };
+        self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE; };
+        self.color_back_disabled = function() { return EMU_COLOR_DISABLED; };
+        self.color_back = function() { return EMU_COLOR_BACK; };
         
         self.sprite_radio = spr_emu_radio;
         
