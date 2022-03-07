@@ -305,7 +305,7 @@ function emu_hex(str) {
     var F = ord("F");
     
     try {
-        result = real(ptr(str));
+        result = int64(ptr(str));
     } catch (e) {
         throw new EmuException("Bad input for emu_hex()", "Could not parse " + string(str) + " as a hex value");
     }
