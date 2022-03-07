@@ -172,21 +172,28 @@ function EmuCore(x, y, w, h, text = "") constructor {
             var thing = elements[i];
             thing.root = self;
             
-            if (thing.y == EMU_AUTO) {
+            if (is_ptr(thing.y) && thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y + top.GetHeight() + self.element_spacing_y;
                 } else {
                     thing.y = self.element_spacing_y;
                 }
-            } else if (thing.y == EMU_INLINE) {
+            } else if (is_ptr(thing.y) && thing.y == EMU_AUTO_NO_SPACING) {
+                var top = self.GetTop();
+                if (top) {
+                    thing.y = top.y + top.GetHeight();
+                } else {
+                    thing.y = self.element_spacing_y;
+                }
+            } else if (is_ptr(thing.y) && thing.y == EMU_INLINE) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y;
                 } else {
                     thing.y = self.element_spacing_y;
                 }
-            } else if (thing.y == EMU_BASE) {
+            } else if (is_ptr(thing.y) && thing.y == EMU_BASE) {
                 thing.y = self.element_spacing_y;
             }
             

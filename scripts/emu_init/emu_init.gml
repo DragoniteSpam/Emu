@@ -37,6 +37,7 @@ scribble_font_set_default(EMU_DEFAULT_FONT);
 #macro EMU_AUTO                         ptr(0)
 #macro EMU_INLINE                       ptr(1)
 #macro EMU_BASE                         ptr(2)
+#macro EMU_AUTO_NO_SPACING              ptr(3)
 #macro EmuOverlay                       _emu_get_overlay()
 #macro EmuActiveElement                 _emu_active_element()
 
