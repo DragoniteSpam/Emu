@@ -187,7 +187,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         if (self.GetInteractive()) {
             if (self.isActiveElement()) {
                 var v0 = working_value;
-                working_value = string_copy(keyboard_string, 1, min(string_length(keyboard_string), self.character_limit));
+                working_value = keyboard_string;
+                
+                if (string_length(working_value) > self.character_limit) {
+                	working_value = string_copy(working_value, 1, self.character_limit);
+                	keyboard_string = working_value;
+                }
                 
 				// press escape to clear input
 				if (keyboard_check_pressed(vk_escape)) {
@@ -199,15 +204,15 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
 				// add newline on pressing enter, if allowed
                 if (self.multi_line && !self.require_enter && keyboard_check_pressed(vk_enter)) {
                     working_value += "\n";
-                    keyboard_string = keyboard_string + "\n";
+                    keyboard_string += "\n";
                 }
 				
                 if (self.ValidateInput(working_value)) {
                     var execute_value_change = (!self.require_enter && v0 != working_value) || (self.require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
-                        var cast = self.CastInput(working_value);
-                        if (is_real(cast)) {
-                            execute_value_change = execute_value_change && (clamp(cast, self.value_lower, self.value_upper) == cast);
+                        var cast_value = self.CastInput(working_value);
+                        if (is_real(cast_value)) {
+                            execute_value_change &= (clamp(cast_value, self.value_lower, self.value_upper) == cast_value);
                         }
 						
                         if (execute_value_change) {
@@ -215,10 +220,9 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                             self.callback();
                         }
                     }
-                }
-                
-				keyboard_string = string_copy(working_value, 1, min(string_length(working_value), self.character_limit));
-                self.value = keyboard_string;
+                } else if (working_value == "") {
+                	self.value = working_value;
+                } 
             }
             // activation
             if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
