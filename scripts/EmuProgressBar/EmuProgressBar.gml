@@ -85,6 +85,7 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
     
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = self.x + x;

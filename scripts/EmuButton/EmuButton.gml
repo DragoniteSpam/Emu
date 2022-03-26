@@ -31,6 +31,7 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, text, 0
     #region other methods
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = self.x + x;

@@ -43,6 +43,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
     #region other methods
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = self.x + x;

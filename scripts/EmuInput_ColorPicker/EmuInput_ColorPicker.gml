@@ -30,6 +30,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = x + base_x;

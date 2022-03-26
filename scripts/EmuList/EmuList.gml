@@ -119,6 +119,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var col_main = self.color();

@@ -71,6 +71,8 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     
     static Render = function() {
         self.gc.Clean();
+        self.update_script();
+        
         var x1 = x;
         var y1 = y;
         var x2 = x1 + self.width;

@@ -84,6 +84,7 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, "bit
     
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = self.x + x;

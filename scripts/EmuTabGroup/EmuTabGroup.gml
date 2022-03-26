@@ -80,6 +80,9 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
+        self.update_script();
+        self.update_script();
+        
         var x1 = x + base_x;
         var y1 = y + base_y;
         var x2 = x1 + self.width;

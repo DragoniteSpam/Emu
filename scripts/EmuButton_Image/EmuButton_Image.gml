@@ -21,6 +21,7 @@ function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, c
     
     static Render = function(base_x, base_y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = x + base_x;

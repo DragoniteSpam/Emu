@@ -70,9 +70,15 @@ function EmuCore(x, y, w, h, text = "") constructor {
     /// @ignore
     self.time_click_left_last = -10000;
     
+    self.update_script = function() { };
+    
     self.refresh_script = function(data) { };
     
     #region mutators
+    static SetUpdate = function(f) {
+        self.update_script = method(self, f);
+        return self;
+    };
     
     static SetRefresh = function(f) {
         self.refresh_script = method(self, f);
@@ -232,6 +238,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     
     static Render = function(base_x = 0, base_y = 0) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         self.renderContents(self.x + base_x, self.y + base_y);
         return self;

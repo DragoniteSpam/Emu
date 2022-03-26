@@ -18,6 +18,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
     #region other methods
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         if (self.update_text) self.text = self.update_text();

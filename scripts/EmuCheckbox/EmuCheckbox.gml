@@ -57,6 +57,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     #region other methods
     static Render = function(x, y) {
         self.gc.Clean();
+        self.update_script();
         self.processAdvancement();
         
         var x1 = self.x + x;
