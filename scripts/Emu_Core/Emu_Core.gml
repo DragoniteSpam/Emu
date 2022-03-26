@@ -70,7 +70,15 @@ function EmuCore(x, y, w, h, text = "") constructor {
     /// @ignore
     self.time_click_left_last = -10000;
     
+    self.refresh_script = function(data) { };
+    
     #region mutators
+    
+    static SetRefresh = function(f) {
+        self.refresh_script = method(self, f);
+        return self;
+    };
+    
     static SetText = function(text) {
         self.text = text;
         return self;
@@ -237,6 +245,14 @@ function EmuCore(x, y, w, h, text = "") constructor {
     
     static Activate = function() {
         _emu_active_element(self);
+        return self;
+    };
+    
+    static Refresh = function(data) {
+        self.refresh_script(data);
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
+            self.contents[i].Refresh(data);
+        }
         return self;
     };
     #endregion
