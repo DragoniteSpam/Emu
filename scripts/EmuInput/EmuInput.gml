@@ -241,6 +241,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
     };
     
+    static Activate = function() {
+    	keyboard_string = self.value;
+        _emu_active_element(self);
+        return self;
+    }
+    
     static ValidateInput = function(text) {
         switch (self.value_type) {
         	case E_InputTypes.STRING:

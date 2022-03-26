@@ -109,13 +109,13 @@ function EmuCore(x, y, w, h, text = "") constructor {
     
     static SetNext = function(element) {
         self.next = element;
-        if (self.next) self.next.previous = self;
+        if (is_struct(self.next)) self.next.previous = self;
         return self;
     };
     
     static SetPrevious = function(element) {
         self.previous = element;
-        if (self.previous) self.previous.next = self;
+        if (is_struct(self.previous)) self.previous.next = self;
         return self;
     };
     
@@ -271,18 +271,24 @@ function EmuCore(x, y, w, h, text = "") constructor {
     static processAdvancement = function() {
         if (!self.isActiveElement()) return false;
         if (!self.override_tab && keyboard_check_pressed(vk_tab)) {
-            if (keyboard_check(vk_shift) && self.previous) {
-                self.previous.Activate();
+            if (keyboard_check(vk_shift) && self.previous != undefined) {
+                if (is_struct(self.previous))
+                    self.previous.Activate();
+                else if (self.GetSibling(self.previous))
+                    self.GetSibling(self.previous).Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
-            if (self.next) {
-                self.next.Activate();
+            if (self.next != undefined) {
+                if (is_struct(self.next))
+                    self.next.Activate();
+                else if (self.GetSibling(self.next))
+                    self.GetSibling(self.next).Activate();
                 keyboard_clear(vk_tab);
                 return true;
             }
         }
-    };
+    }
     
     /// @ignore
     static drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
