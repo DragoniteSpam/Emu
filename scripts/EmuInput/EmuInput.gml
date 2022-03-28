@@ -44,7 +44,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
-    static SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
+    static SetInputBoxPosition = function(vx1, vy1, vx2 = self.box.x2, vy2 = self.box.y2) {
         self.box.x1 = vx1;
         self.box.y1 = vy1;
         self.box.x2 = vx2;
