@@ -75,65 +75,65 @@ function EmuCore(x, y, w, h, text = "") constructor {
     self.refresh_script = function(data) { };
     
     #region mutators
-    static SetUpdate = function(f) {
+    self.SetUpdate = function(f) {
         self.update_script = method(self, f);
         return self;
     };
     
-    static SetRefresh = function(f) {
+    self.SetRefresh = function(f) {
         self.refresh_script = method(self, f);
         return self;
     };
     
-    static SetText = function(text) {
+    self.SetText = function(text) {
         self.text = text;
         return self;
     };
     
-    static SetAlign = function(h, v) {
+    self.SetAlign = function(h, v) {
         self.align.h = h;
         self.align.v = v;
         return self;
     };
     
-    static SetInteractive = function(interactive) {
+    self.SetInteractive = function(interactive) {
         self.interactive = interactive;
         return self;
     };
     
-    static SetEnabled = function(enabled) {
+    self.SetEnabled = function(enabled) {
         self.enabled = enabled;
         return self;
     };
     
-    static SetTooltip = function(text) {
+    self.SetTooltip = function(text) {
         self.tooltip = text;
         return self;
     };
     
-    static SetSpriteNineslice = function(sprite) {
+    self.SetSpriteNineslice = function(sprite) {
         self.sprite_nineslice = sprite;
         return self;
     };
     
-    static SetSpriteCheckers = function(sprite) {
+    self.SetSpriteCheckers = function(sprite) {
         self.sprite_checkers = sprite;
         return self;
     };
     
-    static SetNext = function(element) {
+    self.SetNext = function(element) {
         self.next = element;
         if (is_struct(self.next)) self.next.previous = self;
         return self;
     };
     
-    static SetPrevious = function(element) {
+    self.SetPrevious = function(element) {
         self.previous = element;
         if (is_struct(self.previous)) self.previous.next = self;
         return self;
     };
     
-    static SetID = function(identifier) {
+    self.SetID = function(identifier) {
         identifier = string(identifier);
         if (self.root) {
             if (self.root.child_ids[$ self.identifier] == self) {
@@ -149,36 +149,36 @@ function EmuCore(x, y, w, h, text = "") constructor {
     #endregion
     
     #region accessors
-    static GetHeight = function() {
+    self.GetHeight = function() {
         return self.height;
     };
     
-    static GetInteractive = function() {
+    self.GetInteractive = function() {
         return self.enabled && self.interactive && self.isActiveDialog();
     };
     
-    static GetTop = function() {
+    self.GetTop = function() {
         if (array_length(self.contents) == 0) return undefined;
         return self.contents[array_length(self.contents) - 1];
     };
     
-    static GetMouseOver = function() {
+    self.GetMouseOver = function() {
         return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
     };
     
-    static GetChild = function(identifier) {
+    self.GetChild = function(identifier) {
         identifier = string(identifier);
         return self.child_ids[$ identifier];
     };
     
-    static GetSibling = function(identifier) {
+    self.GetSibling = function(identifier) {
         if (!self.root) return undefined;
         return self.root.GetChild(identifier);
     };
     #endregion
     
     #region other public methods
-    static AddContent = function(elements) {
+    self.AddContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
         }
@@ -221,7 +221,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
-    static RemoveContent = function(elements) {
+    self.RemoveContent = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
         }
@@ -236,7 +236,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
-    static Render = function(base_x = 0, base_y = 0) {
+    self.Render = function(base_x = 0, base_y = 0) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -244,18 +244,18 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
-    static ShowTooltip = function() {
+    self.ShowTooltip = function() {
         // The implementation of this is up to you - but you probably want to
         // assign the element's "tooltip" text to be drawn on the UI somewhere
         return self;
     };
     
-    static Activate = function() {
+    self.Activate = function() {
         _emu_active_element(self);
         return self;
     };
     
-    static Refresh = function(data) {
+    self.Refresh = function(data) {
         self.refresh_script(data);
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
             self.contents[i].Refresh(data);
@@ -266,7 +266,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     
     #region private methods
     /// @ignore
-    static getTextX = function(x) {
+    self.getTextX = function(x) {
         switch (self.align.h) {
             case fa_left: return x + self.offset;
             case fa_center: return x + self.width / 2;
@@ -275,7 +275,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     /// @ignore
-    static getTextY = function(y) {
+    self.getTextY = function(y) {
         switch (self.align.v) {
             case fa_top: return y + self.offset;
             case fa_middle: return y + self.height / 2;
@@ -284,14 +284,14 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     /// @ignore
-    static renderContents = function(at_x, at_y) {
+    self.renderContents = function(at_x, at_y) {
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
             if (self.contents[i]) self.contents[i].Render(at_x, at_y);
         }
     };
     
     /// @ignore
-    static processAdvancement = function() {
+    self.processAdvancement = function() {
         if (!self.isActiveElement()) return false;
         if (!self.override_tab && keyboard_check_pressed(vk_tab)) {
             if (keyboard_check(vk_shift) && self.previous != undefined) {
@@ -314,7 +314,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     }
     
     /// @ignore
-    static drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
+    self.drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
         var s = sprite_get_width(self.sprite_checkers);
@@ -334,7 +334,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     /// @ignore
-    static isActiveDialog = function() {
+    self.isActiveDialog = function() {
         var top = EmuOverlay.GetTop();
         if (!top) return true;
         
@@ -348,17 +348,17 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     /// @ignore
-    static isActiveElement = function() {
+    self.isActiveElement = function() {
         return EmuActiveElement == self;
     };
     #endregion
     
     #region cursor detection methods
-    static getMouseHover = function(x1, y1, x2, y2) {
+    self.getMouseHover = function(x1, y1, x2, y2) {
         return self.GetInteractive() && point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), x1, y1, x2 - 1, y2 - 1);
     };
     
-    static getMousePressed = function(x1, y1, x2, y2) {
+    self.getMousePressed = function(x1, y1, x2, y2) {
         var click = (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_left)) || (self.isActiveElement() && keyboard_check_pressed(vk_space));
         // In the event that clicking is polled more than once per frame, don't
         // register two clicks per frame
@@ -369,42 +369,42 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return click;
     };
     
-    static getMouseDouble = function(x1, y1, x2, y2) {
+    self.getMouseDouble = function(x1, y1, x2, y2) {
         return self.getMousePressed(x1, y1, x2, y2) && (current_time - self.time_click_left_last < EMU_TIME_DOUBLE_CLICK_THRESHOLD);
     };
     
-    static getMouseHold = function(x1, y1, x2, y2) {
+    self.getMouseHold = function(x1, y1, x2, y2) {
         return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button(0, mb_left)) || (self.isActiveElement() && keyboard_check(vk_space));
     };
     
-    static getMouseHoldDuration = function(x1, y1, x2, y2) {
+    self.getMouseHoldDuration = function(x1, y1, x2, y2) {
         return self.getMouseHold(x1, y1, x2, y2) ? (current_time - self.time_click_left) : 0;
     };
     
-    static getMouseReleased = function(x1, y1, x2, y2) {
+    self.getMouseReleased = function(x1, y1, x2, y2) {
         return (self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_left)) || (self.isActiveElement() && keyboard_check_released(vk_space));
     };
     
-    static getMouseMiddlePressed = function(x1, y1, x2, y2) {
+    self.getMouseMiddlePressed = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_middle);
     };
     
-    static getMouseMiddleReleased = function(x1, y1, x2, y2) {
+    self.getMouseMiddleReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_middle);
     };
     
-    static GetMouseRightPressed = function(x1, y1, x2, y2) {
+    self.GetMouseRightPressed = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_pressed(0, mb_right);
     };
     
-    static getMouseRightReleased = function(x1, y1, x2, y2) {
+    self.getMouseRightReleased = function(x1, y1, x2, y2) {
         return self.getMouseHover(x1, y1, x2, y2) && device_mouse_check_button_released(0, mb_right);
     };
     #endregion
     
     #region garbage collector stuff
     /// @ignore
-    static surfaceVerify = function(surface, width, height) {
+    self.surfaceVerify = function(surface, width, height) {
         static gc_ref = function(ref, surface) constructor {
             self.ref = ref;
             self.surface = surface;
@@ -455,6 +455,33 @@ function EmuCore(x, y, w, h, text = "") constructor {
 }
 
 function EmuCallback(x, y, w, h, text, value, callback) : EmuCore(x, y, w, h, text) constructor {
+    #region mutators
+    self.SetCallback = function(callback) {
+        self.callback = method(self, callback);
+        return self;
+    };
+    
+    self.SetCallbackMiddle = function(callback) {
+        self.callback_middle = method(self, callback);
+        return self;
+    };
+    
+    self.SetCallbackRight = function(callback) {
+        self.callback_right = method(self, callback);
+        return self;
+    };
+    
+    self.SetCallbackDouble = function(callback) {
+        self.callback_double = method(self, callback);
+        return self;
+    };
+    
+    self.SetValue = function(value) {
+        self.value = value;
+        return self;
+    };
+    #endregion
+    
     /// @ignore
     self.callback = undefined;
     /// @ignore
@@ -470,33 +497,6 @@ function EmuCallback(x, y, w, h, text, value, callback) : EmuCore(x, y, w, h, te
     self.SetCallbackMiddle(emu_null);
     self.SetCallbackRight(emu_null);
     self.SetCallbackDouble(emu_null);
-    
-    #region mutators
-    static SetCallback = function(callback) {
-        self.callback = method(self, callback);
-        return self;
-    };
-    
-    static SetCallbackMiddle = function(callback) {
-        self.callback_middle = method(self, callback);
-        return self;
-    };
-    
-    static SetCallbackRight = function(callback) {
-        self.callback_right = method(self, callback);
-        return self;
-    };
-    
-    static SetCallbackDouble = function(callback) {
-        self.callback_double = method(self, callback);
-        return self;
-    };
-    
-    static SetValue = function(value) {
-        self.value = value;
-        return self;
-    };
-    #endregion
 }
 
 function emu_null() { }

@@ -15,12 +15,12 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
     
     self.color_back = function() { return EMU_COLOR_BACK; };
     
-    static SetAlphaUsed = function(alpha_used) {
+    self.SetAlphaUsed = function(alpha_used) {
         self.allow_alpha = alpha_used;
         return self;
     };
     
-    static SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
+    self.SetInputBoxPosition = function(vx1, vy1, vx2, vy2) {
         self.box.x1 = vx1;
         self.box.y1 = vy1;
         self.box.x2 = vx2;
@@ -28,7 +28,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
         return self;
     };
     
-    static Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -116,7 +116,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                         self.alpha_height = 16;
                         self.selecting_alpha = false;
                         
-                        static SetValue = function(value) {
+                        self.SetValue = function(value) {
                             self.value = value;
                             
                             switch (self.axis_channel) {
@@ -138,7 +138,7 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                             }
                         };
                         
-                        static Render = function(base_x, base_y) {
+                        self.Render = function(base_x, base_y) {
                             self.gc.Clean();
                             var x1 = x + base_x;
                             var y1 = y + base_y;

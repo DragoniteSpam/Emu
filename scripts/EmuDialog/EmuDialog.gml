@@ -36,40 +36,40 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     EmuOverlay.AddContent(self);
     
     #region mutators
-    static SetCloseButton = function(show) {
+    self.SetCloseButton = function(show) {
         self.close_button = show;
         return self;
     };
     
-    static SetSpriteClose = function(sprite) {
+    self.SetSpriteClose = function(sprite) {
         self.sprite_close = sprite;
         return self;
     };
     
-    static SetActiveShade = function(shade) {
+    self.SetActiveShade = function(shade) {
         self.active_shade = shade;
         return self;
     };
     
-    static SetTitle = function(text) {
+    self.SetTitle = function(text) {
         self.text = text;
         return self;
     };
     #endregion
     
     #region accessors
-    static GetHeight = function() {
+    self.GetHeight = function() {
         return self.height + self.header_height;
     };
     #endregion
     
     #region public methods
-    static Close = function() {
+    self.Close = function() {
         // this needs to be done after the entire dialog box is finished rendering
         self.disposed = true;
     };
     
-    static Render = function() {
+    self.Render = function() {
         self.gc.Clean();
         self.update_script();
         
@@ -165,7 +165,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     
     #region private methods
     // Override this function for dialogs
-    static isActiveDialog = function() {
+    self.isActiveDialog = function() {
         return (EmuOverlay.contents[array_length(EmuOverlay.contents) - 1] == self);
     };
     #endregion

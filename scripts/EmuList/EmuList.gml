@@ -32,31 +32,31 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self.entries = [];
 	self.dragging = false;
     
-    static SetList = function(array) {
+    self.SetList = function(array) {
         self.entries = array;
         self.own_entries = false;
         self.ClearSelection();
         return self;
     };
     
-    static SetEntryTypes = function(type) {
+    self.SetEntryTypes = function(type) {
         self.entries_are = type;
         return self;
     };
     
-    static SetMultiSelect = function(multi_select, auto, toggle) {
+    self.SetMultiSelect = function(multi_select, auto, toggle) {
         self.allow_multi_select = multi_select;
         self.auto_multi_select = auto;
         self.select_toggle = toggle;
         return self;
     };
     
-    static SetVacantText = function(text) {
+    self.SetVacantText = function(text) {
         self.text_vacant = text;
         return self;
     };
     
-    static AddEntries = function(elements) {
+    self.AddEntries = function(elements) {
         if (!self.own_entries) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its entries.");
         }
@@ -68,7 +68,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
-    static Clear = function() {
+    self.Clear = function() {
         if (self.own_entries) {
             self.entries = [];
         } else {
@@ -77,30 +77,30 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
-    static GetHeight = function() {
+    self.GetHeight = function() {
         return self.height + self.element_height * self.slots;
     };
     
-    static GetSelected = function(list_index) {
+    self.GetSelected = function(list_index) {
         return variable_struct_exists(self.selected_entries, string(list_index));
     };
     
-    static getListColors = function(list_index) {
+    self.getListColors = function(list_index) {
         return EMU_COLOR_LIST_TEXT;
     };
     
-    static GetSelection = function() {
+    self.GetSelection = function() {
         if (variable_struct_names_count(self.selected_entries) == 0) return -1;
         return self.selected_entries[$ "first"];
     };
     
-    static ClearSelection = function() {
+    self.ClearSelection = function() {
         self.selected_entries = { };
         self.callback();
         return self;
     };
     
-    static Select = function(list_index, set_index = false) {
+    self.Select = function(list_index, set_index = false) {
         if (!variable_struct_exists(self.selected_entries, "first")) self.selected_entries[$ "first"] = list_index;
         self.selected_entries[$ "last"] = list_index;
         self.selected_entries[$ string(list_index)] = true;
@@ -111,13 +111,13 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
-    static Deselect = function(list_index) {
+    self.Deselect = function(list_index) {
         variable_struct_remove(self.selected_entries, list_index);
         self.callback();
         return self;
     };
     
-    static Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

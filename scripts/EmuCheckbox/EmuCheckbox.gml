@@ -18,44 +18,44 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     self.color_back = function() { return EMU_COLOR_BACK; };
     
     #region mutators
-    static SetBoxSize = function(size) {
+    self.SetBoxSize = function(size) {
         self.box_size = size;
         return self;
     };
     
-    static SetSpriteCheck = function(sprite) {
+    self.SetSpriteCheck = function(sprite) {
         self.box_size = sprite;
         return self;
     };
     
-    static SetSpriteBorder = function(sprite) {
+    self.SetSpriteBorder = function(sprite) {
         self.box_size = sprite;
         return self;
     };
     
-    static SetColorActive = function(color_function) {
+    self.SetColorActive = function(color_function) {
         self.color_active = method(self, color_function);
         return self;
     };
     
-    static SetColorHover = function(color_function) {
+    self.SetColorHover = function(color_function) {
         self.color_hover = method(self, color_function);
         return self;
     };
     
-    static SetColorDisabled = function(color_function) {
+    self.SetColorDisabled = function(color_function) {
         self.color_disabled = method(self, color_function);
         return self;
     };
     
-    static SetColorBack = function(color_function) {
+    self.SetColorBack = function(color_function) {
         self.color_back = method(self, color_function);
         return self;
     };
     #endregion
     
     #region other methods
-    static Render = function(x, y) {
+    self.Render = function(x, y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

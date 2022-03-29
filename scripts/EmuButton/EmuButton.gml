@@ -12,24 +12,24 @@ function EmuButton(x, y, w, h, text, callback) : EmuCallback(x, y, w, h, text, 0
     self.color_disabled = function() { return EMU_COLOR_DISABLED; };
     
     #region mutators
-    static SetColorHover = function(color_function) {
+    self.SetColorHover = function(color_function) {
         self.color_hover = method(self, color_function);
         return self;
     };
     
-    static SetColorDisabled = function(color_function) {
+    self.SetColorDisabled = function(color_function) {
         self.color_disabled = method(self, color_function);
         return self;
     };
     
-    static SetColorBack = function(color_function) {
+    self.SetColorBack = function(color_function) {
         self.color_back = method(self, color_function);
         return self;
     };
     #endregion
     
     #region other methods
-    static Render = function(x, y) {
+    self.Render = function(x, y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

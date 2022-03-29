@@ -59,18 +59,20 @@ scribble_font_set_default(EMU_DEFAULT_FONT);
 
 function _emu_get_overlay() {
     static EmuCoreOverlay = function() : EmuCore(0, 0, 1, 1, "overlay") constructor {
-        static baseRender = self.Render;
-        static Render = function() {
+        self.baseRender = self.Render;
+        
+        self.Render = function() {
             self.width = window_get_width();
             self.height = window_get_height();
             self.baseRender(0, 0);
         };
         
-        static Pop = function() {
+        self.Pop = function() {
             array_delete(self.contents, array_length(self.contents) - 1, 1);
             _emu_active_element(pointer_null);
         };
     };
+    
     static inst = new EmuCoreOverlay();
     return inst;
 }

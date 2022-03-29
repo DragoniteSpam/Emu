@@ -5,7 +5,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
     self.update_text = undefined;
     
     #region mutators
-    static SetTextUpdate = function(f) {
+    self.SetTextUpdate = function(f) {
         if (f) {
             self.update_text = method(self, f);
         } else {
@@ -16,7 +16,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
     #endregion
     
     #region other methods
-    static Render = function(x, y) {
+    self.Render = function(x, y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

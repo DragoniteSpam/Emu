@@ -15,7 +15,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
     self.active_tab_request = undefined;
     self.override_root_check = true;
     
-    static AddTabs = function(row, tabs) {
+    self.AddTabs = function(row, tabs) {
         self.processAdvancement();
         
         if (row > self.rows) {
@@ -39,7 +39,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         return self;
     };
     
-    static arrangeRow = function(row) {
+    self.arrangeRow = function(row) {
         if (row > rows) {
             throw new EmuException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(self.rows) + " are available");
         }
@@ -55,7 +55,7 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         }
     };
     
-    static activateTab = function(tab) {
+    self.activateTab = function(tab) {
         if (tab.root != self) {
             throw new EmuException("Tab is not included in group", "You are trying to activate a tab in a group that it does not belong to. Please only activate tabs that are members of a group.");
         }
@@ -73,12 +73,12 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         self.arrangeRow(self.rows - 1);
     };
     
-    static RequestActivateTab = function(tab) {
+    self.RequestActivateTab = function(tab) {
         self.active_tab_request = tab;
         return self;
     };
     
-    static Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
         self.update_script();

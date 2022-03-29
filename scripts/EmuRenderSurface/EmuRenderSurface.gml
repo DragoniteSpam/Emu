@@ -18,30 +18,30 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
     surface_reset_target();
     
     #region mutators
-    static SetRender = function(render) {
+    self.SetRender = function(render) {
         self.callback_render = method(self, render);
         return self;
     };
     
-    static SetStep = function(step) {
+    self.SetStep = function(step) {
         self.callback_step = method(self, step);
         return self;
     };
     
-    static SetRecreate = function(recreate) {
+    self.SetRecreate = function(recreate) {
         self.callback_recreate = method(self, recreate);
         return self;
     };
     #endregion
     
     #region accessors
-    static GetSurface = function() {
+    self.GetSurface = function() {
         return self.surface;
     };
     #endregion
     
     #region other methods
-    static Render = function(x, y) {
+    self.Render = function(x, y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

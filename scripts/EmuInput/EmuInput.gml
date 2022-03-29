@@ -34,17 +34,17 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     self.surface = self.surfaceVerify(-1, self.box.x2 - self.box.x1, self.box.y2 - self.box.y1).surface;
     
-    static SetMultiLine = function(multi_line) {
+    self.SetMultiLine = function(multi_line) {
         self.multi_line = multi_line;
         return self;
     };
     
-    static SetRequireConfirm = function(require) {
+    self.SetRequireConfirm = function(require) {
         self.require_enter = require;
         return self;
     };
     
-    static SetInputBoxPosition = function(vx1, vy1, vx2 = self.box.x2, vy2 = self.box.y2) {
+    self.SetInputBoxPosition = function(vx1, vy1, vx2 = self.box.x2, vy2 = self.box.y2) {
         self.box.x1 = vx1;
         self.box.y1 = vy1;
         self.box.x2 = vx2;
@@ -52,12 +52,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
-    static SetInputType = function(input_type) {
+    self.SetInputType = function(input_type) {
         self.value_type = input_type;
         return self;
     };
     
-    static SetValue = function(value) {
+    self.SetValue = function(value) {
         self.value = string(value);
         if (self.isActiveElement()) {
             keyboard_string = self.value;
@@ -65,13 +65,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
-    static SetRealNumberBounds = function(lower, upper) {
+    self.SetRealNumberBounds = function(lower, upper) {
         self.value_lower = min(lower, upper);
         self.value_upper = max(lower, upper);
         return self;
     };
     
-    static Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -239,13 +239,13 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
     };
     
-    static Activate = function() {
+    self.Activate = function() {
     	keyboard_string = self.value;
         _emu_active_element(self);
         return self;
     }
     
-    static ValidateInput = function(text) {
+    self.ValidateInput = function(text) {
         switch (self.value_type) {
         	case E_InputTypes.STRING:
         		return true;
@@ -276,7 +276,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return true;
     };
     
-    static CastInput = function(text) {
+    self.CastInput = function(text) {
         switch (self.value_type) {
             case E_InputTypes.STRING: return text;
             case E_InputTypes.INT: return real(text);

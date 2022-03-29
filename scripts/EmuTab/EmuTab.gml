@@ -19,7 +19,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
     
     self.override_root_check = true;
     
-    static Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -63,16 +63,16 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
     // This is NOT the same as isActiveElement() - this checks for the active
     // tab in the tab group, rather than the UI element which will respond to
     // keyboard input
-    static isActiveTab = function() {
+    self.isActiveTab = function() {
         return (self.root.active_tab == self);
     };
     
-    static RequestActivate = function() {
+    self.RequestActivate = function() {
         self.root.RequestActivateTab(self);
         return self;
     };
     
-    static GetInteractive = function() {
+    self.GetInteractive = function() {
         return self.enabled && self.interactive && self.root.isActiveDialog();
     };
 }
