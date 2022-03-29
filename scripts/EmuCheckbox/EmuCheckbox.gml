@@ -4,9 +4,9 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     /// @ignore
     self.box_size = 20;
     /// @ignore
-    self.sprite_check = spr_emu_checkbox;
+    self.sprite_check = EMU_SPRITE_CHECKBOX;
     /// @ignore
-    self.sprite_check_border = spr_emu_checkbox_border;
+    self.sprite_check_border = EMU_SPRITE_CHECKBOX_BORDER;
     
     /// @ignore
     self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE; };

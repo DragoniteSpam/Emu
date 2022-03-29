@@ -44,7 +44,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     /// @ignore
     self.sprite_nineslice = spr_emu_nineslice;
     /// @ignore
-    self.sprite_checkers = spr_emu_checker;
+    self.sprite_checkers = EMU_SPRITE_CHECKERS;
     
     /// @ignore
     self.contents = [];

@@ -21,6 +21,22 @@
 
 #macro EMU_FONT_DEFAULT                 fnt_emu_default
 
+#macro EMU_SPRITE_CHECKERS              spr_emu_checker
+#macro EMU_SPRITE_CHECKBOX              spr_emu_checkbox
+#macro EMU_SPRITE_CHECKBOX_BORDER       spr_emu_checkbox_border
+#macro EMU_SPRITE_CLOSE_BUTTON          spr_emu_close
+#macro EMU_SPRITE_HELP                  spr_emu_help
+#macro EMU_SPRITE_DRAG_KNOB             spr_emu_knob
+#macro EMU_SPRITE_MENU_BAR_H            spr_emu_mask_bar_h
+#macro EMU_SPRITE_MENU_BAR_V            spr_emu_mask_bar_v
+#macro EMU_SPRITE_CROSSHAIR             spr_emu_mask_crosshair
+#macro EMU_SPRITE_NOT_FOUND             spr_emu_not_found
+#macro EMU_SPRITE_PROGRESS              spr_emu_progress
+#macro EMU_SPRITE_RADIO                 spr_emu_radio
+#macro EMU_SPRITE_RING                  spr_emu_ring
+#macro EMU_SPRITE_SCROLL_ARROW          spr_emu_scroll_arrow
+#macro EMU_SPRITE_SUBMIT                spr_emu_enter
+
 #macro EMU_TIME_DOUBLE_CLICK_THRESHOLD  250
 #macro EMU_TIME_HOLD_THRESHOLD          500
 

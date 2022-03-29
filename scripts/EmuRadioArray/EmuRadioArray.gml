@@ -66,7 +66,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         self.color_back_disabled = function() { return EMU_COLOR_DISABLED; };
         self.color_back = function() { return EMU_COLOR_BACK; };
         
-        self.sprite_radio = spr_emu_radio;
+        self.sprite_radio = EMU_SPRITE_RADIO;
         
         static Render = function(base_x, base_y) {
             self.gc.Clean();

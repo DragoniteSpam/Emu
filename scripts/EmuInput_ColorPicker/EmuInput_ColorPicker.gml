@@ -95,9 +95,9 @@ function EmuColorPicker(x, y, w, h, text, value, callback) : EmuCallback(x, y, w
                         self.main_size = 176;
                         self.selecting_color = false;
                         
-                        self.sprite_crosshair = spr_emu_mask_crosshair;
-                        self.sprite_mask_bar_h = spr_emu_mask_bar_h;
-                        self.sprite_mask_bar_v = spr_emu_mask_bar_v;
+                        self.sprite_crosshair = EMU_SPRITE_CROSSHAIR;
+                        self.sprite_mask_bar_h = EMU_SPRITE_MENU_BAR_H;
+                        self.sprite_mask_bar_v = EMU_SPRITE_MENU_BAR_V;
                         
                         self.axis_x = self.color_x + self.main_size + 16;
                         self.axis_y = self.color_y;

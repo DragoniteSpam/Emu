@@ -19,8 +19,8 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self.numbered = false;
     self.text_vacant = "(empty list)";
     
-    self.sprite_help = spr_emu_help;
-    self.sprite_arrows = spr_emu_scroll_arrow;
+    self.sprite_help = EMU_SPRITE_HELP;
+    self.sprite_arrows = EMU_SPRITE_SCROLL_ARROW;
     
     self.index = 0;
     self.click_x = -1;

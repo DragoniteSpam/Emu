@@ -15,9 +15,9 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
     self.color_back = function() { return EMU_COLOR_BACK; };
     
     /// @region
-    self.sprite_bar = spr_emu_progress;
+    self.sprite_bar = EMU_SPRITE_PROGRESS;
     /// @region
-    self.sprite_knob = spr_emu_knob;
+    self.sprite_knob = EMU_SPRITE_DRAG_KNOB;
     /// @region
     self.knob_scale = 2;
     

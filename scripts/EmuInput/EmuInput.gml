@@ -15,8 +15,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.color_selected = function() { return EMU_COLOR_SELECTED; };
     self.input_font = EMU_FONT_DEFAULT;
     
-    self.sprite_ring = spr_emu_ring;
-    self.sprite_enter = spr_emu_enter;
+    self.sprite_ring = EMU_SPRITE_RING;
+    self.sprite_enter = EMU_SPRITE_SUBMIT;
     
     self.box = {
         x1: self.width / 2,

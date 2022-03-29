@@ -18,7 +18,7 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     /// @ignore
     self.changed = false;
     /// @ignore
-    self.sprite_close = spr_emu_close;
+    self.sprite_close = EMU_SPRITE_CLOSE_BUTTON;
     /// @ignore
     self.color_header = function() { return EMU_COLOR_WINDOWSKIN; };
     /// @ignore
