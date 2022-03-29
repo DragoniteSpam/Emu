@@ -93,8 +93,6 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         var ty = self.getTextY(y1);
         
         var working_value = string(self.value);
-        var sw = string_width(working_value);
-        var sw_end = sw + 4;
         
         #region work out the input color
         scribble(string(self.text))
@@ -112,9 +110,9 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         }
         #endregion
         
+        var spacing = 12;
         var vtx = vx1 + 12;
         var vty = floor(mean(vy1, vy2));
-        var spacing = 12;
         
         #region input drawing
         self.surface = self.surfaceVerify(self.surface, ww, hh).surface;
@@ -165,18 +163,17 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
             draw_set_font(self.input_font);
             var sh = string_height_ext(display_text, -1, vx2 - vx1 - (vtx - vx1) * 2);
             var vty = vy1 + self.offset;
-            draw_text_ext_colour(vtx - vx1, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
+            draw_text_ext_colour(spacing, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
         } else {
             draw_set_halign(fa_left);
             draw_set_valign(fa_middle);
             draw_set_font(self.input_font);
-            var sw_begin = min(vtx - vx1, ww - self.offset - sw);
-            draw_text_colour(sw_begin, vty - vy1, display_text, c, c, c, c, 1);
-            sw_end = sw_begin + sw + 4;
+            var sw = string_width(working_value);
+            draw_text_colour(min(spacing, ww - self.offset - sw), vty - vy1, display_text, c, c, c, c, 1);
         }
         
         if (string_length(self.value) == 0) {
-            draw_text_colour(vtx - vx1, vty - vy1, string(self.help_text), self.color_help_text(), self.color_help_text(), self.color_help_text(), self.color_help_text(), 1);
+            draw_text_colour(spacing, vty - vy1, string(self.help_text), self.color_help_text(), self.color_help_text(), self.color_help_text(), self.color_help_text(), 1);
         }
 
         if (self.require_enter) {
