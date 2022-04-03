@@ -158,14 +158,18 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
 }
 
 // You may find yourself using these particularly often
-function emu_bitfield_option_toggle_callback() {
+function emu_bitfield_option_callback_toggle() {
     self.root.value ^= ~self.value;
 }
 
-function emu_bitfield_option_exact_callback() {
+function emu_bitfield_option_callback_exact() {
     self.root.value = self.value;
 }
 
-function emu_bitfield_option_exact_eval() {
+function emu_bitfield_option_eval_includes() {
+    return (self.root.value & self.value) > 0;
+}
+
+function emu_bitfield_option_eval_exact() {
     return self.root.value == self.value;
-};
+}
