@@ -151,6 +151,7 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
         
         if (self.getMousePressed(x1, y1, x2, y2)) {
             self.callback();
+            self.root.callback();
         }
     };
     #endregion
@@ -159,7 +160,6 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
 // You may find yourself using these particularly often
 function emu_bitfield_option_exact_callback() {
     self.root.value = self.value;
-    self.root.callback();
 }
 
 function emu_bitfield_option_exact_eval() {
