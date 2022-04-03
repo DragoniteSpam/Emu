@@ -45,6 +45,9 @@
 #macro EMU_KEY_REPEAT_RATE              2
 
 #macro EMU_DEFAULT_FONT                 "fnt_emu_default"
+
+#macro EMU_DEFAULT_CLOSE_BUTTON_WIDTH   160
+#macro EMU_DEFAULT_CLOSE_BUTTON_HEIGHT  32
 #endregion
 
 scribble_font_set_default(EMU_DEFAULT_FONT);
