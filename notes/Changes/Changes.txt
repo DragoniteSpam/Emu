@@ -1,0 +1,28 @@
+Guess I should probably keep a changelog now. See the documentation for more details:
+https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+# Version 1.1.0 - Changes since 1.0.17
+
+Some of these changes will be breaking; make a backup before updating.
+
+ - General: removed array accessors and the need for copy-on-write (GMS2 version 2022.2 or later will be needed)
+ - General: EMU_AUTO_NO_SPACING
+ - Bitfields: renamed auto functions to make them a tiny bit more orderly
+ - Bitfields: added emu_bitfield_option_callback_toggle and emu_bitfield_option_eval_includes bitfield auto functions
+ - Display: UI element sprites are now macros (as colors were made to be in 1.0.17)
+
+# Version 1.0.17 - Changes since 1.0.16
+
+Some of these changes will be breaking; make a backup before updating.
+
+ - General: the system is now entirely garbage collected, and ::Destroy() methods have been removed
+ - General: EMU_INLINE and EMU_BASE alignment options
+ - Dialogs: added ::AddDefaultCloseButton and ::AddDefaultConfirmCancelButtons to save you from having to add such things yourself every single time
+ - Display: color values are now macros - you can reskin the UI by having the macros point to global variables instead of color literals
+ - Element IDs: added EmuCore::SetID, EmuCore::GetSibling, EmuCore::GetChild, EmuCore::SearchID
+     - You can assign element IDs to elements and use them to reference each other without the need to save each element as a variable elsewhere
+     - Advancement (via the Tab and Shift+Tab keys) can now be set using element IDs
+ - EmuInput: better text entry
+ - Refresh functions: added EmuCore::SetRefresh and EmuCore::SetRefresh
+     - This lets you call .Refresh() on any element (or container element) to update the text or values of an element at any time
+ - Scribble: is now Version 8

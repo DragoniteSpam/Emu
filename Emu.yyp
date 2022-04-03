@@ -5,6 +5,7 @@
     {"id":{"name":"__scribble_gc_collect","path":"scripts/__scribble_gc_collect/__scribble_gc_collect.yy",},"order":8,},
     {"id":{"name":"scribble_typist","path":"scripts/scribble_typist/scribble_typist.yy",},"order":8,},
     {"id":{"name":"scribble_anim_shake","path":"scripts/scribble_anim_shake/scribble_anim_shake.yy",},"order":6,},
+    {"id":{"name":"Changes","path":"notes/Changes/Changes.yy",},"order":5,},
     {"id":{"name":"Emu_Core","path":"scripts/Emu_Core/Emu_Core.yy",},"order":0,},
     {"id":{"name":"emu_init","path":"scripts/emu_init/emu_init.yy",},"order":4,},
     {"id":{"name":"EmuDialog","path":"scripts/EmuDialog/EmuDialog.yy",},"order":16,},
