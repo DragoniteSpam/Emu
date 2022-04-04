@@ -89,6 +89,16 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return EMU_COLOR_LIST_TEXT;
     };
     
+	self.ForEachSelection = function(f) {
+		var names = variable_struct_get_names(self.selected_entries);
+		for (var i = 0, n = array_length(names); i < n; i++) {
+    		if (names[i] == "first") continue;
+    		if (names[i] == "last") continue;
+			f(real(names[i]));
+		}
+	};
+	
+	
     self.GetSelection = function() {
         if (variable_struct_names_count(self.selected_entries) == 0) return -1;
         return self.selected_entries[$ "first"];
