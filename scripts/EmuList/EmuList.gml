@@ -109,7 +109,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     	for (var i = array_length(names) - 1; i >= 0; i--) {
     		if (names[i] == "first") continue;
     		if (names[i] == "last") continue;
-    		results[index++] = names[i];
+    		results[index++] = real(names[i]);
     	}
     	
     	return results;
