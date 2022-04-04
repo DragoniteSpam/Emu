@@ -1,6 +1,10 @@
 Guess I should probably keep a changelog now. See the documentation for more details:
 https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
+# Changes since 1.1.0
+
+ - EmuList::ForEachSelection and ::GetAllSelectedIndices
+
 # Version 1.1.0 - Changes since 1.0.17
 
 Some of these changes will be breaking; make a backup before updating.
