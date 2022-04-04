@@ -98,7 +98,23 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
 		}
 	};
 	
-	
+    self.GetAllSelectedIndices = function() {
+    	var names = variable_struct_get_names(self.selected_entries);
+    	var n = array_length(names);
+    	if (self.selected_entries[$ "first"] != undefined) n--;
+    	if (self.selected_entries[$ "last"] != undefined) n--;
+    	
+    	var results = array_create(n);
+    	var index = 0;
+    	for (var i = array_length(names) - 1; i >= 0; i--) {
+    		if (names[i] == "first") continue;
+    		if (names[i] == "last") continue;
+    		results[index++] = names[i];
+    	}
+    	
+    	return results;
+    };
+    
     self.GetSelection = function() {
         if (variable_struct_names_count(self.selected_entries) == 0) return -1;
         return self.selected_entries[$ "first"];
