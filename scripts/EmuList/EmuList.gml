@@ -56,6 +56,11 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
+    self.SetNumbered = function(numbered) {
+        self.numbered = numbered;
+        return self;
+    };
+    
     self.AddEntries = function(elements) {
         if (!self.own_entries) {
             throw new EmuException("Trying to add to a list owned by someone else", "Please do not add to a list using an external list for its entries.");
