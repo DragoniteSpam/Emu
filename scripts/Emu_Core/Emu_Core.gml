@@ -225,7 +225,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
         if (!is_array(elements)) {
             elements = [elements];
         }
-        for (var i = 0; i < array_length(elements); i++) {
+        for (var i = array_length(elements) - 1; i >= 0; i--) {
             var thing = elements[i];
             array_delete(self.contents, emu_array_search(self.contents, thing), 1);
             if (self.child_ids[$ thing.identifier] == thing) {
