@@ -324,7 +324,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     }
     
     /// @ignore
-    self.drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
+    self.drawCheckerbox = function(x = 0, y = 0, w = self.width - 1, h = self.height - 1, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
         var s = sprite_get_width(self.sprite_checkers);
