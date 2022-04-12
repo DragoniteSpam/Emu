@@ -125,6 +125,12 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self.selected_entries[$ "first"];
     };
     
+    self.GetSelectedItem = function() {
+        var selection = self.GetSelection();
+        if (selection < 0 || selection >= array_length(self.entries)) return undefined;
+        return self.entries[selection];
+    };
+    
     self.ClearSelection = function() {
         self.selected_entries = { };
         self.callback();

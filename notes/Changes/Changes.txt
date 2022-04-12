@@ -5,6 +5,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
  - EmuList::ForEachSelection and ::GetAllSelectedIndices
  - EmuList::SetNumbered
+ - EmuList::GetSelectedItem
 
 # Version 1.1.0 - Changes since 1.0.17
 
