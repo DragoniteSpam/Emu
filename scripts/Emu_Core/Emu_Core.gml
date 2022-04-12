@@ -262,6 +262,16 @@ function EmuCore(x, y, w, h, text = "") constructor {
         }
         return self;
     };
+    
+    self.GetBaseElement = function() {
+        var element = self;
+        while (true) {
+            if (!element.root) return element;
+            element = element.root;
+        }
+        // this will never happen
+        return undefined;
+    };
     #endregion
     
     #region private methods
