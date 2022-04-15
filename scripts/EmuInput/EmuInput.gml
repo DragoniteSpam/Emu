@@ -1,7 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
-    enum E_InputTypes { STRING, INT, REAL, HEX };
+    enum E_InputTypes { STRING, INT, REAL, HEX, LETTERSDIGITS, LETTERSDIGITSANDUNDERSCORES };
     
     self.help_text = help_text;
     self.character_limit = clamp(character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
@@ -68,6 +68,11 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.SetRealNumberBounds = function(lower, upper) {
         self.value_lower = min(lower, upper);
         self.value_upper = max(lower, upper);
+        return self;
+    };
+    
+    self.SetValidateInput = function(f) {
+        self.ValidateInput = method(self, f);
         return self;
     };
     
@@ -272,6 +277,10 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
 	                return false;
 	            }
                 return true;
+            case E_InputTypes.LETTERSDIGITS:
+	            return string_lettersdigits(text) == text;
+            case E_InputTypes.LETTERSDIGITSANDUNDERSCORES:
+	            return string_length(string_lettersdigits(text)) + string_count("_", text) == string_length(text);
         }
         return true;
     };
@@ -279,6 +288,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.CastInput = function(text) {
         switch (self.value_type) {
             case E_InputTypes.STRING: return text;
+            case E_InputTypes.LETTERSDIGITS: return text;
+            case E_InputTypes.LETTERSDIGITSANDUNDERSCORES: return text;
             case E_InputTypes.INT: return real(text);
             case E_InputTypes.REAL: return real(text);
             case E_InputTypes.HEX: return emu_hex(text);
