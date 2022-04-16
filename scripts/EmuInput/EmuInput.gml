@@ -57,6 +57,16 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
+    self.SetValueType = function(type) {
+        self._value_type = type;
+        return self;
+    };
+    
+    self.SetCharacterLimit = function(limit) {
+        self.character_limit = limit;
+        return self;
+    };
+    
     self.SetValue = function(value) {
         self.value = string(value);
         if (self.isActiveElement()) {
