@@ -3,6 +3,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
 # Changes since 1.1.0
 
+ - EmuCore only renders content elements if the element is enabled
  - EmuList::ForEachSelection and ::GetAllSelectedIndices
  - EmuList::SetNumbered
  - EmuList::GetSelectedItem

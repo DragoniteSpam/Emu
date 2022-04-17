@@ -296,7 +296,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     /// @ignore
     self.renderContents = function(at_x, at_y) {
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
-            if (self.contents[i]) self.contents[i].Render(at_x, at_y);
+            if (self.contents[i] && self.contents[i].enabled) self.contents[i].Render(at_x, at_y);
         }
     };
     
