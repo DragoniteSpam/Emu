@@ -32,6 +32,10 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self.entries = [];
 	self.dragging = false;
     
+    self.At = function(index) {
+        return (index < 0 || index >= array_length(self.entries)) ? undefined : self.entries[index];
+    };
+    
     self.SetList = function(array) {
         self.entries = array;
         self.own_entries = false;
