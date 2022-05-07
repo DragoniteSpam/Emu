@@ -6,7 +6,7 @@ Ever wanted to be able to use common UI elements such as text input, checkboxes,
 
 Over the last year and a half I've been working on a GUI system for GameMaker, and now that 2.3 is out I decided to jump on the opportunity to clean up the code and make it properly object-oriented. It's primarily aimed at people looking to make software applications other than games - see the screenshots - but you can use it for whatever you want.
 
-Look inside the demo project or see the [wiki](https://github.com/DragoniteSpam/Emu/wiki) for documentation.
+Look inside the demo project or see the [documentation](https://github.com/DragoniteSpam/Documentation/wiki/Emu) for documentation.
 
 **This requires GameMaker Studio 2.3 in order to work. It relies heavily on the new language features.**
 
