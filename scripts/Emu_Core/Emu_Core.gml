@@ -236,6 +236,14 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
+    static ClearContent = function() {
+        if (self.isActiveElement()) _emu_active_element(undefined);
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
+            self.contents[i].Destroy();
+        }
+        self.contents = [];
+    };
+    
     self.Render = function(base_x = 0, base_y = 0) {
         self.gc.Clean();
         self.update_script();
