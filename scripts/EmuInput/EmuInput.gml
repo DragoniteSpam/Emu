@@ -221,6 +221,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                 }
 				
                 if (self.ValidateInput(working_value)) {
+                    self.value = working_value;
                     var execute_value_change = (!self.require_enter && v0 != working_value) || (self.require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
                         var cast_value = self.CastInput(working_value);
@@ -229,7 +230,6 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                         }
 						
                         if (execute_value_change) {
-                            self.value = working_value;
                             self.callback();
                         }
                     }

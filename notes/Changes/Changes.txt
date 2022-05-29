@@ -10,6 +10,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
  - EmuList::Select will not select a value outside the range of its list
  - EmuList::At so you can get the selected entry without mucking around with the `entries` property
  - EmuInput::SetValueType and ::SetCharacterLimit
+ - EmuInput input can be processed with input elements set to Require Enter
  - E_InputTypes.LETTERSDIGITS and LETTERSDIGITSANDUNDERSCORES
 
 # Version 1.1.0 - Changes since 1.0.17
