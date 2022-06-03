@@ -31,6 +31,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.value_type = input;
     self.value_lower = 0;
     self.value_upper = 100;
+    self.strict_input = false;
     
     self.surface = self.surfaceVerify(-1, self.box.x2 - self.box.x1, self.box.y2 - self.box.y1).surface;
     
@@ -64,6 +65,11 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     
     self.SetCharacterLimit = function(limit) {
         self.character_limit = limit;
+        return self;
+    };
+    
+    self.SetStrictInput = function(strict) {
+        self.strict_input = strict;
         return self;
     };
     
@@ -235,7 +241,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                     }
                 } else if (working_value == "") {
                 	self.value = working_value;
-                } 
+                } else {
+                    // you can set input boxes to reject invalid inputs entirely
+                    if (!self.strict_input) {
+                        self.value = working_value;
+                    }
+                }
             }
             // activation
             if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
