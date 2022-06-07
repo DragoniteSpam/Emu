@@ -1,14 +1,14 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCore(x, y, w, h, text = "") constructor {
+function EmuCore(x, y, width, height, text = "") constructor {
     /// @ignore
     self.x = x;
     /// @ignore
     self.y = y;
     /// @ignore
-    self.width = w;
+    self.width = width;
     /// @ignore
-    self.height = h;
+    self.height = height;
     /// @ignore
     self.root = undefined;
     /// @ignore
@@ -472,7 +472,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     #endregion
 }
 
-function EmuCallback(x, y, w, h, text, value, callback) : EmuCore(x, y, w, h, text) constructor {
+function EmuCallback(x, y, width, height, text, value, callback) : EmuCore(x, y, width, height, text) constructor {
     #region mutators
     self.SetCallback = function(callback) {
         self.callback = method(self, callback);

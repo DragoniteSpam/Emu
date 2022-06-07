@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab group") constructor {
+function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, width, height, "tab group") constructor {
     self.rows = rows;
     self.row_height = row_height;
     

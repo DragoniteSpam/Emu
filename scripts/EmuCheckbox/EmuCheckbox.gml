@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
+function EmuCheckbox(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     /// @ignore
     self.box_size = 20;
     /// @ignore

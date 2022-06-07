@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h, "") constructor {
+function EmuRenderSurface(x, y, width, height, render, step, create) : EmuCore(x, y, width, height, "") constructor {
     /// @ignore
     self.callback_render = method(self, render);
     /// @ignore

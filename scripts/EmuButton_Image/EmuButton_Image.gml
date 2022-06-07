@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuButtonImage(x, y, w, h, sprite, index, blend, alpha, scale_to_fit, callback) : EmuCallback(x, y, w, h, "", 0, callback) constructor {
+function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_to_fit, callback) : EmuCallback(x, y, width, height, "", 0, callback) constructor {
     self.sprite = sprite;
     self.blend = blend;
     self.alpha = alpha;
