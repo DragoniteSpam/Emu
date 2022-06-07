@@ -16,14 +16,11 @@ function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, widt
     self.override_root_check = true;
     
     self.AddTabs = function(row, tabs) {
-        self.processAdvancement();
-        
         if (row > self.rows) {
             throw new EmuException("Tab row out of bounds", "Trying to add to tab row " + string(row) + ", but only up to " + string(self.rows) + " are available");
         }
-        if (!is_array(tabs)) {
-            tabs = [tabs];
-        }
+        
+        if (!is_array(tabs)) tabs = [tabs];
         
         for (var i = 0; i < array_length(tabs); i++) {
             var tab = tabs[i];
@@ -81,7 +78,7 @@ function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, widt
     self.Render = function(base_x, base_y) {
         self.gc.Clean();
         self.update_script();
-        self.update_script();
+        self.processAdvancement();
         
         var x1 = x + base_x;
         var y1 = y + base_y;
