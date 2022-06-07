@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuList(x, y, width, height, text, element_height, content_slots, callback) : EmuCallback(x, y, width, height, text, 0, callback) constructor {
+function EmuList(x, y, width, header_height, text, element_height, content_slots, callback) : EmuCallback(x, y, width, header_height, text, 0, callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     
     self.element_height = element_height;
@@ -83,6 +83,13 @@ function EmuList(x, y, width, height, text, element_height, content_slots, callb
         } else {
             throw new EmuException("Trying to clear a list owned by someone else", "Please do not clear a list using an external list for its entries.");
         }
+        return self;
+    };
+    
+    self.FitToBox = function(total_width = self.width, total_height = self.GetHeight(), header_height = self.height) {
+        self.width = total_width;
+        self.height = header_height;
+        self.slots = (total_height - header_height) / self.element_height;
         return self;
     };
     

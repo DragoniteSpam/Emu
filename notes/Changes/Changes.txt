@@ -5,6 +5,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
  - EmuCore only renders content elements if the element is enabled
  - EmuList::ForEachSelection and ::GetAllSelectedIndices
+ - EmuList::FitToBox
  - EmuList::SetNumbered
  - EmuList::GetSelectedItem
  - EmuList::Select will not select a value outside the range of its list
