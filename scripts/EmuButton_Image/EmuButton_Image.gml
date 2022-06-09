@@ -19,7 +19,7 @@ function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_
     self.surface = -1;
     self.index = index;
     
-    self.Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

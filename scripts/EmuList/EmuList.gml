@@ -166,7 +166,7 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
         return self;
     };
     
-    self.Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

@@ -64,10 +64,10 @@ function _emu_get_overlay() {
     static EmuCoreOverlay = function() : EmuCore(0, 0, 1, 1, "overlay") constructor {
         self.baseRender = self.Render;
         
-        self.Render = function() {
+        self.Render = function(debug_render = false) {
             self.width = window_get_width();
             self.height = window_get_height();
-            self.baseRender(0, 0);
+            self.baseRender(0, 0, debug_render);
         };
         
         self.Pop = function() {

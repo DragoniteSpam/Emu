@@ -29,7 +29,7 @@ function EmuButton(x, y, width, height, text, callback) : EmuCallback(x, y, widt
     #endregion
     
     #region other methods
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();

@@ -244,11 +244,11 @@ function EmuCore(x, y, width, height, text = "") constructor {
         self.contents = [];
     };
     
-    self.Render = function(base_x = 0, base_y = 0) {
+    self.Render = function(base_x = 0, base_y = 0, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
-        self.renderContents(self.x + base_x, self.y + base_y);
+        self.renderContents(self.x + base_x, self.y + base_y, debug_render);
         return self;
     };
     
@@ -302,9 +302,9 @@ function EmuCore(x, y, width, height, text = "") constructor {
     };
     
     /// @ignore
-    self.renderContents = function(at_x, at_y) {
+    self.renderContents = function(at_x, at_y, debug_render = false) {
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
-            if (self.contents[i] && self.contents[i].enabled) self.contents[i].Render(at_x, at_y);
+            if (self.contents[i] && self.contents[i].enabled) self.contents[i].Render(at_x, at_y, debug_render);
         }
     };
     

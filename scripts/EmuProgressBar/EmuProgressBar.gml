@@ -79,7 +79,7 @@ function EmuProgressBar(x, y, width, height, thickness, value_min, value_max, dr
         draw_sprite_stretched_ext(self.sprite_bar, index, x1, y1, max((x2 - x1) * f, 0), y2 - y1, c, alpha);
     };
     
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
