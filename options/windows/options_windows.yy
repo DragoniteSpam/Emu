@@ -1,10 +1,10 @@
 {
   "option_windows_display_name": "Emu UI Framework",
   "option_windows_executable_name": "${project_name}.exe",
-  "option_windows_version": "1.2.0.0",
+  "option_windows_version": "1.2.1.0",
   "option_windows_company_info": "Wizarducks",
   "option_windows_product_info": "Emu UI Framework",
-  "option_windows_copyright_info": "(c) 2019 - 2021 Michael Peng",
+  "option_windows_copyright_info": "(c) 2019 - 2022 Michael Peng",
   "option_windows_description_info": "A UI framework that aims to imitate common software user interface elements",
   "option_windows_display_cursor": true,
   "option_windows_icon": "icons/icon.ico",

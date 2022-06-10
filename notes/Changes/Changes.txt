@@ -7,12 +7,12 @@ Additions:
 
  - All Render() methods now accept an option debug_draw argument, which draws a bounding box around each element's, well, bounding box
  - EmuList::ForEachSelection and ::GetAllSelectedIndices
- - EmuList::FitToBox
+ - EmuList::FitToBox - allows you to specify a total width and height for the element, without having to predict the size given slot height and slot count
  - EmuList::SetNumbered
- - EmuList::GetSelectedItem
+ - EmuList::GetSelectedItem - returns the value at the currently selected index, or undefined
  - EmuList::At so you can get the selected entry without mucking around with the `entries` property
  - EmuInput::SetValueType and ::SetCharacterLimit
- - EmuInput::SetStrictInput
+ - EmuInput::SetStrictInput - will reject invalid input instead of showing a warning (I usually don't do this)
  - E_InputTypes.LETTERSDIGITS and LETTERSDIGITSANDUNDERSCORES
 
 Bugs fixed:
