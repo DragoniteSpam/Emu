@@ -308,7 +308,9 @@ function EmuCore(x, y, width, height, text = "") constructor {
         }
     };
     
+    /// @ignore
     self.renderDebugBounds = function(x1, y1, x2, y2) {
+        // gamemaker
         x2--;
         y2--;
         draw_rectangle_colour(x1, y1, x2, y2, c_red, c_red, c_red, c_red, true);
