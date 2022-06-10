@@ -379,7 +379,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
     
     /// @ignore
     self.isActiveElement = function() {
-        return EmuActiveElement == self;
+        return (EmuActiveElement == self) && (self.isActiveDialog());
     };
     #endregion
     
