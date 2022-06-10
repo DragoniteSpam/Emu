@@ -263,6 +263,8 @@ function EmuInput(x, y, width, height, text, value, help_text, character_limit, 
         
         draw_surface(self.surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     
     self.Activate = function() {

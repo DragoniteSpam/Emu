@@ -85,6 +85,8 @@ function EmuRenderSurface(x, y, width, height, render, step, create) : EmuCore(x
         surface_reset_target();
         
         draw_surface(self.surface, x1, y1);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

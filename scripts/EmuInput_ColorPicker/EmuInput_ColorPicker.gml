@@ -309,6 +309,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                             if (color_initial != self.value || alpha_initial != self.alpha) {
                                 self.callback();
                             }
+                            
+                            if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
                         }
                     }
                     
@@ -351,5 +353,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 self.ShowTooltip();
             }
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
 }

@@ -422,5 +422,10 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
             self.index = clamp(self.index + move_direction, 0, max(0, n - self.slots));
         }
         #endregion
+        
+        if (debug_render) {
+            self.renderDebugBounds(x1, y1, x2, y2);
+            self.renderDebugBounds(x1, y2, x2, y3);
+        }
     };
 }

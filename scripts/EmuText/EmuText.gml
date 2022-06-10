@@ -42,6 +42,8 @@ function EmuText(x, y, width, height, text) : EmuCore(x, y, width, height, text)
             .wrap(self.width, self.height)
             .align(self.align.h, self.align.v)
             .draw(tx, ty);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

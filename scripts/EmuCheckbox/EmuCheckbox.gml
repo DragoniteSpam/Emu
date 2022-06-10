@@ -90,6 +90,8 @@ function EmuCheckbox(x, y, width, height, text, value, callback) : EmuCallback(x
             .wrap(self.width, self.height)
             .align(self.align.h, self.align.v)
             .draw(x1 + self.box_size + self.offset * 2, floor(mean(y1, y2)));
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

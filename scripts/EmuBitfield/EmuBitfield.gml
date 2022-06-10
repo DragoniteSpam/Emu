@@ -92,6 +92,8 @@ function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, w
         var x2 = x1 + self.width;
         var y2 = y1 + self.height;
         
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
+        
         self.renderContents(x1, y1);
     };
     #endregion
@@ -153,6 +155,8 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
             self.callback();
             self.root.callback();
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

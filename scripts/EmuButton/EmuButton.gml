@@ -56,6 +56,8 @@ function EmuButton(x, y, width, height, text, callback) : EmuCallback(x, y, widt
             .wrap(self.width, self.height)
             .align(self.align.h, self.align.v)
             .draw(floor(mean(x1, x2)), floor(mean(y1, y2)));
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

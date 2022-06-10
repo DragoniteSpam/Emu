@@ -62,5 +62,7 @@ function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_
         var back_color = self.getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (self.GetInteractive() ? self.color_back() : self.color_disabled());
         draw_surface_ext(self.surface, x1, y1, 1, 1, 0, back_color, 1);
         draw_sprite_stretched_ext(self.sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
 }

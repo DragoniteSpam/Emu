@@ -82,12 +82,12 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         self.disposed = true;
     };
     
-    self.Render = function(debug_render = false) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         
-        var x1 = x;
-        var y1 = y;
+        var x1 = self.x + base_x;
+        var y1 = self.y + base_y;
         var x2 = x1 + self.width;
         var y2 = y1 + self.GetHeight();
         
@@ -165,6 +165,8 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         if (self.close_button) {
             draw_sprite(self.sprite_close, cbi, cbx1, cby1);
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
         
         self.renderContents(x1, y1 + self.header_height, debug_render);
         

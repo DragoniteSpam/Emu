@@ -137,6 +137,8 @@ function EmuProgressBar(x, y, width, height, thickness, value_min, value_max, dr
             draw_sprite_ext(self.sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
             draw_sprite_ext(self.sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

@@ -56,7 +56,9 @@ function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback
             .align(fa_left, fa_middle)
             .draw(tx, ty);
         
-        self.renderContents(x1, y1);
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
+        
+        self.renderContents(x1, y1, debug_render);
     };
     
     self.emu_radio_array_option = function(x, y, width, height, text, value) : EmuCore(x, y, width, height, text) constructor {
@@ -100,6 +102,8 @@ function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback
                 .wrap(self.width, self.height)
                 .align(fa_left, fa_center)
                 .draw(tx + self.offset + sprite_get_width(self.sprite_radio), ty);
+            
+            if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
         }
         
         self.GetInteractive = function() {

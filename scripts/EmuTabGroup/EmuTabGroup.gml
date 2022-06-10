@@ -94,8 +94,10 @@ function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, widt
             self.active_tab_request = undefined;
         }
         
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
+        
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
-            self.contents[i].Render(x1, y1 + self.rows * self.row_height);
+            self.contents[i].Render(x1, y1 + self.rows * self.row_height, debug_render);
         }
         
         // no sense making a tab group non-interactive
