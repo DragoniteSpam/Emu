@@ -312,8 +312,10 @@ function EmuCore(x, y, width, height, text = "") constructor {
         x2--;
         y2--;
         draw_rectangle_colour(x1, y1, x2, y2, c_red, c_red, c_red, c_red, true);
-        //draw_line_colour(x1, y1, x2, y2, c_red, c_red);
-        //draw_line_colour(x2, y1, x1, y2, c_red, c_red);
+        draw_set_alpha(0.25);
+        draw_line_colour(x1, y1, x2, y2, c_red, c_red);
+        draw_line_colour(x2, y1, x1, y2, c_red, c_red);
+        draw_set_alpha(1); 
     };
     
     /// @ignore
