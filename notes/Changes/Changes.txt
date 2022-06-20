@@ -1,6 +1,12 @@
 Guess I should probably keep a changelog now. See the documentation for more details:
 https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
+# Changes since 1.2.1
+
+Additions:
+
+ - EmuList::SelectNoCallback, DeselectNoCallback, and ClearSelectionNoCallback
+
 # Changes since 1.1.0
 
 Additions:

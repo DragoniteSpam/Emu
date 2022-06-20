@@ -218,7 +218,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"tree1.vbuff","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.5.1.14",
+    "IDEVersion": "2022.600.0.134",
   },
   "resourceVersion": "1.5",
   "name": "Emu",
