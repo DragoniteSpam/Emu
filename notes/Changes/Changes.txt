@@ -7,6 +7,7 @@ Additions:
 
  - EmuColorPicker::SetActiveShade, to control the shade behind the pop-up it creates
  - EmuList::SelectNoCallback, DeselectNoCallback, and ClearSelectionNoCallback
+ - EmuTabGroup::GetActiveTab
 
 # Changes since 1.1.0
 

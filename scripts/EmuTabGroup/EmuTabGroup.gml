@@ -36,6 +36,10 @@ function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, widt
         return self;
     };
     
+    self.GetActiveTab = function() {
+        return self.active_tab;
+    };
+    
     self.arrangeRow = function(row) {
         if (row > rows) {
             throw new EmuException("Tab row out of bounds", "Trying to arrange tab row " + string(row) + ", but only up to " + string(self.rows) + " are available");
