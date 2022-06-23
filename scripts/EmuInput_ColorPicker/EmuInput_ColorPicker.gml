@@ -5,6 +5,7 @@
 // for some reason
 function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     self.allow_alpha = false;
+    self.active_shade = EMU_DIALOG_SHADE_ALPHA;
     
     self.box = {
         x1: self.width / 2,
@@ -14,6 +15,11 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
     };
     
     self.color_back = function() { return EMU_COLOR_BACK; };
+    
+    self.SetActiveShade = function(value) {
+        self.active_shade = value;
+        return self;
+    };
     
     self.SetAlphaUsed = function(alpha_used) {
         self.allow_alpha = alpha_used;
@@ -64,6 +70,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 if (self.getMouseReleased(vx1, vy1, vx2, vy2)) {
                     self.Activate();
                     var dialog = new EmuDialog(480, 400, "Pick a col_main");
+                    dialog.active_shade = self.active_shade;
                     dialog.base_color_element = self;
                     
                     var ew = 256;
