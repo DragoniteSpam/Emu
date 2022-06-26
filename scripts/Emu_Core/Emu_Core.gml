@@ -15,6 +15,8 @@ function EmuCore(x, y, width, height, text = "") constructor {
     self.identifier = "";
     /// @ignore
     self.child_ids = { };
+    /// @ignore
+    self.use_surface_depth = false;
     
     /// @ignore
     self.enabled = true;
@@ -443,14 +445,19 @@ function EmuCore(x, y, width, height, text = "") constructor {
                 if (surface_exists(self.surface)) surface_free(self.surface);
             };
         };
+        var depth_state = surface_get_depth_disable();
         if (!surface_exists(surface)) {
+            surface_depth_disable(!self.use_surface_depth);
             var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            surface_depth_disable(depth_state);
             gc[$ string(ptr(ref))] = ref;
             return { surface: ref.surface, changed: true };
         }
         if (surface_get_width(surface) != width || surface_get_height(surface) != height) {
             surface_free(surface);
+            surface_depth_disable(!self.use_surface_depth);
             var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            surface_depth_disable(depth_state);
             gc[$ string(ptr(ref))] = ref;
             return { surface: ref.surface, changed: true };
         }
