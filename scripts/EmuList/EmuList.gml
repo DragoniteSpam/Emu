@@ -156,6 +156,7 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
     self.Select = function(list_index, set_index = false) {
         self.SelectNoCallback(list_index, set_index);
         self.callback();
+        return self;
     };
     
     self.SelectNoCallback = function(list_index, set_index = false) {
