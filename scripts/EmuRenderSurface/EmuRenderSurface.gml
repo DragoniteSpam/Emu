@@ -66,7 +66,7 @@ function EmuRenderSurface(x, y, width, height, render, step, create) : EmuCore(x
         
         if (self.getMouseHover(x1, y1, x2, y2)) {
             self.ShowTooltip();
-            if (self.getMousePressed(x1, y1, x2, y2)) {
+            if (self.getMousePressed(x1, y1, x2, y2) || self.getMouseMiddlePressed(x1, y1, x2, y2) || self.GetMouseRightPressed(x1, y1, x2, y2)) {
                 self.Activate();
             }
         }
