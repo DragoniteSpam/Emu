@@ -3,6 +3,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
 # Changes since 1.2.1
 
+ - The default font is now Open Sans
  - Decided to take my own advice and disable surface depth on UI elements that don't use 3D (which is most of them except for EmuRenderSurfaces)
  - EmuRenderSurface is "activated" by left clicking, right clicking, or middle clicking on the render surface
 

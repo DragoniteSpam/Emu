@@ -216,9 +216,10 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"rock3.vbuff","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"skybox.vbuff","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"tree1.vbuff","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"Open Sans License.txt","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.600.0.138",
+    "IDEVersion": "2022.600.0.143",
   },
   "resourceVersion": "1.5",
   "name": "Emu",
