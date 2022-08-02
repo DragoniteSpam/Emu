@@ -219,9 +219,9 @@
     {"CopyToMask":-1,"filePath":"datafiles/emu","resourceVersion":"1.0","name":"Open Sans License.txt","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.600.0.143",
+    "IDEVersion": "2022.800.0.180",
   },
-  "resourceVersion": "1.5",
+  "resourceVersion": "1.6",
   "name": "Emu",
   "tags": [],
   "resourceType": "GMProject",
