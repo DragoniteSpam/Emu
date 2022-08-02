@@ -77,6 +77,12 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     #endregion
     
     #region public methods
+    self.CenterInWindow = function() {
+        self.x = floor((window_get_width() - self.width) / 2);
+        self.y = floor((window_get_height() - self.height) / 2);
+        return self;
+    };
+    
     self.Close = function() {
         // this needs to be done after the entire dialog box is finished rendering
         self.disposed = true;
