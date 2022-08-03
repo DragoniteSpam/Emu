@@ -12,6 +12,8 @@ function EmuCore(x, y, width, height, text = "") constructor {
     /// @ignore
     self.root = undefined;
     /// @ignore
+    self.super_root = { x: 0, y: 0 };
+    /// @ignore
     self.identifier = "";
     /// @ignore
     self.child_ids = { };
@@ -135,6 +137,14 @@ function EmuCore(x, y, width, height, text = "") constructor {
         return self;
     };
     
+    self.SetSuperRoot = function(root) {
+        self.super_root = root;
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
+            self.contents[i].SetSuperRoot(root);
+        }
+        return self;
+    };
+    
     self.SetID = function(identifier) {
         identifier = string(identifier);
         if (self.root) {
@@ -187,6 +197,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
         for (var i = 0; i < array_length(elements); i++) {
             var thing = elements[i];
             thing.root = self;
+            thing.super_root = self;
             
             if (is_ptr(thing.y) && thing.y == EMU_AUTO) {
                 var top = self.GetTop();
