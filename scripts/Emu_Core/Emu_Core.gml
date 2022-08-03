@@ -175,7 +175,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
     };
     
     self.GetMouseOver = function() {
-        return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
+        return point_in_rectangle(self.getMousePositionX(), self.getMousePositionY(), self.x, self.y, self.x + self.width, self.y + self.height);
     };
     
     self.GetChild = function(identifier) {
@@ -397,8 +397,16 @@ function EmuCore(x, y, width, height, text = "") constructor {
     #endregion
     
     #region cursor detection methods
+    self.getMousePositionX = function() {
+        return device_mouse_x_to_gui(0) - self.super_root.x;
+    };
+    
+    self.getMousePositionY = function() {
+        return device_mouse_y_to_gui(0) - self.super_root.y;
+    };
+    
     self.getMouseHover = function(x1, y1, x2, y2) {
-        return self.GetInteractive() && point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), x1, y1, x2 - 1, y2 - 1);
+        return self.GetInteractive() && point_in_rectangle(self.getMousePositionX(), self.getMousePositionY(), x1, y1, x2 - 1, y2 - 1);
     };
     
     self.getMousePressed = function(x1, y1, x2, y2) {

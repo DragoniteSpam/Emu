@@ -308,7 +308,7 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
         var move_direction = 0;
         
         if (self.getMouseHover(lx1, ly1, lx2, ly2)) {
-            var mn = min(((mouse_y - ly1) div self.height) + self.index, n - 1);
+            var mn = min(((self.getMousePositionY() - ly1) div self.height) + self.index, n - 1);
             if (self.getMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
                 self.callback_middle(mn);
             } else if (self.getMouseDouble(lx1, ly1, lx2, ly2)) {
@@ -397,13 +397,13 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
                     if (self.getMousePressed(x2 - sw, sby1, x2, sby2) && !self.dragging) {
                         self.Activate();
 						self.dragging = true;
-                        self.click_x = mouse_x;
-                        self.click_y = mouse_y;
+                        self.click_x = self.getMousePositionX();
+                        self.click_y = self.getMousePositionY();
                     }
                 }
                 // Hold while dragging: update the list position
                 if (self.getMouseHold(0, 0, window_get_width(), window_get_height()) && self.click_y > -1) {
-                    self.index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
+                    self.index = floor(noutofrange * clamp(self.getMousePositionY() - smin, 0, srange) / srange);
                 }
                 // Release: stop dragging
                 if (self.getMouseReleased(0, 0, window_get_width(), window_get_height())) {

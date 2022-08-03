@@ -197,8 +197,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                             }
                             
                             if (self.selecting_color) {
-                                self.axis_w = clamp((mouse_x - vx1) / w, 0, 1);
-                                self.axis_h = 1 - clamp((mouse_y - vy1) / h, 0, 1);
+                                self.axis_w = clamp((self.getMousePositionX() - vx1) / w, 0, 1);
+                                self.axis_h = 1 - clamp((self.getMousePositionY() - vy1) / h, 0, 1);
                                 self.selecting_color = self.getMouseHold(0, 0, window_get_width(), window_get_height());
                             }
                             
@@ -240,7 +240,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                             }
                             
                             if (self.selecting_axis) {
-                                self.axis_value = clamp((mouse_y - vy1) / h, 0, 1);
+                                self.axis_value = clamp((self.getMousePositionY() - vy1) / h, 0, 1);
                                 self.selecting_axis = self.getMouseHold(0, 0, window_get_width(), window_get_height());
                             }
                             
@@ -289,7 +289,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                                 }
                                 
                                 if (self.selecting_alpha) {
-                                    self.alpha = clamp((mouse_x - vx1) / w, 0, 1);
+                                    self.alpha = clamp((self.getMousePositionX() - vx1) / w, 0, 1);
                                     self.selecting_alpha = self.getMouseHold(0, 0, window_get_width(), window_get_height());
                                 }
                                 
