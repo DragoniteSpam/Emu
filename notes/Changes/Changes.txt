@@ -10,6 +10,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 Additions:
 
  - EmuColorPicker::SetActiveShade, to control the shade behind the pop-up it creates
+ - EmuColorPicker::ShowPickerDialog, which you can call to activate the color picker's dialog without having to click on it
  - EmuDialog::CenterInWindow, which is exactly what it sounds like
  - EmuList::GetAllSelectedItems
  - EmuList::SelectNoCallback, DeselectNoCallback, and ClearSelectionNoCallback
