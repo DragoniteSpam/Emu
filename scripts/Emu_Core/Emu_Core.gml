@@ -202,26 +202,26 @@ function EmuCore(x, y, width, height, text = "") constructor {
             if (is_ptr(thing.y) && thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
-                    thing.y = top.y + top.GetHeight() + self.element_spacing_y;
+                    thing.y = top.y + top.GetHeight() + thing.element_spacing_y;
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_AUTO_NO_SPACING) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y + top.GetHeight();
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_INLINE) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y;
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_BASE) {
-                thing.y = self.element_spacing_y;
+                thing.y = thing.element_spacing_y;
             }
             
             if (thing.identifier != "") {
