@@ -24,12 +24,9 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"LayerId":{"name":"b4ce1b40-5fe7-4311-a521-b7cb6ad12a58","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"spr_emu_demo_birb_solo","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"resourceVersion":"1.0","name":"b308ca5f-494b-4195-b147-acc46f045d63","tags":[],"resourceType":"GMSpriteFrame",},
+    {"resourceVersion":"1.1","name":"b308ca5f-494b-4195-b147-acc46f045d63","resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"spr_emu_demo_birb_solo","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -37,12 +34,12 @@
     "autoRecord": true,
     "volume": 1.0,
     "length": 1.0,
-    "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MessageEventKeyframe>",},
-    "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
+    "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MessageEventKeyframe",},
+    "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MomentsEventKeyframe",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"cdd65b37-eca7-4144-afa6-fe048717b62e","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
+            {"id":"cdd65b37-eca7-4144-afa6-fe048717b62e","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"b308ca5f-494b-4195-b147-acc46f045d63","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": true,
@@ -58,14 +55,12 @@
     "yorigin": 16,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"spr_emu_demo_birb_solo","path":"sprites/spr_emu_demo_birb_solo/spr_emu_demo_birb_solo.yy",},
     "resourceVersion": "1.4",
     "name": "spr_emu_demo_birb_solo",
-    "tags": [],
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"b4ce1b40-5fe7-4311-a521-b7cb6ad12a58","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"b4ce1b40-5fe7-4311-a521-b7cb6ad12a58","resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
@@ -74,6 +69,5 @@
   },
   "resourceVersion": "1.0",
   "name": "spr_emu_demo_birb_solo",
-  "tags": [],
   "resourceType": "GMSprite",
 }

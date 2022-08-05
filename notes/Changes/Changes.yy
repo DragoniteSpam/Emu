@@ -5,6 +5,5 @@
   },
   "resourceVersion": "1.1",
   "name": "Changes",
-  "tags": [],
   "resourceType": "GMNotes",
 }

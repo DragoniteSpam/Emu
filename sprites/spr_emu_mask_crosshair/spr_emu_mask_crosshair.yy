@@ -24,12 +24,9 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"df884f22-272d-40e3-970b-8378a063cccc","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"df884f22-272d-40e3-970b-8378a063cccc","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"LayerId":{"name":"a1f78328-7add-4ea2-949f-c08fdda24668","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"spr_emu_mask_crosshair","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"resourceVersion":"1.0","name":"df884f22-272d-40e3-970b-8378a063cccc","tags":[],"resourceType":"GMSpriteFrame",},
+    {"resourceVersion":"1.1","name":"df884f22-272d-40e3-970b-8378a063cccc","resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"spr_emu_mask_crosshair","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -37,12 +34,12 @@
     "autoRecord": true,
     "volume": 1.0,
     "length": 1.0,
-    "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MessageEventKeyframe>",},
-    "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
+    "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MessageEventKeyframe",},
+    "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MomentsEventKeyframe",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"769252b6-bf09-480c-ab34-e860a1b06ec8","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"df884f22-272d-40e3-970b-8378a063cccc","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
+            {"id":"769252b6-bf09-480c-ab34-e860a1b06ec8","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"df884f22-272d-40e3-970b-8378a063cccc","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": true,
@@ -58,14 +55,12 @@
     "yorigin": 8,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"spr_emu_mask_crosshair","path":"sprites/spr_emu_mask_crosshair/spr_emu_mask_crosshair.yy",},
     "resourceVersion": "1.4",
     "name": "spr_emu_mask_crosshair",
-    "tags": [],
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"a1f78328-7add-4ea2-949f-c08fdda24668","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"a1f78328-7add-4ea2-949f-c08fdda24668","resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
@@ -74,6 +69,5 @@
   },
   "resourceVersion": "1.0",
   "name": "spr_emu_mask_crosshair",
-  "tags": [],
   "resourceType": "GMSprite",
 }
