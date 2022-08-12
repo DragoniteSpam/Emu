@@ -6,6 +6,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
  - The default font is now Open Sans
  - Decided to take my own advice and disable surface depth on UI elements that don't use 3D (which is most of them except for EmuRenderSurfaces)
  - EmuColorPicker can now accept text formatted as a color code pasted into it
+ - EmuProrgressBar outlines are better-defined on dark color themes
  - EmuRenderSurface is "activated" by left clicking, right clicking, or middle clicking on the render surface
  - Element spacing is taken into account when adding content with one of the spacing indicators
 
