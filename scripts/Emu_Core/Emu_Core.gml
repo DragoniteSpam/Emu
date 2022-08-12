@@ -138,6 +138,8 @@ function EmuCore(x, y, width, height, text = "") constructor {
     };
     
     self.SetSuperRoot = function(root) {
+        // this is starting to look like not a great idea
+        return self;
         self.super_root = root;
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
             self.contents[i].SetSuperRoot(root);
