@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMSprite",
+  "resourceVersion": "1.0",
+  "name": "spr_emu_radio",
   "bboxMode": 0,
   "collisionKind": 1,
   "type": 0,
@@ -24,12 +27,15 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"resourceVersion":"1.1","name":"839cb718-6dcb-4017-bd25-0bbb7d634521","resourceType":"GMSpriteFrame",},
-    {"resourceVersion":"1.1","name":"e7af7714-8c17-40af-8764-7a8993eba21f","resourceType":"GMSpriteFrame",},
-    {"resourceVersion":"1.1","name":"11caf045-8129-438a-8b14-5a93415b6416","resourceType":"GMSpriteFrame",},
-    {"resourceVersion":"1.1","name":"65306b48-500c-4972-ba81-6952e98e3051","resourceType":"GMSpriteFrame",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"839cb718-6dcb-4017-bd25-0bbb7d634521",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"e7af7714-8c17-40af-8764-7a8993eba21f",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"11caf045-8129-438a-8b14-5a93415b6416",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"65306b48-500c-4972-ba81-6952e98e3051",},
   ],
   "sequence": {
+    "resourceType": "GMSequence",
+    "resourceVersion": "1.4",
+    "name": "spr_emu_radio",
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -40,12 +46,12 @@
     "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MessageEventKeyframe",},
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MomentsEventKeyframe",},
     "tracks": [
-      {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","spriteId":null,"keyframes":{"Keyframes":[
             {"id":"73350b78-fdc0-4893-b9f8-00dc73217358","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"839cb718-6dcb-4017-bd25-0bbb7d634521","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
             {"id":"53853c04-d34e-49eb-989a-cc8fa0bd6582","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"e7af7714-8c17-40af-8764-7a8993eba21f","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
             {"id":"03d7ceb2-3838-43a9-af75-ce74c6f386fe","Key":2.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"11caf045-8129-438a-8b14-5a93415b6416","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
             {"id":"cd9a6737-e510-403f-8f84-679dd7c15a8e","Key":3.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"65306b48-500c-4972-ba81-6952e98e3051","path":"sprites/spr_emu_radio/spr_emu_radio.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","resourceType":"GMSpriteFramesTrack","modifiers":[],},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": true,
@@ -61,19 +67,13 @@
     "yorigin": 8,
     "eventToFunction": {},
     "eventStubScript": null,
-    "resourceVersion": "1.4",
-    "name": "spr_emu_radio",
-    "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","resourceType":"GMImageLayer",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"d0f8ab79-2eb3-4909-bc54-2f27fc2a05e8","visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default",},
   ],
   "nineSlice": null,
   "parent": {
     "name": "Graphics",
     "path": "folders/Emu/Graphics.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "spr_emu_radio",
-  "resourceType": "GMSprite",
 }

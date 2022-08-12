@@ -1,4 +1,7 @@
 {
+  "resourceType": "GMSprite",
+  "resourceVersion": "1.0",
+  "name": "spr_emu_knob",
   "bboxMode": 0,
   "collisionKind": 1,
   "type": 0,
@@ -24,11 +27,14 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"resourceVersion":"1.1","name":"c4bb71c8-4ab7-436d-96ee-d95c49430445","resourceType":"GMSpriteFrame",},
-    {"resourceVersion":"1.1","name":"366e80cf-dac0-46db-afa5-a1672f9d6ee0","resourceType":"GMSpriteFrame",},
-    {"resourceVersion":"1.1","name":"3ddfb413-52e5-46f9-9a8c-249f8ae1170a","resourceType":"GMSpriteFrame",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"c4bb71c8-4ab7-436d-96ee-d95c49430445",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"366e80cf-dac0-46db-afa5-a1672f9d6ee0",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"3ddfb413-52e5-46f9-9a8c-249f8ae1170a",},
   ],
   "sequence": {
+    "resourceType": "GMSequence",
+    "resourceVersion": "1.4",
+    "name": "spr_emu_knob",
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -39,11 +45,11 @@
     "events": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MessageEventKeyframe",},
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"MomentsEventKeyframe",},
     "tracks": [
-      {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
+      {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","spriteId":null,"keyframes":{"Keyframes":[
             {"id":"86652911-bdd6-4916-8a3b-f75fab351986","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"c4bb71c8-4ab7-436d-96ee-d95c49430445","path":"sprites/spr_emu_knob/spr_emu_knob.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
             {"id":"1befc0df-d202-423a-91e9-db75a525d5d0","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"366e80cf-dac0-46db-afa5-a1672f9d6ee0","path":"sprites/spr_emu_knob/spr_emu_knob.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
             {"id":"4d830ece-ae05-486a-9705-c01f6c04d41f","Key":2.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"3ddfb413-52e5-46f9-9a8c-249f8ae1170a","path":"sprites/spr_emu_knob/spr_emu_knob.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe`1","elementType":"SpriteFrameKeyframe",},
-          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","resourceType":"GMSpriteFramesTrack","modifiers":[],},
+          ],"resourceVersion":"1.0","resourceType":"KeyframeStore`1","elementType":"SpriteFrameKeyframe",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"modifiers":[],},
     ],
     "visibleRange": null,
     "lockOrigin": false,
@@ -59,21 +65,15 @@
     "yorigin": 8,
     "eventToFunction": {},
     "eventStubScript": null,
-    "resourceVersion": "1.4",
-    "name": "spr_emu_knob",
-    "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":25.0,"displayName":"Layer 1","resourceVersion":"1.0","name":"8c4cad63-5406-49b2-bc11-6cedb59525c2","resourceType":"GMImageLayer",},
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":50.0,"displayName":"Layer 2","resourceVersion":"1.0","name":"596cc1cf-0440-4bc6-bef1-3de423131917","resourceType":"GMImageLayer",},
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"53207807-54c7-4bdb-b5c3-37069ac8256e","resourceType":"GMImageLayer",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"8c4cad63-5406-49b2-bc11-6cedb59525c2","visible":true,"isLocked":false,"blendMode":0,"opacity":25.0,"displayName":"Layer 1",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"596cc1cf-0440-4bc6-bef1-3de423131917","visible":true,"isLocked":false,"blendMode":0,"opacity":50.0,"displayName":"Layer 2",},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"53207807-54c7-4bdb-b5c3-37069ac8256e","visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default",},
   ],
   "nineSlice": null,
   "parent": {
     "name": "Graphics",
     "path": "folders/Emu/Graphics.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "spr_emu_knob",
-  "resourceType": "GMSprite",
 }
