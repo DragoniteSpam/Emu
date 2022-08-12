@@ -28,6 +28,14 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
         return self;
     };
     
+    self.GetColorCode = function() {
+        var color_string = string(ptr(self.value));
+        var rr = string_copy(color_string, string_length(color_string) - 1, 2);
+        var gg = string_copy(color_string, string_length(color_string) - 3, 2);
+        var bb = string_copy(color_string, string_length(color_string) - 5, 2);
+        return rr + gg + bb;
+    };
+    
     self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
