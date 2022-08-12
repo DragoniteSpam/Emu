@@ -331,7 +331,31 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 self.root.base_color_element.value = value_as_real | (floor(self.root.el_picker.alpha * 0xff) << 24);
                 self.root.base_color_element.callback();
             }
-        });
+        })
+            .SetUpdate(function() {
+                if (keyboard_check(vk_control) && keyboard_check_pressed(ord("V"))) {
+                    var text = clipboard_get_text();
+                    if (string_copy(text, 1, 1) == "#") {
+                        text = string_copy(text, 2, string_length(text) - 1);
+                    }
+                    if (string_length(text) == 6) {
+                        var current_value = self.value;
+                        try {
+                            var color = int64(ptr(text));
+                            var rr = colour_get_red(color);
+                            var gg = colour_get_green(color);
+                            var bb = colour_get_blue(color);
+                            color = make_colour_rgb(bb, gg, rr);
+                            self.value = text;
+                            self.root.el_picker.SetValue(color);
+                            self.root.base_color_element.value = color;
+                            self.root.base_color_element.callback();
+                        } catch (e) {
+                            self.value = current_value;
+                        }
+                    }
+                }
+            });
         dialog.el_picker_code.SetInputBoxPosition(vx1, vy1, vx2, vy2);
         dialog.el_picker_code.SetRealNumberBounds(0, 0xffffff);
                     
@@ -340,7 +364,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             self.root.el_picker_code.SetValue(emu_string_hex(((self.value & 0xff0000) >> 16) | (self.value & 0x00ff00) | ((self.value & 0x0000ff) << 16), 6));
             self.root.base_color_element.callback();
         });
-                    
+        
         dialog.el_picker.alpha = self.allow_alpha ? (((self.value & 0xff000000) >> 24) / 0xff) : 1;
         dialog.el_picker.axis_value = (self.value & 0x0000ff) / 0xff;
         dialog.el_picker.axis_w = ((self.value & 0x00ff00) >> 8) / 0xff;

@@ -7,6 +7,5 @@
   },
   "resourceVersion": "1.0",
   "name": "EmuInput_ColorPicker",
-  "tags": [],
   "resourceType": "GMScript",
 }
