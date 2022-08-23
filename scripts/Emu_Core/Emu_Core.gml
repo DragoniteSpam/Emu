@@ -510,6 +510,15 @@ function EmuCore(x, y, width, height, text = "") constructor {
         };
     })();
     #endregion
+    
+    self.DroppedFileHandler = function(files) {
+        
+    };
+    
+    self.SetDroppedFileHandler = function(f) {
+        self.DroppedFileHandler = method(self, f);
+        return self;
+    };
 }
 
 function EmuCallback(x, y, width, height, text, value, callback) : EmuCore(x, y, width, height, text) constructor {
