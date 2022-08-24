@@ -96,7 +96,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
         var spacing = 16;
                     
         static controls = function(x, y, width, height, value, allow_alpha, callback) : EmuCallback(x, y, width, height, "", value, callback) constructor {
-            enum EmuColorChannels { R, G, B, A }
+            enum EmuColorChannels { R, G, B, H, S, V }
                         
             self.axis_value = 0;
             self.axis_w = 0;
@@ -153,6 +153,21 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                         self.axis_h = ((value & 0x00ff00) >> 8) / 0xff;
                         self.axis_value = ((value & 0xff0000) >> 16) / 0xff;
                         break;
+                    case EmuColorChannels.H:
+                        self.axis_w = colour_get_saturation(value) / 0xff;
+                        self.axis_h = colour_get_value(value) / 0xff;
+                        self.axis_value = colour_get_hue(value) / 0xff;
+                        break;
+                    case EmuColorChannels.S:
+                        self.axis_w = colour_get_value(value) / 0xff;
+                        self.axis_h = colour_get_hue(value) / 0xff;
+                        self.axis_value = colour_get_saturation(value) / 0xff;
+                        break;
+                    case EmuColorChannels.V:
+                        self.axis_w = colour_get_value(value) / 0xff;
+                        self.axis_h = colour_get_hue(value) / 0xff;
+                        self.axis_value = colour_get_value(value) / 0xff;
+                        break;
                 }
             };
                         
@@ -164,10 +179,10 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 var y2 = y1 + self.height;
                 var buckets = self.all_colors ? 255 : 8;
                 var col_main = self.color();
-                            
+                
                 var color_initial = self.value;
                 var alpha_initial = self.alpha;
-                            
+                
                 #region color picker
                 var vx1 = x1 + self.color_x;
                 var vy1 = y1 + self.color_y;
@@ -175,60 +190,111 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 var vy2 = vy1 + self.main_size;
                 var w = vx2 - vx1;
                 var h = vy2 - vy1;
-                            
+                
                 var colour_replace_red = function(original, value) { return value | (original & 0xffff00); }
                 var colour_replace_green = function(original, value) { return (value << 8) | (original & 0xff00ff); }
                 var colour_replace_blue = function(original, value) { return (value << 16) | (original & 0x00ffff); }
-                            
+                var colour_replace_hue = function(original, h) {
+                    var s = colour_get_saturation(original);
+                    var v = colour_get_value(original);
+                    return make_colour_hsv(h, s, v);
+                };
+                var colour_replace_sat = function(original, s) {
+                    var h = colour_get_hue(original);
+                    var v = colour_get_value(original);
+                    return make_colour_hsv(h, s, v);
+                };
+                var colour_replace_val = function(original, v) {
+                    var h = colour_get_hue(original);
+                    var s = colour_get_saturation(original);
+                    return make_colour_hsv(h, s, v);
+                };
+                
+                static shader_mode_def = 0;
+                static shader_mode_hue = 1;
+                static shader_mode_sat = 2;
+                static shader_mode_val = 3;
+                static shader_mode_hue_bar = 4;
+                
+                var shader_mode = shader_mode_def;
+                var shader_color_base = 0;
+                
+                var c1 = c_white, c2 = c_white, c3 = c_white, c4 = c_white;
+                
                 switch (self.axis_channel) {
                     case EmuColorChannels.R:
-                        var c2 = colour_replace_red(c_white, self.axis_value * 0xff);
-                        var c1 = colour_replace_green(c2, 0);
-                        var c3 = colour_replace_blue(c2, 0);
-                        var c4 = self.axis_value * 0xff;
+                        c2 = colour_replace_red(c_white, self.axis_value * 0xff);
+                        c1 = colour_replace_green(c2, 0);
+                        c3 = colour_replace_blue(c2, 0);
+                        c4 = self.axis_value * 0xff;
                         break;
                     case EmuColorChannels.G:
-                        var c2 = colour_replace_green(c_white, self.axis_value * 0xff);
-                        var c1 = colour_replace_blue(c2, 0);
-                        var c3 = colour_replace_red(c2, 0);
-                        var c4 = (self.axis_value * 0xff) << 8;
+                        c2 = colour_replace_green(c_white, self.axis_value * 0xff);
+                        c1 = colour_replace_blue(c2, 0);
+                        c3 = colour_replace_red(c2, 0);
+                        c4 = (self.axis_value * 0xff) << 8;
                         break;
                     case EmuColorChannels.B:
-                        var c2 = colour_replace_blue(c_white, self.axis_value * 0xff);
-                        var c1 = colour_replace_red(c2, 0);
-                        var c3 = colour_replace_green(c2, 0);
-                        var c4 = (self.axis_value * 0xff) << 16;
+                        c2 = colour_replace_blue(c_white, self.axis_value * 0xff);
+                        c1 = colour_replace_red(c2, 0);
+                        c3 = colour_replace_green(c2, 0);
+                        c4 = (self.axis_value * 0xff) << 16;
+                        break;
+                    case EmuColorChannels.H:
+                        shader_mode = shader_mode_hue;
+                        break;
+                    case EmuColorChannels.S:
+                        shader_mode = shader_mode_sat;
+                        break;
+                    case EmuColorChannels.V:
+                        shader_mode = shader_mode_val;
                         break;
                 };
-                            
+                
+                static rectangle = undefined;
+                
+                if (rectangle == undefined) {
+                    var s = surface_create(1, 1);
+                    surface_set_target(s);
+                    draw_clear(c_white);
+                    surface_reset_target();
+                    rectangle = sprite_create_from_surface(s, 0, 0, 1, 1, false, false, 0, 0);
+                    surface_free(s);
+                }
+                
+                shader_set(shd_emu_color_buckets);
+                shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "u_Buckets"), buckets);
+                shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode);
+                shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "u_ColorBase"), self.axis_value);
+                draw_sprite_general(rectangle, 0, 0, 0, 1, 1, vx1, vy1, vx2 - vx1, vy2 - vy1, 0, c1, c2, c3, c4, 1);
+                shader_reset();
+                draw_rectangle_colour(vx1, vy1, vx2, vy2, col_main, col_main, col_main, col_main, true);
+                
                 if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
                     if (self.getMouseHold(vx1, vy1, vx2, vy2)) {
                         self.selecting_color = true;
                     }
                 }
-                            
+                
                 if (self.selecting_color) {
                     self.axis_w = clamp((mouse_x - vx1) / w, 0, 1);
                     self.axis_h = 1 - clamp((mouse_y - vy1) / h, 0, 1);
                     self.selecting_color = self.getMouseHold(0, 0, window_get_width(), window_get_height());
                 }
-                            
+                
                 var current_axis = floor(self.axis_value * buckets) * 0xff / buckets;
                 var ww = floor(self.axis_w * buckets) * 0xff / buckets;
                 var hh = floor(self.axis_h * buckets) * 0xff / buckets;
-                            
+                
                 switch (self.axis_channel) {
-                    case EmuColorChannels.R: self.value = (hh << 16) | (ww << 8) | current_axis; break;
-                    case EmuColorChannels.G: self.value = (ww << 16) | (current_axis << 8) | hh; break;
-                    case EmuColorChannels.B: self.value = (current_axis << 16) | (hh << 8) | ww; break;
+                    case EmuColorChannels.R: self.value = make_colour_rgb(current_axis, ww, hh); break;
+                    case EmuColorChannels.G: self.value = make_colour_rgb(hh, current_axis, ww); break;
+                    case EmuColorChannels.B: self.value = make_colour_rgb(ww, hh, current_axis); break;
+                    case EmuColorChannels.H: self.value = make_colour_hsv(current_axis, ww, hh); break;
+                    case EmuColorChannels.S: self.value = make_colour_hsv(ww, current_axis, hh); break;
+                    case EmuColorChannels.V: self.value = make_colour_hsv(ww, hh, current_axis); break;
                 }
-                            
-                shader_set(shd_emu_color_buckets);
-                shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "buckets"), buckets);
-                draw_rectangle_colour(vx1, vy1, vx2, vy2, c1, c2, c3, c4, false);
-                shader_reset();
-                draw_rectangle_colour(vx1, vy1, vx2, vy2, col_main, col_main, col_main, col_main, true);
-
+                
                 gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                 var chx = vx1 + self.axis_w * w;
                 var chy = vy1 + (1 - self.axis_h) * h;
@@ -256,10 +322,37 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 }
                             
                 shader_set(shd_emu_color_buckets);
-                shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "buckets"), buckets);
-                var channels = [0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000];
-                var c = channels[self.axis_channel];
-                draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c, c, false);
+                shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "u_Buckets"), buckets);
+                
+                switch (self.axis_channel) {
+                    case EmuColorChannels.R:
+                    case EmuColorChannels.G:
+                    case EmuColorChannels.B:
+                        var channels = [0x000000ff, 0x0000ff00, 0x00ff0000];
+                        var c = channels[self.axis_channel];
+                        draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c, c, false);
+                        break;
+                    case EmuColorChannels.H:
+                        shader_set(shd_emu_color_buckets);
+                        shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_hue_bar);
+                        draw_sprite_stretched(rectangle, 0, vx1, vy1, vx2 - vx1, vy2 - vy1);
+                        break;
+                    case EmuColorChannels.S:
+                        shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
+                        var hue = colour_get_hue(self.value);
+                        var ct = make_colour_hsv(hue, 255, 255);
+                        var cb = make_colour_hsv(hue,   0, 255);
+                        draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
+                        break;
+                    case EmuColorChannels.V:
+                        shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
+                        var hue = colour_get_hue(self.value);
+                        var ct = make_colour_hsv(hue, 255, 255);
+                        var cb = make_colour_hsv(hue, 255,   0);
+                        draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
+                        break;
+                }
+                
                 shader_reset();
                 draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
                             
@@ -372,7 +465,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             self.root.el_picker_code.SetValue(emu_string_hex(((self.value & 0xff0000) >> 16) | (self.value & 0x00ff00) | ((self.value & 0x0000ff) << 16), 6));
             self.root.base_color_element.callback();
         });
-        
+                    
         dialog.el_picker.alpha = self.allow_alpha ? (((self.value & 0xff000000) >> 24) / 0xff) : 1;
         dialog.el_picker.axis_value = (self.value & 0x0000ff) / 0xff;
         dialog.el_picker.axis_w = ((self.value & 0x00ff00) >> 8) / 0xff;
@@ -381,7 +474,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
         dialog.el_channels = new EmuRadioArray(320, 32, ew / 2, eh, "Axis Channel", 0, function() {
             self.root.el_picker.axis_channel = self.value;
         });
-        dialog.el_channels.AddOptions(["Red", "Green", "Blue"]);
+        dialog.el_channels.AddOptions(["Red", "Green", "Blue", "Hue", "Saturation", "Value"]);
         dialog.el_all = new EmuCheckbox(320, EMU_AUTO, ew / 2, eh, "All colors?", true, function() {
             self.root.el_picker.all_colors = self.value;
         });
