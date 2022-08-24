@@ -133,6 +133,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             // alpha_width is main_size
             self.alpha_height = 16;
             self.selecting_alpha = false;
+            
+            self.last_non_black_value = value;
                         
             self.SetValue = function(value) {
                 self.value = value;
@@ -295,6 +297,10 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     case EmuColorChannels.V: self.value = make_colour_hsv(ww, hh, current_axis); break;
                 }
                 
+                if (self.value != c_black && self.value != c_white) {
+                    self.last_non_black_value = self.value;
+                }
+                
                 gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                 var chx = vx1 + self.axis_w * w;
                 var chy = vy1 + (1 - self.axis_h) * h;
@@ -339,14 +345,14 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                         break;
                     case EmuColorChannels.S:
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
-                        var hue = colour_get_hue(self.value);
+                        var hue = colour_get_hue(self.last_non_black_value);
                         var ct = make_colour_hsv(hue, 255, 255);
                         var cb = make_colour_hsv(hue,   0, 255);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
                         break;
                     case EmuColorChannels.V:
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
-                        var hue = colour_get_hue(self.value);
+                        var hue = colour_get_hue(self.last_non_black_value);
                         var ct = make_colour_hsv(hue, 255, 255);
                         var cb = make_colour_hsv(hue, 255,   0);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
@@ -430,6 +436,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 var value_as_real = emu_hex(string_copy(self.value, 5, 2) + string_copy(self.value, 3, 2) + string_copy(self.value, 1, 2));
                 self.root.el_picker.SetValue(((value_as_real & 0xff0000) >> 16) | (value_as_real & 0x00ff00) | (value_as_real & 0x0000ff) << 16);
                 self.root.base_color_element.value = value_as_real | (floor(self.root.el_picker.alpha * 0xff) << 24);
+                self.root.base_color_element.last_non_black_value = self.root.base_color_element.value;
                 self.root.base_color_element.callback();
             }
         })
@@ -451,6 +458,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                             self.root.el_picker.SetValue(color);
                             self.root.base_color_element.value = color;
                             self.root.base_color_element.callback();
+                            self.root.base_color_element.last_non_black_value = self.root.base_color_element.value;
                         } catch (e) {
                             self.value = current_value;
                         }
