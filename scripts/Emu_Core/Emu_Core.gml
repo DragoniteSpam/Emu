@@ -229,7 +229,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
         }
         for (var i = array_length(elements) - 1; i >= 0; i--) {
             var thing = elements[i];
-            array_delete(self.contents, emu_array_search(self.contents, thing), 1);
+            array_delete(self.contents, array_get_index(self.contents, thing), 1);
             if (self.child_ids[$ thing.identifier] == thing) {
                 variable_struct_remove(self.child_ids, thing.identifier);
             }
