@@ -88,13 +88,6 @@ function _emu_active_element(element = undefined) {
 }
 #endregion
 
-function emu_array_search(array, value) {
-    for (var i = 0, n = array_length(array); i < n; i++) {
-        if (array[i] == value) return i;
-    }
-    return -1;
-}
-
 /*
 //For a light mode, although i dont know if you really want to use that:
 #macro EMU_COLOR_BACK                   0xffffff
