@@ -127,6 +127,8 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
     		if (names[i] == "last") continue;
     		results[index++] = real(names[i]);
     	}
+        
+        array_sort(results, true);
     	
     	return results;
     };

@@ -5,6 +5,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
 Requires GameMaker 2022.11 or later.
 
+ - EmuList::GetSelectedIndices sorts the list of indices in ascending order
  - EmuRadioArray::SetColumns doesn't break everything if called before ::AddOptions
  - The default font is now Open Sans
  - Decided to take my own advice and disable surface depth on UI elements that don't use 3D (which is most of them except for EmuRenderSurfaces)
