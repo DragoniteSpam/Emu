@@ -1,12 +1,11 @@
 {
-  "isDnD": false,
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "Emu_Core",
   "isCompatibility": false,
+  "isDnD": false,
   "parent": {
     "name": "Core",
     "path": "folders/Emu/Core.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "Emu_Core",
-  "tags": [],
-  "resourceType": "GMScript",
 }

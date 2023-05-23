@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, value, callback) : EmuCallback(x, y, w, h, "progress bar", value, callback) constructor {
+function EmuProgressBar(x, y, width, height, thickness, value_min, value_max, draggable, value, callback) : EmuCallback(x, y, width, height, "progress bar", value, callback) constructor {
     /// @region
     self.thickness = thickness;
     /// @region
@@ -79,7 +79,7 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
         draw_sprite_stretched_ext(self.sprite_bar, index, x1, y1, max((x2 - x1) * f, 0), y2 - y1, c, alpha);
     };
     
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -137,6 +137,8 @@ function EmuProgressBar(x, y, w, h, thickness, value_min, value_max, draggable, 
             draw_sprite_ext(self.sprite_knob, 1, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
             draw_sprite_ext(self.sprite_knob, 0, bx1 + fw, floor(mean(y1, y2)), scale, scale, 0, self.color(), 1);
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

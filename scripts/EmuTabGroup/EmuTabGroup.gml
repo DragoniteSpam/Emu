@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab group") constructor {
+function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, width, height, "tab group") constructor {
     self.rows = rows;
     self.row_height = row_height;
     
@@ -16,14 +16,11 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
     self.override_root_check = true;
     
     self.AddTabs = function(row, tabs) {
-        self.processAdvancement();
-        
         if (row > self.rows) {
             throw new EmuException("Tab row out of bounds", "Trying to add to tab row " + string(row) + ", but only up to " + string(self.rows) + " are available");
         }
-        if (!is_array(tabs)) {
-            tabs = [tabs];
-        }
+        
+        if (!is_array(tabs)) tabs = [tabs];
         
         for (var i = 0; i < array_length(tabs); i++) {
             var tab = tabs[i];
@@ -37,6 +34,10 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         }
         self.arrangeRow(row);
         return self;
+    };
+    
+    self.GetActiveTab = function() {
+        return self.active_tab;
     };
     
     self.arrangeRow = function(row) {
@@ -78,10 +79,10 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
         return self;
     };
     
-    self.Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
-        self.update_script();
+        self.processAdvancement();
         
         var x1 = x + base_x;
         var y1 = y + base_y;
@@ -97,8 +98,10 @@ function EmuTabGroup(x, y, w, h, rows, row_height) : EmuCore(x, y, w, h, "tab gr
             self.active_tab_request = undefined;
         }
         
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
+        
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
-            self.contents[i].Render(x1, y1 + self.rows * self.row_height);
+            self.contents[i].Render(x1, y1 + self.rows * self.row_height, debug_render);
         }
         
         // no sense making a tab group non-interactive

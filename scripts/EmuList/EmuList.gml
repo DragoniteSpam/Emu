@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuList(x, y, w, h, text, element_height, content_slots, callback) : EmuCallback(x, y, w, h, text, 0, callback) constructor {
+function EmuList(x, y, width, header_height, text, element_height, content_slots, callback) : EmuCallback(x, y, width, header_height, text, 0, callback) constructor {
     enum E_ListEntryTypes { STRINGS, STRUCTS, SCRIPTS };
     
     self.element_height = element_height;
@@ -32,10 +32,14 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     self.entries = [];
 	self.dragging = false;
     
+    self.At = function(index) {
+        return (index < 0 || index >= array_length(self.entries)) ? undefined : self.entries[index];
+    };
+    
     self.SetList = function(array) {
         self.entries = array;
         self.own_entries = false;
-        self.ClearSelection();
+        self.ClearSelectionNoCallback();
         return self;
     };
     
@@ -82,6 +86,13 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self;
     };
     
+    self.FitToBox = function(total_width = self.width, total_height = self.GetHeight(), header_height = self.height) {
+        self.width = total_width;
+        self.height = header_height;
+        self.slots = (total_height - header_height) / self.element_height;
+        return self;
+    };
+    
     self.GetHeight = function() {
         return self.height + self.element_height * self.slots;
     };
@@ -116,6 +127,8 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
     		if (names[i] == "last") continue;
     		results[index++] = real(names[i]);
     	}
+        
+        array_sort(results, true);
     	
     	return results;
     };
@@ -125,30 +138,69 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         return self.selected_entries[$ "first"];
     };
     
+    self.GetSelectedItem = function() {
+        var selection = self.GetSelection();
+        if (selection < 0 || selection >= array_length(self.entries)) return undefined;
+        return self.entries[selection];
+    };
+    
+    self.GetAllSelectedItems = function() {
+    	var names = variable_struct_get_names(self.selected_entries);
+    	var n = array_length(names);
+    	if (self.selected_entries[$ "first"] != undefined) n--;
+    	if (self.selected_entries[$ "last"] != undefined) n--;
+    	
+    	var results = array_create(n);
+    	var index = 0;
+    	for (var i = array_length(names) - 1; i >= 0; i--) {
+    		if (names[i] == "first") continue;
+    		if (names[i] == "last") continue;
+    		results[index++] = self.entries[real(names[i])];
+    	}
+    	
+    	return results;
+    };
+    
     self.ClearSelection = function() {
-        self.selected_entries = { };
+        self.ClearSelectionNoCallback();
         self.callback();
         return self;
     };
     
+    self.ClearSelectionNoCallback = function() {
+        self.selected_entries = { };
+        return self;
+    };
+    
     self.Select = function(list_index, set_index = false) {
+        self.SelectNoCallback(list_index, set_index);
+        self.callback();
+        return self;
+    };
+    
+    self.SelectNoCallback = function(list_index, set_index = false) {
+        if (list_index < 0 || list_index >= array_length(self.entries)) return self;
         if (!variable_struct_exists(self.selected_entries, "first")) self.selected_entries[$ "first"] = list_index;
         self.selected_entries[$ "last"] = list_index;
         self.selected_entries[$ string(list_index)] = true;
         if (set_index && clamp(list_index, self.index, self.index + self.slots - 1) != list_index) {
             self.index = max(0, min(list_index, array_length(self.entries) - self.slots));
         }
-        self.callback();
         return self;
     };
     
     self.Deselect = function(list_index) {
-        variable_struct_remove(self.selected_entries, list_index);
+        self.DeselectNoCallback();
         self.callback();
         return self;
     };
     
-    self.Render = function(base_x, base_y) {
+    self.DeselectNoCallback = function(list_index) {
+        variable_struct_remove(self.selected_entries, list_index);
+        return self;
+    };
+    
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -258,7 +310,7 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
         var move_direction = 0;
         
         if (self.getMouseHover(lx1, ly1, lx2, ly2)) {
-            var mn = min(((mouse_y - ly1) div self.height) + self.index, n - 1);
+            var mn = min(((self.getMousePositionY() - ly1) div self.height) + self.index, n - 1);
             if (self.getMouseMiddleReleased(lx1, ly1, lx2, ly2)) {
                 self.callback_middle(mn);
             } else if (self.getMouseDouble(lx1, ly1, lx2, ly2)) {
@@ -347,13 +399,13 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
                     if (self.getMousePressed(x2 - sw, sby1, x2, sby2) && !self.dragging) {
                         self.Activate();
 						self.dragging = true;
-                        self.click_x = mouse_x;
-                        self.click_y = mouse_y;
+                        self.click_x = self.getMousePositionX();
+                        self.click_y = self.getMousePositionY();
                     }
                 }
                 // Hold while dragging: update the list position
                 if (self.getMouseHold(0, 0, window_get_width(), window_get_height()) && self.click_y > -1) {
-                    self.index = floor(noutofrange * clamp(mouse_y - smin, 0, srange) / srange);
+                    self.index = floor(noutofrange * clamp(self.getMousePositionY() - smin, 0, srange) / srange);
                 }
                 // Release: stop dragging
                 if (self.getMouseReleased(0, 0, window_get_width(), window_get_height())) {
@@ -404,5 +456,10 @@ function EmuList(x, y, w, h, text, element_height, content_slots, callback) : Em
             self.index = clamp(self.index + move_direction, 0, max(0, n - self.slots));
         }
         #endregion
+        
+        if (debug_render) {
+            self.renderDebugBounds(x1, y1, x2, y2);
+            self.renderDebugBounds(x1, y2, x2, y3);
+        }
     };
 }

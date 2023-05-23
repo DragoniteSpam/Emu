@@ -1,11 +1,10 @@
 {
-  "type": 1,
+  "resourceType": "GMShader",
+  "resourceVersion": "1.0",
+  "name": "shd_emu_color_buckets",
   "parent": {
     "name": "Graphics",
     "path": "folders/Emu/Graphics.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "shd_emu_color_buckets",
-  "tags": [],
-  "resourceType": "GMShader",
+  "type": 1,
 }

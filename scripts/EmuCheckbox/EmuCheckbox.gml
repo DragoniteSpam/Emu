@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
+function EmuCheckbox(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     /// @ignore
     self.box_size = 20;
     /// @ignore
@@ -55,7 +55,7 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
     #endregion
     
     #region other methods
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -90,6 +90,8 @@ function EmuCheckbox(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h
             .wrap(self.width, self.height)
             .align(self.align.h, self.align.v)
             .draw(x1 + self.box_size + self.offset * 2, floor(mean(y1, y2)));
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

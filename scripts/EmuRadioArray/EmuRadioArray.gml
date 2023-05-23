@@ -1,6 +1,9 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
+function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
+    self.column_capacity = 10000;
+    self.column_width = self.width;
+    
     self.AddOptions = function(elements) {
         if (!is_array(elements)) {
             elements = [elements];
@@ -11,18 +14,25 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         }
         
         self.AddContent(elements);
+        self.SetColumns(self.column_capacity, self.column_width);
         return self;
     };
     
-    self.SetColumns = function(column_capacity, column_width) {
-        if (column_capacity <= 0) column_capacity = 10000;
+    self.SetColumns = function(column_capacity, column_width = undefined) {
+        if (column_width == undefined || column_capacity <= 0) {
+            column_capacity = 10000;
+            column_width = self.width;
+        }
+        self.column_capacity = column_capacity;
+        self.column_width = column_width;
+        
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
             var option = self.contents[i];
             option.x = (i div column_capacity) * column_width;
             option.y = self.height * (1 + (i % column_capacity));
             option.width = column_width;
         }
-        self.width = (array_length(self.contents) div column_capacity) * column_width;
+        self.width = ceil(array_length(self.contents) / column_capacity) * column_width;
         return self;
     };
     
@@ -34,7 +44,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         return maximum_height;
     };
     
-    self.Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -56,10 +66,12 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
             .align(fa_left, fa_middle)
             .draw(tx, ty);
         
-        self.renderContents(x1, y1);
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
+        
+        self.renderContents(x1, y1, debug_render);
     };
     
-    self.emu_radio_array_option = function(x, y, w, h, text, value) : EmuCore(x, y, w, h, text) constructor {
+    self.emu_radio_array_option = function(x, y, width, height, text, value) : EmuCore(x, y, width, height, text) constructor {
         self.value = value;
         
         self.color_active = function() { return EMU_COLOR_RADIO_ACTIVE; };
@@ -68,7 +80,7 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
         
         self.sprite_radio = EMU_SPRITE_RADIO;
         
-        self.Render = function(base_x, base_y) {
+        self.Render = function(base_x, base_y, debug_render = false) {
             self.gc.Clean();
             var x1 = x + base_x;
             var y1 = y + base_y;
@@ -100,6 +112,8 @@ function EmuRadioArray(x, y, w, h, text, value, callback) : EmuCallback(x, y, w,
                 .wrap(self.width, self.height)
                 .align(fa_left, fa_center)
                 .draw(tx + self.offset + sprite_get_width(self.sprite_radio), ty);
+            
+            if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
         }
         
         self.GetInteractive = function() {

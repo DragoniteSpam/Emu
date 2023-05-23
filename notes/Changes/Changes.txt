@@ -1,10 +1,53 @@
 Guess I should probably keep a changelog now. See the documentation for more details:
 https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
+# Changes in 1.3
+
+Requires GameMaker 2022.11 or later.
+
+ - EmuList::GetSelectedIndices sorts the list of indices in ascending order
+ - EmuRadioArray::SetColumns doesn't break everything if called before ::AddOptions
+ - The default font is now Open Sans
+ - Decided to take my own advice and disable surface depth on UI elements that don't use 3D (which is most of them except for EmuRenderSurfaces)
+ - EmuColorPicker can now accept text formatted as a color code pasted into it
+ - EmuColorPicker can now put hue, saturation, and value on its axis
+ - EmuProrgressBar outlines are better-defined on dark color themes
+ - EmuRenderSurface is "activated" by left clicking, right clicking, or middle clicking on the render surface
+ - Element spacing is taken into account when adding content with one of the spacing indicators
+ - Replaced emu_array_search with the native array_get_index function
+
+ - The cursor flashes a little faster, I found it got lost sometimes at a period of two seconds
+
+Additions:
+
+ - EmuCore::DroppedFileHandler and SetDroppedFileHandler - this is just a convenience for using Emu with my File Dropper extension
+ - EmuColorPicker::GetColorCode
+ - EmuColorPicker::SetActiveShade, to control the shade behind the pop-up it creates
+ - EmuColorPicker::ShowPickerDialog, which you can call to activate the color picker's dialog without having to click on it
+ - EmuDialog::CenterInWindow, which is exactly what it sounds like
+ - EmuList::GetAllSelectedItems
+ - EmuList::SelectNoCallback, DeselectNoCallback, and ClearSelectionNoCallback
+ - EmuTabGroup::GetActiveTab
+
 # Changes since 1.1.0
 
+Additions:
+
+ - All Render() methods now accept an option debug_draw argument, which draws a bounding box around each element's, well, bounding box
  - EmuList::ForEachSelection and ::GetAllSelectedIndices
+ - EmuList::FitToBox - allows you to specify a total width and height for the element, without having to predict the size given slot height and slot count
  - EmuList::SetNumbered
+ - EmuList::GetSelectedItem - returns the value at the currently selected index, or undefined
+ - EmuList::At so you can get the selected entry without mucking around with the `entries` property
+ - EmuInput::SetValueType and ::SetCharacterLimit
+ - EmuInput::SetStrictInput - will reject invalid input instead of showing a warning (I usually don't do this)
+ - E_InputTypes.LETTERSDIGITS and LETTERSDIGITSANDUNDERSCORES
+
+Bugs fixed:
+
+ - EmuCore only renders content elements if the element is enabled
+ - EmuList::Select will not select a value outside the range of its list
+ - EmuInput input can be processed with input elements set to Require Enter
 
 # Version 1.1.0 - Changes since 1.0.17
 

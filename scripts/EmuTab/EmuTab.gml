@@ -19,7 +19,7 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
     
     self.override_root_check = true;
     
-    self.Render = function(base_x, base_y) {
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -55,8 +55,10 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
             .draw(floor(mean(hx1, hx2)), floor(mean(hy1, hy2)));
         #endregion
         
+        if (debug_render) self.renderDebugBounds(hx1, hy1, hx2, hy2);
+        
         if (self.isActiveTab()) {
-            self.renderContents(x1, y1);
+            self.renderContents(x1, y1, debug_render);
         }
     };
     

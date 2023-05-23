@@ -60,14 +60,15 @@ tab_bio.AddContent([
     })
         .AddOptions(["They/them", "He/him", "She/her"])
         .SetColumns(1, 160),
-    new EmuList(32, EMU_AUTO, 256, 32, "Hometown:", 32, 8, function() {
+    new EmuList(32, EMU_AUTO, 256, 32, "Hometown:", 32, 0, function() {
         var selection = self.GetSelection();
         if (selection > -1) {
             obj_emu_demo.data.hometown = selection;
         }
     })
         .SetList(self.all_hometowns)
-        .Select(self.data.hometown, true),
+        .Select(self.data.hometown, true)
+        .FitToBox(/* default argument */, 288),
     new EmuList(320, EMU_INLINE, 256, 32, "Alignment:", 32, 8, function() {
         var selection = self.GetSelection();
         if (selection > -1) {
@@ -102,8 +103,7 @@ tab_look.AddContent([
         var dialog = new EmuDialog(256, 128, "Birb!");
         dialog.AddContent([
             new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
-            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
-        ]);
+        ]).AddDefaultCloseButton();
     }),
 ]);
 #endregion
@@ -228,8 +228,7 @@ container.AddContent([
         
         dialog.AddContent([
             new EmuText(32, EMU_AUTO, 560, 320, str_summary),
-            new EmuButton(dialog.width / 2 - 128 / 2, dialog.height - 32 - 32 / 2, 128, 32, "Close", emu_dialog_close_auto),
-        ]);
+        ]).AddDefaultCloseButton();
     }),
     new EmuButton(704, EMU_AUTO, 256, 32, "Credits", function() {
         var dialog = new EmuDialog(640, 320, "Credits");

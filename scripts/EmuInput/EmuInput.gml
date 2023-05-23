@@ -1,7 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, callback) : EmuCallback(x, y, w, h, text, value, callback) constructor {
-    enum E_InputTypes { STRING, INT, REAL, HEX };
+function EmuInput(x, y, width, height, text, value, help_text, character_limit, input, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
+    enum E_InputTypes { STRING, INT, REAL, HEX, LETTERSDIGITS, LETTERSDIGITSANDUNDERSCORES };
     
     self.help_text = help_text;
     self.character_limit = clamp(character_limit, 1, 1000);  // keyboard_string maxes out at 1024 characters but I like to cut it off before then to be safe
@@ -31,6 +31,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.value_type = input;
     self.value_lower = 0;
     self.value_upper = 100;
+    self.strict_input = false;
     
     self.surface = self.surfaceVerify(-1, self.box.x2 - self.box.x1, self.box.y2 - self.box.y1).surface;
     
@@ -57,6 +58,21 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
+    self.SetValueType = function(type) {
+        self._value_type = type;
+        return self;
+    };
+    
+    self.SetCharacterLimit = function(limit) {
+        self.character_limit = limit;
+        return self;
+    };
+    
+    self.SetStrictInput = function(strict) {
+        self.strict_input = strict;
+        return self;
+    };
+    
     self.SetValue = function(value) {
         self.value = string(value);
         if (self.isActiveElement()) {
@@ -71,7 +87,12 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         return self;
     };
     
-    self.Render = function(base_x, base_y) {
+    self.SetValidateInput = function(f) {
+        self.ValidateInput = method(self, f);
+        return self;
+    };
+    
+    self.Render = function(base_x, base_y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -122,7 +143,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         draw_clear(self.GetInteractive() ? self.color_back() : self.color_disabled());
         surface_reset_target();
         
-        var display_text = working_value + (self.isActiveElement() && (floor((current_time * 0.00125) % 2) == 0) ? "|" : "");
+        var display_text = working_value + (self.isActiveElement() && (floor((current_time * 0.0025) % 2) == 0) ? "|" : "");
         
         if (self.multi_line) {
             // i guess you could draw this in a single-line box too, but it would be pretty cramped
@@ -206,6 +227,7 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                 }
 				
                 if (self.ValidateInput(working_value)) {
+                    self.value = working_value;
                     var execute_value_change = (!self.require_enter && v0 != working_value) || (self.require_enter && keyboard_check_pressed(vk_enter));
                     if (execute_value_change) {
                         var cast_value = self.CastInput(working_value);
@@ -214,13 +236,17 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
                         }
 						
                         if (execute_value_change) {
-                            self.value = working_value;
                             self.callback();
                         }
                     }
                 } else if (working_value == "") {
                 	self.value = working_value;
-                } 
+                } else {
+                    // you can set input boxes to reject invalid inputs entirely
+                    if (!self.strict_input) {
+                        self.value = working_value;
+                    }
+                }
             }
             // activation
             if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
@@ -237,6 +263,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
         
         draw_surface(self.surface, vx1, vy1)
         draw_rectangle_colour(vx1, vy1, vx2, vy2, self.color(), self.color(), self.color(), self.color(), true);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     
     self.Activate = function() {
@@ -272,6 +300,10 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
 	                return false;
 	            }
                 return true;
+            case E_InputTypes.LETTERSDIGITS:
+	            return string_lettersdigits(text) == text;
+            case E_InputTypes.LETTERSDIGITSANDUNDERSCORES:
+	            return string_length(string_lettersdigits(text)) + string_count("_", text) == string_length(text);
         }
         return true;
     };
@@ -279,6 +311,8 @@ function EmuInput(x, y, w, h, text, value, help_text, character_limit, input, ca
     self.CastInput = function(text) {
         switch (self.value_type) {
             case E_InputTypes.STRING: return text;
+            case E_InputTypes.LETTERSDIGITS: return text;
+            case E_InputTypes.LETTERSDIGITSANDUNDERSCORES: return text;
             case E_InputTypes.INT: return real(text);
             case E_InputTypes.REAL: return real(text);
             case E_InputTypes.HEX: return emu_hex(text);

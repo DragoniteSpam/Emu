@@ -1,20 +1,22 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuCore(x, y, w, h, text = "") constructor {
+function EmuCore(x, y, width, height, text = "") constructor {
     /// @ignore
     self.x = x;
     /// @ignore
     self.y = y;
     /// @ignore
-    self.width = w;
+    self.width = width;
     /// @ignore
-    self.height = h;
+    self.height = height;
     /// @ignore
     self.root = undefined;
     /// @ignore
     self.identifier = "";
     /// @ignore
     self.child_ids = { };
+    /// @ignore
+    self.use_surface_depth = false;
     
     /// @ignore
     self.enabled = true;
@@ -163,7 +165,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     self.GetMouseOver = function() {
-        return point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), self.x, self.y, self.x + self.width, self.y + self.height);
+        return point_in_rectangle(self.getMousePositionX(), self.getMousePositionY(), self.x, self.y, self.x + self.width, self.y + self.height);
     };
     
     self.GetChild = function(identifier) {
@@ -189,26 +191,26 @@ function EmuCore(x, y, w, h, text = "") constructor {
             if (is_ptr(thing.y) && thing.y == EMU_AUTO) {
                 var top = self.GetTop();
                 if (top) {
-                    thing.y = top.y + top.GetHeight() + self.element_spacing_y;
+                    thing.y = top.y + top.GetHeight() + thing.element_spacing_y;
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_AUTO_NO_SPACING) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y + top.GetHeight();
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_INLINE) {
                 var top = self.GetTop();
                 if (top) {
                     thing.y = top.y;
                 } else {
-                    thing.y = self.element_spacing_y;
+                    thing.y = thing.element_spacing_y;
                 }
             } else if (is_ptr(thing.y) && thing.y == EMU_BASE) {
-                thing.y = self.element_spacing_y;
+                thing.y = thing.element_spacing_y;
             }
             
             if (thing.identifier != "") {
@@ -227,7 +229,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
         }
         for (var i = array_length(elements) - 1; i >= 0; i--) {
             var thing = elements[i];
-            array_delete(self.contents, emu_array_search(self.contents, thing), 1);
+            array_delete(self.contents, array_get_index(self.contents, thing), 1);
             if (self.child_ids[$ thing.identifier] == thing) {
                 variable_struct_remove(self.child_ids, thing.identifier);
             }
@@ -236,11 +238,19 @@ function EmuCore(x, y, w, h, text = "") constructor {
         return self;
     };
     
-    self.Render = function(base_x = 0, base_y = 0) {
+    static ClearContent = function() {
+        if (self.isActiveElement()) _emu_active_element(undefined);
+        for (var i = 0, n = array_length(self.contents); i < n; i++) {
+            self.contents[i].Destroy();
+        }
+        self.contents = [];
+    };
+    
+    self.Render = function(base_x = 0, base_y = 0, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
-        self.renderContents(self.x + base_x, self.y + base_y);
+        self.renderContents(self.x + base_x, self.y + base_y, debug_render);
         return self;
     };
     
@@ -261,6 +271,16 @@ function EmuCore(x, y, w, h, text = "") constructor {
             self.contents[i].Refresh(data);
         }
         return self;
+    };
+    
+    self.GetBaseElement = function() {
+        var element = self;
+        while (true) {
+            if (!element.root) return element;
+            element = element.root;
+        }
+        // this will never happen
+        return undefined;
     };
     #endregion
     
@@ -284,10 +304,22 @@ function EmuCore(x, y, w, h, text = "") constructor {
     };
     
     /// @ignore
-    self.renderContents = function(at_x, at_y) {
+    self.renderContents = function(at_x, at_y, debug_render = false) {
         for (var i = 0, n = array_length(self.contents); i < n; i++) {
-            if (self.contents[i]) self.contents[i].Render(at_x, at_y);
+            if (self.contents[i] && self.contents[i].enabled) self.contents[i].Render(at_x, at_y, debug_render);
         }
+    };
+    
+    /// @ignore
+    self.renderDebugBounds = function(x1, y1, x2, y2) {
+        // gamemaker
+        x2--;
+        y2--;
+        draw_rectangle_colour(x1, y1, x2, y2, c_red, c_red, c_red, c_red, true);
+        draw_set_alpha(0.25);
+        draw_line_colour(x1, y1, x2, y2, c_red, c_red);
+        draw_line_colour(x2, y1, x1, y2, c_red, c_red);
+        draw_set_alpha(1); 
     };
     
     /// @ignore
@@ -314,7 +346,7 @@ function EmuCore(x, y, w, h, text = "") constructor {
     }
     
     /// @ignore
-    self.drawCheckerbox = function(x, y, w, h, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
+    self.drawCheckerbox = function(x = 0, y = 0, w = self.width - 1, h = self.height - 1, xscale = 1, yscale = 1, color = c_white, alpha = 1) {
         var old_repeat = gpu_get_texrepeat();
         gpu_set_texrepeat(true);
         var s = sprite_get_width(self.sprite_checkers);
@@ -349,13 +381,21 @@ function EmuCore(x, y, w, h, text = "") constructor {
     
     /// @ignore
     self.isActiveElement = function() {
-        return EmuActiveElement == self;
+        return (EmuActiveElement == self) && (self.isActiveDialog());
     };
     #endregion
     
     #region cursor detection methods
+    self.getMousePositionX = function() {
+        return device_mouse_x_to_gui(0);
+    };
+    
+    self.getMousePositionY = function() {
+        return device_mouse_y_to_gui(0);
+    };
+    
     self.getMouseHover = function(x1, y1, x2, y2) {
-        return self.GetInteractive() && point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), x1, y1, x2 - 1, y2 - 1);
+        return self.GetInteractive() && point_in_rectangle(self.getMousePositionX(), self.getMousePositionY(), x1, y1, x2 - 1, y2 - 1);
     };
     
     self.getMousePressed = function(x1, y1, x2, y2) {
@@ -413,14 +453,19 @@ function EmuCore(x, y, w, h, text = "") constructor {
                 if (surface_exists(self.surface)) surface_free(self.surface);
             };
         };
+        var depth_state = surface_get_depth_disable();
         if (!surface_exists(surface)) {
+            surface_depth_disable(!self.use_surface_depth);
             var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            surface_depth_disable(depth_state);
             gc[$ string(ptr(ref))] = ref;
             return { surface: ref.surface, changed: true };
         }
         if (surface_get_width(surface) != width || surface_get_height(surface) != height) {
             surface_free(surface);
+            surface_depth_disable(!self.use_surface_depth);
             var ref = new gc_ref(weak_ref_create(self), surface_create(width, height));
+            surface_depth_disable(depth_state);
             gc[$ string(ptr(ref))] = ref;
             return { surface: ref.surface, changed: true };
         }
@@ -452,9 +497,17 @@ function EmuCore(x, y, w, h, text = "") constructor {
         };
     })();
     #endregion
+    
+    self.DroppedFileHandler = function(files) {
+    };
+    
+    self.SetDroppedFileHandler = function(f) {
+        self.DroppedFileHandler = method(self, f);
+        return self;
+    };
 }
 
-function EmuCallback(x, y, w, h, text, value, callback) : EmuCore(x, y, w, h, text) constructor {
+function EmuCallback(x, y, width, height, text, value, callback) : EmuCore(x, y, width, height, text) constructor {
     #region mutators
     self.SetCallback = function(callback) {
         self.callback = method(self, callback);

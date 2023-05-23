@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
+function EmuText(x, y, width, height, text) : EmuCore(x, y, width, height, text) constructor {
     /// @ignore
     self.update_text = undefined;
     
@@ -16,7 +16,7 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
     #endregion
     
     #region other methods
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -42,6 +42,8 @@ function EmuText(x, y, w, h, text) : EmuCore(x, y, w, h, text) constructor {
             .wrap(self.width, self.height)
             .align(self.align.h, self.align.v)
             .draw(tx, ty);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

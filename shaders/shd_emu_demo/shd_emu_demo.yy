@@ -1,11 +1,10 @@
 {
-  "type": 1,
+  "resourceType": "GMShader",
+  "resourceVersion": "1.0",
+  "name": "shd_emu_demo",
   "parent": {
     "name": "Emu Demo",
     "path": "folders/Emu Demo.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "shd_emu_demo",
-  "tags": [],
-  "resourceType": "GMShader",
+  "type": 1,
 }

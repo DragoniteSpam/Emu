@@ -1,6 +1,6 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, "bitfield", value, callback) constructor {
+function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, width, height, "bitfield", value, callback) constructor {
     enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     
     /// @ignore
@@ -82,7 +82,7 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, "bit
         return self;
     };
     
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -91,6 +91,8 @@ function EmuBitfield(x, y, w, h, value, callback) : EmuCallback(x, y, w, h, "bit
         var y1 = self.y + y;
         var x2 = x1 + self.width;
         var y2 = y1 + self.height;
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
         
         self.renderContents(x1, y1);
     };
@@ -123,7 +125,7 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
     #endregion
     
     #region other methods
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         var x1 = self.x + x;
         var y1 = self.y + y;
@@ -153,6 +155,8 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
             self.callback();
             self.root.callback();
         }
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }

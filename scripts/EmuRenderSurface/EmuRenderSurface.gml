@@ -1,6 +1,8 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
-function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h, "") constructor {
+function EmuRenderSurface(x, y, width, height, render, step, create) : EmuCore(x, y, width, height, "") constructor {
+    /// @ignore
+    self.use_surface_depth = true;
     /// @ignore
     self.callback_render = method(self, render);
     /// @ignore
@@ -41,7 +43,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
     #endregion
     
     #region other methods
-    self.Render = function(x, y) {
+    self.Render = function(x, y, debug_render = false) {
         self.gc.Clean();
         self.update_script();
         self.processAdvancement();
@@ -64,7 +66,7 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         
         if (self.getMouseHover(x1, y1, x2, y2)) {
             self.ShowTooltip();
-            if (self.getMousePressed(x1, y1, x2, y2)) {
+            if (self.getMousePressed(x1, y1, x2, y2) || self.getMouseMiddlePressed(x1, y1, x2, y2) || self.GetMouseRightPressed(x1, y1, x2, y2)) {
                 self.Activate();
             }
         }
@@ -85,6 +87,8 @@ function EmuRenderSurface(x, y, w, h, render, step, create) : EmuCore(x, y, w, h
         surface_reset_target();
         
         draw_surface(self.surface, x1, y1);
+        
+        if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
     };
     #endregion
 }
