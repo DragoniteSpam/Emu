@@ -1,7 +1,7 @@
 Guess I should probably keep a changelog now. See the documentation for more details:
 https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
-# Changes since 1.2.1
+# Changes in <next version>
 
 Requires GameMaker 2022.11 or later.
 
@@ -15,6 +15,8 @@ Requires GameMaker 2022.11 or later.
  - EmuRenderSurface is "activated" by left clicking, right clicking, or middle clicking on the render surface
  - Element spacing is taken into account when adding content with one of the spacing indicators
  - Replaced emu_array_search with the native array_get_index function
+
+ - The cursor flashes a little faster, I found it got lost sometimes at a period of two seconds
 
 Additions:
 
