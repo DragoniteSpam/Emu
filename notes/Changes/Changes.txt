@@ -4,6 +4,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 # Changes in 1.4
 
  - EmuButtonImage: fixed the color highlighting problem
+ - EmuRenderSurface: step and recreate arguments are optional, since you don't always need to use them
 
 # Changes in 1.3
 
