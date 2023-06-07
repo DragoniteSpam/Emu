@@ -100,9 +100,9 @@ tab_look.AddContent([
         obj_emu_demo.data.favorite_color = value;
     }),
     new EmuButtonImage(320, 32, 256, 256, spr_emu_demo_birb_solo, 0, c_white, 1, true, function() {
-        var dialog = new EmuDialog(256, 128, "Birb!");
+        var dialog = new EmuDialog(256, 128, "Birdo!");
         dialog.AddContent([
-            new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birb!"),
+            new EmuText(32, EMU_AUTO, 192, 64, "[fa_center][wave][rainbow]Birdo!"),
         ]).AddDefaultCloseButton();
     }),
 ]);

@@ -32,9 +32,11 @@ function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_
         #region draw the image to the surface
         self.surface = self.surfaceVerify(self.surface, self.width, self.height).surface;
         
+        var back_color = self.getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (self.GetInteractive() ? self.color_back() : self.color_disabled());
+        
         surface_set_target(self.surface);
         draw_clear_alpha(c_black, 0);
-        draw_sprite_stretched_ext(self.sprite_nineslice, 1, 0, 0, self.width, self.height, self.color_back(), 1);
+        draw_sprite_stretched_ext(self.sprite_nineslice, 1, 0, 0, self.width, self.height, back_color, 1);
         if (sprite_exists(self.sprite)) {
             if (self.checker_background) self.drawCheckerbox();
             var scale = self.allow_shrink ?
@@ -59,8 +61,7 @@ function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_
             self.callback();
         }
         
-        var back_color = self.getMouseHover(x1, y1, x2, y2) ? self.color_hover() : (self.GetInteractive() ? self.color_back() : self.color_disabled());
-        draw_surface_ext(self.surface, x1, y1, 1, 1, 0, back_color, 1);
+        draw_surface_ext(self.surface, x1, y1, 1, 1, 0, c_white, 1);
         draw_sprite_stretched_ext(self.sprite_nineslice, 0, x1, y1, x2 - x1, y2 - y1, self.color(), 1);
         
         if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
