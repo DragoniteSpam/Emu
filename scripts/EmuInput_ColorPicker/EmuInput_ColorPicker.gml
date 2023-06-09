@@ -3,6 +3,7 @@
 
 // I wanted to make this inherit from EmuInput but that made GameMaker cranky
 // for some reason
+// feather use syntax-errors
 function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     self.allow_alpha = false;
     
@@ -313,8 +314,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 vy1 = y1 + self.axis_y;
                 vx2 = vx1 + self.axis_width;
                 vy2 = vy1 + main_size;
-                var w = vx2 - vx1;
-                var h = vy2 - vy1;
+                w = vx2 - vx1;
+                h = vy2 - vy1;
                             
                 if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
                     if (self.getMousePressed(vx1, vy1, vx2, vy2)) {
@@ -329,6 +330,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                             
                 shader_set(shd_emu_color_buckets);
                 shader_set_uniform_f(shader_get_uniform(shd_emu_color_buckets, "u_Buckets"), buckets);
+                
+                var hue, ct, cb;
                 
                 switch (self.axis_channel) {
                     case EmuColorChannels.R:
@@ -345,16 +348,16 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                         break;
                     case EmuColorChannels.S:
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
-                        var hue = colour_get_hue(self.last_non_black_value);
-                        var ct = make_colour_hsv(hue, 255, 255);
-                        var cb = make_colour_hsv(hue,   0, 255);
+                        hue = colour_get_hue(self.last_non_black_value);
+                        ct = make_colour_hsv(hue, 255, 255);
+                        cb = make_colour_hsv(hue,   0, 255);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
                         break;
                     case EmuColorChannels.V:
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
-                        var hue = colour_get_hue(self.last_non_black_value);
-                        var ct = make_colour_hsv(hue, 255, 255);
-                        var cb = make_colour_hsv(hue, 255,   0);
+                        hue = colour_get_hue(self.last_non_black_value);
+                        ct = make_colour_hsv(hue, 255, 255);
+                        cb = make_colour_hsv(hue, 255,   0);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
                         break;
                 }
@@ -373,8 +376,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 vy1 = y1 + self.output_y;
                 vx2 = vx1 + self.main_size;
                 vy2 = vy1 + self.output_height;
-                var w = vx2 - vx1;
-                var h = vy2 - vy1;
+                w = vx2 - vx1;
+                h = vy2 - vy1;
                             
                 self.drawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                 draw_set_alpha(self.alpha);
@@ -389,8 +392,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     vy1 = y1 + self.alpha_y;
                     vx2 = vx1 + self.main_size;
                     vy2 = vy1 + self.alpha_height;
-                    var w = vx2 - vx1;
-                    var h = vy2 - vy1;
+                    w = vx2 - vx1;
+                    h = vy2 - vy1;
                                 
                     if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
                         if (self.getMousePressed(vx1, vy1, vx2, vy2)) {
@@ -416,7 +419,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     draw_primitive_end();
                     draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
                                 
-                    var f = min(vx1 + w * self.alpha, vx2 - 1);
+                    f = min(vx1 + w * self.alpha, vx2 - 1);
                     gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                     draw_sprite_ext(self.sprite_mask_bar_v, 0, f, vy1, 1, (vy2 - vy1) / sprite_get_height(self.sprite_mask_bar_v), 0, c_white, 1);
                     gpu_set_blendmode(bm_normal);

@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     self.column_capacity = 10000;
     self.column_width = self.width;

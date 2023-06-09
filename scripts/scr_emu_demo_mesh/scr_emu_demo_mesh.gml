@@ -62,7 +62,8 @@ function EmuDemoMeshScene() constructor {
     repeat (6) {
         var dist = random_range(40, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu/rock" + string(irandom(3)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0));
+        var mesh = new MeshInstance("emu/rock" + string(irandom(3)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0);
+        ds_list_add(mesh_list, mesh);
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;
@@ -73,7 +74,8 @@ function EmuDemoMeshScene() constructor {
     repeat (64) {
         var dist = random_range(36, 200);
         var angle = random(360);
-        ds_list_add(mesh_list, new MeshInstance("emu/plant" + string(irandom(7)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0));
+        var mesh = new MeshInstance("emu/plant" + string(irandom(7)) + ".vbuff", dist * dcos(angle), -dist * dsin(angle), 0);
+        ds_list_add(mesh_list, mesh);
         mesh.rotation.z = random(360);
         mesh.scale.x = random_range(0.9, 1.1);
         mesh.scale.y = mesh.scale.x;

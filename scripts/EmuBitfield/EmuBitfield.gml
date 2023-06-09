@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, width, height, "bitfield", value, callback) constructor {
     enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
     

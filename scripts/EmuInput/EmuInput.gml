@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuInput(x, y, width, height, text, value, help_text, character_limit, input, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     enum E_InputTypes { STRING, INT, REAL, HEX, LETTERSDIGITS, LETTERSDIGITSANDUNDERSCORES };
     
@@ -183,7 +185,7 @@ function EmuInput(x, y, width, height, text, value, help_text, character_limit, 
             draw_set_valign(fa_top);
             draw_set_font(self.input_font);
             var sh = string_height_ext(display_text, -1, vx2 - vx1 - (vtx - vx1) * 2);
-            var vty = vy1 + self.offset;
+            vty = vy1 + self.offset;
             draw_text_ext_colour(spacing, min(vty - vy1, hh - spacing - sh), display_text, -1, vx2 - vx1 - (vtx - vx1) * 2, c, c, c, c, 1);
         } else {
             draw_set_halign(fa_left);

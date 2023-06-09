@@ -1,6 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
+// feather use syntax-errors
 function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : EmuCallback(0, 0, w, h, title, 0, callback) constructor {
     static drawn_dialog_shade_time = -1;
     
@@ -136,18 +137,18 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
         }
         
         // re-set these in case you dragged the window around
-        var x1 = x;
-        var y1 = y;
-        var x2 = x1 + self.width;
-        var y2 = y1 + self.GetHeight();
+        x1 = x;
+        y1 = y;
+        x2 = x1 + self.width;
+        y2 = y1 + self.GetHeight();
         
         var tx = x1 + self.offset;
         var ty = floor(mean(y1, y1 + self.header_height));
         
-        var cbx1 = x2 - sprite_get_width(self.sprite_close);
-        var cbx2 = x2;
-        var cby1 = y1;
-        var cby2 = y1 + sprite_get_height(self.sprite_close);
+        cbx1 = x2 - sprite_get_width(self.sprite_close);
+        cbx2 = x2;
+        cby1 = y1;
+        cby2 = y1 + sprite_get_height(self.sprite_close);
         
         // tint the screen behind the active dialog (but only once per frame)
         if (active && (self.drawn_dialog_shade_time != current_time)) {

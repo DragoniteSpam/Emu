@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuButtonImage(x, y, width, height, sprite, index, blend, alpha, scale_to_fit, callback) : EmuCallback(x, y, width, height, "", 0, callback) constructor {
     self.sprite = sprite;
     self.blend = blend;

@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuException(message, longMessage) constructor {
 	var script_top = debug_get_callstack()[0];
     self.message = message;

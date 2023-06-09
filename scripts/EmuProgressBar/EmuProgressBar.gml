@@ -1,5 +1,7 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
+
+// feather use syntax-errors
 function EmuProgressBar(x, y, width, height, thickness, value_min, value_max, draggable, value, callback) : EmuCallback(x, y, width, height, "progress bar", value, callback) constructor {
     /// @region
     self.thickness = thickness;
