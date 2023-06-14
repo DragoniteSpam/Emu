@@ -6,6 +6,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
  - EmuButtonImage: fixed the color highlighting problem
  - EmuRenderSurface: step and recreate arguments are optional, since you don't always need to use them
  - Some edits to make Feather shut up
+ - Fixed some leaks involving surfaces repeatedly getting reallocated
 
 # Changes in 1.3
 
