@@ -82,7 +82,6 @@ function EmuTabGroup(x, y, width, height, rows, row_height) : EmuCore(x, y, widt
     };
     
     self.Render = function(base_x, base_y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

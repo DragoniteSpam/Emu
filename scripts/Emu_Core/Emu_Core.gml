@@ -249,7 +249,6 @@ function EmuCore(x, y, width, height, text = "") constructor {
     };
     
     self.Render = function(base_x = 0, base_y = 0, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         self.renderContents(self.x + base_x, self.y + base_y, debug_render);
@@ -447,6 +446,9 @@ function EmuCore(x, y, width, height, text = "") constructor {
     #region garbage collector stuff
     /// @ignore
     self.surfaceVerify = function(surface, width, height) {
+        width = floor(width);
+        height = floor(height);
+        
         static gc_ref = function(ref, surface) constructor {
             self.ref = ref;
             self.surface = surface;
@@ -476,16 +478,12 @@ function EmuCore(x, y, width, height, text = "") constructor {
     
     /// @ignore
     static gc = new (function() constructor {
-        self.frequency = 500;               // ms between cleanings
+        self.frequency = 5;                 // seconds between cleanings
         self.batch_size = 10;               // items per cleanings
         
         self.refs = { };
         
-        self.last_clean_time = current_time;
-        static Clean = function() {
-            if (current_time < self.last_clean_time + self.frequency) return;
-            self.last_clean_time = current_time;
-            
+        self.timer = call_later(self.frequency, time_source_units_seconds, function() {
             var cleaned = 0;
             var keys = variable_struct_get_names(self.refs);
             for (var i = 0, n = array_length(keys); i < n; i++) {
@@ -496,7 +494,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
                     if (++cleaned >= self.batch_size) break;
                 }
             }
-        };
+        }, true);
     })();
     #endregion
     

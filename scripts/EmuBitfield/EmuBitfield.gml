@@ -85,7 +85,6 @@ function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, w
     };
     
     self.Render = function(x, y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         
@@ -128,7 +127,6 @@ function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0
     
     #region other methods
     self.Render = function(x, y, debug_render = false) {
-        self.gc.Clean();
         var x1 = self.x + x;
         var y1 = self.y + y;
         var x2 = x1 + self.width;

@@ -58,7 +58,6 @@ function EmuCheckbox(x, y, width, height, text, value, callback) : EmuCallback(x
     
     #region other methods
     self.Render = function(x, y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

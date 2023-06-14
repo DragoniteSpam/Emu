@@ -82,7 +82,6 @@ function EmuProgressBar(x, y, width, height, thickness, value_min, value_max, dr
     };
     
     self.Render = function(x, y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

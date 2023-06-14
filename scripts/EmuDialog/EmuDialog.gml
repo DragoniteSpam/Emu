@@ -90,7 +90,6 @@ function EmuDialog(w, h, title, callback = function() { EmuOverlay.Pop(); }) : E
     };
     
     self.Render = function(base_x, base_y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         
         var x1 = self.x + base_x;

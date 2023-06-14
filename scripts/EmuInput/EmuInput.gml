@@ -95,7 +95,6 @@ function EmuInput(x, y, width, height, text, value, help_text, character_limit, 
     };
     
     self.Render = function(base_x, base_y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

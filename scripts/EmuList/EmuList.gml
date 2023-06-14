@@ -203,7 +203,6 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
     };
     
     self.Render = function(base_x, base_y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

@@ -46,7 +46,6 @@ function EmuRenderSurface(x, y, width, height, render, step = function() { }, cr
     
     #region other methods
     self.Render = function(x, y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         

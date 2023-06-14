@@ -22,7 +22,6 @@ function EmuTab(name) : EmuCore(0, 0, 0, 0, name) constructor {
     self.override_root_check = true;
     
     self.Render = function(base_x, base_y, debug_render = false) {
-        self.gc.Clean();
         self.update_script();
         self.processAdvancement();
         
