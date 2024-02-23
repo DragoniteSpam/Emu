@@ -8,6 +8,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
  - EmuProgressBar: when disabled, the slider color will be the DISABLED color
  - EmuRadioArray: setting the column width to some small value won't constrict the entire element
  - EmuRenderSurface: step and recreate arguments are optional, since you don't always need to use them
+ - EmuText: will make use of the element's color()
  - Some edits to make Feather shut up
  - Fixed some leaks involving surfaces repeatedly getting reallocated
 
