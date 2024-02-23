@@ -5,6 +5,7 @@
 function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback(x, y, width, height, text, value, callback) constructor {
     self.column_capacity = 10000;
     self.column_width = self.width;
+    self.source_width = self.width;
     
     self.AddOptions = function(elements) {
         if (!is_array(elements)) {
@@ -34,7 +35,7 @@ function EmuRadioArray(x, y, width, height, text, value, callback) : EmuCallback
             option.y = self.height * (1 + (i % column_capacity));
             option.width = column_width;
         }
-        self.width = ceil(array_length(self.contents) / column_capacity) * column_width;
+        self.width = max(self.source_width, ceil(array_length(self.contents) / column_capacity) * column_width);
         return self;
     };
     
