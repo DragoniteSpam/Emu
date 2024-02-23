@@ -29,7 +29,7 @@ function EmuCore(x, y, width, height, text = "") constructor {
     /// @ignore
     self.tooltip = "";               // not used by all element types
     /// @ignore
-    self.color = function() { return EMU_COLOR_DEFAULT; };
+    self.color = function() { return self.interactive ? EMU_COLOR_DEFAULT : EMU_COLOR_DISABLED; };
     
     /// @ignore
     self.active_element = noone;

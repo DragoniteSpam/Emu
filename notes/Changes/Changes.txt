@@ -3,6 +3,7 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 
 # Changes in 1.4
 
+ - EmuCore: elements set to non-interactive will have their color() return the DISABLED color
  - EmuButtonImage: fixed the color highlighting problem
  - EmuRadioArray: setting the column width to some small value won't constrict the entire element
  - EmuRenderSurface: step and recreate arguments are optional, since you don't always need to use them
