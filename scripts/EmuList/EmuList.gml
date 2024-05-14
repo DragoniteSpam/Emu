@@ -50,6 +50,10 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
         return self;
     };
     
+    self.SetAllowDesect = function(allow_deselect) {
+        self.allow_deselect = allow_deselect;
+    };
+    
     self.SetMultiSelect = function(multi_select, auto, toggle) {
         self.allow_multi_select = multi_select;
         self.auto_multi_select = auto;
