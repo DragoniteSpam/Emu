@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "EmuRenderSurface",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Core",
-    "path": "folders/Emu/Core.yy",
+  "$GMScript":"",
+  "%Name":"EmuRenderSurface",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EmuRenderSurface",
+  "parent":{
+    "name":"Core",
+    "path":"folders/Emu/Core.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

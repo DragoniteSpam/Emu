@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "EmuInput_ColorPicker",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Core",
-    "path": "folders/Emu/Core.yy",
+  "$GMScript":"",
+  "%Name":"EmuInput_ColorPicker",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EmuInput_ColorPicker",
+  "parent":{
+    "name":"Core",
+    "path":"folders/Emu/Core.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "EmuTab",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Core",
-    "path": "folders/Emu/Core.yy",
+  "$GMScript":"",
+  "%Name":"EmuTab",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EmuTab",
+  "parent":{
+    "name":"Core",
+    "path":"folders/Emu/Core.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
