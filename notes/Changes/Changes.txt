@@ -4,7 +4,10 @@ https://github.com/DragoniteSpam/Documentation/wiki/Emu
 # Changes in 1.4
 
  - EmuCore: elements set to non-interactive will have their color() return the DISABLED color
+ - EmuDialog: if you set an ID to a dialogue on the overlay layer, it'll be removed when you close the dialog
  - EmuButtonImage: fixed the color highlighting problem
+ - EmuList: Deselect(list_index) works again
+ - EmuList: added SetAllowDeselect(), which I'm pretty sure used to be there but must have been deleted by accident at some point
  - EmuProgressBar: when disabled, the slider color will be the DISABLED color
  - EmuRadioArray: setting the column width to some small value won't constrict the entire element
  - EmuRenderSurface: step and recreate arguments are optional, since you don't always need to use them
