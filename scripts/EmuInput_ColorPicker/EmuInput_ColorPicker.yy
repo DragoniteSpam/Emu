@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuInput_ColorPicker",
   "isCompatibility":false,
   "isDnD":false,

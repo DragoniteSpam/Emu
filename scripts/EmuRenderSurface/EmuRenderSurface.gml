@@ -14,7 +14,7 @@ function EmuRenderSurface(x, y, width, height, render, step = function() { }, cr
         draw_clear(c_black);
         return self;
     };
-    
+    dot_product_3d_normalized()
     self.surface = self.surfaceVerify(-1, self.width, self.height).surface;
     surface_set_target(self.surface);
     draw_clear(c_black);

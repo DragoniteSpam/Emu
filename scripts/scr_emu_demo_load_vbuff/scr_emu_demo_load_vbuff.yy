@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_emu_demo_load_vbuff",
   "isCompatibility":false,
   "isDnD":false,

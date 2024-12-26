@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuList",
   "isCompatibility":false,
   "isDnD":false,

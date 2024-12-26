@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuCheckbox",
   "isCompatibility":false,
   "isDnD":false,

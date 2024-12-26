@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuRadioArray",
   "isCompatibility":false,
   "isDnD":false,

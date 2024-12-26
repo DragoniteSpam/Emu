@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuBitfield",
   "isCompatibility":false,
   "isDnD":false,

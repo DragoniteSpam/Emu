@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"EmuButton_Image",
   "isCompatibility":false,
   "isDnD":false,
