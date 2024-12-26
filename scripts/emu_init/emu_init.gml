@@ -71,8 +71,13 @@ function _emu_get_overlay() {
         };
         
         self.Pop = function() {
+            var last = self.contents[array_length(self.contents) - 1];
             array_delete(self.contents, array_length(self.contents) - 1, 1);
             _emu_active_element(pointer_null);
+            
+            if (self.child_ids[$ last.identifier] == last) {
+                variable_struct_remove(EmuOverlay.child_ids, last.identifier);
+            }
         };
     };
     
