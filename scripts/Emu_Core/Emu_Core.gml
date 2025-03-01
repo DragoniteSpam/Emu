@@ -510,22 +510,38 @@ function EmuCore(x, y, width, height, text = "") constructor {
 function EmuCallback(x, y, width, height, text, value, callback) : EmuCore(x, y, width, height, text) constructor {
     #region mutators
     self.SetCallback = function(callback) {
-        self.callback = method(self, callback);
+		if (is_method(callback) && method_get_self(callback) != undefined) {
+			self.callback = callback;
+		} else {
+			self.callback = method(self, callback);
+		}
         return self;
     };
     
     self.SetCallbackMiddle = function(callback) {
-        self.callback_middle = method(self, callback);
+        if (is_method(callback) && method_get_self(callback) != undefined) {
+			self.callback_middle = callback;
+		} else {
+			self.callback_middle = method(self, callback);
+		}
         return self;
     };
     
     self.SetCallbackRight = function(callback) {
-        self.callback_right = method(self, callback);
+        if (is_method(callback) && method_get_self(callback) != undefined) {
+			self.callback_right = callback;
+		} else {
+			self.callback_right = method(self, callback);
+		}
         return self;
     };
     
     self.SetCallbackDouble = function(callback) {
-        self.callback_double = method(self, callback);
+        if (is_method(callback) && method_get_self(callback) != undefined) {
+			self.callback_double = callback;
+		} else {
+			self.callback_double = method(self, callback);
+		}
         return self;
     };
     
