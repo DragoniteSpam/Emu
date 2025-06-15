@@ -190,7 +190,7 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
     };
     
     self.Deselect = function(list_index) {
-        self.DeselectNoCallback();
+        variable_struct_remove(self.selected_entries, list_index);
         self.callback();
         return self;
     };
