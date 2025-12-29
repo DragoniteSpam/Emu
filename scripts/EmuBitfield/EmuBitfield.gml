@@ -1,12 +1,14 @@
 // Emu (c) 2020 @dragonitespam
 // See the Github wiki for documentation: https://github.com/DragoniteSpam/Documentation/wiki/Emu
 function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, width, height, "bitfield", value, callback) constructor {
-    enum E_BitfieldOrientations { HORIZONTAL, VERTICAL };
+    enum E_BitfieldOrientations { HORIZONTAL, VERTICAL, GRID };
     
     /// @ignore
     self.fixed_spacing = -1;
     /// @ignore
     self.orientation = E_BitfieldOrientations.HORIZONTAL;
+    /// @ignore
+    self.horizontal_limit = -1;
     
     #region mutators
     self.SetFixedSpacing = function(spacing) {
@@ -21,8 +23,9 @@ function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, w
         return self;
     };
     
-    self.SetOrientation = function(orientation) {
+    self.SetOrientation = function(orientation, horizontal_limit = -1) {
         self.orientation = orientation;
+        self.horizontal_limit = horizontal_limit;
         self.ArrangeElements();
         return self;
     };
@@ -70,13 +73,22 @@ function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, w
                 option.x = option.width * i;
                 option.y = 0;
             }
-        } else {
+        } else if (self.orientation == E_BitfieldOrientations.VERTICAL) {
             for (var i = 0, n = array_length(self.contents); i < n; i++) {
                 var option = self.contents[i];
                 option.width = self.width;
                 option.height = (self.fixed_spacing == -1) ? floor(self.height / n) : self.fixed_spacing;
                 option.x = 0;
                 option.y = option.height * i;
+            }
+        } else if (self.orientation == E_BitfieldOrientations.GRID) {
+            var ww = self.width / self.horizontal_limit;
+            for (var i = 0, n = array_length(self.contents); i < n; i++) {
+                var option = self.contents[i];
+                option.width = ww;
+                option.height = (self.fixed_spacing == -1) ? floor(self.height / n) : self.fixed_spacing;
+                option.x = ww * (i mod self.horizontal_limit);
+                option.y = option.height * (i div self.horizontal_limit);
             }
         }
         return self;
@@ -101,7 +113,7 @@ function EmuBitfield(x, y, width, height, value, callback) : EmuCallback(x, y, w
 
 function EmuBitfieldOption(text, value, callback, eval) : EmuCallback(0, 0, 0, 0, text, value, callback) constructor {
     /// @ignore
-    self.eval = method(self, eval);
+    self.evaluate = method(self, eval);
     
     /// @ignore
     self.color_hover = function() { return EMU_COLOR_HOVER; };
