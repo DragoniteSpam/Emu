@@ -1,9 +1,11 @@
 {
-  "resourceType": "GMNotes",
-  "resourceVersion": "1.1",
-  "name": "Changes",
-  "parent": {
-    "name": "Emu",
-    "path": "Emu.yyp",
+  "$GMNotes":"v1",
+  "%Name":"Changes",
+  "name":"Changes",
+  "parent":{
+    "name":"Emu",
+    "path":"Emu.yyp",
   },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
 }
