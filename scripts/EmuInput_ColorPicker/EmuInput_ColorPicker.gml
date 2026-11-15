@@ -102,7 +102,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             self.axis_w = 0;
             self.axis_h = 0;
             self.axis_channel = EmuColorChannels.R;
-            self.all_colors = true;
+            self.all_colors = global.__emu_settings.color_picker_all_colors;
             self.alpha = 1;
             
             self.allow_alpha = allow_alpha;
@@ -382,7 +382,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 draw_set_alpha(1);
                 draw_rectangle_colour(vx1, vy1, vx2, vy2, col_main, col_main, col_main, col_main, true);
                 #endregion
-                            
+                
                 #region alpha
                 if (self.allow_alpha) {
                     vx1 = x1 + self.alpha_x;
@@ -422,11 +422,11 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     gpu_set_blendmode(bm_normal);
                 }
                 #endregion
-                            
+                
                 if (color_initial != self.value || alpha_initial != self.alpha) {
                     self.callback();
                 }
-                            
+                
                 if (debug_render) self.renderDebugBounds(x1, y1, x2, y2);
             }
         }
@@ -478,13 +478,15 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
         dialog.el_picker.axis_value = (self.value & 0x0000ff) / 0xff;
         dialog.el_picker.axis_w = ((self.value & 0x00ff00) >> 8) / 0xff;
         dialog.el_picker.axis_h = ((self.value & 0xff0000) >> 16) / 0xff;
-                    
-        dialog.el_channels = new EmuRadioArray(320, 32, ew / 2, eh, "Axis Channel", 0, function() {
+        
+        dialog.el_channels = new EmuRadioArray(320, 32, ew / 2, eh, "Axis Channel", dialog.el_picker.axis_channel, function() {
             self.root.el_picker.axis_channel = self.value;
         });
         dialog.el_channels.AddOptions(["Red", "Green", "Blue", "Hue", "Saturation", "Value"]);
-        dialog.el_all = new EmuCheckbox(320, EMU_AUTO, ew / 2, eh, "All colors?", true, function() {
+        dialog.el_all = new EmuCheckbox(320, EMU_AUTO, ew / 2, eh, "All colors?", global.__emu_settings.color_picker_all_colors, function() {
             self.root.el_picker.all_colors = self.value;
+            global.__emu_settings.color_picker_all_colors = self.value;
+            emu_save_settings();
         });
         
         var b_width = 128;

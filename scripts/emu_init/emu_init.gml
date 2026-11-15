@@ -103,3 +103,24 @@ function _emu_active_element(element = undefined) {
 #macro EMU_COLOR_SELECTED               0xffb8ac
 #macro EMU_COLOR_WINDOWSKIN             0x339900
 */
+
+#macro EMU_SETTINGS                     "emu"
+
+// instances aren't created properly if you do this on the first frame of the game
+call_later(1, time_source_units_frames, function() {
+    with (instance_create_depth(0, 0, 0, obj_emu_async_handler)) {
+        self.buffer = buffer_create(1024, buffer_grow, 1);
+        self.buffer_id = buffer_load_async(self.buffer, EMU_SETTINGS, 0, -1);
+    }
+});
+
+global.__emu_settings = {
+    color_picker_all_colors: true
+};
+
+function emu_save_settings() {
+    var b = buffer_create(1000, buffer_grow, 1);
+    buffer_write(b, buffer_text, json_stringify(global.__emu_settings));
+    buffer_save_async(b, EMU_SETTINGS, 0, buffer_tell(b));
+    buffer_delete(b);
+}
