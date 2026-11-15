@@ -1,3 +1,4 @@
+// Feather disable all
 /// Emulation of draw_text(), but using Scribble for rendering
 /// 
 /// **Please do not use this function in conjunction with string_copy()**
@@ -17,11 +18,23 @@
 
 function draw_text_scribble(_x, _y, _string, _reveal = undefined)
 {
-    var _element = scribble(_string)
+    static _scribble_state = __scribble_system().__state;
+    
+    var _font = draw_get_font();
+    if (font_exists(_font))
+    {
+        _font = font_get_name(_font);
+        if (!scribble_font_exists(_font)) __scribble_error("Font \"", _font, "\" does not exist in Scribble\n(Fonts added with font_add() are not supported)");
+    }
+    else
+    {
+        _font = _scribble_state.__default_font;
+    }
+    
+    var _element = scribble(_string, "__draw_text_scribble__")
     .align(draw_get_halign(), draw_get_valign())
-    .starting_format(draw_get_font(), c_white)
+    .starting_format(_font, c_white)
     .blend(draw_get_color(), draw_get_alpha());
     if (_reveal != undefined) _element.reveal(_reveal);
     _element.draw(_x, _y);
-    return _element;
 }

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scribble_external_sound_add",
   "parent":{
-    "name":"Miscellaneous",
-    "path":"folders/Scribble/Miscellaneous.yy",
+    "name":"External Assets",
+    "path":"folders/Scribble/External Assets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

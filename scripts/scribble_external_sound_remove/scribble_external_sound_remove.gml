@@ -1,7 +1,7 @@
-function scribble_external_sound_exists(_alias)
+// Feather disable all
+
+function scribble_external_sound_remove(_alias)
 {
-    //Ensure we're initialized
-    __scribble_system();
-    
-    return ds_map_exists(global.__scribble_external_sound_map, _alias);
+    static _external_sound_map = __scribble_system().__external_sound_map;
+    ds_map_delete(_external_sound_map, _alias);
 }

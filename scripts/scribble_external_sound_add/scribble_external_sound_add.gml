@@ -1,20 +1,21 @@
-/// @param soundID
+// Feather disable all
+
+/// @param sound
 /// @param alias
 
-function scribble_external_sound_add(_soundID, _alias)
+function scribble_external_sound_add(_sound, _alias)
 {
-    //Ensure we're initialized
-    __scribble_system();
+    static _external_sound_map = __scribble_system().__external_sound_map;
     
-    if (ds_map_exists(global.__scribble_external_sound_map, _alias))
+    if (ds_map_exists(_external_sound_map, _alias))
     {
         __scribble_error("External sound alias \"", _alias, "\" already exists");
     }
     
-    if (!audio_exists(_soundID))
+    if (not audio_exists(_sound))
     {
-        __scribble_error("Audio asset ", _soundID, " could not be found");
+        __scribble_error("Audio asset ", _sound, " could not be found");
     }
     
-    global.__scribble_external_sound_map[? _alias] = _soundID;
+    _external_sound_map[? _alias] = _sound;
 }

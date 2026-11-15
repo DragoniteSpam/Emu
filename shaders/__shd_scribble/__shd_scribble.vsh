@@ -1,6 +1,8 @@
 //   @jujuadams   v8.0.0   2021-12-15
 precision highp float;
 
+#define BLEND_SPRITES true
+
 const int MAX_EFFECTS = 11;
 #define SPRITE_FLAG   flagArray[ 0]
 #define WAVE_FLAG     flagArray[ 1]
@@ -67,16 +69,17 @@ const float PI = 3.14159265359;
 
 
 attribute vec3  in_Position;     //{X, Y, Packed character & line index}
-attribute vec3  in_Normal;       //{dX, Sprite data, Bitpacked effect flags}
+attribute vec3  in_Normal;       //{unused, Sprite data, Bitpacked effect flags}
 attribute vec4  in_Colour;       //Colour. This attribute is used for sprite data if this character is a sprite
 attribute vec2  in_TextureCoord; //UVs
-attribute vec2  in_Colour2;      //{Scale, dY}
+attribute vec2  in_Colour2;      //{dX, dY}
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
 uniform vec4  u_vColourBlend;                           //4
 uniform vec4  u_vGradient;                              //4
+uniform vec2  u_vSkew;                                  //2
 uniform vec2  u_vRegionActive;                          //2
 uniform vec4  u_vRegionColour;                          //4
 uniform float u_fTime;                                  //1
@@ -84,6 +87,7 @@ uniform float u_aDataFields[MAX_ANIM_FIELDS];           //21
 uniform vec2  u_aBezier[3];                             //6
 uniform float u_fBlinkState;                            //1
 
+uniform int   u_iTypewriterUseLines;                    //1
 uniform int   u_iTypewriterMethod;                      //1
 uniform int   u_iTypewriterCharMax;                     //1
 uniform float u_fTypewriterWindowArray[2*WINDOW_COUNT]; //6
@@ -186,11 +190,11 @@ vec2 jitter(vec2 position, vec2 centre, float characterIndex)
 
 float filterSprite(float spriteData)
 {
-    float imageSpeed = floor(spriteData / 4096.0);
-    float imageMax   = floor((spriteData - 4096.0*imageSpeed) / 64.0);
-    float image      = spriteData - (4096.0*imageSpeed + 64.0*imageMax);
+    float imageSpeed = floor(spriteData / 16384.0);
+    float imageMax   = floor((spriteData - 16384.0*imageSpeed) / 128.0);
+    float image      = spriteData - (16384.0*imageSpeed + 128.0*imageMax);
     
-    float displayImage = floor(mod(imageSpeed*u_fTime/1024.0, imageMax));
+    float displayImage = floor(mod(u_fTime*(imageSpeed/256.0), imageMax));
     return ((abs(image-displayImage) < 1.0/255.0)? 1.0 : 0.0);
 }
 
@@ -298,22 +302,22 @@ vec2 bezierDerivative(float t, vec2 p1, vec2 p2, vec2 p3)
 
 float easeQuad(float time)
 {
-	return time*time;
+    return time*time;
 }
 
 float easeCubic(float time)
 {
-	return time*time*time;
+    return time*time*time;
 }
 
 float easeQuart(float time)
 {
-	return time*time*time*time;
+    return time*time*time*time;
 }
 
 float easeQuint(float time)
 {
-	return time*time*time*time*time;
+    return time*time*time*time*time;
 }
 
 float easeSine(float time)
@@ -335,7 +339,7 @@ float easeCirc(float time)
 float easeBack(float time)
 {
     float param = 1.70158;
-	return time*time*((param + 1.0)*time - param);
+    return time*time*((param + 1.0)*time - param);
 }
 
 float easeElastic(float time)
@@ -347,30 +351,30 @@ float easeElastic(float time)
 
 float easeBounce(float time)
 {
-	float n1 = 7.5625;
-	float d1 = 2.75;
+    float n1 = 7.5625;
+    float d1 = 2.75;
     
     time = 1.0 - time;
     
-	if (time < 1.0 / d1)
+    if (time < 1.0 / d1)
     {
-		return 1.0 - n1*time*time;
-	}
+        return 1.0 - n1*time*time;
+    }
     else if (time < 2.0 / d1)
     {
         time -= 1.5/d1;
-		return 1.0 - (n1*time*time + 0.75);
-	}
+        return 1.0 - (n1*time*time + 0.75);
+    }
     else if (time < 2.5 / d1)
     {
         time -= 2.25/d1;
-		return 1.0 - (n1*time*time + 0.9375);
-	}
+        return 1.0 - (n1*time*time + 0.9375);
+    }
     else
     {
         time -= 2.625/d1;
-		return 1.0 - (n1*time*time + 0.984375);
-	}
+        return 1.0 - (n1*time*time + 0.984375);
+    }
 }
 
 
@@ -408,10 +412,6 @@ void main()
     
     
     //Unpack the glyph centre
-    vec2 centreDelta = vec2(in_Normal.x, in_Colour2.y);
-    
-    
-    
     vec2 centre;
     
     //If we have a valid Bezier curve, apply it
@@ -420,38 +420,46 @@ void main()
         centre = bezier(in_Position.x, u_aBezier[0], u_aBezier[1], u_aBezier[2]);
         
         vec2 orientation = bezierDerivative(in_Position.x, u_aBezier[0], u_aBezier[1], u_aBezier[2]);
-        pos = rotate_by_vector(centre - centreDelta, centre, normalize(orientation));
+        pos = rotate_by_vector(centre - in_Colour2, centre, normalize(orientation));
         
         vec2 perpendicular = normalize(vec2(-u_aBezier[2].y, u_aBezier[2].x));
         pos += in_Position.y*perpendicular;
     }
     else
     {
-        centre = pos + centreDelta;
+        centre = pos + in_Colour2;
     }
     
-    if (SLANT_FLAG > 0.5) pos.x += centreDelta.y*SLANT_GRADIENT;
+    pos += u_vSkew*centre.yx;
+    if (SLANT_FLAG > 0.5) pos.x += in_Colour2.y*SLANT_GRADIENT;
     
     
     
     //Colour
     v_vColour = in_Colour;
     
-    if (pos.y > centre.y) v_vColour.rgb = mix(v_vColour.rgb, u_vGradient.rgb, u_vGradient.a);
-    
     if (CYCLE_FLAG > 0.5) v_vColour = cycle(characterIndex, v_vColour); //Cycle colours through the defined palette
     v_vColour = rainbow(characterIndex, v_vColour); //Cycle colours for the rainbow effect
-    v_vColour *= u_vColourBlend; //And then blend with the blend colour/alpha
+    
+    //Apply the gradient effect
+    if (pos.y > centre.y) v_vColour.rgb = mix(v_vColour.rgb, u_vGradient.rgb, u_vGradient.a);
+    
+    if (!BLEND_SPRITES && (SPRITE_FLAG > 0.5))
+    {
+        //If we're not RGB blending sprites and this *is* a sprite then only modify the alpha channel
+        v_vColour.a *= u_vColourBlend.a;
+    }
+    else
+    {
+        //And then blend with the blend colour/alpha
+        v_vColour *= u_vColourBlend;
+    }
+    
     if (SPRITE_FLAG > 0.5) v_vColour.a *= filterSprite(in_Normal.y); //Use packed sprite data to filter out sprite frames that we don't want
     if ((BLINK_FLAG > 0.5) && (u_fBlinkState < 0.5)) v_vColour.a = 0.0;
     
-    
-    
     //Regions
-    if ((characterIndex >= u_vRegionActive.x) && (characterIndex <= u_vRegionActive.y))
-    {
-        v_vColour.rgb = mix(v_vColour.rgb, u_vRegionColour.rgb, u_vRegionColour.a);
-    }
+    if ((characterIndex >= u_vRegionActive.x) && (characterIndex <= u_vRegionActive.y)) v_vColour.rgb = mix(v_vColour.rgb, u_vRegionColour.rgb, u_vRegionColour.a);
     
     
     
@@ -469,7 +477,7 @@ void main()
     
     if (easeMethod > EASE_NONE)
     {
-        float fadeIndex = characterIndex + 1.0;
+        float fadeIndex = ((u_iTypewriterUseLines > 0)? lineIndex : characterIndex) + 1.0;
         if (u_iTypewriterCharMax > 0) fadeIndex = float(u_iTypewriterCharMax) - fadeIndex;
         
         float time = fade(u_fTypewriterWindowArray, u_fTypewriterSmoothness, fadeIndex, fadeOut);

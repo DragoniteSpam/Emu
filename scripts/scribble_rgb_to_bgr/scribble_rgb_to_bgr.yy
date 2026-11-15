@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scribble_rgb_to_bgr",
   "parent":{
-    "name":"Miscellaneous",
-    "path":"folders/Scribble/Miscellaneous.yy",
+    "name":"Legacy",
+    "path":"folders/Scribble/Legacy.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

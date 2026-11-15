@@ -1,3 +1,4 @@
+// Feather disable all
 /// Associates four fonts together for use with [r] [b] [i] [bi] font tags
 /// Use <undefined> for any style you don't want to set a font for
 /// 
@@ -14,10 +15,12 @@ function scribble_font_set_style_family(_r_font, _b_font, _i_font, _bi_font)
     _font_names[@ 2] = is_string(_i_font )? _i_font  : undefined;
     _font_names[@ 3] = is_string(_bi_font)? _bi_font : undefined;
     
+    static _font_data_map = __scribble_system().__font_data_map;
+    
     var _i = 0;
     repeat(4)
     {
-        var _struct = global.__scribble_font_data[? _font_names[_i]];
+        var _struct = _font_data_map[? _font_names[_i]];
         if (is_struct(_struct))
         {
             with(_struct)

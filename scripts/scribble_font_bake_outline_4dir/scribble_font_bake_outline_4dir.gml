@@ -1,7 +1,8 @@
+// Feather disable all
 /// Creates a new font with an outline based on a given source font
 ///
 /// @param sourceFontName   Name, as a string, of the font to use as a basis for the effect
-/// @param newFontName      Name of the new font to create, as a strintg
+/// @param newFontName      Name of the new font to create, as a string
 /// @param outlineColour    Colour of the outline
 /// @param smooth           Whether or not to interpolate the outline. Set to <false> for pixel fonts, set to <true> for anti-aliased fonts
 /// @param [textureSize]
@@ -10,7 +11,9 @@ function scribble_font_bake_outline_4dir(_source_font_name, _new_font_name, _out
 {
     if (is_string(_outline_color))
     {
-        var _found = global.__scribble_colours[? _outline_color];
+        var _colors_struct = __scribble_config_colours();
+        
+        var _found = _colors_struct[$ _outline_color];
         if (_outline_color == undefined)
         {
             __scribble_error("Colour \"", _outline_color, "\" not recognised");

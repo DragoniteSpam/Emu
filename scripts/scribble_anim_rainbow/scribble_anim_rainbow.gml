@@ -1,17 +1,22 @@
+// Feather disable all
 /// @param weight  Rainbow blend weight. 0 does not show any rainbow effect at all, and 1 will blend a glyph's colour fully with the rainbow colour
 /// @param speed   Rainbow speed. Larger values cause characters to change colour more rapidly
 
 function scribble_anim_rainbow(_weight, _speed)
 {
-    if ((_weight != global.__scribble_anim_properties[__SCRIBBLE_ANIM.RAINBOW_WEIGHT])
-    ||  (_speed  != global.__scribble_anim_properties[__SCRIBBLE_ANIM.RAINBOW_SPEED ]))
+    static _array = __scribble_system().__anim_properties;
+    
+    if ((_weight != _array[__SCRIBBLE_ANIM.__RAINBOW_WEIGHT])
+    ||  (_speed  != _array[__SCRIBBLE_ANIM.__RAINBOW_SPEED ]))
     {
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.RAINBOW_WEIGHT] = _weight;
-        global.__scribble_anim_properties[@ __SCRIBBLE_ANIM.RAINBOW_SPEED ] = _speed;
+        _array[@ __SCRIBBLE_ANIM.__RAINBOW_WEIGHT] = _weight;
+        _array[@ __SCRIBBLE_ANIM.__RAINBOW_SPEED ] = _speed;
         
-        global.__scribble_anim_shader_desync                 = true;
-        global.__scribble_anim_shader_desync_to_default      = false;
-        global.__scribble_anim_shader_msdf_desync            = true;
-        global.__scribble_anim_shader_msdf_desync_to_default = false;
+        static _scribble_state = __scribble_system().__state;
+        with(_scribble_state)
+        {
+            __shader_anim_desync            = (not __shader_anim_disabled); //Only re-set uniforms when the animations aren't disabled
+            __shader_anim_desync_to_default = false;
+        }
     }
 }

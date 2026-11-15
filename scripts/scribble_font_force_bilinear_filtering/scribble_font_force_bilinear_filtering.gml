@@ -1,16 +1,24 @@
+// Feather disable all
+
 /// @param font
 /// @param state
 
 function scribble_font_force_bilinear_filtering(_font, _state)
 {
-    if (!ds_map_exists(global.__scribble_font_data, _font))
+    with(__scribble_get_font_data(_font))
     {
-        __scribble_error("Font \"", _font, "\" not found");
-        exit;
+        if (__bilinear == _state) return;
+        __bilinear = _state;
+        
+        var _grid = __glyph_data_grid;
+        var _i = 0;
+        repeat(ds_grid_width(_grid))
+        {
+            var _material = _grid[# _i, SCRIBBLE_GLYPH.MATERIAL];
+            var _new_material = _material.__duplicate_material_with_new_bilinear(_state);
+            _grid[# _i, SCRIBBLE_GLYPH.MATERIAL] = _new_material;
+            
+            ++_i;
+        }
     }
-    
-    var _font_data = global.__scribble_font_data[? _font];
-    var _grid = _font_data.__glyph_data_grid;
-    var _map  = _font_data.__glyphs_map;
-    ds_grid_set_region(_grid, 0, SCRIBBLE_GLYPH.BILINEAR, ds_map_size(_map) - 1, SCRIBBLE_GLYPH.BILINEAR, _state);
 }

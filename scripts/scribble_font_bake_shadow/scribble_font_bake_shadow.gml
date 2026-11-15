@@ -1,7 +1,8 @@
+// Feather disable all
 /// Creates a new font with an outline based on a given source font
 ///
 /// @param sourceFontName   Name, as a string, of the font to use as a basis for the effect
-/// @param newFontName      Name of the new font to create, as a strintg
+/// @param newFontName      Name of the new font to create, as a string
 /// @param dX               
 /// @param dY               
 /// @param shadowColour     Colour of the shadow
@@ -13,12 +14,15 @@ function scribble_font_bake_shadow(_source_font_name, _new_font_name, _dx, _dy, 
 {
     if (is_string(_shadow_color))
     {
-        var _found = global.__scribble_colours[? _shadow_color];
+        var _colors_struct = __scribble_config_colours();
+        
+        var _found = _colors_struct[$ _shadow_color];
         if (_shadow_color == undefined)
         {
             __scribble_error("Colour \"", _shadow_color, "\" not recognised");
             exit;
         }
+        
         _shadow_color = _found & 0xFFFFFF;
     }
 
@@ -33,6 +37,6 @@ function scribble_font_bake_shadow(_source_font_name, _new_font_name, _dx, _dy, 
 
     //Run the baking operation
     scribble_font_bake_shader(_source_font_name, _new_font_name, __shd_scribble_bake_shadow,
-                              2, max(0, -_dx), max(0, -_dx), max(0, _dx), max(0, _dy),
+                              2, max(0, -_dx), max(0, -_dy), max(0, _dx), max(0, _dy),
                               _separation, _smooth);
 }
