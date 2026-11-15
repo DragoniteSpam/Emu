@@ -222,12 +222,13 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
         var ty = self.getTextY(y1);
         
         #region list header
+        var txoffset = 0;
         if (string_length(self.tooltip) > 0) {
             var spr_xoffset = sprite_get_xoffset(self.sprite_help);
             var spr_yoffset = sprite_get_yoffset(self.sprite_help);
             var spr_width = sprite_get_width(self.sprite_help);
             var spr_height = sprite_get_height(self.sprite_help);
-            var txoffset = spr_width;
+            txoffset = spr_width;
             
             if (self.getMouseHover(tx - spr_xoffset, ty - spr_yoffset, tx - spr_xoffset + spr_width, ty - spr_yoffset + spr_height)) {
                 draw_sprite_ext(self.sprite_help, 2, tx, ty, 1, 1, 0, col_hover, 1);
@@ -237,8 +238,6 @@ function EmuList(x, y, width, header_height, text, element_height, content_slots
             }
             draw_sprite_ext(self.sprite_help, 1, tx, ty, 1, 1, 0, col_main, 1);
             draw_sprite_ext(self.sprite_help, 0, tx, ty, 1, 1, 0, col_main, 1);
-        } else {
-            var txoffset = 0;
         }
         
         scribble(self.text)

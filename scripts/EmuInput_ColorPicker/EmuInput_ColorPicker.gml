@@ -97,37 +97,37 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     
         static controls = function(x, y, width, height, value, allow_alpha, callback) : EmuCallback(x, y, width, height, "", value, callback) constructor {
             enum EmuColorChannels { R, G, B, H, S, V }
-                        
+            
             self.axis_value = 0;
             self.axis_w = 0;
             self.axis_h = 0;
             self.axis_channel = EmuColorChannels.R;
             self.all_colors = true;
             self.alpha = 1;
-                        
+            
             self.allow_alpha = allow_alpha;
             self.override_escape = true;
-                        
+            
             self.color_x = 0;
             self.color_y = 0;
             self.main_size = 176;
             self.selecting_color = false;
-                        
+            
             self.sprite_crosshair = EMU_SPRITE_CROSSHAIR;
             self.sprite_mask_bar_h = EMU_SPRITE_MENU_BAR_H;
             self.sprite_mask_bar_v = EMU_SPRITE_MENU_BAR_V;
-                        
+            
             self.axis_x = self.color_x + self.main_size + 16;
             self.axis_y = self.color_y;
             self.axis_width = 32;
             // axis_height is main_size
             self.selecting_axis = false;
-                        
+            
             self.output_x = self.color_x + 48;
             self.output_y = self.color_y + self.main_size + 8;
             // output_width is main_size
             self.output_height = 16;
-                        
+            
             self.alpha_x = self.color_x + 48;
             self.alpha_y = self.output_y + self.output_height + 8;
             // alpha_width is main_size
@@ -135,10 +135,10 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             self.selecting_alpha = false;
             
             self.last_non_black_value = value;
-                        
+            
             self.SetValue = function(value) {
                 self.value = value;
-                            
+                
                 switch (self.axis_channel) {
                     case EmuColorChannels.R:
                         self.axis_value = (value & 0x0000ff) / 0xff;
@@ -172,7 +172,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                         break;
                 }
             };
-                        
+            
             self.Render = function(base_x, base_y, debug_render = false) {
                 self.gc.Clean();
                 var x1 = x + base_x;
@@ -313,8 +313,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 vy1 = y1 + self.axis_y;
                 vx2 = vx1 + self.axis_width;
                 vy2 = vy1 + main_size;
-                var w = vx2 - vx1;
-                var h = vy2 - vy1;
+                w = vx2 - vx1;
+                h = vy2 - vy1;
                             
                 if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
                     if (self.getMousePressed(vx1, vy1, vx2, vy2)) {
@@ -333,30 +333,30 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 switch (self.axis_channel) {
                     case EmuColorChannels.R:
                     case EmuColorChannels.G:
-                    case EmuColorChannels.B:
+                    case EmuColorChannels.B: {
                         var channels = [0x000000ff, 0x0000ff00, 0x00ff0000];
                         var c = channels[self.axis_channel];
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c, c, false);
-                        break;
-                    case EmuColorChannels.H:
+                    } break;
+                    case EmuColorChannels.H: {
                         shader_set(shd_emu_color_buckets);
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_hue_bar);
                         draw_sprite_stretched(rectangle, 0, vx1, vy1, vx2 - vx1, vy2 - vy1);
-                        break;
-                    case EmuColorChannels.S:
+                    } break;
+                    case EmuColorChannels.S: {
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
                         var hue = colour_get_hue(self.last_non_black_value);
                         var ct = make_colour_hsv(hue, 255, 255);
                         var cb = make_colour_hsv(hue,   0, 255);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
-                        break;
-                    case EmuColorChannels.V:
+                    } break;
+                    case EmuColorChannels.V: {
                         shader_set_uniform_i(shader_get_uniform(shd_emu_color_buckets, "u_Mode"), shader_mode_def);
                         var hue = colour_get_hue(self.last_non_black_value);
                         var ct = make_colour_hsv(hue, 255, 255);
                         var cb = make_colour_hsv(hue, 255,   0);
                         draw_rectangle_colour(vx1, vy1, vx2, vy2, cb, cb, ct, ct, false);
-                        break;
+                    } break;
                 }
                 
                 shader_reset();
@@ -373,8 +373,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                 vy1 = y1 + self.output_y;
                 vx2 = vx1 + self.main_size;
                 vy2 = vy1 + self.output_height;
-                var w = vx2 - vx1;
-                var h = vy2 - vy1;
+                w = vx2 - vx1;
+                h = vy2 - vy1;
                             
                 self.drawCheckerbox(vx1, vy1, vx2 - vx1, vy2 - vy1, 0.4, 0.4);
                 draw_set_alpha(self.alpha);
@@ -389,8 +389,8 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     vy1 = y1 + self.alpha_y;
                     vx2 = vx1 + self.main_size;
                     vy2 = vy1 + self.alpha_height;
-                    var w = vx2 - vx1;
-                    var h = vy2 - vy1;
+                    w = vx2 - vx1;
+                    h = vy2 - vy1;
                                 
                     if (self.getMouseHover(vx1, vy1, vx2, vy2)) {
                         if (self.getMousePressed(vx1, vy1, vx2, vy2)) {
@@ -416,7 +416,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
                     draw_primitive_end();
                     draw_rectangle_colour(vx1, vy1, vx2, vy2, c_black, c_black, c_black, c_black, true);
                                 
-                    var f = min(vx1 + w * self.alpha, vx2 - 1);
+                    f = min(vx1 + w * self.alpha, vx2 - 1);
                     gpu_set_blendmode_ext(bm_inv_dest_color, bm_inv_src_color);
                     draw_sprite_ext(self.sprite_mask_bar_v, 0, f, vy1, 1, (vy2 - vy1) / sprite_get_height(self.sprite_mask_bar_v), 0, c_white, 1);
                     gpu_set_blendmode(bm_normal);
@@ -473,7 +473,7 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
             self.root.el_picker_code.SetValue(emu_string_hex(((self.value & 0xff0000) >> 16) | (self.value & 0x00ff00) | ((self.value & 0x0000ff) << 16), 6));
             self.root.base_color_element.callback();
         });
-                    
+        
         dialog.el_picker.alpha = self.allow_alpha ? (((self.value & 0xff000000) >> 24) / 0xff) : 1;
         dialog.el_picker.axis_value = (self.value & 0x0000ff) / 0xff;
         dialog.el_picker.axis_w = ((self.value & 0x00ff00) >> 8) / 0xff;
@@ -486,11 +486,11 @@ function EmuColorPicker(x, y, width, height, text, value, callback) : EmuCallbac
         dialog.el_all = new EmuCheckbox(320, EMU_AUTO, ew / 2, eh, "All colors?", true, function() {
             self.root.el_picker.all_colors = self.value;
         });
-                    
+        
         var b_width = 128;
         var b_height = 32;
         var el_confirm = new EmuButton(dialog.width / 2 - b_width / 2, dialog.height - 32 - b_height / 2, b_width, b_height, "Done", emu_dialog_close_auto);
-                    
+        
         dialog.AddContent([dialog.el_picker_code, dialog.el_picker, dialog.el_channels, dialog.el_all, el_confirm]);
         
         return dialog;

@@ -5,6 +5,7 @@
     {"name":"scribble_fallback_font","order":11,"path":"fonts/scribble_fallback_font/scribble_fallback_font.yy",},
     {"name":"Changes","order":5,"path":"notes/Changes/Changes.yy",},
     {"name":"readme_please","order":2,"path":"notes/readme_please/readme_please.yy",},
+    {"name":"obj_emu_async_handler","order":5,"path":"objects/obj_emu_async_handler/obj_emu_async_handler.yy",},
     {"name":"obj_emu_demo","order":4,"path":"objects/obj_emu_demo/obj_emu_demo.yy",},
     {"name":"__scribble_class_event","order":1,"path":"scripts/__scribble_class_event/__scribble_class_event.yy",},
     {"name":"__scribble_class_font","order":2,"path":"scripts/__scribble_class_font/__scribble_class_font.yy",},

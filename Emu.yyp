@@ -59,7 +59,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"Emu",
   "resources":[
@@ -67,6 +67,7 @@
     {"id":{"name":"scribble_fallback_font","path":"fonts/scribble_fallback_font/scribble_fallback_font.yy",},},
     {"id":{"name":"Changes","path":"notes/Changes/Changes.yy",},},
     {"id":{"name":"readme_please","path":"notes/readme_please/readme_please.yy",},},
+    {"id":{"name":"obj_emu_async_handler","path":"objects/obj_emu_async_handler/obj_emu_async_handler.yy",},},
     {"id":{"name":"obj_emu_demo","path":"objects/obj_emu_demo/obj_emu_demo.yy",},},
     {"id":{"name":"rm_emu_demo","path":"rooms/rm_emu_demo/rm_emu_demo.yy",},},
     {"id":{"name":"__scribble_class_element","path":"scripts/__scribble_class_element/__scribble_class_element.yy",},},
